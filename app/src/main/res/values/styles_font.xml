@@ -1,0 +1,19 @@
+<resources>
+
+    <style name="font_light">
+        <item name="android:fontFamily">@font/avenir_light</item>
+    </style>
+
+    <style name="font_medium">
+        <item name="android:fontFamily">@font/avenir_medium</item>
+    </style>
+
+    <style name="font_roman">
+        <item name="android:fontFamily">@font/avenir_roman</item>
+    </style>
+
+    <style name="font_demi">
+        <item name="android:fontFamily">@font/avenir_demi</item>
+    </style>
+
+</resources>
