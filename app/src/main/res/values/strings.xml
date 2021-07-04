@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Eighty</string>
+    <string name="app_name">Black Eye</string>
     <string name="ok">Ok</string>
     <string name="email">Email</string>
     <string name="search">Search</string>
@@ -10,5 +10,27 @@
     <string name="done">Done</string>
     <string name="back">Back</string>
     <string name="are_you_sure_you_want_to_exit_the_app">Are you sure you want to exit the app?</string>
+    <string name="gues">Continue as a guest</string>
+    <string name="terms">Terms and condition</string>
 
+    <string name="Name">Full Name</string>
+    <string name="lastName">Last Name</string>
+    <string name="Mobile">Mobile</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="gender">GENDER</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="dob">Date of Birth</string>
+    <string name="kindly_enter_first_name">Kindly Enter Name</string>
+    <string name="kindly_enter_last_name">Kindly Enter Last Name</string>
+    <string name="kindly_enter_mobile">Kindly Enter Mobile</string>
+    <string name="kindly_enter_dob">Kindly enter Date of Birth</string>
+    <string name="kindly_enter_confirm">Kindly Enter Confirm Password</string>
+    <string name="kindly_select_terms">Kindly Select Terms and Condition</string>
+    <string name="kindly_enter_password">Kindly Enter Password</string>
+    <string name="terms_and_condition">Accept Terms and Condition and the details must be as per the Civil Id</string>
+    <string name="info_txt">The details must be as per the Civil Id</string>
+    <string name="have_you">Have an account?</string>
+
+    <string name="cancel">Cancel</string>
 </resources>

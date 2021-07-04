@@ -9,9 +9,17 @@
         android:id="@+id/layout_parent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:gravity="center"
         android:orientation="vertical">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:text="You are Logged in"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="24dp"
 
+            android:layout_height="wrap_content"></TextView>
     </LinearLayout>
 
     <include layout="@layout/layout_error" />

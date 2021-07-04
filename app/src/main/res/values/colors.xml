@@ -3,7 +3,9 @@
     <color name="colorPrimary">#3e4394</color>
     <color name="colorPrimaryDark">#3e4394</color>
     <color name="colorAccent">#b8113d</color>
-
+    <color name="login_backgroud">#FFF6DE</color>
+    <color name="login_button">#1F2136</color>
+    <color name="next_button">#E5686F</color>
     <color name="blackstart">#414141</color>
     <color name="blackend">#858585</color>
 
@@ -12,7 +14,7 @@
     <color name="black">#000000</color>
     <color name="blackOpacity80">#cc000000</color>
     <color name="white">#FFFFFF</color>
-    <color name="red">#E60003</color>
+    <color name="red">#FE1D1D</color>
     <color name="yellow">#FFB900</color>
     <color name="whiteAlpha">#E6ffffff</color>
     <color name="colorAppBG">#E6E6E6</color>
@@ -22,4 +24,7 @@
     <color name="grey_light">#f4f4f4</color>
     <color name="greyDark">#9a9a9a</color>
     <color name="textColorPrimary">#616161</color>
+
+    <color name="new_grey">#F2F2F2</color>
+    <color name="new_read">#C88835</color>
 </resources>

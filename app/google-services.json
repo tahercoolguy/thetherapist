@@ -1,35 +1,42 @@
 {
   "project_info": {
-    "project_number": "1003111866923",
-    "firebase_url": "https://eighty-97ac0.firebaseio.com",
-    "project_id": "eighty-97ac0",
-    "storage_bucket": "eighty-97ac0.appspot.com"
+    "project_number": "62820884284",
+    "firebase_url": "https://testapp-66830.firebaseio.com",
+    "project_id": "testapp-66830",
+    "storage_bucket": "testapp-66830.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1003111866923:android:792178a81ed73bec",
+        "mobilesdk_app_id": "1:62820884284:android:6a36e5f60a793def524839",
         "android_client_info": {
-          "package_name": "com.master.design.eighty"
+          "package_name": "com.master.design.blackeye"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1003111866923-b53ggijra56odu70bgjhdt5l8nkq4cib.apps.googleusercontent.com",
+          "client_id": "62820884284-tmrfi73ebrj3ocvg4nojkvtrotc4nh4b.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyB2Rd9sY4RdIjxzvKW-CViobpMKtS1v7sw"
+          "current_key": "AIzaSyAwWr-Jk6-M3B44uaAlCLVpRl5_ovAXElQ"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1003111866923-b53ggijra56odu70bgjhdt5l8nkq4cib.apps.googleusercontent.com",
+              "client_id": "62820884284-tmrfi73ebrj3ocvg4nojkvtrotc4nh4b.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "62820884284-435h2kjh3usp4jnijj2a2t49mfpsroqa.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.designmaster.chattest"
+              }
             }
           ]
         }
