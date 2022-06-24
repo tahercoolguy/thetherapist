@@ -63,10 +63,10 @@ public class Adapter_Restaurent extends RecyclerView.Adapter<Adapter_Restaurent.
 
     private void setDetails(Adapter_Restaurent.ViewHolder viewHolder, int position) {
         if(!arrayList.get(position).getImage_file().equalsIgnoreCase(""))
-        Picasso.with(context).load(arrayList.get(position).getImage_file()).into(viewHolder.img);
+        Picasso.get( ).load(arrayList.get(position).getImage_file()).into(viewHolder.img);
         viewHolder.companyName.setText(arrayList.get(position).getRestaurant_name());
         viewHolder.status.setText(arrayList.get(position).getStatus());
-        Picasso.with(context).load(arrayList.get(position).getAttachment()).into(viewHolder.companyIcon);
+        Picasso.get( ).load(arrayList.get(position).getAttachment()).into(viewHolder.companyIcon);
         viewHolder.location.setText(arrayList.get(position).getLocation());
     }
 

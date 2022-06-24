@@ -20,6 +20,7 @@
         android:background="@color/colorPrimary"
         android:clickable="true"
         android:focusable="true">
+
         <include layout="@layout/app_bar_drawer" />
 
         <FrameLayout

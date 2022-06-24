@@ -26,8 +26,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activity.CameraHandling"></activity>
-        <activity android:name=".Activity.ImagePickerActivity" />
+        <activity
+            android:name=".Activity.Add_Image_Video_Activity"
+            android:exported="false" />
         <activity android:name=".Activity.LoginActivity" />
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
@@ -52,8 +53,8 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity android:name=".Activity.MainActivity" />
-        <activity android:name=".Activity.SplashScreen">
+        <activity android:name=".Activity.MainActivity" /> <!-- <activity android:name=".Activity.SplashScreen"> -->
+        <activity android:name=".Activity.SplashScreenVideo_Gif">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -64,6 +65,9 @@
         <activity android:name=".Activity.AddressSelector" />
         <activity android:name=".Activity.SignUpActivity" />
         <activity android:name=".Activity.VerifyActivity" />
-    </application>
+        <activity android:name=".Activity.Story_Activity" />
+        <activity android:name=".Activity.ImagePickerActivity" />
+        <activity android:name=".Activity.CameraHandling" />
+     </application>
 
 </manifest>

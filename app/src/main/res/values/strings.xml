@@ -31,6 +31,15 @@
     <string name="terms_and_condition">Accept Terms and Condition and the details must be as per the Civil Id</string>
     <string name="info_txt">The details must be as per the Civil Id</string>
     <string name="have_you">Have an account?</string>
-
+    <string name="sat">Sat</string>
+    <string name="fri">Fri</string>
+    <string name="sun">Sun</string>
+    <string name="mon">Mon</string>
+    <string name="tue">Tue</string>
+    <string name="wed">Wed</string>
+    <string name="thr">Thr</string>
     <string name="cancel">Cancel</string>
+    <string name="dialog_permission_title">Grant Permissions</string>
+    <string name="dialog_permission_message">This app needs permission to use this feature. You can grant them in app settings.</string>
+    <string name="go_to_settings">GOTO SETTINGS</string>
 </resources>

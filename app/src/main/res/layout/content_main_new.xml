@@ -80,7 +80,7 @@
             android:layout_width="40dp"
             android:background="@color/colorPrimary"
             android:layout_height="40dp"
-           android:src="@drawable/com_facebook_button_like_icon_selected"
+           android:src="@drawable/switch_selector"
             android:visibility="visible"
             android:layout_marginLeft="20dp"
             />

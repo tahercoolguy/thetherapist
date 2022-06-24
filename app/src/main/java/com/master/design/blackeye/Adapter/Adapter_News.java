@@ -63,7 +63,7 @@ public class Adapter_News extends RecyclerView.Adapter<Adapter_News.ViewHolder> 
 
 
     private void setDetails(Adapter_News.ViewHolder viewHolder, int position) {
-        Picasso.with(context).load(arrayList.get(position).getImage_file()).into(viewHolder.img);
+        Picasso.get( ).load(arrayList.get(position).getImage_file()).into(viewHolder.img);
         viewHolder.description.setText(arrayList.get(position).getDescription());
         viewHolder.read.setOnClickListener(new View.OnClickListener() {
             @Override

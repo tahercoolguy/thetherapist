@@ -24,6 +24,7 @@ import android.widget.TextView;
 import com.google.android.material.appbar.AppBarLayout;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.master.design.blackeye.Adapter.Adapter_Menu;
+import com.master.design.blackeye.Fragments.Calender_Fragment;
 import com.master.design.blackeye.Fragments.Fragment_Default;
 import com.master.design.blackeye.Fragments.Home_Fragment;
 import com.master.design.blackeye.Helper.ContextWrapper;
@@ -36,6 +37,7 @@ import com.master.design.blackeye.R;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.master.design.blackeye.Models.DrawerMenu.RECORD;
@@ -81,8 +83,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @OnClick(R.id.reportLL)
     public void reportIncident(){
-//        Intent intent=new Intent(MainActivity.this,IncidentActivity.class);
-//        startActivity(intent);
+        Intent intent=new Intent(MainActivity.this,Add_Image_Video_Activity.class);
+        startActivity(intent);
+
 
     }
 
@@ -104,11 +107,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         user = new User(this);
+        ButterKnife.bind(this);
+
+
         idMappings();
         setDrawer();
         setToolBar();
         setOnClickListeners();
-        addFragment(new Home_Fragment(), false);
+        addFragment(new Calender_Fragment(), false);
     }
 
     @Override

@@ -1,8 +1,6 @@
 package com.master.design.blackeye.Activity;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
+import static androidx.core.content.FileProvider.getUriForFile;
 
 import android.Manifest;
 import android.app.Activity;
@@ -17,6 +15,10 @@ import android.provider.OpenableColumns;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -26,9 +28,8 @@ import com.master.design.blackeye.R;
 import com.yalantis.ucrop.UCrop;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
-
-import static androidx.core.content.FileProvider.getUriForFile;
 
 public class ImagePickerActivity extends AppCompatActivity {
     private static final String TAG = ImagePickerActivity.class.getSimpleName();
@@ -44,6 +45,7 @@ public class ImagePickerActivity extends AppCompatActivity {
 
     public static final int REQUEST_IMAGE_CAPTURE = 0;
     public static final int REQUEST_GALLERY_IMAGE = 1;
+    public static final int REQUEST_IMAGE_CAPTURE_VIDEO = 2;
 
     private boolean lockAspectRatio = false, setBitmapMaxWidthHeight = false;
     private int ASPECT_RATIO_X = 16, ASPECT_RATIO_Y = 9, bitmapMaxWidth = 1000, bitmapMaxHeight = 1000;
@@ -52,9 +54,11 @@ public class ImagePickerActivity extends AppCompatActivity {
 
     public interface PickerOptionListener {
         void onTakeCameraSelected();
+        void onTakeCameraSelectedVideo();
 
         void onChooseGallerySelected();
     }
+    boolean isNotCrop=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,21 +79,38 @@ public class ImagePickerActivity extends AppCompatActivity {
         bitmapMaxWidth = intent.getIntExtra(INTENT_BITMAP_MAX_WIDTH, bitmapMaxWidth);
         bitmapMaxHeight = intent.getIntExtra(INTENT_BITMAP_MAX_HEIGHT, bitmapMaxHeight);
 
+        isNotCrop = intent.getBooleanExtra("isNotCrop",false);
+
         int requestCode = intent.getIntExtra(INTENT_IMAGE_PICKER_OPTION, -1);
         if (requestCode == REQUEST_IMAGE_CAPTURE) {
             takeCameraImage();
-        } else {
+        }else if (requestCode == REQUEST_IMAGE_CAPTURE_VIDEO )
+        {
+            takeCameraImageVideo();
+        }
+            else {
             chooseImageFromGallery();
         }
     }
 
-    public static void showImagePickerOptions(Context context, PickerOptionListener listener) {
+
+    public static void showImagePickerOptions(Context context, PickerOptionListener listener,boolean isVideo) {
         // setup the alert builder
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Set image");
+        if(isVideo)
+            builder.setTitle("Set image / Video");
 
+        List<String> where = new ArrayList<String>();
+        where.add( "Take a image" );
+        where.add( "Choose from gallery" );
+        if(isVideo)
+            where.add( "Take a video" );
+        String[] animals = new String[ where.size() ];
+        where.toArray( animals );
         // add a list
-        String[] animals = {"Take a video", "Choose from gallery"};
+//        String[] animals = {"Take a image", "Choose from gallery","Take a video"};
+
         builder.setItems(animals, (dialog, which) -> {
             switch (which) {
                 case 0:
@@ -97,6 +118,10 @@ public class ImagePickerActivity extends AppCompatActivity {
                     break;
                 case 1:
                     listener.onChooseGallerySelected();
+                    break;
+
+                case 2:
+                    listener.onTakeCameraSelectedVideo();
                     break;
             }
         });
@@ -113,12 +138,35 @@ public class ImagePickerActivity extends AppCompatActivity {
                     @Override
                     public void onPermissionsChecked(MultiplePermissionsReport report) {
                         if (report.areAllPermissionsGranted()) {
-                            fileName = System.currentTimeMillis() + ".mp4";
-                            Intent takePictureIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+                            fileName = System.currentTimeMillis() + ".jpg";
+                            Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, getCacheImagePath(fileName));
                             if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
                                 startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
                             }
+                        }
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+                        token.continuePermissionRequest();
+                    }
+                }).check();
+    }
+
+    private void takeCameraImageVideo() {
+        Dexter.withActivity(this)
+                .withPermissions(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .withListener(new MultiplePermissionsListener() {
+                    @Override
+                    public void onPermissionsChecked(MultiplePermissionsReport report) {
+                        if (report.areAllPermissionsGranted()) {
+                            fileName = System.currentTimeMillis() + ".jpg";
+                            Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, getCacheImagePath(fileName));
+//                            if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+                            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+//                            }
                         }
                     }
 
@@ -137,7 +185,7 @@ public class ImagePickerActivity extends AppCompatActivity {
                     public void onPermissionsChecked(MultiplePermissionsReport report) {
                         if (report.areAllPermissionsGranted()) {
                             Intent pickPhoto = new Intent(Intent.ACTION_PICK,
-                                    android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                             startActivityForResult(pickPhoto, REQUEST_GALLERY_IMAGE);
                         }
                     }
@@ -156,8 +204,12 @@ public class ImagePickerActivity extends AppCompatActivity {
         switch (requestCode) {
             case REQUEST_IMAGE_CAPTURE:
                 if (resultCode == RESULT_OK) {
-//                    cropImage(getCacheImagePath(fileName));
-                    setResultOk(getCacheImagePath(fileName));
+                    if(isNotCrop)
+                    {
+                        setResultOk(getCacheImagePath(fileName));
+                    }else
+                        cropImage(getCacheImagePath(fileName));
+//                    setResultOk(getCacheImagePath(fileName));
                 } else {
                     setResultCancelled();
                 }
@@ -166,7 +218,12 @@ public class ImagePickerActivity extends AppCompatActivity {
                 if (resultCode == RESULT_OK) {
                     Uri imageUri = data.getData();
 //                    cropImage(imageUri);
-                    setResultOk(imageUri);
+                    if(isNotCrop)
+                    {
+                        setResultOk(imageUri);
+                    }else
+                        cropImage(imageUri);
+//                    setResultOk(imageUri);
                 } else {
                     setResultCancelled();
                 }
@@ -194,7 +251,7 @@ public class ImagePickerActivity extends AppCompatActivity {
         options.setCompressionQuality(IMAGE_COMPRESSION);
         options.setToolbarColor(ContextCompat.getColor(this, R.color.colorPrimary));
         options.setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
-        options.setActiveWidgetColor(ContextCompat.getColor(this, R.color.colorPrimary));
+//        options.setActiveWidzgetColor(ContextCompat.getColor(this, R.color.colorPrimary));
 
         if (lockAspectRatio)
             options.withAspectRatio(ASPECT_RATIO_X, ASPECT_RATIO_Y);

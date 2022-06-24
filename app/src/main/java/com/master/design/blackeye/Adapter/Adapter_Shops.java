@@ -61,10 +61,10 @@ public class Adapter_Shops extends RecyclerView.Adapter<Adapter_Shops.ViewHolder
 
 
     private void setDetails(Adapter_Shops.ViewHolder viewHolder, int position) {
-        Picasso.with(context).load(arrayList.get(position).getImage_file()).into(viewHolder.img);
+        Picasso.get( ).load(arrayList.get(position).getImage_file()).into(viewHolder.img);
         viewHolder.companyName.setText(arrayList.get(position).getShop_name());
         viewHolder.status.setText(arrayList.get(position).getStatus());
-        Picasso.with(context).load(arrayList.get(position).getAttachment()[0]).into(viewHolder.companyIcon);
+        Picasso.get( ).load(arrayList.get(position).getAttachment()[0]).into(viewHolder.companyIcon);
 
     }
 

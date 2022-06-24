@@ -149,7 +149,7 @@ public class Home_Fragment extends Fragment {
                 public void success(BannerDM bannerDM, Response response) {
                     if(bannerDM.getStatus().equalsIgnoreCase("1"))
                     {
-                        Picasso.with(getActivity()).load(bannerDM.getResult().getBanner_file()).into(banner_img);
+                        Picasso.get( ).load(bannerDM.getResult().getBanner_file()).into(banner_img);
                         banner_txt.setText(bannerDM.getResult().getTitle());
                     }
                 }

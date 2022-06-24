@@ -216,21 +216,23 @@ public class SignUpActivity extends AppCompatActivity implements  Validator.Vali
     }
 
 
-    public void showImagePickerOptions() {
-
-        ImagePickerActivity.showImagePickerOptions(this, new ImagePickerActivity.PickerOptionListener() {
+    private void showImagePickerOptions() {
+        ImagePickerActivity.showImagePickerOptions(SignUpActivity.this, new ImagePickerActivity.PickerOptionListener() {
             @Override
             public void onTakeCameraSelected() {
                 launchCameraIntent();
             }
 
             @Override
-            public void onChooseGallerySelected() {
-                launchGalleryIntent();
+            public void onTakeCameraSelectedVideo() {
 
             }
-        });
 
+            @Override
+            public void onChooseGallerySelected() {
+                launchGalleryIntent();
+            }
+        }, true);
     }
 
     int REQUEST_IMAGE =3;
