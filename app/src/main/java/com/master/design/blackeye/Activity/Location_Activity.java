@@ -92,14 +92,15 @@ public class Location_Activity extends AppCompatActivity implements OnMapReadyCa
                         e.printStackTrace();
                     }
                     Address address = null;
-                    if(addressList==null){
+                    if(addressList.size()==1){
                           address = addressList.get(0);
+                          LatLng latLng= new LatLng(address.getLatitude(),address.getLongitude());
+                          mMap.addMarker(new MarkerOptions().position(latLng).title(location));
+                          mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,10));
 
                     }else{
                         Helper.showToast(Location_Activity.this,"kindly enter correct name");
                     }
-
-
 
                 }
 
