@@ -68,10 +68,10 @@ public class SplashScreenVideo_Gif extends AppCompatActivity {
             public void onCompletion(MediaPlayer mediaPlayer) {
                 String Id = String.valueOf(user.getId());
                 if (Id.equalsIgnoreCase("0")) {
-                    startActivity(new Intent(SplashScreenVideo_Gif.this, MainActivity.class));
+                    startActivity(new Intent(SplashScreenVideo_Gif.this, Location_Activity.class));
                     finish();
                 } else {
-                    startActivity(new Intent(SplashScreenVideo_Gif.this, MainActivity.class));
+                    startActivity(new Intent(SplashScreenVideo_Gif.this, Location_Activity.class));
                     finish();
                 }
             }

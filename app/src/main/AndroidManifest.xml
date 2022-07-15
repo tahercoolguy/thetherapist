@@ -26,6 +26,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/map_key"></meta-data>
+
+        <activity
+            android:name=".Activity.Location_Activity"
+            android:exported="false" />
         <activity
             android:name=".Activity.Add_Image_Video_Activity"
             android:exported="false" />
@@ -68,6 +76,6 @@
         <activity android:name=".Activity.Story_Activity" />
         <activity android:name=".Activity.ImagePickerActivity" />
         <activity android:name=".Activity.CameraHandling" />
-     </application>
+    </application>
 
 </manifest>
