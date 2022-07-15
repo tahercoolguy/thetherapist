@@ -2,6 +2,7 @@ package com.master.design.blackeye.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
@@ -35,7 +36,7 @@ import java.util.Locale;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class Location_Activity extends AppCompatActivity {
+public class Location_Activity extends AppCompatActivity implements OnMapReadyCallback {
 //
 //    @BindView(R.id.card_img)
 //    Frag card_img;
@@ -50,6 +51,8 @@ public class Location_Activity extends AppCompatActivity {
     private double selectedlat, selecteclng;
     private List<Address> addresses;
     private String selectedAddress;
+    private SearchView searchView;
+    private GoogleMap map;
 
 
     @Override
@@ -57,6 +60,8 @@ public class Location_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location);
         ButterKnife.bind(this);
+        searchView = findViewById(R.id.sv_location);
+
 
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.maps);
 
@@ -67,6 +72,46 @@ public class Location_Activity extends AppCompatActivity {
         } else {
             ActivityCompat.requestPermissions(Location_Activity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
         }
+
+        searchLocation();
+    }
+
+    public void searchLocation() {
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                String location = searchView.getQuery().toString();
+                List<Address> addressList = null;
+
+                if (location != null || !location.equals("") || location.equalsIgnoreCase(String.valueOf(addressList))) {
+                    Geocoder geocoder = new Geocoder(Location_Activity.this);
+                    try {
+                        addressList = geocoder.getFromLocationName(location, 1);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    Address address = null;
+                    if(addressList==null){
+                          address = addressList.get(0);
+
+                    }else{
+                        Helper.showToast(Location_Activity.this,"kindly enter correct name");
+                    }
+
+
+
+                }
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+        mapFragment.getMapAsync(this);
 
     }
 
@@ -106,10 +151,10 @@ public class Location_Activity extends AppCompatActivity {
                                     CheckConnection();
 
                                     if (networkInfo.isConnected() && networkInfo.isAvailable()) {
-                                        selectedlat=latLng.latitude;
-                                        selecteclng=latLng.longitude;
+                                        selectedlat = latLng.latitude;
+                                        selecteclng = latLng.longitude;
 
-                                        GetAddress(selectedlat,selecteclng);
+                                        GetAddress(selectedlat, selecteclng);
 
                                     } else {
                                         Toast.makeText(Location_Activity.this, "please check connection", Toast.LENGTH_SHORT).show();
@@ -147,43 +192,48 @@ public class Location_Activity extends AppCompatActivity {
     }
 
 
-    private void GetAddress(double mlat,double mlong){
-        geocoder= new Geocoder(Location_Activity.this, Locale.getDefault());
+    private void GetAddress(double mlat, double mlong) {
+        geocoder = new Geocoder(Location_Activity.this, Locale.getDefault());
 
-        if(mlat!=0){
+        if (mlat != 0) {
 
             try {
-                addresses=geocoder.getFromLocation(mlat,mlong,1);
+                addresses = geocoder.getFromLocation(mlat, mlong, 1);
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
-            if(addresses!=null){
-                String mAddress =addresses.get(0).getAddressLine(0);
+            if (addresses.size()!=0) {
+                String mAddress = addresses.get(0).getAddressLine(0);
 
-                String city =addresses.get(0).getLocality();
-                String state=addresses.get(0).getAdminArea();
-                String postalCode=addresses.get(0).getPostalCode();
-                String areaName=addresses.get(0).getFeatureName();
-                String dis=addresses.get(0).getSubAdminArea();
+                String city = addresses.get(0).getLocality();
+                String state = addresses.get(0).getAdminArea();
+                String postalCode = addresses.get(0).getPostalCode();
+                String areaName = addresses.get(0).getFeatureName();
+                String dis = addresses.get(0).getSubAdminArea();
 
-                selectedAddress=mAddress;
+                selectedAddress = mAddress;
 
-                if(mAddress!=null){
-                    MarkerOptions markerOptions=new MarkerOptions();
+                if (mAddress != null) {
+                    MarkerOptions markerOptions = new MarkerOptions();
 
-                    LatLng latLng = new LatLng(mlat,mlong);
+                    LatLng latLng = new LatLng(mlat, mlong);
                     markerOptions.position(latLng).title(selectedAddress);
                     mMap.addMarker(markerOptions).showInfoWindow();
-                }else{
-                    Helper.showToast(Location_Activity.this,"Something went  wrong");
+                } else {
+                    Helper.showToast(Location_Activity.this, "Something went  wrong");
                 }
-            }else{
-                Helper.showToast(Location_Activity.this,"Something went  wrong");
+            } else {
+                Helper.showToast(Location_Activity.this, "Something went  wrong");
             }
-        }else{
-            Helper.showToast(Location_Activity.this,"latlng null");
+        } else {
+            Helper.showToast(Location_Activity.this, "latlng null");
         }
 
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
     }
 }

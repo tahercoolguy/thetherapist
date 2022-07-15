@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.master.design.blackeye">
 
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -29,7 +30,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/map_key"></meta-data>
+            android:value="@string/map_key" />
 
         <activity
             android:name=".Activity.Location_Activity"
@@ -62,7 +63,7 @@
         </provider>
 
         <activity android:name=".Activity.MainActivity" /> <!-- <activity android:name=".Activity.SplashScreen"> -->
-        <activity android:name=".Activity.SplashScreenVideo_Gif">
+        <activity android:name=".Activity.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
