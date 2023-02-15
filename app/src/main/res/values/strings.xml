@@ -42,6 +42,8 @@
     <string name="dialog_permission_title">Grant Permissions</string>
     <string name="dialog_permission_message">This app needs permission to use this feature. You can grant them in app settings.</string>
     <string name="go_to_settings">GOTO SETTINGS</string>
-    <string name="map_key">AIzaSyCdx6WXfM9JgEU7yrOmPpdBQKQJ-x8Maeg</string>
+    <string name="map_key" translatable="false">AIzaSyCdx6WXfM9JgEU7yrOmPpdBQKQJ-x8Maeg</string>
+    <string name="place_api" translatable="false">AIzaSyAusRdpcmkauwfOMViSj2wbcKYmQQjTDyM</string>
+
 
 </resources>

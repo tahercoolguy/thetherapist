@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 30
     defaultConfig {
-        applicationId "com.master.design.blackeye"
+        applicationId "com.master.design.therapist"
         minSdkVersion 24
         targetSdkVersion 30
         versionCode 1
@@ -51,6 +51,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-maps:16.0.0'
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'com.google.android.libraries.places:places:2.6.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
@@ -173,18 +174,10 @@ dependencies {
 
     implementation 'com.github.florent37:singledateandtimepicker:2.2.7'
 
-    // custum calender view
-     implementation 'com.github.sundeepk:compact-calendar-view:1.9.1'
 
 //compatible with androidX
 
-    //    for location
-    implementation 'com.google.android.gms:play-services-maps:17.0.0'
 
-    implementation 'com.google.android.gms:play-services-location:17.0.0'
-
-    
-
-}
+ }
 apply plugin: 'com.google.gms.google-services'
 com.google.gms.googleservices.GoogleServicesPlugin.config.disableVersionCheck = true
