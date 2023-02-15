@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:background="@color/white">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/layout_parent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+             android:orientation="vertical"
+            android:padding="10dp">
+
+
+
+            <TextView
+                android:id="@+id/tittleTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_bold"
+                android:layout_marginVertical="10dp"
+                android:layout_marginHorizontal="10dp"
+                 android:text="Settings"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_Heading"
+                android:textStyle="bold"></TextView>
+
+            <LinearLayout
+                android:id="@+id/myProfileLL"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/rectangle_white_grey_border"
+                android:backgroundTint="@color/grey_light"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_about"></ImageView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="10dp"
+                    android:textSize="@dimen/text_size_normal"
+                    android:layout_weight="1"
+                    android:text="@string/my_profile"
+                    android:textColor="@color/black"></TextView>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="20dp"
+                    android:src="@drawable/ic_go_arrow"></ImageView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/languageLL"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/rectangle_white_grey_border"
+                android:backgroundTint="@color/grey_light"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_language"></ImageView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="10dp"
+                    android:textSize="@dimen/text_size_normal"
+
+                    android:layout_weight="1"
+                    android:text="Language"
+                    android:textColor="@color/black"></TextView>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="20dp"
+                    android:src="@drawable/ic_go_arrow"></ImageView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/notificationLL"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/rectangle_white_grey_border"
+                android:backgroundTint="@color/grey_light"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_notification"></ImageView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_weight="1"
+                    android:textSize="@dimen/text_size_normal"
+
+                    android:text="@string/notification"
+                    android:textColor="@color/black"></TextView>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="20dp"
+                    android:src="@drawable/ic_go_arrow"></ImageView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/aboutLL"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/rectangle_white_grey_border"
+                android:backgroundTint="@color/grey_light"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_about"></ImageView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_weight="1"
+                    android:textSize="@dimen/text_size_normal"
+
+                    android:text="@string/about"
+                    android:textColor="@color/black"></TextView>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="20dp"
+                    android:src="@drawable/ic_go_arrow"></ImageView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/logoutLL"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/rectangle_white_grey_border"
+                android:backgroundTint="@color/grey_light"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_abouttt"></ImageView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textSize="@dimen/text_size_normal"
+
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_weight="1"
+                    android:text="@string/logout"
+                    android:textColor="@color/red"></TextView>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="20dp"
+                    android:src="@drawable/ic_go_arrow"></ImageView>
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </androidx.core.widget.NestedScrollView>
+
+    <include layout="@layout/layout_error" />
+</RelativeLayout>

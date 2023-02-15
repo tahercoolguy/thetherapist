@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3e4394</color>
-    <color name="colorPrimaryDark">#3e4394</color>
+    <color name="colorPrimary">#0F6CB0</color>
+    <color name="colorPrimaryDark">#0F6CB0</color>
 <!--    <color name="colorAccent">#b8113d</color>-->
-    <color name="colorAccent">#3e4394</color>
+    <color name="colorAccent">#0F6CB0</color>
 
     <color name="login_backgroud">#FFF6DE</color>
     <color name="login_button">#1F2136</color>
@@ -29,4 +29,5 @@
 
     <color name="new_grey">#F2F2F2</color>
     <color name="new_read">#C88835</color>
+    <color name="mehndi_color">#91C044</color>
 </resources>

@@ -16,4 +16,12 @@
         <item name="android:fontFamily">@font/avenir_demi</item>
     </style>
 
+    <style name="font_poppins_bold">
+        <item name="android:fontFamily">@font/poppins_bold</item>
+    </style>
+
+    <style name="poppins_meduium">
+        <item name="android:fontFamily">@font/poppins_medium</item>
+    </style>
+
 </resources>

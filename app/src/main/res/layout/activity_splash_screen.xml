@@ -1,9 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/splash"
+    android:layout_gravity="center"
+    android:background="@drawable/ic_splash_bg"
+    android:gravity="center"
+    android:orientation="vertical"
     tools:context=".Activity.SplashScreen">
 
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical">
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_app_icon"></ImageView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="-25dp"
+            android:ems="10"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="@string/app_arabic"
+            android:textColor="@color/black"
+            android:textSize="50dp"></TextView>
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

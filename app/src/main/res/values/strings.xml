@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Black Eye</string>
+    <string name="app_name">Therapist</string>
     <string name="ok">Ok</string>
     <string name="email">Email</string>
     <string name="search">Search</string>
@@ -44,6 +44,16 @@
     <string name="go_to_settings">GOTO SETTINGS</string>
     <string name="map_key" translatable="false">AIzaSyCdx6WXfM9JgEU7yrOmPpdBQKQJ-x8Maeg</string>
     <string name="place_api" translatable="false">AIzaSyAusRdpcmkauwfOMViSj2wbcKYmQQjTDyM</string>
+    <string name="app_arabic">تجربة تعارف</string>
+    <string name="notification">Notification</string>
+    <string name="about">About</string>
+    <string name="logout">Logout</string>
+    <string name="my_profile">My Profile</string>
+    <string name="about_">About</string>
+    <string name="terms___and_condition">Terms and Condition</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="tips">Tips</string>
+    <string name="terms_amp_condition"><![CDATA[Terms & Condition]]></string>
 
 
 </resources>

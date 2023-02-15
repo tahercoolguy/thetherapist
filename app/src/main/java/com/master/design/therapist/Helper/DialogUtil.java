@@ -46,7 +46,7 @@ public class DialogUtil {
         if (icon != 0) {
             iv_icon.setImageResource(icon);
         } else {
-            iv_icon.setImageResource(R.drawable.app_icon);
+//            iv_icon.setImageResource(R.drawable.app_icon);
         }
         txt_message.setText(message);
         txt_title.setText(title);
@@ -116,7 +116,7 @@ public class DialogUtil {
         if (icon != 0) {
             iv_icon.setImageResource(icon);
         } else {
-            iv_icon.setImageResource(R.drawable.app_icon);
+//            iv_icon.setImageResource(R.drawable.app_icon);
         }
 
         txt_message.setText(message);

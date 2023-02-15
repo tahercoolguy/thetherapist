@@ -40,7 +40,7 @@
                     android:layout_height="match_parent"
                     android:elevation="3dp"
                     android:padding="18dp"
-                    android:src="@drawable/progress_bar_icon" />
+                    android:src="@drawable/ic_home" />
             </RelativeLayout>
 
             <TextView

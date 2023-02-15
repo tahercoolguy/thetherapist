@@ -144,6 +144,6 @@
         android:background="@drawable/circle_white"
         android:elevation="3dp"
         android:padding="16dp"
-        android:src="@drawable/progress_bar_icon"
+        android:src="@drawable/ic_home"
         android:visibility="visible" />
 </RelativeLayout>

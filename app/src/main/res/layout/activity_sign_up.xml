@@ -16,8 +16,7 @@
     tools:context="therapist.Activity.LoginActivity">
     <ImageView
         android:layout_width="match_parent"
-        android:src="@drawable/login_page"
-        android:scaleType="fitXY"
+         android:scaleType="fitXY"
         android:layout_height="250dp">
 
     </ImageView>

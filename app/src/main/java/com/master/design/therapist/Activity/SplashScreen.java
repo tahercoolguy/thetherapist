@@ -26,7 +26,7 @@ public class SplashScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
-        user=new User(SplashScreen.this);
+        user = new User(SplashScreen.this);
 
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
         Log.d("Android Token", "Refreshed token: " + refreshedToken);
@@ -40,25 +40,10 @@ public class SplashScreen extends AppCompatActivity {
                 Log.d("KeyHash:", Base64.encodeToString(messageDigest.digest(), Base64.DEFAULT));
             }
 
-//             info = getPackageManager().getPackageInfo(
-//                    "44:64:0F:46:C1:E8:29:E9:C7:F3:FF:50:5C:EA:80:86:46:0B:67:4C",
-//                    PackageManager.GET_SIGNATURES);
-//            for (Signature signature : info.signatures) {
-//                MessageDigest md = MessageDigest.getInstance("SHA");
-//                md.update(signature.toByteArray());
-//                Log.i("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
-//                Log.println(1,"Base64", Base64.encodeToString(md.digest(),Base64.NO_WRAP));
-//                Log.println(1,"Base64", Base64.encodeToString(md.digest(),Base64.NO_WRAP));
-//                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
-//                Log.e("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
-//                Log.v("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
-//                Log.w("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
-//
-//            }
         } catch (PackageManager.NameNotFoundException e) {
-            Log.d("Exception NameNotFound","hurray");
+            Log.d("Exception NameNotFound", "hurray");
         } catch (NoSuchAlgorithmException e) {
-            Log.d("Exception NoSuction","hurray");
+            Log.d("Exception NoSuction", "hurray");
 
         }
         int secondsDelayed = 2;
@@ -73,8 +58,9 @@ public class SplashScreen extends AppCompatActivity {
 //                    startActivity(new Intent(SplashScreen.this, AdvertiseSelector.class));
 //                    finish();
 //                }
-                startActivity(new Intent(SplashScreen.this, MainActivity.class));
-                    finish();
+                startActivity(new Intent(SplashScreen.this, LanguageActivity.class));
+                finish();
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_in);
             }
         }, secondsDelayed * 1000);
     }

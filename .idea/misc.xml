@@ -3,12 +3,35 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/drawable-v24/language_select_bg.xml" value="0.11" />
+        <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/drawable-v24/progress_bar_drawable.xml" value="0.11" />
+        <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/drawable-v24/rectangle_white_grey_border.xml" value="0.1825" />
+        <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/drawable/bottom_icon_selelctor.xml" value="0.11" />
+        <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/drawable/ic_friends.xml" value="0.1825" />
         <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/drawable/ic_home.xml" value="0.11" />
-        <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/layout/activity_main.xml" value="0.1515625" />
-        <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/layout/activity_splash_screen.xml" value="0.15185185185185185" />
+        <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/drawable/ic_intro_bg.xml" value="0.1825" />
+        <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/drawable/intro_bg.xml" value="0.11" />
+        <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/drawable/language_bg.xml" value="0.1825" />
+        <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/drawable/language_unselect_bg.xml" value="0.11" />
+        <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/layout/account_fragment_layout.xml" value="0.25" />
+        <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/layout/account_top_bar.xml" value="0.25" />
+        <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/layout/activity_about.xml" value="0.2" />
+        <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/layout/activity_intro.xml" value="0.16" />
+        <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/layout/activity_language.xml" value="0.14" />
+        <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/layout/activity_login.xml" value="0.16979166666666667" />
+        <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/layout/activity_sign_up.xml" value="0.15185185185185185" />
+        <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/layout/activity_splash_screen.xml" value="0.12" />
+        <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/layout/activity_term_privacy_tips.xml" value="0.21" />
+        <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/layout/app_bar_drawer.xml" value="0.1393758016246259" />
         <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/layout/content_main_new.xml" value="0.16979166666666667" />
         <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/layout/custom_item_for_menu.xml" value="0.15185185185185185" />
+        <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/layout/dialog_layout_for_alert_message.xml" value="0.16979166666666667" />
+        <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/layout/dialog_progress.xml" value="0.1" />
+        <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/layout/layout_error.xml" value="0.1" />
         <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/layout/restaurent_item.xml" value="0.16979166666666667" />
+        <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/menu/bottom_nav_menu.xml" value="0.21" />
+        <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/menu/menu_main.xml" value="0.1393758016246259" />
         <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/default/app/src/main/res/drawable-v24/circle_primary.xml" value="0.137" />
         <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/default/app/src/main/res/drawable-v24/ic_left_calnder.xml" value="0.137" />
         <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/default/app/src/main/res/drawable-v24/ic_m.xml" value="0.2025" />
