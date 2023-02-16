@@ -70,6 +70,7 @@
     <string name="maximum_distance">Maximum distance</string>
     <string name="global">Global</string>
     <string name="thank_you_for_signing_up">Thank You For Signing Up</string>
+    <string name="the_global_mode_turns_on_as_soon_as_the_profiles_in_this_location_run_out">The global mode turns on as soon as the profiles in this location run out.</string>
 
 
 </resources>

@@ -7,31 +7,32 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+         android:layout_height="wrap_content">
 
         <LinearLayout
             android:id="@+id/layout_parent"
             android:layout_width="match_parent"
-              android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="100dp"
             android:orientation="vertical"
             android:padding="10dp">
 
             <ImageView
                 android:id="@+id/backImg"
                 android:layout_width="wrap_content"
-                android:paddingVertical="20dp"
-                android:paddingHorizontal="10dp"
                 android:layout_height="wrap_content"
-                 android:src="@drawable/ic_back_arrow"></ImageView>
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="20dp"
+                android:src="@drawable/ic_back_arrow"></ImageView>
 
             <TextView
                 android:id="@+id/tittleTxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_bold"
-                 android:text="@string/edit_profile"
-                android:textColor="@color/black"
                 android:paddingHorizontal="10dp"
+                android:text="@string/edit_profile"
+                android:textColor="@color/black"
                 android:textSize="@dimen/text_size_Heading"
                 android:textStyle="bold"></TextView>
 
@@ -40,7 +41,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
-                 android:layout_marginTop="20dp"
+                android:layout_marginTop="20dp"
                 android:hint="@string/enter_your_name"
                 android:paddingHorizontal="10dp"></TextView>
 
@@ -53,9 +54,9 @@
                 android:layout_margin="10dp"
                 android:background="@drawable/rectangle_white_grey_border"
                 android:backgroundTint="@color/white"
-                android:elevation="11dp"
+                android:elevation="10dp"
                 android:hint=" eg:Monica Geller"
-                 android:paddingHorizontal="10dp"
+                android:paddingHorizontal="10dp"
                 android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size_normal"></EditText>
@@ -65,7 +66,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
-                 android:layout_marginTop="20dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginBottom="-30dp"
                 android:hint="@string/date_of_birth"
                 android:paddingHorizontal="10dp"></TextView>
@@ -78,7 +79,7 @@
                 android:layout_marginVertical="10dp"
                 android:layout_marginEnd="25dp"
                 android:backgroundTint="@color/white"
-                android:elevation="11dp"
+                android:elevation="10dp"
                 android:orientation="horizontal"
                 android:padding="10dp"
                 android:paddingHorizontal="10dp">
@@ -90,7 +91,7 @@
                     android:layout_margin="10dp"
                     android:layout_weight="1"
                     android:background="@drawable/rounded_rectangle_white"
-                    android:elevation="11dp"
+                    android:elevation="10dp"
                     android:gravity="center"
                     android:hint="@string/date"
                     android:inputType="number"
@@ -107,7 +108,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/rounded_rectangle_white"
 
-                    android:elevation="11dp"
+                    android:elevation="10dp"
                     android:gravity="center"
                     android:hint="Month"
 
@@ -123,7 +124,7 @@
                     android:layout_margin="10dp"
                     android:layout_weight="1"
                     android:background="@drawable/rounded_rectangle_white"
-                    android:elevation="11dp"
+                    android:elevation="10dp"
                     android:gravity="center"
                     android:hint="@string/year"
 
@@ -137,9 +138,9 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="-10dp"
                 android:layout_gravity="start"
-                 android:hint="@string/choose_your_country"
+                android:layout_marginTop="-10dp"
+                android:hint="@string/choose_your_country"
                 android:paddingHorizontal="10dp"></TextView>
 
 
@@ -152,7 +153,7 @@
                 android:background="@drawable/rectangle_white_grey_border"
                 android:backgroundTint="@color/white"
                 android:drawableEnd="@drawable/ic_down"
-                android:elevation="11dp"
+                android:elevation="10dp"
                 android:hint="Kuwait"
                 android:padding="10dp"
                 android:paddingHorizontal="10dp"
@@ -165,7 +166,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
-                 android:layout_marginTop="10dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginBottom="-30dp"
                 android:hint="@string/gender_"
                 android:paddingHorizontal="10dp"></TextView>
@@ -178,7 +179,7 @@
                 android:layout_marginVertical="10dp"
                 android:layout_marginEnd="25dp"
                 android:backgroundTint="@color/white"
-                android:elevation="11dp"
+                android:elevation="10dp"
                 android:orientation="horizontal"
                 android:padding="10dp"
                 android:paddingHorizontal="10dp">
@@ -189,7 +190,7 @@
                     android:layout_gravity="center"
                     android:layout_margin="10dp"
                     android:background="@drawable/rounded_rectangle_white"
-                    android:elevation="11dp"
+                    android:elevation="10dp"
                     android:gravity="center"
                     android:inputType="number"
                     android:minWidth="100dp"
@@ -206,7 +207,7 @@
                     android:layout_margin="10dp"
                     android:background="@drawable/rounded_rectangle_white"
                     android:backgroundTint="@color/colorPrimary"
-                    android:elevation="11dp"
+                    android:elevation="10dp"
                     android:gravity="center"
                     android:inputType="number"
                     android:minWidth="100dp"
@@ -223,9 +224,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
-                 android:layout_marginTop="-15dp"
-                android:hint="@string/location"
+                android:layout_marginTop="-15dp"
                 android:layout_marginBottom="-5dp"
+                android:hint="@string/location"
                 android:paddingHorizontal="10dp"></TextView>
 
 
@@ -237,7 +238,7 @@
                 android:layout_margin="10dp"
                 android:background="@drawable/rectangle_white_grey_border"
                 android:backgroundTint="@color/white"
-                android:elevation="11dp"
+                android:elevation="10dp"
                 android:hint="@string/take_my_location"
                 android:padding="10dp"
                 android:paddingHorizontal="10dp"
@@ -248,7 +249,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                 android:layout_marginTop="15dp"
+                android:layout_marginTop="15dp"
 
                 android:orientation="horizontal">
 
@@ -283,7 +284,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
-                 android:layout_marginTop="20dp"
+                android:layout_marginTop="20dp"
 
                 android:orientation="horizontal">
 
@@ -292,14 +293,12 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
                     android:layout_weight="1"
-                    android:hint="@string/global"
-                    android:paddingHorizontal="10dp"></TextView>
+                    android:hint="@string/global"></TextView>
 
                 <Switch
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="start"
-                      ></Switch>
+                    android:layout_gravity="start"></Switch>
 
             </LinearLayout>
 
@@ -307,14 +306,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
-                 android:layout_marginBottom="90dp"
-                android:gravity="center"
                 android:layout_marginTop="6dp"
+                android:layout_marginBottom="90dp"
 
-                android:textSize="@dimen/text_size_normal"
-                android:layout_marginHorizontal="10dp"
-                android:hint="The global mode turns on as soon as the profiles in this location run out."
-                android:paddingHorizontal="10dp"></TextView>
+                android:gravity="center"
+                android:hint="@string/the_global_mode_turns_on_as_soon_as_the_profiles_in_this_location_run_out"
+                android:paddingHorizontal="10dp"
+                android:textSize="@dimen/text_size_normal"></TextView>
 
             <TextView
                 android:id="@+id/editProfileTxt"
@@ -325,10 +323,9 @@
                 android:layout_marginVertical="10dp"
                 android:background="@drawable/rectangle_white_grey_border"
                 android:backgroundTint="@color/colorPrimary"
-                android:elevation="11dp"
-                android:fontFamily="@font/poppins_bold"
+                 android:fontFamily="@font/poppins_bold"
                 android:gravity="center"
-                 android:singleLine="true"
+                android:singleLine="true"
                 android:text="@string/select"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_title"
