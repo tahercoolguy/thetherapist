@@ -7,11 +7,14 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.master.design.therapist.Adapter.Adapter_Interest;
 import com.master.design.therapist.Adapter.Adapter_Search;
 import com.master.design.therapist.Adapter.Adapter_Search_Select;
+import com.master.design.therapist.DM.InterestDM;
 import com.master.design.therapist.DM.SearchDM;
 import com.master.design.therapist.R;
 
@@ -44,13 +47,14 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
         getIntentData();
     }
 
-    String position0, position1, position2, position3, position4 ;
+    String position0, position1, position2, position3, position4;
 
     private void getIntentData() {
         Intent intent = getIntent();
         if (intent != null) {
-            position0 =  intent.getStringExtra("string1");
-            position1 = intent.getStringExtra("string2");;
+            position0 = intent.getStringExtra("string1");
+            position1 = intent.getStringExtra("string2");
+            ;
             position2 = intent.getStringExtra("string3");
             position3 = intent.getStringExtra("string4");
             position4 = intent.getStringExtra("string5");
@@ -90,7 +94,6 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
             searchDMArrayList.add(new SearchDM("", "20-35"));
 
 
-
             Adapter_Search_Select adapter_search = new Adapter_Search_Select(context, searchDMArrayList);
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
             rcvRcv.setLayoutManager(linearLayoutManager);
@@ -114,6 +117,38 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
         }
         if (position.equalsIgnoreCase("string3")) {
             tittleTxt.setText(getString(R.string.interestt));
+            startSearchingTxt.setText(R.string.continue_);
+
+            ArrayList<InterestDM> interestDMArrayList = new ArrayList<>();
+            interestDMArrayList.add(new InterestDM("Film", R.drawable.film));
+            interestDMArrayList.add(new InterestDM("Music", R.drawable.film));
+            interestDMArrayList.add(new InterestDM("Books", R.drawable.film));
+            interestDMArrayList.add(new InterestDM("Arts", R.drawable.film));
+            interestDMArrayList.add(new InterestDM("Games", R.drawable.film));
+            interestDMArrayList.add(new InterestDM("Computer", R.drawable.film));
+            interestDMArrayList.add(new InterestDM("Poem", R.drawable.film));
+            interestDMArrayList.add(new InterestDM("Social Media", R.drawable.film));
+            interestDMArrayList.add(new InterestDM("Pets", R.drawable.film));
+            interestDMArrayList.add(new InterestDM("Bars", R.drawable.film));
+            interestDMArrayList.add(new InterestDM("Books", R.drawable.film));
+            interestDMArrayList.add(new InterestDM("Sports", R.drawable.film));
+            interestDMArrayList.add(new InterestDM("Film", R.drawable.film));
+            interestDMArrayList.add(new InterestDM("Music", R.drawable.film));
+            interestDMArrayList.add(new InterestDM("Books", R.drawable.film));
+            interestDMArrayList.add(new InterestDM("Arts", R.drawable.film));
+            interestDMArrayList.add(new InterestDM("Games", R.drawable.film));
+            interestDMArrayList.add(new InterestDM("Computer", R.drawable.film));
+            interestDMArrayList.add(new InterestDM("Poem", R.drawable.film));
+            interestDMArrayList.add(new InterestDM("Social Media", R.drawable.film));
+            interestDMArrayList.add(new InterestDM("Pets", R.drawable.film));
+            interestDMArrayList.add(new InterestDM("Bars", R.drawable.film));
+            interestDMArrayList.add(new InterestDM("Books", R.drawable.film));
+            interestDMArrayList.add(new InterestDM("Sports", R.drawable.film));
+
+            Adapter_Interest adapter_interest = new Adapter_Interest(context, interestDMArrayList);
+            GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2);
+            rcvRcv.setLayoutManager(gridLayoutManager);
+            rcvRcv.setAdapter(adapter_interest);
 
         }
         if (position.equalsIgnoreCase("string4")) {
@@ -146,8 +181,6 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
 
         }
     }
-
-
 
 
     @OnClick(R.id.notificationImg)

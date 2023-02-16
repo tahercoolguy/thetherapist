@@ -20,7 +20,7 @@
         <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/layout/account_top_bar.xml" value="0.25" />
         <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/layout/activity_about.xml" value="0.2" />
         <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/layout/activity_edit_profile.xml" value="0.16" />
-        <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/layout/activity_friend_search.xml" value="0.16" />
+        <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/layout/activity_friend_search.xml" value="0.25" />
         <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/layout/activity_intro.xml" value="0.16" />
         <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/layout/activity_language.xml" value="0.15" />
         <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/layout/activity_login.xml" value="0.16979166666666667" />
@@ -33,6 +33,7 @@
         <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/layout/app_bar_drawer.xml" value="0.1393758016246259" />
         <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/layout/content_main_new.xml" value="0.16979166666666667" />
         <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/layout/custom_item_for_menu.xml" value="0.15185185185185185" />
+        <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/layout/custum_item_interest.xml" value="0.25" />
         <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/layout/custum_item_search.xml" value="0.25" />
         <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/layout/dialog_layout_for_alert_message.xml" value="0.16979166666666667" />
         <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/layout/dialog_progress.xml" value="0.1" />

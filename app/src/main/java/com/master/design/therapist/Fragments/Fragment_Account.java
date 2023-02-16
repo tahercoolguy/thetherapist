@@ -18,6 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.master.design.therapist.Activity.AboutActivity;
+import com.master.design.therapist.Activity.FriendSearchActivity;
 import com.master.design.therapist.Activity.LanguageActivity;
 import com.master.design.therapist.Activity.MainActivity;
 import com.master.design.therapist.Activity.My_ProfileActivity;
@@ -106,7 +107,8 @@ public class Fragment_Account extends Fragment {
 
     @OnClick(R.id.logoutLL)
     public void clicklogoutLL() {
-
+        startActivity(new Intent(getActivity(), FriendSearchActivity.class));
+        activity.overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
     }
 
     @Override
