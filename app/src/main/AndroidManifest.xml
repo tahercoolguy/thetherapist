@@ -28,6 +28,9 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".Activity.ThankYouActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activity.Edit_ProfileActivity"
             android:exported="false" />
         <activity
