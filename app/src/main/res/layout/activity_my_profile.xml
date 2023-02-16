@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:animateLayoutChanges="true"
     android:background="@color/white">
 
@@ -46,8 +47,8 @@
                     android:id="@+id/profileImgRIV"
                     android:layout_width="140dp"
                     android:layout_height="180dp"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
+                    app:riv_corner_radius="30dp"
+                    android:layout_centerInParent="true"
                     android:layout_gravity="center"
                     android:src="@drawable/my_profile_img"></com.makeramen.roundedimageview.RoundedImageView>
 
@@ -90,7 +91,7 @@
                     android:padding="10dp"
                     android:paddingHorizontal="10dp"
                     android:singleLine="true"
-                    android:text=" Monica Geller"
+                    android:hint=" Monica Geller"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_normal"></EditText>
 
@@ -122,7 +123,7 @@
                     android:padding="10dp"
                     android:paddingHorizontal="10dp"
                     android:singleLine="true"
-                    android:text="monica_geller@gmail.com"
+                    android:hint="monica_geller@gmail.com"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_normal"></EditText>
 
@@ -155,7 +156,7 @@
                     android:padding="10dp"
                     android:paddingHorizontal="10dp"
                     android:singleLine="true"
-                    android:text="+095 1232 4545 0206"
+                    android:hint="+095 1232 4545 0206"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_normal"></EditText>
 
@@ -188,7 +189,7 @@
                     android:padding="10dp"
                     android:paddingHorizontal="10dp"
                     android:singleLine="true"
-                    android:text="@string/female"
+                    android:hint="@string/female"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_normal"></EditText>
 
@@ -220,7 +221,7 @@
                     android:padding="10dp"
                     android:paddingHorizontal="10dp"
                     android:singleLine="true"
-                    android:text="16.06.1955"
+                    android:hint="16.06.1955"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_normal"></EditText>
 

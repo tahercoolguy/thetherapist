@@ -307,12 +307,12 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
                 android:layout_marginTop="6dp"
+                android:layout_marginHorizontal="7dp"
                 android:layout_marginBottom="90dp"
 
                 android:gravity="center"
                 android:hint="@string/the_global_mode_turns_on_as_soon_as_the_profiles_in_this_location_run_out"
-                android:paddingHorizontal="10dp"
-                android:textSize="@dimen/text_size_normal"></TextView>
+                 android:textSize="@dimen/text_size_normal"></TextView>
 
             <TextView
                 android:id="@+id/editProfileTxt"

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/clickLL"
+     android:layout_height="wrap_content">
+    <LinearLayout
+        android:id="@+id/ageRangeLL"
+        android:layout_width="match_parent"
+        android:layout_margin="10dp"
+          android:layout_height="wrap_content"
+        android:background="@drawable/rectangle_white_grey_border"
+        android:backgroundTint="@color/white"
+        android:elevation="@dimen/elevation">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:singleLine="true"
+            android:text="@string/age_range"
+            android:gravity="center"
+            android:id="@+id/mainTxt"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="@dimen/text_size_normal"
+            android:paddingHorizontal="10dp"></TextView>
+
+        <TextView
+            android:id="@+id/smallTxt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@color/white"
+            android:gravity="end"
+            android:padding="10dp"
+            android:paddingHorizontal="10dp"
+            android:singleLine="true"
+            android:text="20-35"
+            android:textColor="@color/greyDark"
+            android:textSize="@dimen/text_size_normal" />
+
+    </LinearLayout>
+</LinearLayout>
