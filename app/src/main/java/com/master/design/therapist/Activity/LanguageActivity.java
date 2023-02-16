@@ -36,7 +36,7 @@ public class LanguageActivity extends AppCompatActivity {
     public void clickEnglishRL() {
         englishRL.setBackground(getDrawable(R.drawable.language_select_bg));
         arabicRL.setBackground(getDrawable(R.drawable.language_unselect_bg));
-        startActivity(new Intent(LanguageActivity.this, MainActivity.class));
+        startActivity(new Intent(LanguageActivity.this, Sign_InActivity.class));
         overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
 
     }
@@ -45,7 +45,7 @@ public class LanguageActivity extends AppCompatActivity {
     public void clickArabicRL() {
         englishRL.setBackground(getDrawable(R.drawable.language_unselect_bg));
         arabicRL.setBackground(getDrawable(R.drawable.language_select_bg));
-        startActivity(new Intent(LanguageActivity.this, MainActivity.class));
+        startActivity(new Intent(LanguageActivity.this, Sign_InActivity.class));
         overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
 
     }

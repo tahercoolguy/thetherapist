@@ -80,6 +80,12 @@
     <string name="selectt">Select</string>
     <string name="friends_you_are_looking_for">Friends you are looking for</string>
     <string name="continue_">Continue</string>
+    <string name="create_account">Create Account</string>
+    <string name="ethnicity">Ethnicity</string>
+    <string name="email_address_">Email address</string>
+    <string name="password">Password</string>
+    <string name="log_in_">Log In</string>
+    <string name="or">OR</string>
 
 
 </resources>
