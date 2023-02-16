@@ -54,6 +54,21 @@
     <string name="privacy_policy">Privacy Policy</string>
     <string name="tips">Tips</string>
     <string name="terms_amp_condition"><![CDATA[Terms & Condition]]></string>
+    <string name="username">Username</string>
+    <string name="phone">Phone</string>
+    <string name="date_of_birth">Date of birth</string>
+    <string name="gender_">Gender</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="delete_my_account">Delete My Account</string>
+    <string name="enter_your_name">Enter your name</string>
+    <string name="date">Date</string>
+    <string name="year">Year</string>
+    <string name="choose_your_country">Choose your country</string>
+    <string name="location">Location</string>
+    <string name="take_my_location">Take My Location</string>
+    <string name="select">Select</string>
+    <string name="maximum_distance">Maximum distance</string>
+    <string name="global">Global</string>
 
 
 </resources>

@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:background="@color/white">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/layout_parent"
+            android:layout_width="match_parent"
+            android:paddingBottom="30dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <ImageView
+                android:id="@+id/backImg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="20dp"
+                android:src="@drawable/ic_back_arrow"></ImageView>
+
+            <TextView
+                android:id="@+id/tittleTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_bold"
+                android:paddingHorizontal="20dp"
+                android:text="@string/my_profile"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_Heading"
+                android:textStyle="bold"></TextView>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:layout_gravity="center"
+                android:background="@drawable/rounded_img_bg">
+
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/profileImgRIV"
+                    android:layout_width="140dp"
+                    android:layout_height="180dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:src="@drawable/my_profile_img"></com.makeramen.roundedimageview.RoundedImageView>
+
+                <ImageView
+                    android:id="@+id/editImg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="104dp"
+                    android:layout_marginBottom="-20dp"
+                    android:elevation="@dimen/elevation"
+                    android:src="@drawable/ic_edit"></ImageView>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/UserNameLL"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/rectangle_white_grey_border"
+                android:backgroundTint="@color/white"
+                android:elevation="11dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:hint="@string/username"
+                    android:paddingHorizontal="10dp"></TextView>
+
+                <EditText
+                    android:id="@+id/userNameET"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@color/white"
+                    android:gravity="end"
+                    android:padding="10dp"
+                    android:paddingHorizontal="10dp"
+                    android:singleLine="true"
+                    android:text=" Monica Geller"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_normal"></EditText>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/emailLL"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/rectangle_white_grey_border"
+                android:backgroundTint="@color/white"
+                android:elevation="11dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:hint="@string/email"
+                    android:paddingHorizontal="10dp"></TextView>
+
+                <EditText
+                    android:id="@+id/emailET"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@color/white"
+                    android:gravity="end"
+                    android:padding="10dp"
+                    android:paddingHorizontal="10dp"
+                    android:singleLine="true"
+                    android:text="monica_geller@gmail.com"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_normal"></EditText>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/phoneLL"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/rectangle_white_grey_border"
+                android:backgroundTint="@color/white"
+                android:elevation="11dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:hint="@string/phone"
+                    android:paddingHorizontal="10dp"></TextView>
+
+                <EditText
+                    android:id="@+id/phoneET"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@color/white"
+                    android:gravity="end"
+                    android:inputType="number"
+                    android:padding="10dp"
+                    android:paddingHorizontal="10dp"
+                    android:singleLine="true"
+                    android:text="+095 1232 4545 0206"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_normal"></EditText>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/genderLL"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/rectangle_white_grey_border"
+                android:backgroundTint="@color/white"
+                android:elevation="11dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:hint="@string/gender_"
+                    android:paddingHorizontal="10dp"
+                    android:textAllCaps="false"></TextView>
+
+                <EditText
+                    android:id="@+id/genderET"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@color/white"
+                    android:gravity="end"
+                    android:padding="10dp"
+                    android:paddingHorizontal="10dp"
+                    android:singleLine="true"
+                    android:text="@string/female"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_normal"></EditText>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/dobLL"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/rectangle_white_grey_border"
+                android:backgroundTint="@color/white"
+                android:elevation="11dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:hint="@string/date_of_birth"
+                    android:paddingHorizontal="10dp"></TextView>
+
+                <EditText
+                    android:id="@+id/dobET"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@color/white"
+                    android:gravity="end"
+                    android:padding="10dp"
+                    android:paddingHorizontal="10dp"
+                    android:singleLine="true"
+                    android:text="16.06.1955"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_normal"></EditText>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/editProfileTxt"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginVertical="10dp"
+                android:background="@drawable/rectangle_white_grey_border"
+                android:backgroundTint="@color/colorPrimary"
+                android:elevation="11dp"
+                android:singleLine="true"
+                android:fontFamily="@font/poppins_bold"
+                android:gravity="center"
+                android:text="Edit Profile"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_title"
+                android:textStyle="bold">
+            </TextView>
+            <TextView
+                android:id="@+id/deleteAccountTxt"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="100dp"
+                android:layout_marginVertical="10dp"
+                android:background="@drawable/rectangle_white_grey_border"
+                android:backgroundTint="@color/red_light"
+                 android:fontFamily="@font/poppins_bold"
+                android:gravity="center"
+                android:text="@string/delete_my_account"
+                android:textColor="@color/white"
+                android:textSize="@dimen/small_text_size"
+                 >
+            </TextView>
+
+        </LinearLayout>
+
+
+    </androidx.core.widget.NestedScrollView>
+
+</RelativeLayout>

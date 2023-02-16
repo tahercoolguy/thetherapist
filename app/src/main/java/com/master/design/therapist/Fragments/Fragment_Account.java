@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment;
 import com.master.design.therapist.Activity.AboutActivity;
 import com.master.design.therapist.Activity.LanguageActivity;
 import com.master.design.therapist.Activity.MainActivity;
+import com.master.design.therapist.Activity.My_ProfileActivity;
 import com.master.design.therapist.Activity.SplashScreen;
 import com.master.design.therapist.Controller.AppController;
 import com.master.design.therapist.R;
@@ -81,7 +82,8 @@ public class Fragment_Account extends Fragment {
 
     @OnClick(R.id.myProfileLL)
     public void clickmyProfileLL() {
-
+        startActivity(new Intent(getActivity(), My_ProfileActivity.class));
+        activity.overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
     }
 
     @OnClick(R.id.languageLL)

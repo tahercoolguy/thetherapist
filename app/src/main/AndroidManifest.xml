@@ -28,6 +28,12 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".Activity.Edit_ProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.My_ProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activity.Term_Privacy_TipsActivity"
             android:exported="false" />
         <activity
