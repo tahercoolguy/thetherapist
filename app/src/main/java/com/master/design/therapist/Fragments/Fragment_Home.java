@@ -97,7 +97,7 @@ public class Fragment_Home extends Fragment {
             setInterestData();
             Bitmap resultBmp = BlurBuilder.blur(getActivity(), BitmapFactory.decodeResource(getResources(), R.drawable.marshall_img));
             Drawable dr = new BitmapDrawable(resultBmp);
-            bgRoundedImg.setBackgroundDrawable(dr);
+            bgRoundedImg.setImageDrawable(dr);
 
         }
         return rootView;
