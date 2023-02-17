@@ -1,5 +1,6 @@
 package com.master.design.therapist.Fragments;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -80,13 +81,36 @@ public class Fragment_Friends_Request extends Fragment {
     }
 
 
+    @SuppressLint({"UseCompatLoadingForDrawables", "UseCompatLoadingForColorStateLists"})
     @OnClick(R.id.myFriendsTxt)
     public void clickMyFriends() {
+
+
+        myFriendsTxt.setBackground(getActivity().getDrawable(R.drawable.rounded_rectangle_white));
+        myFriendsTxt.setTextColor(getActivity().getColor(R.color.white));
+        myFriendsTxt.setBackgroundTintList(context.getResources().getColorStateList(R.color.colorPrimary));
+
+
+        requestTxt.setBackground(getActivity().getDrawable(R.drawable.rounded_rectangle_white));
+        requestTxt.setTextColor(getActivity().getColor(R.color.black));
+        requestTxt.setBackgroundTintList(context.getResources().getColorStateList(R.color.white));
+
         setMyFriendsAdapter();
     }
 
+    @SuppressLint({"UseCompatLoadingForDrawables", "UseCompatLoadingForColorStateLists"})
     @OnClick(R.id.requestTxt)
     public void clickRequestTxt() {
+
+        myFriendsTxt.setBackground(getActivity().getDrawable(R.drawable.rounded_rectangle_white));
+        myFriendsTxt.setTextColor(getActivity().getColor(R.color.black));
+        myFriendsTxt.setBackgroundTintList(context.getResources().getColorStateList(R.color.white));
+
+
+        requestTxt.setBackground(getActivity().getDrawable(R.drawable.rounded_rectangle_white));
+        requestTxt.setTextColor(getActivity().getColor(R.color.white));
+        requestTxt.setBackgroundTintList(context.getResources().getColorStateList(R.color.colorPrimary));
+
         setRequestAdapter();
     }
 
