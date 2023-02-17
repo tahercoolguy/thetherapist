@@ -328,7 +328,7 @@
                 android:singleLine="true"
                 android:text="@string/select"
                 android:textColor="@color/white"
-                android:textSize="@dimen/text_size_title"
+                android:textSize="@dimen/text_size_normal"
                 android:textStyle="bold"></TextView>
 
 

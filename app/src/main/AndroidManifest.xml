@@ -28,6 +28,9 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".Activity.About_You_Activity"
+            android:exported="false" />
+        <activity
             android:name=".Activity.Sign_InActivity"
             android:exported="false" />
         <activity

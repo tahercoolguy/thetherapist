@@ -250,7 +250,7 @@
             android:layout_height="100dp"></LinearLayout>
 
         <TextView
-            android:id="@+id/selectTxt"
+            android:id="@+id/continueTxt"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_gravity="center"
@@ -261,9 +261,9 @@
             android:fontFamily="@font/poppins_bold"
             android:gravity="center"
             android:singleLine="true"
-            android:text="@string/select"
+            android:text="@string/continue_"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_title"
+            android:textSize="@dimen/text_size_normal"
             android:textStyle="bold"></TextView>
         <LinearLayout
             android:layout_width="match_parent"

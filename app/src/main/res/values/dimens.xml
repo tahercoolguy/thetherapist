@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 <dimen name="elevation">3dp</dimen>
-    <dimen name="text_size_Heading">20sp</dimen>
+    <dimen name="text_size_Heading">17sp</dimen>
     <dimen name="text_size_title">17sp</dimen>
     <dimen name="text_size_normal">14sp</dimen>
     <dimen name="drawer_text_size">16sp</dimen>

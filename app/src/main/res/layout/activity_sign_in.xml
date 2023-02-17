@@ -127,8 +127,8 @@
             android:layout_height="50dp"
             android:layout_gravity="center"
             android:layout_marginHorizontal="30dp"
-            android:layout_marginVertical="30dp"
-            android:background="@drawable/rectangle_white_grey_border"
+            android:layout_marginTop="10dp"
+             android:background="@drawable/rectangle_white_grey_border"
             android:backgroundTint="@color/colorPrimary"
             android:fontFamily="@font/poppins_bold"
             android:gravity="center"
@@ -176,20 +176,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:gravity="center"
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_gravity="center"
                 android:layout_margin="20dp"
                 android:src="@drawable/ic_facebook"></ImageView>
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_gravity="center"
                 android:layout_margin="20dp"
                 android:src="@drawable/ic_google"></ImageView>

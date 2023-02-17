@@ -86,6 +86,11 @@
     <string name="password">Password</string>
     <string name="log_in_">Log In</string>
     <string name="or">OR</string>
+    <string name="about_you">About You</string>
+    <string name="its_recommended_to_add_a_real_picture_of_your_face_or_a_part_of_it">its recommended to add a real picture of your face or a part of it</string>
+    <string name="tell_us_about_you">Tell us about you</string>
+    <string name="min_150">Min 150</string>
+    <string name="sign_up">Sign Up</string>
 
 
 </resources>

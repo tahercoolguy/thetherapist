@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:background="@color/white">
+
+
+    <LinearLayout
+        android:id="@+id/layout_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/backImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:src="@drawable/ic_back_arrow"></ImageView>
+
+        <TextView
+            android:id="@+id/tittleTxt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/poppins_bold"
+            android:gravity="center"
+            android:layout_marginTop="-20dp"
+            android:paddingHorizontal="20dp"
+            android:text="@string/about_you"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_Heading"
+            android:textStyle="bold"></TextView>
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:orientation="horizontal">
+
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:layout_width="134dp"
+                    android:layout_height="190dp"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/img_profile"
+                    android:elevation="@dimen/elevation"
+                    android:padding="10dp"
+                    android:paddingHorizontal="20dp"></com.makeramen.roundedimageview.RoundedImageView>
+
+                <RelativeLayout
+                    android:layout_width="134dp"
+                    android:layout_height="190dp"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/rectangle_white_grey_border"
+                    android:elevation="@dimen/elevation"
+                    android:padding="10dp"
+                    android:paddingHorizontal="20dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/ic_add_image"></ImageView>
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </HorizontalScrollView>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/its_recommended_to_add_a_real_picture_of_your_face_or_a_part_of_it"
+            android:textSize="@dimen/text_size_normal"></TextView>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="-20dp"
+            android:text="@string/tell_us_about_you"
+            android:textSize="@dimen/text_size_normal"></TextView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+             android:elevation="@dimen/elevation"
+            android:orientation="vertical"
+            app:cardCornerRadius="20dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:background="@color/white"
+                    android:gravity="start"
+                    android:hint="Co Founder of ZZ App"
+                    android:minLines="5"
+                    android:padding="20dp"
+                    android:textSize="@dimen/text_size_normal"></EditText>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginTop="-25dp"
+                    android:gravity="center"
+                    android:text="@string/min_150"></TextView>
+
+            </LinearLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/education"
+            android:layout_marginBottom="-10dp"
+            android:textSize="@dimen/text_size_normal"></TextView>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_marginHorizontal="20dp"
+            android:layout_margin="20dp"
+            android:layout_marginTop="10dp"
+            android:elevation="@dimen/elevation"
+            android:padding="15dp"
+            android:background="@drawable/rounded_rectangle_white"
+            android:layout_height="wrap_content"></EditText>
+
+        <TextView
+            android:id="@+id/signUpTxt"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginVertical="70dp"
+            android:background="@drawable/rectangle_white_grey_border"
+            android:backgroundTint="@color/colorPrimary"
+            android:fontFamily="@font/poppins_bold"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="@string/sign_up"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_normal"
+            android:textStyle="bold"></TextView>
+    </LinearLayout>
+
+
+</androidx.core.widget.NestedScrollView>
