@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                drawerNavigationToggle();
+//                drawerNavigationToggle();
             }
         });
 

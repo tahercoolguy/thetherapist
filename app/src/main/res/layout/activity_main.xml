@@ -191,30 +191,30 @@
 
     </RelativeLayout>
 
-    <LinearLayout
-        android:layout_width="280dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:background="@color/login_backgroud"
-        android:orientation="vertical"
-        android:visibility="gone">
+<!--    <LinearLayout-->
+<!--        android:layout_width="280dp"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_gravity="start"-->
+<!--        android:background="@color/login_backgroud"-->
+<!--        android:orientation="vertical"-->
+<!--        android:visibility="gone">-->
 
-        <ListView
-            android:id="@+id/listView"
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:choiceMode="singleChoice"
-            android:clipToPadding="false"
-            android:divider="@android:color/transparent"
-            android:dividerHeight="10dp"
-            android:groupIndicator="@null"
-            android:listSelector="@drawable/listview_selector"
-            android:padding="5dp"
-            android:scrollbars="none" />
+<!--        <ListView-->
+<!--            android:id="@+id/listView"-->
+<!--            android:layout_width="280dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="30dp"-->
+<!--            android:choiceMode="singleChoice"-->
+<!--            android:clipToPadding="false"-->
+<!--            android:divider="@android:color/transparent"-->
+<!--            android:dividerHeight="10dp"-->
+<!--            android:groupIndicator="@null"-->
+<!--            android:listSelector="@drawable/listview_selector"-->
+<!--            android:padding="5dp"-->
+<!--            android:scrollbars="none" />-->
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"></ImageView>
-    </LinearLayout>
+<!--        <ImageView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"></ImageView>-->
+<!--    </LinearLayout>-->
 </androidx.drawerlayout.widget.DrawerLayout>
