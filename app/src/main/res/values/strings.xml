@@ -91,6 +91,9 @@
     <string name="tell_us_about_you">Tell us about you</string>
     <string name="min_150">Min 150</string>
     <string name="sign_up">Sign Up</string>
+    <string name="best_matches">Best Matches</string>
+    <string name="i_am_corporate_lawyer_at_goliath_national_bank_i_grown_up_in_minnesota_i_love_and_care_and_confident_and_extremely_emotional_which_i_often_gets_teased_for_by_the_gang_i_am_very_passionate_about_what_i_do_and_care_deeply_for_my_family_and_friends">I am corporate lawyer at Goliath National Bank. I grown up in Minnesota. I love and care and confident and extremely emotional, which I often gets teased for by the gang. I am very passionate about what I do, and care deeply for my family and friends.</string>
+    <string name="change_search">Change Search</string>
 
 
 </resources>

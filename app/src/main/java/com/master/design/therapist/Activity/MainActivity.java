@@ -29,6 +29,7 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import com.master.design.therapist.Adapter.Adapter_Menu;
 import com.master.design.therapist.Fragments.Fragment_Account;
 import com.master.design.therapist.Fragments.Fragment_Default;
+import com.master.design.therapist.Fragments.Fragment_Home;
 import com.master.design.therapist.Helper.ContextWrapper;
 import com.master.design.therapist.Helper.DialogUtil;
 import com.master.design.therapist.Helper.Helper;
@@ -83,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         user = new User(this);
         ButterKnife.bind(this);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
-        addFragment(new Fragment_Account(), false);
+        addFragment(new Fragment_Home(), false);
 
         idMappings();
 //        setDrawer();
@@ -220,6 +221,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         switch (item.getItemId()) {
             case R.id.home:
                 item.setIcon(getResources().getDrawable(R.drawable.ic_home));
+                addFragment(new Fragment_Home(), false);
+
 
                 return true;
 
