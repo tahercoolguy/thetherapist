@@ -7,13 +7,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.master.design.therapist.DM.InterestDM;
 import com.master.design.therapist.Helper.User;
 import com.master.design.therapist.R;
@@ -21,17 +22,17 @@ import com.master.design.therapist.R;
 import java.util.ArrayList;
 
 
-public class Adapter_Category_Interest extends RecyclerView.Adapter<Adapter_Category_Interest.ViewHolder> {
+public class Adapter_Request extends RecyclerView.Adapter<Adapter_Request.ViewHolder> {
     private Context context;
     private ArrayList<InterestDM> arrayList;
     private InterestDM selected;
     User user;
-    Adapter_Category_Interest.OnItemClickListener onItemClickListener;
+    Adapter_Request.OnItemClickListener onItemClickListener;
 
 
     int selectedPosition = 0;
 
-    public Adapter_Category_Interest(Context context, ArrayList<InterestDM> arrayList) {
+    public Adapter_Request(Context context, ArrayList<InterestDM> arrayList) {
         this.context = context;
         this.arrayList = arrayList;
         user = new User(context);
@@ -41,15 +42,15 @@ public class Adapter_Category_Interest extends RecyclerView.Adapter<Adapter_Cate
 
     @NonNull
     @Override
-    public Adapter_Category_Interest.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.custum_item_category, parent, false);
+    public Adapter_Request.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.custum_item_request, parent, false);
         // set the view's size, margins, paddings and layout parameters
-        Adapter_Category_Interest.ViewHolder vh = new Adapter_Category_Interest.ViewHolder(v);
+        Adapter_Request.ViewHolder vh = new Adapter_Request.ViewHolder(v);
         return vh;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull Adapter_Category_Interest.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull Adapter_Request.ViewHolder holder, int position) {
         setDetails(holder, position);
     }
 
@@ -64,7 +65,7 @@ public class Adapter_Category_Interest extends RecyclerView.Adapter<Adapter_Cate
     }
 
 
-    private void setDetails(Adapter_Category_Interest.ViewHolder viewHolder, int position) {
+    private void setDetails(Adapter_Request.ViewHolder viewHolder, int position) {
 
         Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
         new Handler().postDelayed(new Runnable() {
@@ -78,20 +79,33 @@ public class Adapter_Category_Interest extends RecyclerView.Adapter<Adapter_Cate
             }
         }, 100);
 
-//        viewHolder.mainTxt.setText(arrayList.get(position).getHead());
-        viewHolder.interestTxt.setText(arrayList.get(position).getTittleInterest());
-
+        viewHolder.nameTxt.setText(arrayList.get(position).getTittleInterest());
+        viewHolder.profileImageRIV.setImageResource(arrayList.get(position).getImage());
 
         viewHolder.clickLL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                onItemClickListener.onClickThis(position, arrayList.get(position).getImage());
+//                onItemClickListener.onClickThis(position);
+
+            }
+        });
+
+        viewHolder.acceptTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        viewHolder.rejectTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
             }
         });
     }
 
-    public void setOnItemClickListener(Adapter_Category_Interest.OnItemClickListener onItemClickListener) {
+    public void setOnItemClickListener(Adapter_Request.OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
 
@@ -105,13 +119,18 @@ public class Adapter_Category_Interest extends RecyclerView.Adapter<Adapter_Cate
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-         private TextView interestTxt;
+        private TextView nameTxt,acceptTxt,rejectTxt;
         private RelativeLayout clickLL;
+        private RoundedImageView profileImageRIV;
 
         public ViewHolder(View itemView) {
             super(itemView);
-             interestTxt = itemView.findViewById(R.id.interestTxt);
+            profileImageRIV = itemView.findViewById(R.id.profileImageRIV);
             clickLL = itemView.findViewById(R.id.clickLL);
+            nameTxt = itemView.findViewById(R.id.nameTxt);
+            acceptTxt = itemView.findViewById(R.id.acceptTxt);
+            rejectTxt = itemView.findViewById(R.id.rejectTxt);
+
 
         }
     }
@@ -119,6 +138,6 @@ public class Adapter_Category_Interest extends RecyclerView.Adapter<Adapter_Cate
     public interface OnItemClickListener {
 
 
-        void onClickThis(int position, int img);
+        void onClickThis(int position);
     }
 }

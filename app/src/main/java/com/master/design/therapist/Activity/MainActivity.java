@@ -29,6 +29,7 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import com.master.design.therapist.Adapter.Adapter_Menu;
 import com.master.design.therapist.Fragments.Fragment_Account;
 import com.master.design.therapist.Fragments.Fragment_Default;
+import com.master.design.therapist.Fragments.Fragment_Friends_Request;
 import com.master.design.therapist.Fragments.Fragment_Home;
 import com.master.design.therapist.Helper.ContextWrapper;
 import com.master.design.therapist.Helper.DialogUtil;
@@ -228,6 +229,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
             case R.id.friends:
                 item.setIcon(getResources().getDrawable(R.drawable.ic_handshake));
+                addFragment(new Fragment_Friends_Request(),false);
                 return true;
 
             case R.id.message:

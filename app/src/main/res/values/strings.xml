@@ -101,6 +101,8 @@
     <string name="intro1_head_part2">With Your Friends!</string>
     <string name="intro_2_head">Share Media With\n</string>
     <string name="intro2_headpart2">Each other</string>
+    <string name="my_friends">My Friends</string>
+    <string name="request">Request</string>
 
 
 </resources>

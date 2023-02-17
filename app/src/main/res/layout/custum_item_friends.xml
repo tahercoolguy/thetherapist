@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:id="@+id/clickLL"
+    android:padding="5dp"
+    android:layout_height="wrap_content">
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minWidth="130dp"
+        app:riv_corner_radius="15dp"
+        android:id="@+id/profileImageRIV"
+        android:minHeight="153dp"
+        android:src="@drawable/img_profile"></com.makeramen.roundedimageview.RoundedImageView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Chirag"
+        android:singleLine="true"
+         android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_margin="10dp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_size_normal"
+        android:id="@+id/nameTxt"></TextView>
+</LinearLayout>

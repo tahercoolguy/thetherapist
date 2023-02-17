@@ -1,9 +1,12 @@
 package com.master.design.therapist.Adapter;
 
 import android.content.Context;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -65,6 +68,17 @@ public class Adapter_Search extends RecyclerView.Adapter<Adapter_Search.ViewHold
 
 
     private void setDetails(Adapter_Search.ViewHolder viewHolder, int position) {
+        Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                // on the below line we are finishing
+                // our current activity.
+                viewHolder.itemView.startAnimation(animation);
+
+            }
+        }, 100);
         viewHolder.mainTxt.setText(arrayList.get(position).getHead());
         viewHolder.smallTxt.setText(arrayList.get(position).getDes());
 
