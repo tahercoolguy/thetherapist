@@ -34,8 +34,8 @@ public class About_You_Activity extends AppCompatActivity {
 
     @OnClick(R.id.signUpTxt)
     public void clicksignUpTxt() {
-        startActivity(new Intent(About_You_Activity.this, Sign_InActivity.class));
-        overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
+        startActivity(new Intent(About_You_Activity.this, ThankYouActivity.class));
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_in);
     }
 
 
