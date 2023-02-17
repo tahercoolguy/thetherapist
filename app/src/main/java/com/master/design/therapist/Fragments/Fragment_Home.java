@@ -2,6 +2,10 @@ package com.master.design.therapist.Fragments;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -20,10 +24,12 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.master.design.therapist.Activity.MainActivity;
 import com.master.design.therapist.Adapter.Adapter_Category_Interest;
 import com.master.design.therapist.Controller.AppController;
 import com.master.design.therapist.DM.InterestDM;
+import com.master.design.therapist.Helper.BlurBuilder;
 import com.master.design.therapist.R;
 import com.master.design.therapist.Utils.ConnectionDetector;
 
@@ -60,6 +66,10 @@ public class Fragment_Home extends Fragment {
     TextView changeSearchTxt;
     @BindView(R.id.recieveRequestImg)
     ImageView recieveRequestImg;
+    @BindView(R.id.bgRoundedImg)
+    RoundedImageView bgRoundedImg;
+    @BindView(R.id.frontRoundedImg)
+    RoundedImageView frontRoundedImg;
 
     @BindView(R.id.layout_parent)
     LinearLayout layout_parent;
@@ -85,7 +95,9 @@ public class Fragment_Home extends Fragment {
             rootView = inflater.inflate(R.layout.home_fragment_layout, container, false);
             ButterKnife.bind(this, rootView);
             setInterestData();
-
+            Bitmap resultBmp = BlurBuilder.blur(getActivity(), BitmapFactory.decodeResource(getResources(), R.drawable.marshall_img));
+            Drawable dr = new BitmapDrawable(resultBmp);
+            bgRoundedImg.setBackgroundDrawable(dr);
 
         }
         return rootView;

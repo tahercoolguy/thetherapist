@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:animateLayoutChanges="true"
     android:background="@color/white">
 
@@ -83,23 +84,29 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp">
 
-                    <ImageView
+                    <com.makeramen.roundedimageview.RoundedImageView
                         android:layout_width="match_parent"
                         android:layout_height="250dp"
+                        android:id="@+id/bgRoundedImg"
                         android:layout_centerInParent="true"
-                        android:layout_centerHorizontal="true"
                         android:layout_marginHorizontal="20dp"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/marshall_img"></ImageView>
 
-                    <ImageView
+                        android:src="@drawable/marshall_img"
+                        app:riv_corner_radius="20dp"></com.makeramen.roundedimageview.RoundedImageView>
+
+                    <com.makeramen.roundedimageview.RoundedImageView
                         android:layout_width="match_parent"
                         android:layout_height="290dp"
+                        android:id="@+id/frontRoundedImg"
                         android:layout_centerHorizontal="true"
                         android:layout_marginHorizontal="50dp"
+                        android:background="@drawable/rounded_rectangle_white"
+                        android:padding="2dp"
                         android:scaleType="centerCrop"
+                        android:src="@drawable/marshall_img"
 
-                        android:src="@drawable/marshall_img"></ImageView>
+                        app:riv_corner_radius="15dp"></com.makeramen.roundedimageview.RoundedImageView>
 
                 </RelativeLayout>
 
@@ -170,7 +177,8 @@
                     android:layout_gravity="center"
                     android:layout_margin="20dp"
                     android:gravity="center"
-                    android:maxLines="3"
+                    android:ems="10"
+                    android:maxLines="2"
                     android:minLines="2"
                     android:text="@string/i_am_corporate_lawyer_at_goliath_national_bank_i_grown_up_in_minnesota_i_love_and_care_and_confident_and_extremely_emotional_which_i_often_gets_teased_for_by_the_gang_i_am_very_passionate_about_what_i_do_and_care_deeply_for_my_family_and_friends"
                     android:textSize="@dimen/text_size_normal"></TextView>
