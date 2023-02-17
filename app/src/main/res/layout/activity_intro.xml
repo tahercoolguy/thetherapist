@@ -10,23 +10,32 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
-        android:layout_gravity="center"
-        android:gravity="center"
+
         android:orientation="vertical">
-
-
         <ImageView
+            android:id="@+id/backImg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:src="@drawable/ic_intro_one"></ImageView>
+            android:padding="20dp"
+            android:src="@drawable/ic_back_arrow"></ImageView>
 
-        <ImageView
+        <com.smarteist.autoimageslider.SliderView
+            android:id="@+id/slider"
             android:layout_width="match_parent"
-            android:layout_marginTop="25dp"
             android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:src="@drawable/intro_bg"></ImageView>
+            app:sliderAnimationDuration="600"
+            app:sliderAutoCycleDirection="back_and_forth"
+            app:sliderIndicatorAnimationDuration="600"
+            app:sliderIndicatorEnabled="true"
+            app:sliderIndicatorGravity="center_horizontal|bottom"
+            app:sliderIndicatorMargin="15dp"
+            app:sliderIndicatorOrientation="horizontal"
+            app:sliderIndicatorPadding="7dp"
+            app:sliderIndicatorRadius="3dp"
+            app:sliderIndicatorSelectedColor="@color/colorPrimary"
+            app:sliderIndicatorUnselectedColor="@color/greyDark"
+            app:sliderScrollTimeInSec="1" />
+
 
 
     </LinearLayout>
