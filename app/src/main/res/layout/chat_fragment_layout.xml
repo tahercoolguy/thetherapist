@@ -8,6 +8,7 @@
     <LinearLayout
         android:id="@+id/layout_parent"
         android:layout_width="match_parent"
+        android:padding="10dp"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
@@ -35,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
             android:fontFamily="@font/poppins_bold"
-            android:text="Settings"
+            android:text="@string/chat"
             android:textColor="@color/black"
             android:textSize="@dimen/text_size_Heading"
             android:textStyle="bold"></TextView>

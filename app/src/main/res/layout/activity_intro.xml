@@ -32,7 +32,7 @@
             app:sliderIndicatorOrientation="horizontal"
             app:sliderIndicatorPadding="7dp"
             app:sliderIndicatorRadius="3dp"
-            app:sliderIndicatorSelectedColor="@color/colorPrimary"
+            app:sliderIndicatorSelectedColor="@color/quantum_orange"
             app:sliderIndicatorUnselectedColor="@color/greyDark"
             app:sliderScrollTimeInSec="1" />
 

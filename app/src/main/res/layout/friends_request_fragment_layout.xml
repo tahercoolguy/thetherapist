@@ -9,6 +9,7 @@
         android:id="@+id/layout_parent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:padding="10dp"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -23,7 +24,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_gravity="end"
                 android:paddingHorizontal="20dp"
-                android:paddingVertical="20dp"
+                android:paddingVertical="10dp"
 
                 android:src="@drawable/ic_notification_come"></ImageView>
 

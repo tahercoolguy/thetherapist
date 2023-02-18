@@ -103,6 +103,8 @@
     <string name="intro2_headpart2">Each other</string>
     <string name="my_friends">My Friends</string>
     <string name="request">Request</string>
+    <string name="chat">Chat</string>
+    <string name="settings">Settings</string>
 
 
 </resources>
