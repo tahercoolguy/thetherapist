@@ -99,7 +99,7 @@ public class Adapter_Chat extends RecyclerView.Adapter<Adapter_Chat.ViewHolder> 
         viewHolder.clickLL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                onItemClickListener.onClickThis(position, arrayList.get(position).getImage());
+                onItemClickListener.onClickThis(position, arrayList.get(position).getImage(),arrayList.get(position).getName());
 
             }
         });
@@ -140,6 +140,6 @@ public class Adapter_Chat extends RecyclerView.Adapter<Adapter_Chat.ViewHolder> 
     public interface OnItemClickListener {
 
 
-        void onClickThis(int position, int img);
+        void onClickThis(int position, int img,String name);
     }
 }

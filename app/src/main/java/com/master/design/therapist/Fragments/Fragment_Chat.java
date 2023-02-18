@@ -1,7 +1,9 @@
 package com.master.design.therapist.Fragments;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -18,7 +20,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.master.design.therapist.Activity.Conversation_Activity;
 import com.master.design.therapist.Activity.MainActivity;
+import com.master.design.therapist.Activity.My_ProfileActivity;
 import com.master.design.therapist.Adapter.Adapter_Chat;
 import com.master.design.therapist.Controller.AppController;
 import com.master.design.therapist.DM.ChatDM;
@@ -35,6 +39,7 @@ public class Fragment_Chat extends Fragment {
 
     private View rootView;
     private Context context;
+    private Activity activity;
 
     @BindView(R.id.progress_bar)
     ProgressBar progress_bar;
@@ -58,6 +63,7 @@ public class Fragment_Chat extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         context = getActivity();
+        activity = getActivity();
         appController = (AppController) getActivity().getApplicationContext();
 
         connectionDetector = new ConnectionDetector(getActivity());
@@ -69,7 +75,7 @@ public class Fragment_Chat extends Fragment {
         if (rootView == null) {
             rootView = inflater.inflate(R.layout.chat_fragment_layout, container, false);
             ButterKnife.bind(this, rootView);
-            
+
             setChatData();
 
         }
@@ -78,31 +84,40 @@ public class Fragment_Chat extends Fragment {
 
     private void setChatData() {
 
-        ArrayList<ChatDM>chatDMArrayList= new ArrayList<>();
-        chatDMArrayList.add(new ChatDM("Rachel","10:36 PM","5","Today I work in a cafe. Come there, I’ll buy you",R.drawable.img_profile));
-        chatDMArrayList.add(new ChatDM("Dude","01:03 AM","0","How are you ?",R.drawable.img_profile));
-        chatDMArrayList.add(new ChatDM("Rachel","10:36 PM","5","Today I work in a cafe. Come there, I’ll buy you",R.drawable.img_profile));
-        chatDMArrayList.add(new ChatDM("Dude","Fri","0","How are you ?",R.drawable.img_profile));
-        chatDMArrayList.add(new ChatDM("Rachel","Sat","3","Today I work in a cafe. Come there, I’ll buy you",R.drawable.img_profile));
-        chatDMArrayList.add(new ChatDM("Dude","Sun","0","How are you ?",R.drawable.img_profile));
-        chatDMArrayList.add(new ChatDM("Rachel","10:36 PM","1","Today I work in a cafe. Come there, I’ll buy you",R.drawable.img_profile));
-        chatDMArrayList.add(new ChatDM("Dude","01:03 AM","0","How are you ?",R.drawable.img_profile));
-        chatDMArrayList.add(new ChatDM("Rachel","10:36 PM","7","Today I work in a cafe. Come there, I’ll buy you",R.drawable.img_profile));
-        chatDMArrayList.add(new ChatDM("Dude","01:03 AM","4","How are you ?",R.drawable.img_profile));
-        chatDMArrayList.add(new ChatDM("Rachel","10:36 PM","6","Today I work in a cafe. Come there, I’ll buy you",R.drawable.img_profile));
-        chatDMArrayList.add(new ChatDM("Dude","01:03 AM","0","How are you ?",R.drawable.img_profile));
-        chatDMArrayList.add(new ChatDM("Rachel","10:36 PM","2","Today I work in a cafe. Come there, I’ll buy you",R.drawable.img_profile));
-        chatDMArrayList.add(new ChatDM("Dude","01:03 AM","0","How are you ?",R.drawable.img_profile));
-        chatDMArrayList.add(new ChatDM("Rachel","10:36 PM","5","Today I work in a cafe. Come there, I’ll buy you",R.drawable.img_profile));
-        chatDMArrayList.add(new ChatDM("Dude","01:03 AM","0","How are you ?",R.drawable.img_profile));
-        chatDMArrayList.add(new ChatDM("Rachel","10:36 PM","5","Today I work in a cafe. Come there, I’ll buy you",R.drawable.img_profile));
-        chatDMArrayList.add(new ChatDM("Dude","01:03 AM","0","How are you ?",R.drawable.img_profile));
+        ArrayList<ChatDM> chatDMArrayList = new ArrayList<>();
+        chatDMArrayList.add(new ChatDM("Rachel", "10:36 PM", "5", "Today I work in a cafe. Come there, I’ll buy you", R.drawable.img_profile));
+        chatDMArrayList.add(new ChatDM("Dude", "01:03 AM", "0", "How are you ?", R.drawable.img_profile));
+        chatDMArrayList.add(new ChatDM("Rachel", "10:36 PM", "5", "Today I work in a cafe. Come there, I’ll buy you", R.drawable.img_profile));
+        chatDMArrayList.add(new ChatDM("Dude", "Fri", "0", "How are you ?", R.drawable.img_profile));
+        chatDMArrayList.add(new ChatDM("Rachel", "Sat", "3", "Today I work in a cafe. Come there, I’ll buy you", R.drawable.img_profile));
+        chatDMArrayList.add(new ChatDM("Dude", "Sun", "0", "How are you ?", R.drawable.img_profile));
+        chatDMArrayList.add(new ChatDM("Rachel", "10:36 PM", "1", "Today I work in a cafe. Come there, I’ll buy you", R.drawable.img_profile));
+        chatDMArrayList.add(new ChatDM("Dude", "01:03 AM", "0", "How are you ?", R.drawable.img_profile));
+        chatDMArrayList.add(new ChatDM("Rachel", "10:36 PM", "7", "Today I work in a cafe. Come there, I’ll buy you", R.drawable.img_profile));
+        chatDMArrayList.add(new ChatDM("Dude", "01:03 AM", "4", "How are you ?", R.drawable.img_profile));
+        chatDMArrayList.add(new ChatDM("Rachel", "10:36 PM", "6", "Today I work in a cafe. Come there, I’ll buy you", R.drawable.img_profile));
+        chatDMArrayList.add(new ChatDM("Dude", "01:03 AM", "0", "How are you ?", R.drawable.img_profile));
+        chatDMArrayList.add(new ChatDM("Rachel", "10:36 PM", "2", "Today I work in a cafe. Come there, I’ll buy you", R.drawable.img_profile));
+        chatDMArrayList.add(new ChatDM("Dude", "01:03 AM", "0", "How are you ?", R.drawable.img_profile));
+        chatDMArrayList.add(new ChatDM("Rachel", "10:36 PM", "5", "Today I work in a cafe. Come there, I’ll buy you", R.drawable.img_profile));
+        chatDMArrayList.add(new ChatDM("Dude", "01:03 AM", "0", "How are you ?", R.drawable.img_profile));
+        chatDMArrayList.add(new ChatDM("Rachel", "10:36 PM", "5", "Today I work in a cafe. Come there, I’ll buy you", R.drawable.img_profile));
+        chatDMArrayList.add(new ChatDM("Dude", "01:03 AM", "0", "How are you ?", R.drawable.img_profile));
 
 
-        LinearLayoutManager linearLayoutManager= new LinearLayoutManager(context);
-        Adapter_Chat adapter_chat= new Adapter_Chat(context,chatDMArrayList);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
+        Adapter_Chat adapter_chat = new Adapter_Chat(context, chatDMArrayList);
         rcvRcv.setLayoutManager(linearLayoutManager);
         rcvRcv.setAdapter(adapter_chat);
+
+
+        adapter_chat.setOnItemClickListener(new Adapter_Chat.OnItemClickListener() {
+            @Override
+            public void onClickThis(int position, int img, String name) {
+                startActivity(new Intent(getActivity(), Conversation_Activity.class));
+                activity.overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
+            }
+        });
 
     }
 

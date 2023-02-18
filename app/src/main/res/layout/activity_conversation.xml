@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="5dp"
+    android:padding="10dp"
+    tools:context=".Activity.Conversation_Activity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:paddingVertical="10dp"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/backImg"
+            android:layout_marginVertical="10dp"
+            android:paddingHorizontal="10dp"
+            android:src="@drawable/ic_back_arrow"></ImageView>
+
+        <ImageView
+            android:id="@+id/notificationImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="end"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="10dp"
+
+            android:src="@drawable/ic_notification_come"></ImageView>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profileCircleImg"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:minWidth="40dp"
+            android:minHeight="40dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/img_profile"
+            app:riv_corner_radius="100dp"></de.hdodenhof.circleimageview.CircleImageView>
+
+        <TextView
+            android:id="@+id/userNameTxt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginVertical="10dp"
+            android:fontFamily="@font/poppins_bold"
+            android:text="Rachel"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_Heading"
+            android:textStyle="bold"></TextView>
+    </LinearLayout>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:id="@+id/rcvRcv"
+        android:layout_height="wrap_content"
+        android:padding="10dp"></androidx.recyclerview.widget.RecyclerView>
+
+
+</LinearLayout>

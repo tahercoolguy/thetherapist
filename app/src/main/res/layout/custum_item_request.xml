@@ -11,15 +11,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
+        android:layout_centerVertical="true"
 
         android:layout_alignParentStart="true"
         android:orientation="horizontal">
 
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/profileImageRIV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minWidth="130dp"
+            android:layout_width="72dp"
+            android:layout_height="91dp"
+            android:minWidth="91dp"
             app:riv_corner_radius="100dp"
             android:minHeight="153dp"
             android:src="@drawable/img_profile"></com.makeramen.roundedimageview.RoundedImageView>
