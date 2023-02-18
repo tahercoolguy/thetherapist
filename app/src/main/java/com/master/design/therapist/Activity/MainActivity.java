@@ -28,6 +28,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.master.design.therapist.Adapter.Adapter_Menu;
 import com.master.design.therapist.Fragments.Fragment_Account;
+import com.master.design.therapist.Fragments.Fragment_Chat;
 import com.master.design.therapist.Fragments.Fragment_Default;
 import com.master.design.therapist.Fragments.Fragment_Friends_Request;
 import com.master.design.therapist.Fragments.Fragment_Home;
@@ -234,6 +235,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
             case R.id.message:
                 item.setIcon(getResources().getDrawable(R.drawable.ic_message_select));
+                addFragment(new Fragment_Chat(),false);
                 return true;
 
             case R.id.account:

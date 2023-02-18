@@ -43,13 +43,13 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:background="@drawable/rounded_rectangle_white"
-                android:backgroundTint="@color/white"
+                android:backgroundTint="@color/colorPrimary"
                 android:fontFamily="@font/poppins_bold"
                 android:gravity="center"
                 android:minWidth="150dp"
                 android:padding="10dp"
                 android:text="@string/my_friends"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="@dimen/text_size_normal"
                 android:textStyle="bold"></TextView>
 
@@ -60,13 +60,13 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:background="@drawable/rounded_rectangle_white"
-                android:backgroundTint="@color/colorPrimary"
+                android:backgroundTint="@color/white"
                 android:fontFamily="@font/poppins_bold"
                 android:gravity="center"
                 android:minWidth="150dp"
                 android:padding="10dp"
                 android:text="@string/request"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="@dimen/text_size_normal"
                 android:textStyle="bold"></TextView>
         </LinearLayout>
