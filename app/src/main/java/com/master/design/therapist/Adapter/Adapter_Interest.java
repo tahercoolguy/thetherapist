@@ -1,6 +1,7 @@
 package com.master.design.therapist.Adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.master.design.therapist.DM.InterestDM;
@@ -29,6 +32,7 @@ public class Adapter_Interest extends RecyclerView.Adapter<Adapter_Interest.View
     private InterestDM selected;
     User user;
     Adapter_Interest.OnItemClickListener onItemClickListener;
+    int row_index;
 
 
     int selectedPosition = 0;
@@ -68,17 +72,17 @@ public class Adapter_Interest extends RecyclerView.Adapter<Adapter_Interest.View
 
     private void setDetails(Adapter_Interest.ViewHolder viewHolder, int position) {
 
-        Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-
-                // on the below line we are finishing
-                // our current activity.
-                viewHolder.itemView.startAnimation(animation);
-
-            }
-        }, 100);
+//        Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//
+//                // on the below line we are finishing
+//                // our current activity.
+//                viewHolder.itemView.startAnimation(animation);
+//
+//            }
+//        }, 100);
 //        viewHolder.mainTxt.setText(arrayList.get(position).getHead());
         viewHolder.interestTxt.setText(arrayList.get(position).getTittleInterest());
         viewHolder.img.setImageResource(arrayList.get(position).getImage());
@@ -89,8 +93,16 @@ public class Adapter_Interest extends RecyclerView.Adapter<Adapter_Interest.View
             public void onClick(View view) {
 //                onItemClickListener.onClickThis(position, arrayList.get(position).getImage());
 
+                row_index = position;
+                notifyDataSetChanged();
             }
         });
+
+        if (row_index == position) {
+            viewHolder.selected_cardView.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.red));
+        } else {
+            viewHolder.selected_cardView.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.white));
+        }
     }
 
     public void setOnItemClickListener(Adapter_Interest.OnItemClickListener onItemClickListener) {
@@ -110,12 +122,14 @@ public class Adapter_Interest extends RecyclerView.Adapter<Adapter_Interest.View
         private ImageView img;
         private TextView interestTxt;
         private RelativeLayout clickLL;
+        private CardView selected_cardView;
 
         public ViewHolder(View itemView) {
             super(itemView);
             img = itemView.findViewById(R.id.img);
             interestTxt = itemView.findViewById(R.id.interestTxt);
             clickLL = itemView.findViewById(R.id.clickLL);
+            selected_cardView = itemView.findViewById(R.id.selected_cardView);
 
         }
     }

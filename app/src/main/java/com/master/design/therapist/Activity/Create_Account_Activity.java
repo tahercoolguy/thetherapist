@@ -21,7 +21,7 @@ public class Create_Account_Activity extends AppCompatActivity {
 
     @OnClick(R.id.continueTxt)
     public void clickcontinueTxt() {
-        startActivity(new Intent(Create_Account_Activity.this, About_You_Activity.class));
+        startActivity(new Intent(Create_Account_Activity.this, FriendSearch_SelectActivity.class).putExtra("string33","string33"));
         overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
     }
 

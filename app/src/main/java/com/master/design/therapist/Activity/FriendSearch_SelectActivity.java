@@ -47,17 +47,17 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
         getIntentData();
     }
 
-    String position0, position1, position2, position3, position4;
+    String position0, position1, position2, position3, position4 ,string33;
 
     private void getIntentData() {
         Intent intent = getIntent();
         if (intent != null) {
             position0 = intent.getStringExtra("string1");
             position1 = intent.getStringExtra("string2");
-            ;
             position2 = intent.getStringExtra("string3");
             position3 = intent.getStringExtra("string4");
             position4 = intent.getStringExtra("string5");
+            string33 = intent.getStringExtra("string33");
 
             if (position0 != null) {
                 setPositionData(position0);
@@ -73,10 +73,20 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
             }
             if (position4 != null) {
                 setPositionData(position4);
+            }  if (string33 != null) {
+                setPositionData(string33);
             }
 
         }
 
+    }
+
+    @OnClick(R.id.startSearchingTxt)
+    public void clickstartSearchingTxt(){
+        if(string33!=null){
+            startActivity(new Intent(FriendSearch_SelectActivity.this, About_You_Activity.class));
+            overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
+        }
     }
 
     @SuppressLint("SetTextI18n")
@@ -115,7 +125,7 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
             rcvRcv.setLayoutManager(linearLayoutManager);
             rcvRcv.setAdapter(adapter_search);
         }
-        if (position.equalsIgnoreCase("string3")) {
+        if (position.equalsIgnoreCase("string3")||string33.equalsIgnoreCase("string33")) {
             tittleTxt.setText(getString(R.string.interestt));
             startSearchingTxt.setText(R.string.continue_);
 
