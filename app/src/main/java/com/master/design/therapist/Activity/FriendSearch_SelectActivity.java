@@ -115,7 +115,7 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
                     Intent intent = new Intent();
                     intent.putExtra("value", value);
                     setResult(RESULT_OK, intent);
-                    finish();
+                     
                 }
             });
 
@@ -142,7 +142,7 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
                     Intent intent = new Intent();
                     intent.putExtra("value", value);
                     setResult(RESULT_OK, intent);
-                    finish();
+                     
                 }
             });
         }
@@ -187,7 +187,7 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
                     Intent intent = new Intent();
                     intent.putExtra("value", value);
                     setResult(RESULT_OK, intent);
-                    finish();
+                     
                 }
             });
 
@@ -212,7 +212,7 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
                     Intent intent = new Intent();
                     intent.putExtra("value", value);
                     setResult(RESULT_OK, intent);
-                    finish();
+                     
                 }
             });
         }
@@ -237,7 +237,7 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
                     Intent intent = new Intent();
                     intent.putExtra("value", value);
                     setResult(RESULT_OK, intent);
-                    finish();
+                     
                 }
             });
 
@@ -291,7 +291,7 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
 
     @OnClick(R.id.backImg)
     public void clickBack() {
-        finish();
+         
     }
 
 
@@ -303,7 +303,7 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
 
     @Override
     public void finish() {
-        super.finish();
+        super. 
         overridePendingTransition(R.anim.right_slide_in, R.anim.right_slide_in);
     }
 }

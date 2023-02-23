@@ -48,6 +48,9 @@
                 <com.makeramen.roundedimageview.RoundedImageView
                     android:layout_width="134dp"
                     android:layout_height="190dp"
+                    android:id="@+id/profileCircleImg"
+                    android:scaleType="centerCrop"
+                    android:visibility="gone"
                     android:layout_margin="10dp"
                     android:background="@drawable/img_profile"
                     android:elevation="@dimen/elevation"
@@ -57,6 +60,7 @@
                 <RelativeLayout
                     android:layout_width="134dp"
                     android:layout_height="190dp"
+                    android:id="@+id/addImgRL"
                     android:layout_margin="10dp"
                     android:background="@drawable/rectangle_white_grey_border"
                     android:elevation="@dimen/elevation"

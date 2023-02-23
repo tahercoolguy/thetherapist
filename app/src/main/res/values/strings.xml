@@ -107,5 +107,29 @@
     <string name="settings">Settings</string>
     <string name="message">Message</string>
 
+    <string name="set_image">Set image</string>
+    <string name="take_image">Take a image</string>
+    <string name="choose_from_gallery">Choose from gallery</string>
+    <string name="take_a_video">Take a video</string>
+    <string name="set_image_or_video">Set image / Video</string>
+    <string name="kindly_choose_any_profile_pic">kindly choose any profile pic</string>
+    <string name="delete_account">Delete Account</string>
+    <string name="are_you_sure_want_to_delete_account">Are you sure you want to Delete Account </string>
+    <string name="your_account_will_be_deleted">Your Account will be Deleted </string>
+    <string name="take_a_picture">Take a picture</string>
+    <string name="record_a_video">Record a Video</string>
+    <string name="image_picker_option_is_missing">Image picker option is missing</string>
+    <string name="sorry_your_camera_does_not_support">Sorry! Your device doesn\'t support camera</string>
+    <string name="kindly_capture_some_media">Kindly Capture some media</string>
+    <string name="user_cancelled_image_capture">User cancelled image capture</string>
+    <string name="sorry_failed_to_capture">Sorry! Failed to capture image</string>
+    <string name="user_cancelled_video_recording">User cancelled video recording</string>
+    <string name="sorry_failed_to_record_video">Sorry! Failed to record video</string>
+    <string name="permission_required">Permissions required!</string>
+    <string name="camera_needs_few_permisson">Camera needs few permissions to work properly. Grant them in settings.</string>
+    <string name="goto_settings">GOTO SETTINGS</string>
+    <string name="select_video_from_gallery">select video from gallery</string>
+
+
 
 </resources>

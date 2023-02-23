@@ -28,6 +28,9 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".Activity.ImagePickerActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activity.Conversation_Activity"
             android:exported="false" />
         <activity
