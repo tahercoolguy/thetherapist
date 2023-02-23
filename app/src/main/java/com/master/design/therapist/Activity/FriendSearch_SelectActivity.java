@@ -115,8 +115,7 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
                     Intent intent = new Intent();
                     intent.putExtra("value", value);
                     setResult(RESULT_OK, intent);
-                     
-                }
+                 }
             });
 
         }
@@ -142,8 +141,7 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
                     Intent intent = new Intent();
                     intent.putExtra("value", value);
                     setResult(RESULT_OK, intent);
-                     
-                }
+                 }
             });
         }
         if (position.equalsIgnoreCase("string3") ) {
@@ -187,8 +185,7 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
                     Intent intent = new Intent();
                     intent.putExtra("value", value);
                     setResult(RESULT_OK, intent);
-                     
-                }
+                 }
             });
 
         }
@@ -212,8 +209,7 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
                     Intent intent = new Intent();
                     intent.putExtra("value", value);
                     setResult(RESULT_OK, intent);
-                     
-                }
+                 }
             });
         }
         if (position.equalsIgnoreCase("string5")) {
@@ -237,8 +233,7 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
                     Intent intent = new Intent();
                     intent.putExtra("value", value);
                     setResult(RESULT_OK, intent);
-                     
-                }
+                 }
             });
 
         }
@@ -291,7 +286,7 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
 
     @OnClick(R.id.backImg)
     public void clickBack() {
-         
+        finish();
     }
 
 
@@ -303,7 +298,7 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
 
     @Override
     public void finish() {
-        super. 
+        super.finish();
         overridePendingTransition(R.anim.right_slide_in, R.anim.right_slide_in);
     }
 }
