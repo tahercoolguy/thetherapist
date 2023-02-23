@@ -47,15 +47,14 @@
 
                 <com.makeramen.roundedimageview.RoundedImageView
                     android:id="@+id/profileCircleImg"
-                    android:layout_width="134dp"
+                    android:layout_width="140dp"
                     android:layout_height="190dp"
                     android:visibility="gone"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/rectangle_white_grey_border"
-                    android:elevation="@dimen/elevation"
-                    android:padding="10dp"
-                    android:paddingHorizontal="20dp"
-                    android:scaleType="centerCrop"></com.makeramen.roundedimageview.RoundedImageView>
+                     android:layout_margin="10dp"
+                     android:elevation="@dimen/elevation"
+
+                     app:riv_corner_radius="20dp"
+                     android:scaleType="centerCrop"></com.makeramen.roundedimageview.RoundedImageView>
 
                 <RelativeLayout
                     android:id="@+id/addImgRL"
@@ -65,7 +64,7 @@
                     android:background="@drawable/rectangle_white_grey_border"
                     android:elevation="@dimen/elevation"
                     android:padding="10dp"
-                    android:paddingHorizontal="20dp">
+                     >
 
                     <ImageView
                         android:layout_width="wrap_content"
