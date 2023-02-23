@@ -250,6 +250,31 @@
             android:layout_height="wrap_content"
             android:layout_gravity="start"
             android:layout_marginTop="10dp"
+            android:hint="@string/email"
+            android:paddingHorizontal="10dp"></TextView>
+
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:background="@drawable/rectangle_white_grey_border"
+            android:backgroundTint="@color/white"
+            android:elevation="10dp"
+            android:hint="hello@gmail.com"
+             android:padding="10dp"
+            android:paddingHorizontal="10dp"
+            android:paddingEnd="20dp"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_normal"></EditText>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginTop="10dp"
             android:hint="@string/password"
             android:paddingHorizontal="10dp"></TextView>
 
