@@ -3,29 +3,27 @@
 
     <item 
         android:id="@+id/home"
-        android:icon="@drawable/ic_home"
+        android:icon="@drawable/ic_home_white"
          android:title="" />
     <item
         android:id="@+id/friends"
-        
-        android:icon="@drawable/ic_friends"
+        android:iconTint="@color/white"
+        android:icon="@drawable/ic_friend_select"
 
 
         android:title="" />
     <item
         android:id="@+id/message"
-
-        android:icon="@drawable/ic_message"
+        android:iconTint="@color/white"
+        android:icon="@drawable/ic_messege_select"
 
 
         android:title="" />
 
     <item
         android:id="@+id/account"
-
-        android:icon="@drawable/ic_account"
-
-
+        android:iconTint="@color/white"
+        android:icon="@drawable/ic_account_select"
         android:title="" />
 
 

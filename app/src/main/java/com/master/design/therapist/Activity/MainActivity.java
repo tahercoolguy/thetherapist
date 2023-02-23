@@ -19,6 +19,8 @@ import android.view.Display;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -78,6 +80,49 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     @BindView(R.id.bottomNavigationView)
     BottomNavigationView bottomNavigationView;
 
+//    @BindView(R.id.settingLL)
+//    LinearLayout settingLL;
+//
+//    @BindView(R.id.chatLL)
+//    LinearLayout chatLL;
+//
+//    @BindView(R.id.friendsLL)
+//    LinearLayout friendsLL;
+//
+//    @BindView(R.id.homeLL)
+//    LinearLayout homeLL;
+//
+//    @BindView(R.id.homeImage)
+//    ImageView homeImage;
+//
+//    @BindView(R.id.messageImage)
+//    ImageView messageImage;
+//
+//    @BindView(R.id.friendImage)
+//    ImageView friendImage;
+//
+//    @BindView(R.id.settingsImage)
+//    ImageView settingsImage;
+//
+//    @OnClick(R.id.homeLL)
+//    public void clickHomeLL() {
+//
+//    }
+//
+//    @OnClick(R.id.friendsLL)
+//    public void clickfriendsLL() {
+//
+//    }
+//
+//    @OnClick(R.id.chatLL)
+//    public void clickchatLL() {
+//
+//    }
+//
+//    @OnClick(R.id.settingLL)
+//    public void clickSettingLL() {
+//
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -222,20 +267,18 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.home:
-                item.setIcon(getResources().getDrawable(R.drawable.ic_home));
+//                item.setIcon(getResources().getDrawable(R.drawable.ic_home));
                 addFragment(new Fragment_Home(), false);
-
-
                 return true;
 
             case R.id.friends:
-                item.setIcon(getResources().getDrawable(R.drawable.ic_handshake));
-                addFragment(new Fragment_Friends_Request(),false);
+//                item.setIcon(getResources().getDrawable(R.drawable.ic_handshake));
+                addFragment(new Fragment_Friends_Request(), false);
                 return true;
 
             case R.id.message:
-                item.setIcon(getResources().getDrawable(R.drawable.ic_message_select));
-                addFragment(new Fragment_Chat(),false);
+//                item.setIcon(getResources().getDrawable(R.drawable.ic_message_select));
+                addFragment(new Fragment_Chat(), false);
                 return true;
 
             case R.id.account:

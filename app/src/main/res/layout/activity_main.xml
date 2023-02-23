@@ -26,26 +26,29 @@
         <FrameLayout
             android:id="@+id/content_frame"
             android:layout_width="match_parent"
-            android:layout_marginBottom="80dp"
             android:layout_height="match_parent"
+            android:layout_marginBottom="80dp"
             android:background="@color/white" />
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:background="@drawable/intro_bg"
-            android:backgroundTint="@color/colorPrimary"
-            android:padding="10dp">
+
+            >
 
             <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:id="@+id/bottomNavigationView"
                 style="@style/Widget.Design.BottomNavigationView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:background="@color/colorPrimary"
                 app:itemIconTint="@color/white"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:layout_alignParentBottom="true"
+                 android:background="@drawable/intro_bg"
+
+                 android:backgroundTint="@color/colorPrimary"
+
                 app:menu="@menu/bottom_nav_menu" />
 
 
@@ -67,8 +70,9 @@
                     android:layout_alignParentBottom="true"
                     android:background="@color/colorPrimary"
                     android:gravity="center"
+                    android:orientation="horizontal"
 
-                    android:orientation="horizontal">
+                    android:visibility="gone">
 
                     <LinearLayout
                         android:id="@+id/HomeLL"
@@ -191,30 +195,30 @@
 
     </RelativeLayout>
 
-<!--    <LinearLayout-->
-<!--        android:layout_width="280dp"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:layout_gravity="start"-->
-<!--        android:background="@color/login_backgroud"-->
-<!--        android:orientation="vertical"-->
-<!--        android:visibility="gone">-->
+    <!--    <LinearLayout-->
+    <!--        android:layout_width="280dp"-->
+    <!--        android:layout_height="match_parent"-->
+    <!--        android:layout_gravity="start"-->
+    <!--        android:background="@color/login_backgroud"-->
+    <!--        android:orientation="vertical"-->
+    <!--        android:visibility="gone">-->
 
-<!--        <ListView-->
-<!--            android:id="@+id/listView"-->
-<!--            android:layout_width="280dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginStart="30dp"-->
-<!--            android:choiceMode="singleChoice"-->
-<!--            android:clipToPadding="false"-->
-<!--            android:divider="@android:color/transparent"-->
-<!--            android:dividerHeight="10dp"-->
-<!--            android:groupIndicator="@null"-->
-<!--            android:listSelector="@drawable/listview_selector"-->
-<!--            android:padding="5dp"-->
-<!--            android:scrollbars="none" />-->
+    <!--        <ListView-->
+    <!--            android:id="@+id/listView"-->
+    <!--            android:layout_width="280dp"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_marginStart="30dp"-->
+    <!--            android:choiceMode="singleChoice"-->
+    <!--            android:clipToPadding="false"-->
+    <!--            android:divider="@android:color/transparent"-->
+    <!--            android:dividerHeight="10dp"-->
+    <!--            android:groupIndicator="@null"-->
+    <!--            android:listSelector="@drawable/listview_selector"-->
+    <!--            android:padding="5dp"-->
+    <!--            android:scrollbars="none" />-->
 
-<!--        <ImageView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"></ImageView>-->
-<!--    </LinearLayout>-->
+    <!--        <ImageView-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"></ImageView>-->
+    <!--    </LinearLayout>-->
 </androidx.drawerlayout.widget.DrawerLayout>
