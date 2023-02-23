@@ -107,8 +107,8 @@ public class Fragment_Account extends Fragment {
 
     @OnClick(R.id.logoutLL)
     public void clicklogoutLL() {
-        startActivity(new Intent(getActivity(), FriendSearchActivity.class));
-        activity.overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
+        ((MainActivity)context).finish();
+         activity.overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
     }
 
     @Override

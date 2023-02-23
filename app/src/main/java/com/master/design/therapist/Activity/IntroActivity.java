@@ -83,6 +83,7 @@ public class IntroActivity extends AppCompatActivity {
             positionslider=1;
         } else {
             startActivity(new Intent(IntroActivity.this, Sign_InActivity.class));
+            finish();
             overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
         }
 

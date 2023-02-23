@@ -46,6 +46,7 @@ public class LanguageActivity extends AppCompatActivity {
         englishRL.setBackground(getDrawable(R.drawable.language_unselect_bg));
         arabicRL.setBackground(getDrawable(R.drawable.language_select_bg));
         startActivity(new Intent(LanguageActivity.this, IntroActivity.class));
+        finish();
         overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
 
     }
