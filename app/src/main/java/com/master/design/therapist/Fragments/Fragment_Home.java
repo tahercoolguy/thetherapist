@@ -1,7 +1,9 @@
 package com.master.design.therapist.Fragments;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -25,6 +27,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.master.design.therapist.Activity.FriendSearchActivity;
+import com.master.design.therapist.Activity.FriendSearch_SelectActivity;
 import com.master.design.therapist.Activity.MainActivity;
 import com.master.design.therapist.Adapter.Adapter_Category_Interest;
 import com.master.design.therapist.Controller.AppController;
@@ -44,6 +48,7 @@ public class Fragment_Home extends Fragment {
 
     private View rootView;
     private Context context;
+    private Activity activity;
 
     @BindView(R.id.progress_bar)
     ProgressBar progress_bar;
@@ -83,6 +88,7 @@ public class Fragment_Home extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         context = getActivity();
+        activity = getActivity();
         appController = (AppController) getActivity().getApplicationContext();
 
         connectionDetector = new ConnectionDetector(getActivity());
@@ -120,6 +126,12 @@ public class Fragment_Home extends Fragment {
         layout_parent.startAnimation(animation);
         sendRequestImg.setVisibility(View.VISIBLE);
         recieveRequestImg.setVisibility(View.GONE);
+    }
+
+    @OnClick(R.id.changeSearchTxt)
+    public void clickchangeSearchTxt() {
+        startActivity(new Intent(context, FriendSearchActivity.class));
+        activity.overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
     }
 
     private void setInterestData() {

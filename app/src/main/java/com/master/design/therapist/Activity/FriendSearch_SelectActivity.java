@@ -108,6 +108,16 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
             rcvRcv.setLayoutManager(linearLayoutManager);
             rcvRcv.setAdapter(adapter_search);
+            adapter_search.setOnItemClickListener(new Adapter_Search_Select.OnItemClickListener() {
+                @Override
+                public void onClickThis(int position, String heading, String subheading) {
+                    String value = subheading ;
+                    Intent intent = new Intent();
+                    intent.putExtra("value", value);
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }
+            });
 
         }
 
@@ -124,8 +134,116 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
             rcvRcv.setLayoutManager(linearLayoutManager);
             rcvRcv.setAdapter(adapter_search);
+
+            adapter_search.setOnItemClickListener(new Adapter_Search_Select.OnItemClickListener() {
+                @Override
+                public void onClickThis(int position, String heading, String subheading) {
+                    String value = subheading ;
+                    Intent intent = new Intent();
+                    intent.putExtra("value", value);
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }
+            });
         }
-        if (position.equalsIgnoreCase("string3")||string33.equalsIgnoreCase("string33")) {
+        if (position.equalsIgnoreCase("string3") ) {
+            tittleTxt.setText(getString(R.string.interestt));
+            startSearchingTxt.setText(R.string.continue_);
+
+            ArrayList<InterestDM> interestDMArrayList = new ArrayList<>();
+            interestDMArrayList.add(new InterestDM("Film", R.drawable.film));
+            interestDMArrayList.add(new InterestDM("Music", R.drawable.film));
+            interestDMArrayList.add(new InterestDM("Books", R.drawable.film));
+            interestDMArrayList.add(new InterestDM("Arts", R.drawable.film));
+            interestDMArrayList.add(new InterestDM("Games", R.drawable.film));
+            interestDMArrayList.add(new InterestDM("Computer", R.drawable.film));
+            interestDMArrayList.add(new InterestDM("Poem", R.drawable.film));
+            interestDMArrayList.add(new InterestDM("Social Media", R.drawable.film));
+            interestDMArrayList.add(new InterestDM("Pets", R.drawable.film));
+            interestDMArrayList.add(new InterestDM("Bars", R.drawable.film));
+            interestDMArrayList.add(new InterestDM("Books", R.drawable.film));
+            interestDMArrayList.add(new InterestDM("Sports", R.drawable.film));
+            interestDMArrayList.add(new InterestDM("Film", R.drawable.film));
+            interestDMArrayList.add(new InterestDM("Music", R.drawable.film));
+            interestDMArrayList.add(new InterestDM("Books", R.drawable.film));
+            interestDMArrayList.add(new InterestDM("Arts", R.drawable.film));
+            interestDMArrayList.add(new InterestDM("Games", R.drawable.film));
+            interestDMArrayList.add(new InterestDM("Computer", R.drawable.film));
+            interestDMArrayList.add(new InterestDM("Poem", R.drawable.film));
+            interestDMArrayList.add(new InterestDM("Social Media", R.drawable.film));
+            interestDMArrayList.add(new InterestDM("Pets", R.drawable.film));
+            interestDMArrayList.add(new InterestDM("Bars", R.drawable.film));
+            interestDMArrayList.add(new InterestDM("Books", R.drawable.film));
+            interestDMArrayList.add(new InterestDM("Sports", R.drawable.film));
+
+            Adapter_Interest adapter_interest = new Adapter_Interest(context, interestDMArrayList);
+            GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2);
+            rcvRcv.setLayoutManager(gridLayoutManager);
+            rcvRcv.setAdapter(adapter_interest);
+            adapter_interest.setOnItemClickListener(new Adapter_Interest.OnItemClickListener() {
+                @Override
+                public void onClickThis(int position, String tittle) {
+                    String value =tittle;
+                    Intent intent = new Intent();
+                    intent.putExtra("value", value);
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }
+            });
+
+        }
+        if (position.equalsIgnoreCase("string4")) {
+            tittleTxt.setText(getString(R.string.ethic));
+
+            ArrayList<SearchDM> searchDMArrayList = new ArrayList<>();
+            searchDMArrayList.add(new SearchDM("", "arab"));
+            searchDMArrayList.add(new SearchDM("", "Indian"));
+
+
+            Adapter_Search_Select adapter_search = new Adapter_Search_Select(context, searchDMArrayList);
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
+            rcvRcv.setLayoutManager(linearLayoutManager);
+            rcvRcv.setAdapter(adapter_search);
+
+            adapter_search.setOnItemClickListener(new Adapter_Search_Select.OnItemClickListener() {
+                @Override
+                public void onClickThis(int position, String heading, String subheading) {
+                    String value = subheading ;
+                    Intent intent = new Intent();
+                    intent.putExtra("value", value);
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }
+            });
+        }
+        if (position.equalsIgnoreCase("string5")) {
+            tittleTxt.setText(getString(R.string.education));
+
+            ArrayList<SearchDM> searchDMArrayList = new ArrayList<>();
+            searchDMArrayList.add(new SearchDM("", "High School"));
+            searchDMArrayList.add(new SearchDM("", "Graduate"));
+            searchDMArrayList.add(new SearchDM("", "Post Graduate"));
+            searchDMArrayList.add(new SearchDM("", "PHD"));
+
+
+            Adapter_Search_Select adapter_search = new Adapter_Search_Select(context, searchDMArrayList);
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
+            rcvRcv.setLayoutManager(linearLayoutManager);
+            rcvRcv.setAdapter(adapter_search);
+            adapter_search.setOnItemClickListener(new Adapter_Search_Select.OnItemClickListener() {
+                @Override
+                public void onClickThis(int position, String heading, String subheading) {
+                    String value = subheading ;
+                    Intent intent = new Intent();
+                    intent.putExtra("value", value);
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }
+            });
+
+        }
+
+        if (position.equalsIgnoreCase("string33")) {
             tittleTxt.setText(getString(R.string.interestt));
             startSearchingTxt.setText(R.string.continue_);
 
@@ -161,35 +279,7 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
             rcvRcv.setAdapter(adapter_interest);
 
         }
-        if (position.equalsIgnoreCase("string4")) {
-            tittleTxt.setText(getString(R.string.ethic));
 
-            ArrayList<SearchDM> searchDMArrayList = new ArrayList<>();
-            searchDMArrayList.add(new SearchDM("", "arab"));
-            searchDMArrayList.add(new SearchDM("", "Indian"));
-
-
-            Adapter_Search_Select adapter_search = new Adapter_Search_Select(context, searchDMArrayList);
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
-            rcvRcv.setLayoutManager(linearLayoutManager);
-            rcvRcv.setAdapter(adapter_search);
-        }
-        if (position.equalsIgnoreCase("string5")) {
-            tittleTxt.setText(getString(R.string.education));
-
-            ArrayList<SearchDM> searchDMArrayList = new ArrayList<>();
-            searchDMArrayList.add(new SearchDM("", "High School"));
-            searchDMArrayList.add(new SearchDM("", "Graduate"));
-            searchDMArrayList.add(new SearchDM("", "Post Graduate"));
-            searchDMArrayList.add(new SearchDM("", "PHD"));
-
-
-            Adapter_Search_Select adapter_search = new Adapter_Search_Select(context, searchDMArrayList);
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
-            rcvRcv.setLayoutManager(linearLayoutManager);
-            rcvRcv.setAdapter(adapter_search);
-
-        }
     }
 
 

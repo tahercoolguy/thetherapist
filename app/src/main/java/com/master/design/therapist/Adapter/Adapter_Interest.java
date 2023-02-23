@@ -91,7 +91,7 @@ public class Adapter_Interest extends RecyclerView.Adapter<Adapter_Interest.View
         viewHolder.clickLL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                onItemClickListener.onClickThis(position, arrayList.get(position).getImage());
+                onItemClickListener.onClickThis(position, arrayList.get(position).getTittleInterest());
 
                 row_index = position;
                 notifyDataSetChanged();
@@ -137,6 +137,6 @@ public class Adapter_Interest extends RecyclerView.Adapter<Adapter_Interest.View
     public interface OnItemClickListener {
 
 
-        void onClickThis(int position, int img);
+        void onClickThis(int position, String tittle);
     }
 }

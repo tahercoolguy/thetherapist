@@ -86,7 +86,8 @@ public class Adapter_Search extends RecyclerView.Adapter<Adapter_Search.ViewHold
         viewHolder.clickLL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onItemClickListener.onClickThis(position,arrayList.get(position).getHead(),arrayList.get(position).getHead());
+                onItemClickListener.onClickThis(position);
+                onItemClickListener.onGetSubItem(position,arrayList.get(position).getHead());
 
             }
         });
@@ -119,6 +120,8 @@ public class Adapter_Search extends RecyclerView.Adapter<Adapter_Search.ViewHold
     public interface OnItemClickListener {
 
 
-        void onClickThis(int position, String heading, String subheading);
+        void onClickThis(int position);
+        void onGetSubItem(int position, String subheading);
+
     }
 }
