@@ -81,6 +81,7 @@
             android:paddingHorizontal="10dp">
 
             <EditText
+                android:id="@+id/dateET"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -97,6 +98,7 @@
                 android:textSize="@dimen/text_size_normal"></EditText>
 
             <EditText
+                android:id="@+id/monthET"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -114,6 +116,7 @@
                 android:textSize="@dimen/text_size_normal"></EditText>
 
             <EditText
+                android:id="@+id/yearET"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -169,6 +172,7 @@
 
 
         <LinearLayout
+            android:id="@+id/genderselectLL"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_gravity="center"
@@ -181,6 +185,7 @@
             android:paddingHorizontal="10dp">
 
             <TextView
+                android:id="@+id/maleTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -197,6 +202,7 @@
                 android:textSize="@dimen/text_size_normal"></TextView>
 
             <TextView
+                android:id="@+id/femaleTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -255,6 +261,8 @@
 
 
         <EditText
+
+            android:id="@+id/emailET"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -280,6 +288,7 @@
 
 
         <EditText
+            android:id="@+id/PasswordET"
              android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -305,6 +314,7 @@
 
 
         <EditText
+            android:id="@+id/confirmPasswordET"
              android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

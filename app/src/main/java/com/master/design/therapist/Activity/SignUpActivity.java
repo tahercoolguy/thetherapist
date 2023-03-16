@@ -88,8 +88,8 @@
 //    EditText emailET;
 //
 //
-//    @BindView(R.id.videoView)
-//    VideoView videoView;
+////    @BindView(R.id.videoView)
+////    VideoView videoView;
 //
 ////    @OnClick(R.id.guestBtn)
 ////    public void signup()
@@ -143,8 +143,8 @@
 //        connectionDetector = new ConnectionDetector(getApplicationContext());
 //        user = new User(SignUpActivity.this);
 //
-//        validator = new Validator(this);
-//        validator.setValidationListener(this);
+////        validator = new Validator(this);
+////        validator.setValidationListener(this);
 //
 //    }
 //
@@ -183,27 +183,27 @@
 //    }
 //
 //
-//    public void pickImg() {
-//        Dexter.withActivity(this)
-//                .withPermissions(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-//                .withListener(new MultiplePermissionsListener() {
-//                    @Override
-//                    public void onPermissionsChecked(MultiplePermissionsReport report) {
-//                        if (report.areAllPermissionsGranted()) {
-//                            showImagePickerOptions();
-//                        }
-//
-//                        if (report.isAnyPermissionPermanentlyDenied()) {
-//                            showSettingsDialog();
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
-//                        token.continuePermissionRequest();
-//                    }
-//                }).check();
-//    }
+////    public void pickImg() {
+////        Dexter.withActivity(this)
+////                .withPermissions(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+////                .withListener(new MultiplePermissionsListener() {
+////                    @Override
+////                    public void onPermissionsChecked(MultiplePermissionsReport report) {
+////                        if (report.areAllPermissionsGranted()) {
+////                            showImagePickerOptions();
+////                        }
+////
+////                        if (report.isAnyPermissionPermanentlyDenied()) {
+////                            showSettingsDialog();
+////                        }
+////                    }
+////
+////                    @Override
+////                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+////                        token.continuePermissionRequest();
+////                    }
+////                }).check();
+////    }
 //
 //
 ////    private void showImagePickerOptions() {
@@ -317,89 +317,89 @@
 ////    }
 ////
 ////}
-//    private static final int VIDEO_CAPTURE = 101;
-//    private Uri fileUri;
+////    private static final int VIDEO_CAPTURE = 101;
+////    private Uri fileUri;
+////
+////    public void startRecording() {
+////        Intent intent = new Intent(SignUpActivity.this, CameraHandling.class);
+////        intent.putExtra("mode", "video");
+////        startActivityForResult(intent, IMAGE_VIDEO_ACTIVITY_PICKER);
+////    }
+////
+////
+////    String user_id;
 //
-//    public void startRecording() {
-//        Intent intent = new Intent(SignUpActivity.this, CameraHandling.class);
-//        intent.putExtra("mode", "video");
-//        startActivityForResult(intent, IMAGE_VIDEO_ACTIVITY_PICKER);
-//    }
-//
-//
-//    String user_id;
-//
-//    public void UploadVideo() {
-//        if (connectionDetector.isConnectingToInternet()) {
-//            progress = new DialogUtil().showProgressDialog(this, getString(R.string.please_wait));
-//            MultipartTypedOutput multipartTypedOutput = new MultipartTypedOutput();
-//            multipartTypedOutput.addPart("user_id", new TypedString(user_id));
-//            File imageFile = new File(getRealPathFromUri(SignUpActivity.this, Video));
-//
+////    public void UploadVideo() {
+////        if (connectionDetector.isConnectingToInternet()) {
+////            progress = new DialogUtil().showProgressDialog(this, getString(R.string.please_wait));
+////            MultipartTypedOutput multipartTypedOutput = new MultipartTypedOutput();
+////            multipartTypedOutput.addPart("user_id", new TypedString(user_id));
+////            File imageFile = new File(getRealPathFromUri(SignUpActivity.this, Video));
+////
+//////            multipartTypedOutput.addPart("video_file", new TypedFile("video/mp4", imageFile));
 ////            multipartTypedOutput.addPart("video_file", new TypedFile("video/mp4", imageFile));
-//            multipartTypedOutput.addPart("video_file", new TypedFile("video/mp4", imageFile));
-//            appController.paServices.RecordedVideo(multipartTypedOutput, new Callback<VideoDM>() {
-//                @Override
-//                public void success(VideoDM videoDM, Response response) {
-//                    progress.dismiss();
-//                    Helper.showToast(SignUpActivity.this, "Video Uploaded Successfully");
-//                    finish();
-//                }
-//
-//                @Override
-//                public void failure(RetrofitError error) {
-//
-//                    progress.dismiss();
-//                    Log.e("String", error.toString());
-//                    Helper.showToast(SignUpActivity.this, "User Created Successfully");
-//                    finish();
-//
-//                }
-//            });
-//        } else
-//            Helper.showToast(SignUpActivity.this, getString(R.string.no_internet_connection));
-//    }
-//
-//    /**
-//     * Showing Alert Dialog with Settings option
-//     * Navigates user to app settings
-//     * NOTE: Keep proper title and message depending on your app
-//     */
-//    private void showSettingsDialog() {
-//        AlertDialog.Builder builder = new AlertDialog.Builder(SignUpActivity.this);
-//        builder.setTitle("Grant Permissions");
-//        builder.setMessage("This app needs permission to use this feature. You can grant them in app settings.");
-//        builder.setPositiveButton("GOTO SETTINGS", (dialog, which) -> {
-//            dialog.cancel();
-//            openSettings();
-//        });
-//        builder.setNegativeButton(getString(android.R.string.cancel), (dialog, which) -> dialog.cancel());
-//        builder.show();
-//
-//    }
-//
-//    // navigating user to app settings
-//    private void openSettings() {
-//        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-//        Uri uri = Uri.fromParts("package", getPackageName(), null);
-//        intent.setData(uri);
-//        startActivityForResult(intent, 101);
-//    }
-//
-//    public static String getRealPathFromUri(Context context, Uri contentUri) {
-//        Cursor cursor = null;
-//        try {
-//            String[] proj = {MediaStore.Images.Media.DATA};
-//            cursor = context.getContentResolver().query(contentUri, proj, null, null, null);
-//            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-//            cursor.moveToFirst();
-//            return cursor.getString(column_index);
-//        } catch (Exception e) {
-//            return contentUri.getPath();
-//        } finally {
-////            if (cursor != null) {
-////                cursor.close();
-////            }
-//        }
-//    }
+////            appController.paServices.RecordedVideo(multipartTypedOutput, new Callback<VideoDM>() {
+////                @Override
+////                public void success(VideoDM videoDM, Response response) {
+////                    progress.dismiss();
+////                    Helper.showToast(SignUpActivity.this, "Video Uploaded Successfully");
+////                    finish();
+////                }
+////
+////                @Override
+////                public void failure(RetrofitError error) {
+////
+////                    progress.dismiss();
+////                    Log.e("String", error.toString());
+////                    Helper.showToast(SignUpActivity.this, "User Created Successfully");
+////                    finish();
+////
+////                }
+////            });
+////        } else
+////            Helper.showToast(SignUpActivity.this, getString(R.string.no_internet_connection));
+////    }
+////
+////    /**
+////     * Showing Alert Dialog with Settings option
+////     * Navigates user to app settings
+////     * NOTE: Keep proper title and message depending on your app
+////     */
+////    private void showSettingsDialog() {
+////        AlertDialog.Builder builder = new AlertDialog.Builder(SignUpActivity.this);
+////        builder.setTitle("Grant Permissions");
+////        builder.setMessage("This app needs permission to use this feature. You can grant them in app settings.");
+////        builder.setPositiveButton("GOTO SETTINGS", (dialog, which) -> {
+////            dialog.cancel();
+////            openSettings();
+////        });
+////        builder.setNegativeButton(getString(android.R.string.cancel), (dialog, which) -> dialog.cancel());
+////        builder.show();
+////
+////    }
+////
+////    // navigating user to app settings
+////    private void openSettings() {
+////        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+////        Uri uri = Uri.fromParts("package", getPackageName(), null);
+////        intent.setData(uri);
+////        startActivityForResult(intent, 101);
+////    }
+////
+////    public static String getRealPathFromUri(Context context, Uri contentUri) {
+////        Cursor cursor = null;
+////        try {
+////            String[] proj = {MediaStore.Images.Media.DATA};
+////            cursor = context.getContentResolver().query(contentUri, proj, null, null, null);
+////            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+////            cursor.moveToFirst();
+////            return cursor.getString(column_index);
+////        } catch (Exception e) {
+////            return contentUri.getPath();
+////        } finally {
+//////            if (cursor != null) {
+//////                cursor.close();
+//////            }
+////        }
+////    }
 //}

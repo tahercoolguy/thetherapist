@@ -3,11 +3,14 @@ package com.master.design.therapist.Activity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.master.design.therapist.Controller.AppController;
 import com.master.design.therapist.Helper.DialogUtil;
 import com.master.design.therapist.Helper.User;
@@ -24,55 +27,82 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class LoginActivity extends AppCompatActivity implements  Validator.ValidationListener{
-    AppController appController;
-
-    Dialog progress;
-    ConnectionDetector connectionDetector;
-    User user;
-    DialogUtil dialogUtil;
-
-    @NotEmpty
-    @Email
-    @BindView(R.id.emailET)
-    EditText EmailET;
-
-    @NotEmpty
-    @BindView(R.id.passwordET)
-    EditText passwordET;
-
+//    AppController appController;
+//
+//    Dialog progress;
+//    ConnectionDetector connectionDetector;
+//    User user;
+//    DialogUtil dialogUtil;
+//
+//    @NotEmpty
+//    @Email
+//    @BindView(R.id.emailET)
+//    EditText EmailET;
+//
+//    @NotEmpty
+//    @BindView(R.id.passwordET)
+//    EditText passwordET;
+//
 //    @OnClick(R.id.signInBtn)
 //    public void SignIn()
 //    {
-//        try {
-//            if (connectionDetector.isConnectingToInternet()) {
-//                isValid();
-//                if (o) {
-//                    MultipartTypedOutput multipartTypedOutput = new MultipartTypedOutput();
 //
-//                    multipartTypedOutput.addPart("email",new TypedString(EmailET.getText().toString()));
-//                    multipartTypedOutput.addPart("password",new TypedString(passwordET.getText().toString()));
-//
-//                    appController.paServices.SignUp(multipartTypedOutput, new Callback<SignUpDM>() {
-//                        @Override
-//                        public void success(SignUpDM signUpDM, Response response) {
-//                            Intent intent=new Intent(LoginActivity.this,MainActivity.class);
-//                            startActivity(intent);
-//                        }
-//
-//                        @Override
-//                        public void failure(RetrofitError error) {
-//
-//                        }
-//                    });
-//                }
-//            } else
-//                Helper.showToast(LoginActivity.this, getString(R.string.no_internet_connection));
-//        }catch (Exception e)
+//        if(connectionDetector.isConnectingToInternet())
 //        {
 //
-//        }
+//            boolean correct = true;
+//            if(emailET.getText().toString().equalsIgnoreCase(""))
+//            {
+//                correct=false;
+//                Helper.showToast(LoginActivity.this,"kindly enter your email");
+//            }
+//
+//            else if(passwordET.getText().toString().equalsIgnoreCase(""))
+//            {
+//                correct=false;
+//                Helper.showToast(LoginActivity.this,"kindly enter your password");
+//            }
+//
+//            else if (correct) {
+//                String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+//
+//                progress = dialogUtil.showProgressDialog(LoginActivity.this, getString(R.string.please_wait));
+//
+//                appController.paServices.CustomerLogin(emailET.getText().toString(), passwordET.getText().toString(),
+//                        "2", refreshedToken, new Callback<CustomerRegisterDM>() {
+//
+//                            @Override
+//
+//                            public void success ( CustomerRegisterDM customerRegisterDM, Response response ) {
+//                                progress.dismiss();
+//                                if (customerRegisterDM.getStatus().equalsIgnoreCase("1")) {
+////                        Helper.shwToast(LoginActivity.this,customerRegisterDM.getMessage());
+//                                    user.setId(Integer.valueOf(customerRegisterDM.getCustomerID()));
+//
+//                                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+//                                    finish();
+//
+//                                } else
+//                                    Helper.showToast(LoginActivity.this, customerRegisterDM.getMessage());
+//                            }
+//
+//                            @Override
+//                            public void failure ( RetrofitError retrofitError ) {
+//                                progress.dismiss();
+//
+//                                Log.e("error", retrofitError.toString());
+//
+//                            }
+//                        });
+//            }
+//        }else
+//            Helper.showToast(LoginActivity.this,getString(R.string.no_internet_connection));
+//
 //
 //    }
 
@@ -94,10 +124,10 @@ public class LoginActivity extends AppCompatActivity implements  Validator.Valid
 
 
         ButterKnife.bind(this);
-        dialogUtil = new DialogUtil();
-        appController = (AppController) getApplicationContext();
-        connectionDetector = new ConnectionDetector(getApplicationContext());
-        user = new User(LoginActivity.this);
+//        dialogUtil = new DialogUtil();
+//        appController = (AppController) getApplicationContext();
+//        connectionDetector = new ConnectionDetector(getApplicationContext());
+//        user = new User(LoginActivity.this);
         validator=new Validator(this);
         validator.setValidationListener(this);
 

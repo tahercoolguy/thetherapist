@@ -2,24 +2,32 @@ package com.master.design.therapist.Activity;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.master.design.therapist.Controller.AppController;
+import com.master.design.therapist.Helper.DialogUtil;
+import com.master.design.therapist.Helper.Helper;
+import com.master.design.therapist.Helper.User;
 import com.master.design.therapist.R;
+import com.master.design.therapist.Utils.ConnectionDetector;
 
 import java.io.IOException;
 import java.util.List;
@@ -27,11 +35,17 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit.RetrofitError;
 
 public class About_You_Activity extends AppCompatActivity {
 
     private Activity activity;
     private Context context;
+    AppController appController;
+    ConnectionDetector connectionDetector;
+    User user;
+    DialogUtil dialogUtil;
+    Dialog progress;
 
     @BindView(R.id.profileCircleImg)
     RoundedImageView profileCircleImg;
@@ -41,6 +55,10 @@ public class About_You_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_you);
         ButterKnife.bind(this);
+        appController = (AppController)  getApplicationContext();
+        connectionDetector = new ConnectionDetector(About_You_Activity.this);
+        user = new User(About_You_Activity.this);
+        dialogUtil = new DialogUtil();
         context = this.getApplicationContext();
         activity = this;
     }
@@ -52,10 +70,49 @@ public class About_You_Activity extends AppCompatActivity {
     }
 
     @OnClick(R.id.signUpTxt)
-    public void clicksignUpTxt() {
-        startActivity(new Intent(About_You_Activity.this, ThankYouActivity.class));
-        overridePendingTransition(R.anim.fade_in, R.anim.fade_in);
+    public void clicksignUpTxt()
+    {
+
+//        if(connectionDetector.isConnectingToInternet())
+//        {
+//            String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+//            progress = dialogUtil.showProgressDialog(About_You_Activity.this,getString(R.string.please_wait));
+//
+//                appController.paServices.TherapistRegister(userNameET.getText().toString(), date.getText().toString(), selectCountryET.getText().toString(), gender.getText().toString(), ethnicityyET.getText().toString(), emailEt.getText().toString(), passwordET.getText().toString(), confirmPasswordET.getText().toString(),, new Callback<TherapistRegisterDM>() {
+//                    @Override
+//
+//                    public void success (TherapistRegisterDM therapistRegisterDM, Response response ) {
+//                        progress.dismiss();
+//                        if (therapistRegisterDM.getStatus().equalsIgnoreCase("1") ){
+//
+//
+//                            user.setId(Integer.valueOf(therapistRegisterDM.getCustomerID()));
+//
+//
+//                            startActivity(new Intent(About_You_Activity.this, ThankYouActivity.class));
+//                            overridePendingTransition(R.anim.fade_in, R.anim.fade_in);
+//
+//                        } else
+//                            Helper.showToast(About_You_Activity.this, customerRegisterDM.getMessage());
+//                    }
+//
+//                    @Override
+//                    public void failure ( RetrofitError retrofitError ) {
+//                        progress.dismiss();
+//                        Log.e("error", retrofitError.toString());
+//
+//                    }
+//                });
+//
+//        }else
+//            Helper.showToast(Create_Account_Activity.this,getString(R.string.no_internet_connection));
+//
+
+
+//        startActivity(new Intent(About_You_Activity.this, ThankYouActivity.class));
+//        overridePendingTransition(R.anim.fade_in, R.anim.fade_in);
     }
+
 
     @OnClick(R.id.addImgRL)
     public void clickAddImgRL() {

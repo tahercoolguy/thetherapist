@@ -4,6 +4,14 @@ package com.master.design.therapist.Services;
 //import io.opencensus.stats.Stats;
 
 
+import com.master.design.therapist.DataModel.TherapistLoginDM;
+import com.master.design.therapist.DataModel.TherapistRegisterDM;
+
+import retrofit.Callback;
+import retrofit.http.Field;
+import retrofit.http.FormUrlEncoded;
+import retrofit.http.POST;
+
 public interface PAServices {
 //    @Headers("Cache-Control: no-cache;")
 //    @POST("/auth/signin")
@@ -37,5 +45,30 @@ public interface PAServices {
 //    @Headers("Cache-Control: no-cache;")
 //    @GET("/user/view_shops")
 //    void Shops(Callback<ShopsDM> shopsDMCallback);
+
+
+    // 1
+    @FormUrlEncoded
+    @POST("/register")
+    public void TherapistRegister(@Field("name") String name,
+                                 @Field("dob") String dob,
+                                 @Field("country") String country,
+                                 @Field("gender") String gender,
+                                 @Field("ethnicity") String ethnicity,
+                                 @Field("email") String email,
+                                  @Field("password") String password,
+                                 @Field("ConfirmPassword") String ConfirmPassword,
+                                 @Field("interests") String interests,
+                                 @Field("about_you") String about_you,
+
+                                 Callback<TherapistRegisterDM> therapistRegisterDMCallback);
+
+    // 2
+    @FormUrlEncoded
+    @POST("/login")
+    public void TherapistLogin(@Field("email") String email,
+                                  @Field("password") String password,
+
+                               Callback<TherapistLoginDM> therapistLoginDMCallback);
 
 }
