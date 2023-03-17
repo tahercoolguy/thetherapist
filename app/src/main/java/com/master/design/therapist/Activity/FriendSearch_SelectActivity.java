@@ -1,9 +1,11 @@
 package com.master.design.therapist.Activity;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,22 +13,40 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.master.design.therapist.Adapter.Adapter_Interest;
 import com.master.design.therapist.Adapter.Adapter_Search;
 import com.master.design.therapist.Adapter.Adapter_Search_Select;
+import com.master.design.therapist.Adapter.Adapter_Search_Select1;
+import com.master.design.therapist.Controller.AppController;
 import com.master.design.therapist.DM.InterestDM;
 import com.master.design.therapist.DM.SearchDM;
+import com.master.design.therapist.DataModel.TherapistAgeDM;
+import com.master.design.therapist.DataModel.TherapistLoginDM;
+import com.master.design.therapist.Helper.DialogUtil;
+import com.master.design.therapist.Helper.User;
 import com.master.design.therapist.R;
+import com.master.design.therapist.Utils.ConnectionDetector;
+import com.master.design.therapist.Utils.Helper;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class FriendSearch_SelectActivity extends AppCompatActivity {
 
     private Context context;
+    AppController appController;
+
+    Dialog progress;
+    ConnectionDetector connectionDetector;
+    User user;
+    DialogUtil dialogUtil;
 
     @BindView(R.id.rcvRcv)
     RecyclerView rcvRcv;
@@ -42,6 +62,11 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend_search);
         ButterKnife.bind(this);
+        dialogUtil = new DialogUtil();
+        appController = (AppController) getApplicationContext();
+        connectionDetector = new ConnectionDetector(getApplicationContext());
+        user = new User(FriendSearch_SelectActivity.this);
+
         context = getApplicationContext();
         startSearchingTxt.setText(getString(R.string.selectt));
         getIntentData();
@@ -89,22 +114,39 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
         }
     }
 
-    @SuppressLint("SetTextI18n")
-    private void setPositionData(String position) {
+    @SuppressLint({"SetTextI18n", "SuspiciousIndentation"})
+    private void setPositionData(String position)
+    {
 
-        if (position.equalsIgnoreCase("string1")) {
+        if (position.equalsIgnoreCase("string1"))
+        {
 
             tittleTxt.setText(getString(R.string.age_rangee));
 
-            ArrayList<SearchDM> searchDMArrayList = new ArrayList<>();
-            searchDMArrayList.add(new SearchDM("", "20-35"));
-            searchDMArrayList.add(new SearchDM("", "20-35"));
-            searchDMArrayList.add(new SearchDM("", "20-35"));
-            searchDMArrayList.add(new SearchDM("", "20-35"));
-            searchDMArrayList.add(new SearchDM("", "20-35"));
+//            ArrayList<SearchDM> searchDMArrayList = new ArrayList<>();
+//            searchDMArrayList.add(new SearchDM("", "20-35"));
+//            searchDMArrayList.add(new SearchDM("", "20-35"));
+//            searchDMArrayList.add(new SearchDM("", "20-35"));
+//            searchDMArrayList.add(new SearchDM("", "20-35"));
+//            searchDMArrayList.add(new SearchDM("", "20-35"));
+
+            if(connectionDetector.isConnectingToInternet())
+            {
+
+                String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+
+                progress = dialogUtil.showProgressDialog(FriendSearch_SelectActivity.this, getString(R.string.please_wait));
+
+                appController.paServices.TherapistAge( new Callback<TherapistAgeDM>() {
+
+                    @Override
+
+                    public void success ( TherapistAgeDM therapistAgeDM, Response response ) {
+                        progress.dismiss();
+                        if (therapistAgeDM.getStatus().equalsIgnoreCase("1")) {
 
 
-            Adapter_Search_Select adapter_search = new Adapter_Search_Select(context, searchDMArrayList);
+            Adapter_Search_Select1 adapter_search = new Adapter_Search_Select1(context, therapistAgeDM.getDetails());
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
             rcvRcv.setLayoutManager(linearLayoutManager);
             rcvRcv.setAdapter(adapter_search);
@@ -117,8 +159,32 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
                     setResult(RESULT_OK, intent);
                  }
             });
+                        } else
+                            Helper.showToast(FriendSearch_SelectActivity.this, getString(R.string.user_login_failed));
+                    }
+
+                    @Override
+                    public void failure ( RetrofitError retrofitError ) {
+                        progress.dismiss();
+
+                        Log.e("error", retrofitError.toString());
+
+                    }
+                });
+
+        }else
+            Helper.showToast(FriendSearch_SelectActivity.this,getString(R.string.no_internet_connection));
+
+
+
 
         }
+
+
+
+
+
+
 
         if (position.equalsIgnoreCase("string2")) {
             tittleTxt.setText(getString(R.string.gender_));

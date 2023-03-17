@@ -64,7 +64,8 @@ public class Sign_InActivity extends AppCompatActivity {
                 Helper.showToast(Sign_InActivity.this,"kindly enter your password");
             }
 
-            else if (correct) {
+            else if (correct)
+            {
                 String refreshedToken = FirebaseInstanceId.getInstance().getToken();
 
                 progress = dialogUtil.showProgressDialog(Sign_InActivity.this, getString(R.string.please_wait));

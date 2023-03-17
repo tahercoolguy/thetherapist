@@ -1,11 +1,11 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
     defaultConfig {
         applicationId "com.master.design.therapist"
         minSdkVersion 24
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -145,9 +145,7 @@ dependencies {
 
     implementation 'com.github.codecameo:ImageSlider:1.0'
 
-    implementation 'com.github.denzcoskun:ImageSlideshow:0.0.6'
 
-    implementation 'com.github.denzcoskun:ImageSlideshow:0.0.6'
 
     implementation 'com.github.shts:StoriesProgressView:3.0.0'
 //

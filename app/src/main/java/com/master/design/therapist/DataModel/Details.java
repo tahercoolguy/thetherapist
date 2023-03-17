@@ -13,7 +13,24 @@ public class Details {
     private String interests;
     private String email;
     private String confirm_password;
+    private String  age_eg;
+    private String  age_arb;
 
+    public String getAge_eg() {
+        return age_eg;
+    }
+
+    public void setAge_eg(String age_eg) {
+        this.age_eg = age_eg;
+    }
+
+    public String getAge_arb() {
+        return age_arb;
+    }
+
+    public void setAge_arb(String age_arb) {
+        this.age_arb = age_arb;
+    }
 
     public String getCountry() {
         return country;

@@ -4,12 +4,14 @@ package com.master.design.therapist.Services;
 //import io.opencensus.stats.Stats;
 
 
+import com.master.design.therapist.DataModel.TherapistAgeDM;
 import com.master.design.therapist.DataModel.TherapistLoginDM;
 import com.master.design.therapist.DataModel.TherapistRegisterDM;
 
 import retrofit.Callback;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
+import retrofit.http.GET;
 import retrofit.http.POST;
 
 public interface PAServices {
@@ -70,5 +72,9 @@ public interface PAServices {
                                   @Field("password") String password,
 
                                Callback<TherapistLoginDM> therapistLoginDMCallback);
+
+    // 3
+    @GET("/age")
+    public void TherapistAge(Callback<TherapistAgeDM> therapistAgeDMCallback);
 
 }
