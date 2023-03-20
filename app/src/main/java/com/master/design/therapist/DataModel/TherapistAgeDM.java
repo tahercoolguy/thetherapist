@@ -5,15 +5,15 @@ import java.util.List;
 
 public class TherapistAgeDM {
 
-    private ArrayList<Details> details;
+    private ArrayList<Age_details> age_details;
     private String status;
 
-    public ArrayList<Details> getDetails() {
-        return details;
+    public ArrayList<Age_details> getAge_details() {
+        return age_details;
     }
 
-    public void setDetails(ArrayList<Details> details) {
-        this.details = details;
+    public void setAge_details(ArrayList<Age_details> age_details) {
+        this.age_details = age_details;
     }
 
     public String getStatus() {

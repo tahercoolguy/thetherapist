@@ -4,7 +4,9 @@ package com.master.design.therapist.Services;
 //import io.opencensus.stats.Stats;
 
 
+import com.master.design.therapist.Adapter.TherapistEducationDM;
 import com.master.design.therapist.DataModel.TherapistAgeDM;
+import com.master.design.therapist.DataModel.TherapistGenderDM;
 import com.master.design.therapist.DataModel.TherapistLoginDM;
 import com.master.design.therapist.DataModel.TherapistRegisterDM;
 
@@ -76,5 +78,13 @@ public interface PAServices {
     // 3
     @GET("/age")
     public void TherapistAge(Callback<TherapistAgeDM> therapistAgeDMCallback);
+
+    // 4
+    @GET("/gender")
+    public void TherapistGender(Callback<TherapistGenderDM> therapistGenderDMCallback);
+
+    // 5
+    @GET("/education")
+    public void TherapistEducation(Callback<TherapistEducationDM> therapistEducationDMCallback);
 
 }

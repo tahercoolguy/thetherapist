@@ -16,16 +16,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.master.design.therapist.DM.SearchDM;
 import com.master.design.therapist.DataModel.Age_details;
-import com.master.design.therapist.DataModel.Details;
+import com.master.design.therapist.DataModel.Gender_details;
 import com.master.design.therapist.Helper.User;
 import com.master.design.therapist.R;
 
 import java.util.ArrayList;
 
-public class Adapter_Search_Select1 extends RecyclerView.Adapter<Adapter_Search_Select1.ViewHolder>  {
+public class Adapter_Search_Select_Gender extends RecyclerView.Adapter<Adapter_Search_Select_Gender.ViewHolder>{
 
     private Context context;
-    private ArrayList<Age_details> arrayList;
+    private ArrayList<Gender_details> arrayList;
     private SearchDM selected;
     User user;
     Adapter_Search_Select.OnItemClickListener onItemClickListener;
@@ -33,7 +33,7 @@ public class Adapter_Search_Select1 extends RecyclerView.Adapter<Adapter_Search_
 
     int selectedPosition = 0;
 
-    public Adapter_Search_Select1(Context context, ArrayList<Age_details> arrayList) {
+    public Adapter_Search_Select_Gender(Context context, ArrayList<Gender_details> arrayList) {
         this.context = context;
         this.arrayList = arrayList;
         user = new User(context);
@@ -43,15 +43,15 @@ public class Adapter_Search_Select1 extends RecyclerView.Adapter<Adapter_Search_
 
     @NonNull
     @Override
-    public Adapter_Search_Select1.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public Adapter_Search_Select_Gender.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.custum_item_search, parent, false);
         // set the view's size, margins, paddings and layout parameters
-        Adapter_Search_Select1.ViewHolder vh = new Adapter_Search_Select1.ViewHolder(v);
+        Adapter_Search_Select_Gender.ViewHolder vh = new Adapter_Search_Select_Gender.ViewHolder(v);
         return vh;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull Adapter_Search_Select1.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull Adapter_Search_Select_Gender.ViewHolder holder, int position) {
         setDetails(holder, position);
     }
 
@@ -66,7 +66,7 @@ public class Adapter_Search_Select1 extends RecyclerView.Adapter<Adapter_Search_
     }
 
 
-    private void setDetails(Adapter_Search_Select1.ViewHolder viewHolder, int position) {
+    private void setDetails(Adapter_Search_Select_Gender.ViewHolder viewHolder, int position) {
 
         Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
         new Handler().postDelayed(new Runnable() {
@@ -82,7 +82,7 @@ public class Adapter_Search_Select1 extends RecyclerView.Adapter<Adapter_Search_
 
 //        viewHolder.mainTxt.setText(arrayList.get(position).getHead());
 
-        viewHolder.smallTxt.setText(arrayList.get(position).getAge_eg());
+        viewHolder.smallTxt.setText(arrayList.get(position).getGender());
 
         viewHolder.mainTxt.setVisibility(View.GONE);
         viewHolder.smallTxt.setGravity(Gravity.CENTER);

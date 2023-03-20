@@ -118,6 +118,7 @@
     <string name="your_account_will_be_deleted">Your Account will be Deleted </string>
     <string name="take_a_picture">Take a picture</string>
     <string name="record_a_video">Record a Video</string>
+     <string name="Api_data_not_found">Api data not found</string>
     <string name="image_picker_option_is_missing">Image picker option is missing</string>
     <string name="sorry_your_camera_does_not_support">Sorry! Your device doesn\'t support camera</string>
     <string name="kindly_capture_some_media">Kindly Capture some media</string>

@@ -18,10 +18,14 @@ import com.master.design.therapist.Adapter.Adapter_Interest;
 import com.master.design.therapist.Adapter.Adapter_Search;
 import com.master.design.therapist.Adapter.Adapter_Search_Select;
 import com.master.design.therapist.Adapter.Adapter_Search_Select1;
+import com.master.design.therapist.Adapter.Adapter_Search_Select_Education;
+import com.master.design.therapist.Adapter.Adapter_Search_Select_Gender;
+import com.master.design.therapist.Adapter.TherapistEducationDM;
 import com.master.design.therapist.Controller.AppController;
 import com.master.design.therapist.DM.InterestDM;
 import com.master.design.therapist.DM.SearchDM;
 import com.master.design.therapist.DataModel.TherapistAgeDM;
+import com.master.design.therapist.DataModel.TherapistGenderDM;
 import com.master.design.therapist.DataModel.TherapistLoginDM;
 import com.master.design.therapist.Helper.DialogUtil;
 import com.master.design.therapist.Helper.User;
@@ -146,7 +150,7 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
                         if (therapistAgeDM.getStatus().equalsIgnoreCase("1")) {
 
 
-            Adapter_Search_Select1 adapter_search = new Adapter_Search_Select1(context, therapistAgeDM.getDetails());
+            Adapter_Search_Select1 adapter_search = new Adapter_Search_Select1(context, therapistAgeDM.getAge_details());
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
             rcvRcv.setLayoutManager(linearLayoutManager);
             rcvRcv.setAdapter(adapter_search);
@@ -160,7 +164,7 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
                  }
             });
                         } else
-                            Helper.showToast(FriendSearch_SelectActivity.this, getString(R.string.user_login_failed));
+                            Helper.showToast(FriendSearch_SelectActivity.this, getString(R.string.Api_data_not_found));
                     }
 
                     @Override
@@ -189,13 +193,28 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
         if (position.equalsIgnoreCase("string2")) {
             tittleTxt.setText(getString(R.string.gender_));
 
-            ArrayList<SearchDM> searchDMArrayList = new ArrayList<>();
-            searchDMArrayList.add(new SearchDM("", "Male"));
-            searchDMArrayList.add(new SearchDM("", "Female"));
-            searchDMArrayList.add(new SearchDM("", "Both"));
+//            ArrayList<SearchDM> searchDMArrayList = new ArrayList<>();
+//            searchDMArrayList.add(new SearchDM("", "Male"));
+//            searchDMArrayList.add(new SearchDM("", "Female"));
+//            searchDMArrayList.add(new SearchDM("", "Both"));
+
+            if(connectionDetector.isConnectingToInternet())
+            {
+
+                String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+
+                progress = dialogUtil.showProgressDialog(FriendSearch_SelectActivity.this, getString(R.string.please_wait));
+
+                appController.paServices.TherapistGender( new Callback<TherapistGenderDM>() {
+
+                    @Override
+
+                    public void success ( TherapistGenderDM therapistGenderDM, Response response ) {
+                        progress.dismiss();
+                        if (therapistGenderDM.getStatus().equalsIgnoreCase("1")) {
 
 
-            Adapter_Search_Select adapter_search = new Adapter_Search_Select(context, searchDMArrayList);
+            Adapter_Search_Select_Gender adapter_search = new Adapter_Search_Select_Gender(context, therapistGenderDM.getGender_details());
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
             rcvRcv.setLayoutManager(linearLayoutManager);
             rcvRcv.setAdapter(adapter_search);
@@ -209,6 +228,25 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
                     setResult(RESULT_OK, intent);
                  }
             });
+
+                        } else
+                            Helper.showToast(FriendSearch_SelectActivity.this, getString(R.string.Api_data_not_found));
+                    }
+
+                    @Override
+                    public void failure ( RetrofitError retrofitError ) {
+                        progress.dismiss();
+
+                        Log.e("error", retrofitError.toString());
+
+                    }
+                });
+
+            }else
+                Helper.showToast(FriendSearch_SelectActivity.this,getString(R.string.no_internet_connection));
+
+
+
         }
         if (position.equalsIgnoreCase("string3") ) {
             tittleTxt.setText(getString(R.string.interestt));
@@ -281,14 +319,29 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
         if (position.equalsIgnoreCase("string5")) {
             tittleTxt.setText(getString(R.string.education));
 
-            ArrayList<SearchDM> searchDMArrayList = new ArrayList<>();
-            searchDMArrayList.add(new SearchDM("", "High School"));
-            searchDMArrayList.add(new SearchDM("", "Graduate"));
-            searchDMArrayList.add(new SearchDM("", "Post Graduate"));
-            searchDMArrayList.add(new SearchDM("", "PHD"));
+//            ArrayList<SearchDM> searchDMArrayList = new ArrayList<>();
+//            searchDMArrayList.add(new SearchDM("", "High School"));
+//            searchDMArrayList.add(new SearchDM("", "Graduate"));
+//            searchDMArrayList.add(new SearchDM("", "Post Graduate"));
+//            searchDMArrayList.add(new SearchDM("", "PHD"));
+
+            if(connectionDetector.isConnectingToInternet())
+            {
+
+                String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+
+                progress = dialogUtil.showProgressDialog(FriendSearch_SelectActivity.this, getString(R.string.please_wait));
+
+                appController.paServices.TherapistEducation( new Callback<TherapistEducationDM>() {
+
+                    @Override
+
+                    public void success (TherapistEducationDM therapistEducationDM, Response response ) {
+                        progress.dismiss();
+                        if (therapistEducationDM.getStatus().equalsIgnoreCase("1")) {
 
 
-            Adapter_Search_Select adapter_search = new Adapter_Search_Select(context, searchDMArrayList);
+            Adapter_Search_Select_Education adapter_search = new Adapter_Search_Select_Education(context,therapistEducationDM.getEducation_details());
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
             rcvRcv.setLayoutManager(linearLayoutManager);
             rcvRcv.setAdapter(adapter_search);
@@ -301,6 +354,25 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
                     setResult(RESULT_OK, intent);
                  }
             });
+
+                        } else
+                            Helper.showToast(FriendSearch_SelectActivity.this, getString(R.string.Api_data_not_found));
+                    }
+
+                    @Override
+                    public void failure ( RetrofitError retrofitError ) {
+                        progress.dismiss();
+
+                        Log.e("error", retrofitError.toString());
+
+                    }
+                });
+
+            }else
+                Helper.showToast(FriendSearch_SelectActivity.this,getString(R.string.no_internet_connection));
+
+
+
 
         }
 
