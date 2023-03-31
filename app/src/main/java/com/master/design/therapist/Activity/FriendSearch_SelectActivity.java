@@ -15,17 +15,21 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.master.design.therapist.Adapter.Adapter_Interest;
+import com.master.design.therapist.Adapter.Adapter_Interest_new;
 import com.master.design.therapist.Adapter.Adapter_Search;
 import com.master.design.therapist.Adapter.Adapter_Search_Select;
 import com.master.design.therapist.Adapter.Adapter_Search_Select1;
 import com.master.design.therapist.Adapter.Adapter_Search_Select_Education;
+import com.master.design.therapist.Adapter.Adapter_Search_Select_Ethnic;
 import com.master.design.therapist.Adapter.Adapter_Search_Select_Gender;
 import com.master.design.therapist.Adapter.TherapistEducationDM;
 import com.master.design.therapist.Controller.AppController;
 import com.master.design.therapist.DM.InterestDM;
 import com.master.design.therapist.DM.SearchDM;
 import com.master.design.therapist.DataModel.TherapistAgeDM;
+import com.master.design.therapist.DataModel.TherapistEthnicDM;
 import com.master.design.therapist.DataModel.TherapistGenderDM;
+import com.master.design.therapist.DataModel.TherapistInterestDM;
 import com.master.design.therapist.DataModel.TherapistLoginDM;
 import com.master.design.therapist.Helper.DialogUtil;
 import com.master.design.therapist.Helper.User;
@@ -44,13 +48,26 @@ import retrofit.client.Response;
 
 public class FriendSearch_SelectActivity extends AppCompatActivity {
 
-    private Context context;
+
     AppController appController;
 
     Dialog progress;
     ConnectionDetector connectionDetector;
     User user;
     DialogUtil dialogUtil;
+
+    String username;
+    String date;
+    String selectCountry;
+    String gender;
+    String ethenicity;
+    String mobilenumber;
+    String email;
+    String password;
+    String confirmPassword;
+
+
+    public String InterestIdList="";
 
     @BindView(R.id.rcvRcv)
     RecyclerView rcvRcv;
@@ -60,6 +77,7 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
 
     @BindView(R.id.startSearchingTxt)
     TextView startSearchingTxt;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,14 +89,24 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
         connectionDetector = new ConnectionDetector(getApplicationContext());
         user = new User(FriendSearch_SelectActivity.this);
 
-        context = getApplicationContext();
+        username=getIntent().getStringExtra("userName");
+        date=getIntent().getStringExtra("date");
+        selectCountry=getIntent().getStringExtra("selectCountry");
+        gender=getIntent().getStringExtra("gender");
+        ethenicity=getIntent().getStringExtra("ethnicity");
+        mobilenumber=getIntent().getStringExtra("mobileNumber");
+        email=getIntent().getStringExtra("email");
+        password=getIntent().getStringExtra("password");
+        confirmPassword=getIntent().getStringExtra("confirmPassword");
+
+
         startSearchingTxt.setText(getString(R.string.selectt));
         getIntentData();
     }
 
     String position0, position1, position2, position3, position4 ,string33;
 
-    private void getIntentData() {
+    public void getIntentData() {
         Intent intent = getIntent();
         if (intent != null) {
             position0 = intent.getStringExtra("string1");
@@ -102,24 +130,46 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
             }
             if (position4 != null) {
                 setPositionData(position4);
+            }
             }  if (string33 != null) {
                 setPositionData(string33);
             }
 
         }
 
-    }
+
 
     @OnClick(R.id.startSearchingTxt)
     public void clickstartSearchingTxt(){
         if(string33!=null){
-            startActivity(new Intent(FriendSearch_SelectActivity.this, About_You_Activity.class));
+            if (!InterestIdList.equalsIgnoreCase("")) {
+                Intent intent = new Intent(FriendSearch_SelectActivity.this, About_You_Activity.class);
+                intent.putExtra("userName", username);
+                intent.putExtra("date", date);
+                intent.putExtra("selectCountry", selectCountry);
+                intent.putExtra("gender", gender);
+                intent.putExtra("ethnicity", ethenicity);
+                intent.putExtra("mobileNumber", mobilenumber);
+                intent.putExtra("email", email);
+                intent.putExtra("password", password);
+                intent.putExtra("confirmPassword", confirmPassword);
+                intent.putExtra("InterestIdlist", InterestIdList);
+                startActivity(intent);
+            }
+            else
+            {
+              Helper.showToast(FriendSearch_SelectActivity.this, getString(R.string.kindly_select_interest));
+            }
+
+
+
+//            startActivity(new Intent(FriendSearch_SelectActivity.this, About_You_Activity.class));
             overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
         }
     }
 
     @SuppressLint({"SetTextI18n", "SuspiciousIndentation"})
-    private void setPositionData(String position)
+    public void setPositionData(String position)
     {
 
         if (position.equalsIgnoreCase("string1"))
@@ -150,8 +200,8 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
                         if (therapistAgeDM.getStatus().equalsIgnoreCase("1")) {
 
 
-            Adapter_Search_Select1 adapter_search = new Adapter_Search_Select1(context, therapistAgeDM.getAge_details());
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
+            Adapter_Search_Select1 adapter_search = new Adapter_Search_Select1(FriendSearch_SelectActivity.this, therapistAgeDM.getAge_details());
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(FriendSearch_SelectActivity.this);
             rcvRcv.setLayoutManager(linearLayoutManager);
             rcvRcv.setAdapter(adapter_search);
             adapter_search.setOnItemClickListener(new Adapter_Search_Select.OnItemClickListener() {
@@ -214,8 +264,8 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
                         if (therapistGenderDM.getStatus().equalsIgnoreCase("1")) {
 
 
-            Adapter_Search_Select_Gender adapter_search = new Adapter_Search_Select_Gender(context, therapistGenderDM.getGender_details());
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
+            Adapter_Search_Select_Gender adapter_search = new Adapter_Search_Select_Gender(FriendSearch_SelectActivity.this, therapistGenderDM.getGender_details());
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(FriendSearch_SelectActivity.this);
             rcvRcv.setLayoutManager(linearLayoutManager);
             rcvRcv.setAdapter(adapter_search);
 
@@ -252,34 +302,50 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
             tittleTxt.setText(getString(R.string.interestt));
             startSearchingTxt.setText(R.string.continue_);
 
-            ArrayList<InterestDM> interestDMArrayList = new ArrayList<>();
-            interestDMArrayList.add(new InterestDM("Film", R.drawable.film));
-            interestDMArrayList.add(new InterestDM("Music", R.drawable.film));
-            interestDMArrayList.add(new InterestDM("Books", R.drawable.film));
-            interestDMArrayList.add(new InterestDM("Arts", R.drawable.film));
-            interestDMArrayList.add(new InterestDM("Games", R.drawable.film));
-            interestDMArrayList.add(new InterestDM("Computer", R.drawable.film));
-            interestDMArrayList.add(new InterestDM("Poem", R.drawable.film));
-            interestDMArrayList.add(new InterestDM("Social Media", R.drawable.film));
-            interestDMArrayList.add(new InterestDM("Pets", R.drawable.film));
-            interestDMArrayList.add(new InterestDM("Bars", R.drawable.film));
-            interestDMArrayList.add(new InterestDM("Books", R.drawable.film));
-            interestDMArrayList.add(new InterestDM("Sports", R.drawable.film));
-            interestDMArrayList.add(new InterestDM("Film", R.drawable.film));
-            interestDMArrayList.add(new InterestDM("Music", R.drawable.film));
-            interestDMArrayList.add(new InterestDM("Books", R.drawable.film));
-            interestDMArrayList.add(new InterestDM("Arts", R.drawable.film));
-            interestDMArrayList.add(new InterestDM("Games", R.drawable.film));
-            interestDMArrayList.add(new InterestDM("Computer", R.drawable.film));
-            interestDMArrayList.add(new InterestDM("Poem", R.drawable.film));
-            interestDMArrayList.add(new InterestDM("Social Media", R.drawable.film));
-            interestDMArrayList.add(new InterestDM("Pets", R.drawable.film));
-            interestDMArrayList.add(new InterestDM("Bars", R.drawable.film));
-            interestDMArrayList.add(new InterestDM("Books", R.drawable.film));
-            interestDMArrayList.add(new InterestDM("Sports", R.drawable.film));
+//            ArrayList<InterestDM> interestDMArrayList = new ArrayList<>();
+//            interestDMArrayList.add(new InterestDM("Film", R.drawable.film));
+//            interestDMArrayList.add(new InterestDM("Music", R.drawable.film));
+//            interestDMArrayList.add(new InterestDM("Books", R.drawable.film));
+//            interestDMArrayList.add(new InterestDM("Arts", R.drawable.film));
+//            interestDMArrayList.add(new InterestDM("Games", R.drawable.film));
+//            interestDMArrayList.add(new InterestDM("Computer", R.drawable.film));
+//            interestDMArrayList.add(new InterestDM("Poem", R.drawable.film));
+//            interestDMArrayList.add(new InterestDM("Social Media", R.drawable.film));
+//            interestDMArrayList.add(new InterestDM("Pets", R.drawable.film));
+//            interestDMArrayList.add(new InterestDM("Bars", R.drawable.film));
+//            interestDMArrayList.add(new InterestDM("Books", R.drawable.film));
+//            interestDMArrayList.add(new InterestDM("Sports", R.drawable.film));
+//            interestDMArrayList.add(new InterestDM("Film", R.drawable.film));
+//            interestDMArrayList.add(new InterestDM("Music", R.drawable.film));
+//            interestDMArrayList.add(new InterestDM("Books", R.drawable.film));
+//            interestDMArrayList.add(new InterestDM("Arts", R.drawable.film));
+//            interestDMArrayList.add(new InterestDM("Games", R.drawable.film));
+//            interestDMArrayList.add(new InterestDM("Computer", R.drawable.film));
+//            interestDMArrayList.add(new InterestDM("Poem", R.drawable.film));
+//            interestDMArrayList.add(new InterestDM("Social Media", R.drawable.film));
+//            interestDMArrayList.add(new InterestDM("Pets", R.drawable.film));
+//            interestDMArrayList.add(new InterestDM("Bars", R.drawable.film));
+//            interestDMArrayList.add(new InterestDM("Books", R.drawable.film));
+//            interestDMArrayList.add(new InterestDM("Sports", R.drawable.film));
 
-            Adapter_Interest adapter_interest = new Adapter_Interest(context, interestDMArrayList);
-            GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2);
+            if(connectionDetector.isConnectingToInternet())
+            {
+
+                String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+
+                progress = dialogUtil.showProgressDialog(FriendSearch_SelectActivity.this, getString(R.string.please_wait));
+
+                appController.paServices.TherapistInterest( new Callback<TherapistInterestDM>() {
+
+                    @Override
+
+                    public void success ( TherapistInterestDM therapistInterestDM, Response response ) {
+                        progress.dismiss();
+                        if (therapistInterestDM.getStatus().equalsIgnoreCase("1")) {
+
+
+            Adapter_Interest adapter_interest = new Adapter_Interest(FriendSearch_SelectActivity.this, therapistInterestDM.getInterest_details());
+            GridLayoutManager gridLayoutManager = new GridLayoutManager(FriendSearch_SelectActivity.this, 2);
             rcvRcv.setLayoutManager(gridLayoutManager);
             rcvRcv.setAdapter(adapter_interest);
             adapter_interest.setOnItemClickListener(new Adapter_Interest.OnItemClickListener() {
@@ -292,17 +358,55 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
                  }
             });
 
+
+
+                        } else
+                            Helper.showToast(FriendSearch_SelectActivity.this, getString(R.string.Api_data_not_found));
+                    }
+
+                    @Override
+                    public void failure ( RetrofitError retrofitError ) {
+                        progress.dismiss();
+
+                        Log.e("error", retrofitError.toString());
+
+                    }
+                });
+
+            }else
+                Helper.showToast(FriendSearch_SelectActivity.this,getString(R.string.no_internet_connection));
+
+
+
+
         }
         if (position.equalsIgnoreCase("string4")) {
             tittleTxt.setText(getString(R.string.ethic));
 
-            ArrayList<SearchDM> searchDMArrayList = new ArrayList<>();
-            searchDMArrayList.add(new SearchDM("", "arab"));
-            searchDMArrayList.add(new SearchDM("", "Indian"));
+//            ArrayList<SearchDM> searchDMArrayList = new ArrayList<>();
+//            searchDMArrayList.add(new SearchDM("", "arab"));
+//            searchDMArrayList.add(new SearchDM("", "Indian"));
 
 
-            Adapter_Search_Select adapter_search = new Adapter_Search_Select(context, searchDMArrayList);
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
+            if(connectionDetector.isConnectingToInternet())
+            {
+
+                String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+
+                progress = dialogUtil.showProgressDialog(FriendSearch_SelectActivity.this, getString(R.string.please_wait));
+
+                appController.paServices.TherapistEthnic( new Callback<TherapistEthnicDM>() {
+
+                    @Override
+
+                    public void success (TherapistEthnicDM therapistEthnicDM, Response response ) {
+                        progress.dismiss();
+                        if (therapistEthnicDM.getStatus().equalsIgnoreCase("1")) {
+
+
+
+            Adapter_Search_Select_Ethnic adapter_search = new Adapter_Search_Select_Ethnic(FriendSearch_SelectActivity.this, therapistEthnicDM.getEthnic_details());
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(FriendSearch_SelectActivity.this);
             rcvRcv.setLayoutManager(linearLayoutManager);
             rcvRcv.setAdapter(adapter_search);
 
@@ -315,6 +419,27 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
                     setResult(RESULT_OK, intent);
                  }
             });
+
+
+                        } else
+                            Helper.showToast(FriendSearch_SelectActivity.this, getString(R.string.Api_data_not_found));
+                    }
+
+                    @Override
+                    public void failure ( RetrofitError retrofitError ) {
+                        progress.dismiss();
+
+                        Log.e("error", retrofitError.toString());
+
+                    }
+                });
+
+            }else
+                Helper.showToast(FriendSearch_SelectActivity.this,getString(R.string.no_internet_connection));
+
+
+
+
         }
         if (position.equalsIgnoreCase("string5")) {
             tittleTxt.setText(getString(R.string.education));
@@ -341,8 +466,8 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
                         if (therapistEducationDM.getStatus().equalsIgnoreCase("1")) {
 
 
-            Adapter_Search_Select_Education adapter_search = new Adapter_Search_Select_Education(context,therapistEducationDM.getEducation_details());
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
+            Adapter_Search_Select_Education adapter_search = new Adapter_Search_Select_Education(FriendSearch_SelectActivity.this,therapistEducationDM.getEducation_details());
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(FriendSearch_SelectActivity.this);
             rcvRcv.setLayoutManager(linearLayoutManager);
             rcvRcv.setAdapter(adapter_search);
             adapter_search.setOnItemClickListener(new Adapter_Search_Select.OnItemClickListener() {
@@ -376,44 +501,83 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
 
         }
 
+
+
         if (position.equalsIgnoreCase("string33")) {
             tittleTxt.setText(getString(R.string.interestt));
             startSearchingTxt.setText(R.string.continue_);
 
-            ArrayList<InterestDM> interestDMArrayList = new ArrayList<>();
-            interestDMArrayList.add(new InterestDM("Film", R.drawable.film));
-            interestDMArrayList.add(new InterestDM("Music", R.drawable.film));
-            interestDMArrayList.add(new InterestDM("Books", R.drawable.film));
-            interestDMArrayList.add(new InterestDM("Arts", R.drawable.film));
-            interestDMArrayList.add(new InterestDM("Games", R.drawable.film));
-            interestDMArrayList.add(new InterestDM("Computer", R.drawable.film));
-            interestDMArrayList.add(new InterestDM("Poem", R.drawable.film));
-            interestDMArrayList.add(new InterestDM("Social Media", R.drawable.film));
-            interestDMArrayList.add(new InterestDM("Pets", R.drawable.film));
-            interestDMArrayList.add(new InterestDM("Bars", R.drawable.film));
-            interestDMArrayList.add(new InterestDM("Books", R.drawable.film));
-            interestDMArrayList.add(new InterestDM("Sports", R.drawable.film));
-            interestDMArrayList.add(new InterestDM("Film", R.drawable.film));
-            interestDMArrayList.add(new InterestDM("Music", R.drawable.film));
-            interestDMArrayList.add(new InterestDM("Books", R.drawable.film));
-            interestDMArrayList.add(new InterestDM("Arts", R.drawable.film));
-            interestDMArrayList.add(new InterestDM("Games", R.drawable.film));
-            interestDMArrayList.add(new InterestDM("Computer", R.drawable.film));
-            interestDMArrayList.add(new InterestDM("Poem", R.drawable.film));
-            interestDMArrayList.add(new InterestDM("Social Media", R.drawable.film));
-            interestDMArrayList.add(new InterestDM("Pets", R.drawable.film));
-            interestDMArrayList.add(new InterestDM("Bars", R.drawable.film));
-            interestDMArrayList.add(new InterestDM("Books", R.drawable.film));
-            interestDMArrayList.add(new InterestDM("Sports", R.drawable.film));
+//            ArrayList<InterestDM> interestDMArrayList = new ArrayList<>();
+//            interestDMArrayList.add(new InterestDM("Film", R.drawable.film));
+//            interestDMArrayList.add(new InterestDM("Music", R.drawable.film));
+//            interestDMArrayList.add(new InterestDM("Books", R.drawable.film));
+//            interestDMArrayList.add(new InterestDM("Arts", R.drawable.film));
+//            interestDMArrayList.add(new InterestDM("Games", R.drawable.film));
+//            interestDMArrayList.add(new InterestDM("Computer", R.drawable.film));
+//            interestDMArrayList.add(new InterestDM("Poem", R.drawable.film));
+//            interestDMArrayList.add(new InterestDM("Social Media", R.drawable.film));
+//            interestDMArrayList.add(new InterestDM("Pets", R.drawable.film));
+//            interestDMArrayList.add(new InterestDM("Bars", R.drawable.film));
+//            interestDMArrayList.add(new InterestDM("Books", R.drawable.film));
+//            interestDMArrayList.add(new InterestDM("Sports", R.drawable.film));
+//            interestDMArrayList.add(new InterestDM("Film", R.drawable.film));
+//            interestDMArrayList.add(new InterestDM("Music", R.drawable.film));
+//            interestDMArrayList.add(new InterestDM("Books", R.drawable.film));
+//            interestDMArrayList.add(new InterestDM("Arts", R.drawable.film));
+//            interestDMArrayList.add(new InterestDM("Games", R.drawable.film));
+//            interestDMArrayList.add(new InterestDM("Computer", R.drawable.film));
+//            interestDMArrayList.add(new InterestDM("Poem", R.drawable.film));
+//            interestDMArrayList.add(new InterestDM("Social Media", R.drawable.film));
+//            interestDMArrayList.add(new InterestDM("Pets", R.drawable.film));
+//            interestDMArrayList.add(new InterestDM("Bars", R.drawable.film));
+//            interestDMArrayList.add(new InterestDM("Books", R.drawable.film));
+//            interestDMArrayList.add(new InterestDM("Sports", R.drawable.film));
 
-            Adapter_Interest adapter_interest = new Adapter_Interest(context, interestDMArrayList);
-            GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2);
+            if(connectionDetector.isConnectingToInternet())
+            {
+
+                String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+
+                progress = dialogUtil.showProgressDialog(FriendSearch_SelectActivity.this, getString(R.string.please_wait));
+
+                appController.paServices.TherapistInterest( new Callback<TherapistInterestDM>() {
+
+                    @Override
+
+                    public void success ( TherapistInterestDM therapistInterestDM, Response response ) {
+                        progress.dismiss();
+                        if (therapistInterestDM.getStatus().equalsIgnoreCase("1")) {
+
+            Adapter_Interest_new adapter_interest = new Adapter_Interest_new(FriendSearch_SelectActivity.this, therapistInterestDM.getInterest_details());
+            GridLayoutManager gridLayoutManager = new GridLayoutManager(FriendSearch_SelectActivity.this, 2);
             rcvRcv.setLayoutManager(gridLayoutManager);
             rcvRcv.setAdapter(adapter_interest);
+
+
+                        } else
+                            Helper.showToast(FriendSearch_SelectActivity.this, getString(R.string.Api_data_not_found));
+                    }
+
+                    @Override
+                    public void failure ( RetrofitError retrofitError ) {
+                        progress.dismiss();
+
+                        Log.e("error", retrofitError.toString());
+
+                    }
+                });
+
+            }else
+                Helper.showToast(FriendSearch_SelectActivity.this,getString(R.string.no_internet_connection));
+
+
+
 
         }
 
     }
+
+
 
 
     @OnClick(R.id.notificationImg)

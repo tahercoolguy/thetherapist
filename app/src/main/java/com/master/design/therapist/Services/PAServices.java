@@ -6,7 +6,9 @@ package com.master.design.therapist.Services;
 
 import com.master.design.therapist.Adapter.TherapistEducationDM;
 import com.master.design.therapist.DataModel.TherapistAgeDM;
+import com.master.design.therapist.DataModel.TherapistEthnicDM;
 import com.master.design.therapist.DataModel.TherapistGenderDM;
+import com.master.design.therapist.DataModel.TherapistInterestDM;
 import com.master.design.therapist.DataModel.TherapistLoginDM;
 import com.master.design.therapist.DataModel.TherapistRegisterDM;
 
@@ -15,6 +17,9 @@ import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
 import retrofit.http.POST;
+import retrofit.mime.MultipartTypedOutput;
+import retrofit2.http.Body;
+import retrofit2.http.Headers;
 
 public interface PAServices {
 //    @Headers("Cache-Control: no-cache;")
@@ -50,22 +55,26 @@ public interface PAServices {
 //    @GET("/user/view_shops")
 //    void Shops(Callback<ShopsDM> shopsDMCallback);
 
-
-    // 1
-    @FormUrlEncoded
+    @Headers("Cache-Control: no-cache;")
     @POST("/register")
-    public void TherapistRegister(@Field("name") String name,
-                                 @Field("dob") String dob,
-                                 @Field("country") String country,
-                                 @Field("gender") String gender,
-                                 @Field("ethnicity") String ethnicity,
-                                 @Field("email") String email,
-                                  @Field("password") String password,
-                                 @Field("ConfirmPassword") String ConfirmPassword,
-                                 @Field("interests") String interests,
-                                 @Field("about_you") String about_you,
+    void TherapistRegister(@Body MultipartTypedOutput multipartTypedOutput, Callback<TherapistRegisterDM> therapistRegisterDMCallback);
 
-                                 Callback<TherapistRegisterDM> therapistRegisterDMCallback);
+//    // 1
+//    @FormUrlEncoded
+//    @POST("/register")
+//    public void TherapistRegister(@Field("name") String name,
+//                                 @Field("dob") String dob,
+//                                 @Field("country") String country,
+//                                 @Field("gender") String gender,
+//                                 @Field("ethnicity") String ethnicity,
+//                                 @Field("email") String email,
+//                                  @Field("password") String password,
+//                                 @Field("ConfirmPassword") String ConfirmPassword,
+//                                 @Field("interests") String interests,
+//                                  @Field("image") String  image,
+//                                  @Field("about_you") String about_you,
+//                                  @Field("education") String education,
+//                                 Callback<TherapistRegisterDM> therapistRegisterDMCallback);
 
     // 2
     @FormUrlEncoded
@@ -86,5 +95,13 @@ public interface PAServices {
     // 5
     @GET("/education")
     public void TherapistEducation(Callback<TherapistEducationDM> therapistEducationDMCallback);
+
+    // 6
+    @GET("/ethnic")
+    public void TherapistEthnic(Callback<TherapistEthnicDM> therapistEthnicDMCallback);
+
+    // 7
+    @GET("/interest")
+    public void TherapistInterest(Callback<TherapistInterestDM> therapistInterestDMCallback);
 
 }

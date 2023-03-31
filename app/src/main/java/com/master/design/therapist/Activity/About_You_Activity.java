@@ -1,16 +1,20 @@
 package com.master.design.therapist.Activity;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,19 +27,30 @@ import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.master.design.therapist.Controller.AppController;
+import com.master.design.therapist.DataModel.TherapistAgeDM;
+import com.master.design.therapist.DataModel.TherapistRegisterDM;
 import com.master.design.therapist.Helper.DialogUtil;
 import com.master.design.therapist.Helper.Helper;
 import com.master.design.therapist.Helper.User;
 import com.master.design.therapist.R;
 import com.master.design.therapist.Utils.ConnectionDetector;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import me.echodev.resizer.Resizer;
+import retrofit.Callback;
 import retrofit.RetrofitError;
+import retrofit.client.Response;
+import retrofit.mime.MultipartTypedOutput;
+import retrofit.mime.TypedFile;
+import retrofit.mime.TypedString;
 
 public class About_You_Activity extends AppCompatActivity {
 
@@ -46,9 +61,30 @@ public class About_You_Activity extends AppCompatActivity {
     User user;
     DialogUtil dialogUtil;
     Dialog progress;
+    String multipartTypedOutput ;
+
+    String username;
+    String date;
+    String selectCountry;
+    String gender;
+    String ethenicity;
+    String mobilenumber;
+    String email;
+    String password;
+    String confirmPassword;
+    String InterestIdList;
+
+    @BindView(R.id.aboutYouET)
+    EditText aboutYouET;
+
+    @BindView(R.id. educationET)
+    EditText  educationET;
 
     @BindView(R.id.profileCircleImg)
     RoundedImageView profileCircleImg;
+
+    @BindView(R.id.my_account_img)
+    ImageView my_account_img;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +97,17 @@ public class About_You_Activity extends AppCompatActivity {
         dialogUtil = new DialogUtil();
         context = this.getApplicationContext();
         activity = this;
+
+        username=getIntent().getStringExtra("userName");
+        date=getIntent().getStringExtra("date");
+        selectCountry=getIntent().getStringExtra("selectCountry");
+        gender=getIntent().getStringExtra("gender");
+        ethenicity=getIntent().getStringExtra("ethnicity");
+        mobilenumber=getIntent().getStringExtra("mobileNumber");
+        email=getIntent().getStringExtra("email");
+        password=getIntent().getStringExtra("password");
+        confirmPassword=getIntent().getStringExtra("confirmPassword");
+        InterestIdList=getIntent().getStringExtra("InterestIdlist");
     }
 
 
@@ -68,6 +115,7 @@ public class About_You_Activity extends AppCompatActivity {
     public void clickBack() {
         finish();
     }
+
 
     @OnClick(R.id.signUpTxt)
     public void clicksignUpTxt()
@@ -108,14 +156,120 @@ public class About_You_Activity extends AppCompatActivity {
 //            Helper.showToast(Create_Account_Activity.this,getString(R.string.no_internet_connection));
 //
 
+        boolean correct = true;
+        if (aboutYouET.getText().toString().equalsIgnoreCase("")) {
+            correct = false;
+            Helper.showToast(About_You_Activity.this, "kindly tell us about you");
+        } else if (educationET.getText().toString().equalsIgnoreCase("")) {
+            correct = false;
+            Helper.showToast(About_You_Activity.this, "kindly enter education");
+        }
+        if (correct) {
+//
+//            if(connectionDetector.isConnectingToInternet())
+//        {
+//            String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+//
+//            progress = dialogUtil.showProgressDialog(About_You_Activity.this, getString(R.string.please_wait));
+//
+//
+//
+//            MultipartTypedOutput multipartTypedOutput = new MultipartTypedOutput();
+//            multipartTypedOutput.addPart("name", new TypedString(username));
+//            multipartTypedOutput.addPart("dob", new TypedString(date));
+//            multipartTypedOutput.addPart("country", new TypedString(selectCountry));
+//            multipartTypedOutput.addPart("gender", new TypedString(gender));
+//            multipartTypedOutput.addPart("ethnicity", new TypedString(ethenicity));
+//            multipartTypedOutput.addPart("email", new TypedString(email));
+//            multipartTypedOutput.addPart("password", new TypedString(password));
+//            multipartTypedOutput.addPart("confirm_password", new TypedString(confirmPassword));
+//            multipartTypedOutput.addPart("interests", new TypedString(InterestIdList));
+//
+//            try {
+//                if (ifimg1) {
+//                    File f = new File(context.getCacheDir(), "temp.jpg");
+//                    f.createNewFile();
+//
+//                    Bitmap one = ((BitmapDrawable) my_account_img.getDrawable()).getBitmap();
+////Convert bitmap to byte array
+//                    Bitmap bitmap = one;
+//                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+//                    bitmap.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
+//                    byte[] bitmapdata = bos.toByteArray();
+//
+////write the bytes in file
+//                    FileOutputStream fos = new FileOutputStream(f);
+//                    fos.write(bitmapdata);
+//                    fos.flush();
+//                    fos.close();
+//                    File resizedImage = new Resizer(context)
+//                            .setTargetLength(512)
+//                            .setQuality(80)
+//                            .setOutputFormat("JPEG")
+//                            .setOutputFilename("resized_image1")
+//                            .setSourceImage(f)
+//                            .getResizedFile();
+//                    multipartTypedOutput.addPart("image", new TypedFile("image/jpg", resizedImage));
+//                }
+//
+//
+//            } catch (Exception e) {
+//                Log.e("Error", e.toString());
+//            }
+//
+//            multipartTypedOutput.addPart("aboutyou", new TypedString(aboutYouET.getText().toString()));
+//            multipartTypedOutput.addPart("education", new TypedString(educationET.getText().toString()));
+//
+//
+//
+//
+//
+//            appController.paServices.TherapistRegister(multipartTypedOutput,new Callback<TherapistRegisterDM>() {
+//
+//                @Override
+//
+//                public void success ( TherapistRegisterDM therapistRegisterDM, Response response ) {
+//                    progress.dismiss();
+//                    if (therapistRegisterDM.getStatus().equalsIgnoreCase("1")) {
+//
+//
+//
+//
+//                            user.setId(Integer.valueOf(therapistRegisterDM.getDetails().get(0).getId()));
+//
+//
+//                            startActivity(new Intent(About_You_Activity.this, ThankYouActivity.class));
+//                            overridePendingTransition(R.anim.fade_in, R.anim.fade_in);
+//
+//                        } else
+//                            Helper.showToast(About_You_Activity.this, "registration failed");
+//                    }
+//
+//                    @Override
+//                    public void failure ( RetrofitError retrofitError ) {
+//                        progress.dismiss();
+//                        Log.e("error", retrofitError.toString());
+//
+//                    }
+//                });
+//
+//        }else
+//            Helper.showToast(About_You_Activity.this,getString(R.string.no_internet_connection));
+//
+//
+//
+        }
+
 
 //        startActivity(new Intent(About_You_Activity.this, ThankYouActivity.class));
 //        overridePendingTransition(R.anim.fade_in, R.anim.fade_in);
     }
 
+    boolean ifimg1 = false;
 
     @OnClick(R.id.addImgRL)
     public void clickAddImgRL() {
+        ifimg1 = true;
         OpenImage();
     }
 
@@ -129,7 +283,7 @@ public class About_You_Activity extends AppCompatActivity {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(About_You_Activity.this.getContentResolver(), uri);
 
                     profileCircleImg.setVisibility(View.VISIBLE);
-                    profileCircleImg.setImageBitmap(bitmap);
+                   profileCircleImg.setImageBitmap(bitmap);
 //                    ifimg1 = true;
 //                    EditProfileImageAPI();
 

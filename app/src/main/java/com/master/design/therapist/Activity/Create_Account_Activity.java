@@ -39,17 +39,17 @@ public class Create_Account_Activity extends AppCompatActivity {
     @BindView(R.id.emailET)
     EditText emailEt;
 
-    @BindView(R.id.passwordET)
-    EditText passwordET;
+    @BindView(R.id.PasswordEdT)
+    EditText PasswordEdT;
 
     @BindView(R.id.confirmPasswordET)
     EditText confirmPasswordET;
 
     @BindView(R.id.ethnicityyET)
     EditText ethnicityyET;
-//
-//    @BindView(R.id.mobilenumberET)
-//    EditText mobilenumberET;
+
+    @BindView(R.id.mobileET)
+    EditText mobileET;
 
     @BindView(R.id.dateET)
     EditText dateET;
@@ -79,18 +79,18 @@ public class Create_Account_Activity extends AppCompatActivity {
 
     @OnClick(R.id.maleTV)
     public void maleTV() {
-        Gender="Male";
+        Gender="1";
     }
 
     @OnClick({R.id.femaleTV})
     public void femaleTV() {
-        Gender="FeMale";
+        Gender="0";
     }
 
-    @OnClick(R.id.continueTxt)
-    public void continueTxt() {
-        Binding();
-    }
+//    @OnClick(R.id.continueTxt)
+//    public void continueTxt() {
+//        Binding();
+//    }
 
 
     @Override
@@ -104,11 +104,15 @@ public class Create_Account_Activity extends AppCompatActivity {
         user = new User(Create_Account_Activity.this);
         dialogUtil = new DialogUtil();
 
+
+
     }
 
     @OnClick(R.id.continueTxt)
     public void clickcontinueTxt() {
-        startActivity(new Intent(Create_Account_Activity.this, FriendSearch_SelectActivity.class).putExtra("string33", "string33"));
+        Binding();
+
+//        startActivity(new Intent(Create_Account_Activity.this, FriendSearch_SelectActivity.class).putExtra("string33", "string33"));
         overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
     }
 
@@ -151,22 +155,44 @@ public class Create_Account_Activity extends AppCompatActivity {
         } else if (ethnicityyET.getText().toString().equalsIgnoreCase("")) {
             correct = false;
             Helper.showToast(Create_Account_Activity.this, "kindly enter your Ethnicity");
-        } else if (emailEt.getText().toString().equalsIgnoreCase("")) {
+        } else if (mobileET.getText().toString().equalsIgnoreCase("")) {
             correct = false;
             Helper.showToast(Create_Account_Activity.this, "kindly enter your Email");
-        } else if (passwordET.getText().toString().equalsIgnoreCase("")) {
+        } else if (emailEt.getText().toString().equalsIgnoreCase("")) {
+            correct = false;
+            Helper.showToast(Create_Account_Activity.this, "kindly enter your mobile Number");
+        }
+
+        else if (PasswordEdT.getText().toString().equalsIgnoreCase("")) {
             correct = false;
             Helper.showToast(Create_Account_Activity.this, "kindly enter your Password");
         } else if (confirmPasswordET.getText().toString().equalsIgnoreCase("")) {
             correct = false;
             Helper.showToast(Create_Account_Activity.this, "kindly enter your Confirm Password");
         }
-
-
-//            String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+        else if (Gender==null) {
+            correct = false;
+            Helper.showToast(Create_Account_Activity.this, "kindly select Gender");
+        }
+//
+//
+////            String refreshedToken = FirebaseInstanceId.getInstance().getToken();
         if (correct) {
 
+     //       startActivity(new Intent(Create_Account_Activity.this, FriendSearch_SelectActivity.class).putExtra("string33", "string33"));
+        Intent intent = new Intent(Create_Account_Activity.this, FriendSearch_SelectActivity.class);
+        intent.putExtra("string33", "string33");
+        intent.putExtra("userName", userNameET.getText().toString());
+        intent.putExtra("date", (yearET.getText().toString()+"-"+monthET.getText().toString()+"-"+dateET.getText().toString()));
+        intent.putExtra("selectCountry", selectCountryET.getText().toString());
+        intent.putExtra("gender", Gender);
+        intent.putExtra("ethnicity", ethnicityyET.getText().toString());
+        intent.putExtra("mobileNumber", mobileET.getText().toString());
+        intent.putExtra("email", emailEt.getText().toString());
+        intent.putExtra("password", PasswordEdT.getText().toString());
+        intent.putExtra("confirmPassword", confirmPasswordET.getText().toString());
 
+            startActivity(intent);
 
         }
 //                progress = dialogUtil.showProgressDialog(Create_Account_Activity.this,getString(R.string.please_wait));
