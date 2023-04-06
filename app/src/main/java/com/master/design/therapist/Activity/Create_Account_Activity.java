@@ -12,18 +12,28 @@ import android.widget.TextView;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.master.design.therapist.Controller.AppController;
+import com.master.design.therapist.DataModel.Ethnic_details;
+import com.master.design.therapist.DataModel.TherapistEthnicDM;
 import com.master.design.therapist.DataModel.TherapistRegisterDM;
+import com.master.design.therapist.Helper.BottomForAll;
+import com.master.design.therapist.Helper.DataChangeDM;
 import com.master.design.therapist.Helper.DialogUtil;
 import com.master.design.therapist.Helper.Helper;
+import com.master.design.therapist.Helper.ResponseListener;
 import com.master.design.therapist.Helper.User;
 import com.master.design.therapist.R;
 import com.master.design.therapist.Utils.ConnectionDetector;
+
+import org.w3c.dom.Text;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import retrofit.Callback;
 import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class Create_Account_Activity extends AppCompatActivity {
 
@@ -46,7 +56,7 @@ public class Create_Account_Activity extends AppCompatActivity {
     EditText confirmPasswordET;
 
     @BindView(R.id.ethnicityyET)
-    EditText ethnicityyET;
+    TextView ethnicityyET;
 
     @BindView(R.id.mobileET)
     EditText mobileET;
@@ -75,6 +85,8 @@ public class Create_Account_Activity extends AppCompatActivity {
     TextView maleTV;
 
     String Gender;
+    String name;
+    String id;
     String Date;
 
     @OnClick(R.id.maleTV)
@@ -92,6 +104,33 @@ public class Create_Account_Activity extends AppCompatActivity {
 //        Binding();
 //    }
 
+    ArrayList<DataChangeDM> arrayList = new ArrayList();
+BottomForAll bottomForAll;
+        @OnClick(R.id.ethnicityyET)
+          public void ethnicityyET()
+        {
+                  bottomForAll = new BottomForAll();
+                        bottomForAll.arrayList = arrayList;
+
+                            bottomForAll.setResponseListener(new ResponseListener() {
+                                @Override
+                                public void response(Object object) {
+
+                                    name = ((DataChangeDM) object).getName();
+                                    id = ((DataChangeDM) object).getId();
+//                                    user.setAreaId(AreaID);
+                                    ethnicityyET.setText(name);
+
+
+                                }
+                            });
+                            bottomForAll.show(Create_Account_Activity.this.getSupportFragmentManager(), "bottomSheetCountry");
+
+
+}
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +142,7 @@ public class Create_Account_Activity extends AppCompatActivity {
         connectionDetector = new ConnectionDetector(Create_Account_Activity.this);
         user = new User(Create_Account_Activity.this);
         dialogUtil = new DialogUtil();
+        BindingEthenicity();
 
 
 
@@ -186,7 +226,7 @@ public class Create_Account_Activity extends AppCompatActivity {
         intent.putExtra("date", (yearET.getText().toString()+"-"+monthET.getText().toString()+"-"+dateET.getText().toString()));
         intent.putExtra("selectCountry", selectCountryET.getText().toString());
         intent.putExtra("gender", Gender);
-        intent.putExtra("ethnicity", ethnicityyET.getText().toString());
+        intent.putExtra("ethnicity", id);
         intent.putExtra("mobileNumber", mobileET.getText().toString());
         intent.putExtra("email", emailEt.getText().toString());
         intent.putExtra("password", PasswordEdT.getText().toString());
@@ -228,6 +268,37 @@ public class Create_Account_Activity extends AppCompatActivity {
     }
 
 
+    public void BindingEthenicity()
+    {
+        if (connectionDetector.isConnectingToInternet()) {
+            String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+            progress = dialogUtil.showProgressDialog(Create_Account_Activity.this, getString(R.string.please_wait));
+            appController.paServices.TherapistEthnic(new Callback<TherapistEthnicDM>() {
+                @Override
+                public void success(TherapistEthnicDM therapistEthnicDM, Response response) {
+                    progress.dismiss();
+                    if (therapistEthnicDM.getStatus().equalsIgnoreCase("1")) {
+
+                        for (Ethnic_details obj : therapistEthnicDM.getEthnic_details()) {
+                            DataChangeDM s = new DataChangeDM();
+                            s.setName(obj.getEthnic_name());
+                            s.setId(obj.getId());
+                            arrayList.add(s);
+                        }
+                    } else
+                        Helper.showToast(Create_Account_Activity.this, getString(R.string.Api_data_not_found));
+                }
+
+                @Override
+                public void failure(RetrofitError retrofitError) {
+                    Log.e("error", retrofitError.toString());
+                }
+            });
+        } else
+            Helper.showToast(Create_Account_Activity.this, getString(R.string.no_internet_connection));
+
+
+    }
 
 
 }

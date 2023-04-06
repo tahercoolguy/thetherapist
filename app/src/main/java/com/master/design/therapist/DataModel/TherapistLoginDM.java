@@ -4,8 +4,17 @@ import java.util.ArrayList;
 
 public class TherapistLoginDM {
 
+    private String msg;
     private ArrayList<LoginUser> user;
     private String status;
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
 
     public ArrayList<LoginUser> getUser() {
         return user;

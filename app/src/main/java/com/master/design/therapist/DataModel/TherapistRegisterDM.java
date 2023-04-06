@@ -6,15 +6,24 @@ import java.util.ArrayList;
 
 public class TherapistRegisterDM {
 
-    private ArrayList<Details> details;
-    private String status;
+     String msg;
+     String user_id;
+     String status;
 
-    public ArrayList<Details> getDetails() {
-        return details;
+    public String getMsg() {
+        return msg;
     }
 
-    public void setDetails(ArrayList<Details> details) {
-        this.details = details;
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
+    public String getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
     }
 
     public String getStatus() {

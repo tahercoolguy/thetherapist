@@ -1,4 +1,4 @@
-package com.master.design.therapist.Services;
+package com.master.design.therapist.notification.Services;
 
 
 //import io.opencensus.stats.Stats;
@@ -13,13 +13,13 @@ import com.master.design.therapist.DataModel.TherapistLoginDM;
 import com.master.design.therapist.DataModel.TherapistRegisterDM;
 
 import retrofit.Callback;
+import retrofit.http.Body;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
 import retrofit.http.POST;
 import retrofit.mime.MultipartTypedOutput;
-import retrofit2.http.Body;
-import retrofit2.http.Headers;
+
 
 public interface PAServices {
 //    @Headers("Cache-Control: no-cache;")
@@ -55,7 +55,6 @@ public interface PAServices {
 //    @GET("/user/view_shops")
 //    void Shops(Callback<ShopsDM> shopsDMCallback);
 
-    @Headers("Cache-Control: no-cache;")
     @POST("/register")
     void TherapistRegister(@Body MultipartTypedOutput multipartTypedOutput, Callback<TherapistRegisterDM> therapistRegisterDMCallback);
 

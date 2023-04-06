@@ -84,7 +84,7 @@ public class Adapter_Interest_new extends RecyclerView.Adapter<Adapter_Interest_
 //        viewHolder.mainTxt.setText(arrayList.get(position).getHead());
         viewHolder.interestTxt.setText(arrayList.get(position).getInterest_eg());
         if(arrayList.get(position).getInterest_img()!=null) {
-            Picasso.with(context).load(arrayList.get(position).getInterest_img()).into(viewHolder.img);
+            Picasso.with(context).load("http://207.154.215.156:8000"+arrayList.get(position).getInterest_img()).into(viewHolder.img);
         }
 //        viewHolder.img.setImageResource(arrayList.get(position).getImage());
 

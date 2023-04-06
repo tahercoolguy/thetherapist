@@ -9,12 +9,14 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,11 +28,18 @@ import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.master.design.therapist.Adapter.Education_details;
+import com.master.design.therapist.Adapter.TherapistEducationDM;
 import com.master.design.therapist.Controller.AppController;
+import com.master.design.therapist.DataModel.Ethnic_details;
 import com.master.design.therapist.DataModel.TherapistAgeDM;
+import com.master.design.therapist.DataModel.TherapistEthnicDM;
 import com.master.design.therapist.DataModel.TherapistRegisterDM;
+import com.master.design.therapist.Helper.BottomForAll;
+import com.master.design.therapist.Helper.DataChangeDM;
 import com.master.design.therapist.Helper.DialogUtil;
 import com.master.design.therapist.Helper.Helper;
+import com.master.design.therapist.Helper.ResponseListener;
 import com.master.design.therapist.Helper.User;
 import com.master.design.therapist.R;
 import com.master.design.therapist.Utils.ConnectionDetector;
@@ -39,6 +48,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -73,18 +83,39 @@ public class About_You_Activity extends AppCompatActivity {
     String password;
     String confirmPassword;
     String InterestIdList;
+    String name,id;
 
     @BindView(R.id.aboutYouET)
     EditText aboutYouET;
 
     @BindView(R.id. educationET)
-    EditText  educationET;
+    TextView educationET;
 
     @BindView(R.id.profileCircleImg)
-    RoundedImageView profileCircleImg;
+    ImageView profileCircleImg;
 
     @BindView(R.id.my_account_img)
     ImageView my_account_img;
+
+    ArrayList<DataChangeDM> arrayList = new ArrayList();
+    BottomForAll bottomForAll;
+    @OnClick(R.id.educationET)
+    public void educationET() {
+        bottomForAll = new BottomForAll();
+        bottomForAll.arrayList = arrayList;
+
+        bottomForAll.setResponseListener(new ResponseListener() {
+            @Override
+            public void response(Object object) {
+
+                name = ((DataChangeDM) object).getName();
+                id = ((DataChangeDM) object).getId();
+//                                    user.setAreaId(AreaID);
+                educationET.setText(name);
+            }
+        });
+        bottomForAll.show(About_You_Activity.this.getSupportFragmentManager(), "bottomSheetCountry");
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,6 +139,10 @@ public class About_You_Activity extends AppCompatActivity {
         password=getIntent().getStringExtra("password");
         confirmPassword=getIntent().getStringExtra("confirmPassword");
         InterestIdList=getIntent().getStringExtra("InterestIdlist");
+
+        BindingEducation();
+
+
     }
 
 
@@ -117,6 +152,7 @@ public class About_You_Activity extends AppCompatActivity {
     }
 
 
+    @SuppressLint("SuspiciousIndentation")
     @OnClick(R.id.signUpTxt)
     public void clicksignUpTxt()
     {
@@ -185,12 +221,13 @@ public class About_You_Activity extends AppCompatActivity {
 //            multipartTypedOutput.addPart("confirm_password", new TypedString(confirmPassword));
 //            multipartTypedOutput.addPart("interests", new TypedString(InterestIdList));
 //
-//            try {
+//            try
+//            {
 //                if (ifimg1) {
 //                    File f = new File(context.getCacheDir(), "temp.jpg");
 //                    f.createNewFile();
 //
-//                    Bitmap one = ((BitmapDrawable) my_account_img.getDrawable()).getBitmap();
+//                    Bitmap one = ((BitmapDrawable) profileCircleImg.getDrawable()).getBitmap();
 ////Convert bitmap to byte array
 //                    Bitmap bitmap = one;
 //                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -218,8 +255,8 @@ public class About_You_Activity extends AppCompatActivity {
 //            }
 //
 //            multipartTypedOutput.addPart("aboutyou", new TypedString(aboutYouET.getText().toString()));
-//            multipartTypedOutput.addPart("education", new TypedString(educationET.getText().toString()));
-//
+//            multipartTypedOutput.addPart("education", new TypedString(id));
+//            multipartTypedOutput.addPart("phone", new TypedString(mobilenumber));
 //
 //
 //
@@ -228,20 +265,19 @@ public class About_You_Activity extends AppCompatActivity {
 //
 //                @Override
 //
-//                public void success ( TherapistRegisterDM therapistRegisterDM, Response response ) {
+//                public void success(TherapistRegisterDM therapistRegisterDM, Response response ) {
 //                    progress.dismiss();
 //                    if (therapistRegisterDM.getStatus().equalsIgnoreCase("1")) {
 //
 //
+//                         user.setId(Integer.valueOf(therapistRegisterDM.getUser_id()));
 //
-//
-//                            user.setId(Integer.valueOf(therapistRegisterDM.getDetails().get(0).getId()));
-//
-//
-//                            startActivity(new Intent(About_You_Activity.this, ThankYouActivity.class));
+//                        startActivity(new Intent(About_You_Activity.this, ThankYouActivity.class));
+//                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ECLAIR) {
 //                            overridePendingTransition(R.anim.fade_in, R.anim.fade_in);
+//                        }
 //
-//                        } else
+//                    } else
 //                            Helper.showToast(About_You_Activity.this, "registration failed");
 //                    }
 //
@@ -255,14 +291,14 @@ public class About_You_Activity extends AppCompatActivity {
 //
 //        }else
 //            Helper.showToast(About_You_Activity.this,getString(R.string.no_internet_connection));
-//
-//
-//
+
+
+
         }
 
 
-//        startActivity(new Intent(About_You_Activity.this, ThankYouActivity.class));
-//        overridePendingTransition(R.anim.fade_in, R.anim.fade_in);
+////        startActivity(new Intent(About_You_Activity.this, ThankYouActivity.class));
+////        overridePendingTransition(R.anim.fade_in, R.anim.fade_in);
     }
 
     boolean ifimg1 = false;
@@ -394,13 +430,48 @@ public class About_You_Activity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        overridePendingTransition(R.anim.right_slide_in, R.anim.right_slide_in);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ECLAIR) {
+            overridePendingTransition(R.anim.right_slide_in, R.anim.right_slide_in);
+        }
         super.onBackPressed();
     }
 
     @Override
     public void finish() {
         super.finish();
-        overridePendingTransition(R.anim.right_slide_in, R.anim.right_slide_in);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ECLAIR) {
+            overridePendingTransition(R.anim.right_slide_in, R.anim.right_slide_in);
+        }
+    }
+
+    public void BindingEducation()
+    {
+        if (connectionDetector.isConnectingToInternet()) {
+            String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+            progress = dialogUtil.showProgressDialog(About_You_Activity.this, getString(R.string.please_wait));
+            appController.paServices.TherapistEducation(new Callback<TherapistEducationDM>() {
+                @Override
+                public void success(TherapistEducationDM therapistEducationDM, Response response) {
+                    progress.dismiss();
+                    if (therapistEducationDM.getStatus().equalsIgnoreCase("1")) {
+
+                        for (Education_details obj : therapistEducationDM.getEducation_details()) {
+                            DataChangeDM s = new DataChangeDM();
+                            s.setName(obj.getEducation());
+                            s.setId(obj.getId());
+                            arrayList.add(s);
+                        }
+                    } else
+                        Helper.showToast(About_You_Activity.this, getString(R.string.Api_data_not_found));
+                }
+
+                @Override
+                public void failure(RetrofitError retrofitError) {
+                    Log.e("error", retrofitError.toString());
+                }
+            });
+        } else
+            Helper.showToast(About_You_Activity.this, getString(R.string.no_internet_connection));
+
     }
 }

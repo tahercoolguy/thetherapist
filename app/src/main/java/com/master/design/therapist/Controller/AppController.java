@@ -14,7 +14,7 @@ import com.google.gson.GsonBuilder;
 import com.izikode.izilib.roguin.endpoint.FacebookEndpoint;
 import com.izikode.izilib.roguin.endpoint.GoogleEndpoint;
 
-import com.master.design.therapist.Services.PAServices;
+import com.master.design.therapist.notification.Services.PAServices;
 import com.master.design.therapist.Utils.MyUrlConnectionClient;
 
 import java.util.Locale;
