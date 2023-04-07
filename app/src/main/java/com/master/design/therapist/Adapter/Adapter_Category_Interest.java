@@ -15,6 +15,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.master.design.therapist.DM.InterestDM;
+import com.master.design.therapist.DataModel.Interests;
+import com.master.design.therapist.DataModel.Users;
 import com.master.design.therapist.Helper.User;
 import com.master.design.therapist.R;
 
@@ -23,7 +25,7 @@ import java.util.ArrayList;
 
 public class Adapter_Category_Interest extends RecyclerView.Adapter<Adapter_Category_Interest.ViewHolder> {
     private Context context;
-    private ArrayList<InterestDM> arrayList;
+    private ArrayList<Interests> arrayList;
     private InterestDM selected;
     User user;
     Adapter_Category_Interest.OnItemClickListener onItemClickListener;
@@ -31,7 +33,7 @@ public class Adapter_Category_Interest extends RecyclerView.Adapter<Adapter_Cate
 
     int selectedPosition = 0;
 
-    public Adapter_Category_Interest(Context context, ArrayList<InterestDM> arrayList) {
+    public Adapter_Category_Interest(Context context, ArrayList<Interests> arrayList) {
         this.context = context;
         this.arrayList = arrayList;
         user = new User(context);
@@ -79,7 +81,7 @@ public class Adapter_Category_Interest extends RecyclerView.Adapter<Adapter_Cate
         }, 100);
 
 //        viewHolder.mainTxt.setText(arrayList.get(position).getHead());
-        viewHolder.interestTxt.setText(arrayList.get(position).getTittleInterest());
+        viewHolder.interestTxt.setText(arrayList.get(position).getInterest_eg());
 
 
         viewHolder.clickLL.setOnClickListener(new View.OnClickListener() {

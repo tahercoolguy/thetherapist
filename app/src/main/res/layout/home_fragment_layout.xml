@@ -85,13 +85,13 @@
                      >
 
                     <com.makeramen.roundedimageview.RoundedImageView
+                        android:id="@+id/bgRoundedImg"
                         android:layout_width="match_parent"
                         android:layout_height="250dp"
-                        android:id="@+id/bgRoundedImg"
                         android:layout_centerInParent="true"
+
                         android:layout_marginHorizontal="20dp"
                         android:scaleType="centerCrop"
-
                         android:src="@drawable/marshall_img"
                         app:riv_corner_radius="20dp"></com.makeramen.roundedimageview.RoundedImageView>
 
@@ -107,6 +107,8 @@
                         android:src="@drawable/marshall_img"
 
                         app:riv_corner_radius="15dp"></com.makeramen.roundedimageview.RoundedImageView>
+
+                    <include layout="@layout/layout_error" />
 
                 </RelativeLayout>
 
@@ -212,7 +214,5 @@
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
     </LinearLayout>
-
-    <include layout="@layout/layout_error" />
 
 </RelativeLayout>

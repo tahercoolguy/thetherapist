@@ -12,7 +12,9 @@ import android.widget.TextView;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.master.design.therapist.Controller.AppController;
+import com.master.design.therapist.DataModel.Details;
 import com.master.design.therapist.DataModel.Ethnic_details;
+import com.master.design.therapist.DataModel.TherapistCountriesDM;
 import com.master.design.therapist.DataModel.TherapistEthnicDM;
 import com.master.design.therapist.DataModel.TherapistRegisterDM;
 import com.master.design.therapist.Helper.BottomForAll;
@@ -72,7 +74,7 @@ public class Create_Account_Activity extends AppCompatActivity {
 
 
     @BindView(R.id.selectCountryET)
-    EditText selectCountryET;
+    TextView selectCountryET;
 
     @BindView(R.id.genderselectLL)
     LinearLayout genderselectLL;
@@ -129,6 +131,30 @@ BottomForAll bottomForAll;
 
 }
 
+    ArrayList<DataChangeDM> arrayList1 = new ArrayList();
+    @OnClick(R.id.selectCountryET)
+    public void selectCountryET()
+    {
+
+        bottomForAll = new BottomForAll();
+        bottomForAll.arrayList = arrayList1;
+
+        bottomForAll.setResponseListener(new ResponseListener() {
+            @Override
+            public void response(Object object) {
+
+                name = ((DataChangeDM) object).getName();
+                id = ((DataChangeDM) object).getId();
+//               user.setAreaId(AreaID);
+                selectCountryET.setText(name);
+
+            }
+        });
+        bottomForAll.show(Create_Account_Activity.this.getSupportFragmentManager(), "bottomSheetCountry");
+
+
+    }
+
 
 
 
@@ -143,6 +169,7 @@ BottomForAll bottomForAll;
         user = new User(Create_Account_Activity.this);
         dialogUtil = new DialogUtil();
         BindingEthenicity();
+        SelectCountry();
 
 
 
@@ -272,11 +299,11 @@ BottomForAll bottomForAll;
     {
         if (connectionDetector.isConnectingToInternet()) {
             String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-            progress = dialogUtil.showProgressDialog(Create_Account_Activity.this, getString(R.string.please_wait));
+ //           progress = dialogUtil.showProgressDialog(Create_Account_Activity.this, getString(R.string.please_wait));
             appController.paServices.TherapistEthnic(new Callback<TherapistEthnicDM>() {
                 @Override
                 public void success(TherapistEthnicDM therapistEthnicDM, Response response) {
-                    progress.dismiss();
+ //                   progress.dismiss();
                     if (therapistEthnicDM.getStatus().equalsIgnoreCase("1")) {
 
                         for (Ethnic_details obj : therapistEthnicDM.getEthnic_details()) {
@@ -298,6 +325,37 @@ BottomForAll bottomForAll;
             Helper.showToast(Create_Account_Activity.this, getString(R.string.no_internet_connection));
 
 
+    }
+
+    public void SelectCountry()
+    {
+        if (connectionDetector.isConnectingToInternet()) {
+            String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+            //           progress = dialogUtil.showProgressDialog(Create_Account_Activity.this, getString(R.string.please_wait));
+            appController.paServices.TherapistCountries(new Callback<TherapistCountriesDM>() {
+                @Override
+                public void success(TherapistCountriesDM therapistCountriesDM, Response response) {
+ //                   progress.dismiss();
+                    if (therapistCountriesDM.getStatus().equalsIgnoreCase("1")) {
+
+                        for (Details obj : therapistCountriesDM.getDetails()) {
+                            DataChangeDM s = new DataChangeDM();
+                            s.setName(obj.getCountry_name());
+                            s.setId(obj.getCountry_id());
+                            arrayList1.add(s);
+                        }
+                    } else
+                        Helper.showToast(Create_Account_Activity.this, getString(R.string.Api_data_not_found));
+                }
+
+                @Override
+                public void failure(RetrofitError retrofitError) {
+ //                   progress.dismiss();
+                    Log.e("error", retrofitError.toString());
+                }
+            });
+        } else
+            Helper.showToast(Create_Account_Activity.this, getString(R.string.no_internet_connection));
     }
 
 

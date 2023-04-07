@@ -6,8 +6,10 @@ package com.master.design.therapist.notification.Services;
 
 import com.master.design.therapist.Adapter.TherapistEducationDM;
 import com.master.design.therapist.DataModel.TherapistAgeDM;
+import com.master.design.therapist.DataModel.TherapistCountriesDM;
 import com.master.design.therapist.DataModel.TherapistEthnicDM;
 import com.master.design.therapist.DataModel.TherapistGenderDM;
+import com.master.design.therapist.DataModel.TherapistHomeDM;
 import com.master.design.therapist.DataModel.TherapistInterestDM;
 import com.master.design.therapist.DataModel.TherapistLoginDM;
 import com.master.design.therapist.DataModel.TherapistRegisterDM;
@@ -102,5 +104,15 @@ public interface PAServices {
     // 7
     @GET("/interest")
     public void TherapistInterest(Callback<TherapistInterestDM> therapistInterestDMCallback);
+
+    // 8
+    @GET("/countries")
+    public void TherapistCountries(Callback<TherapistCountriesDM> therapistCountriesDMCallback);
+
+    // 9
+    @GET("/home")
+    public void TherapistHome(Callback<TherapistHomeDM> therapistHomeDMCallback);
+
+
 
 }

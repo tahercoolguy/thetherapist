@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -26,16 +27,22 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.master.design.therapist.Activity.Create_Account_Activity;
 import com.master.design.therapist.Activity.FriendSearchActivity;
 import com.master.design.therapist.Activity.FriendSearch_SelectActivity;
 import com.master.design.therapist.Activity.MainActivity;
 import com.master.design.therapist.Adapter.Adapter_Category_Interest;
 import com.master.design.therapist.Controller.AppController;
 import com.master.design.therapist.DM.InterestDM;
+import com.master.design.therapist.DataModel.TherapistEthnicDM;
+import com.master.design.therapist.DataModel.TherapistHomeDM;
 import com.master.design.therapist.Helper.BlurBuilder;
+import com.master.design.therapist.Helper.Helper;
 import com.master.design.therapist.R;
 import com.master.design.therapist.Utils.ConnectionDetector;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -43,6 +50,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import it.sephiroth.android.library.widget.HListView;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class Fragment_Home extends Fragment {
 
@@ -136,28 +146,54 @@ public class Fragment_Home extends Fragment {
 
     private void setInterestData() {
 
-        ArrayList<InterestDM> interestDMArrayList = new ArrayList<>();
-        interestDMArrayList.add(new InterestDM("Movies", R.drawable.ic_add_image));
-        interestDMArrayList.add(new InterestDM("Study", R.drawable.ic_add_image));
-        interestDMArrayList.add(new InterestDM("Music", R.drawable.ic_add_image));
-        interestDMArrayList.add(new InterestDM("Songs", R.drawable.ic_add_image));
-        interestDMArrayList.add(new InterestDM("Cricket", R.drawable.ic_add_image));
-        interestDMArrayList.add(new InterestDM("Travel", R.drawable.ic_add_image));
-        interestDMArrayList.add(new InterestDM("Pets", R.drawable.ic_add_image));
-        interestDMArrayList.add(new InterestDM("Bikes", R.drawable.ic_add_image));
-        interestDMArrayList.add(new InterestDM("Movies", R.drawable.ic_add_image));
-        interestDMArrayList.add(new InterestDM("Study", R.drawable.ic_add_image));
-        interestDMArrayList.add(new InterestDM("Music", R.drawable.ic_add_image));
-        interestDMArrayList.add(new InterestDM("Songs", R.drawable.ic_add_image));
-        interestDMArrayList.add(new InterestDM("Cricket", R.drawable.ic_add_image));
-        interestDMArrayList.add(new InterestDM("Travel", R.drawable.ic_add_image));
-        interestDMArrayList.add(new InterestDM("Pets", R.drawable.ic_add_image));
-        interestDMArrayList.add(new InterestDM("Bikes", R.drawable.ic_add_image));
+//        ArrayList<InterestDM> interestDMArrayList = new ArrayList<>();
+//        interestDMArrayList.add(new InterestDM("Movies", R.drawable.ic_add_image));
+//        interestDMArrayList.add(new InterestDM("Study", R.drawable.ic_add_image));
+//        interestDMArrayList.add(new InterestDM("Music", R.drawable.ic_add_image));
+//        interestDMArrayList.add(new InterestDM("Songs", R.drawable.ic_add_image));
+//        interestDMArrayList.add(new InterestDM("Cricket", R.drawable.ic_add_image));
+//        interestDMArrayList.add(new InterestDM("Travel", R.drawable.ic_add_image));
+//        interestDMArrayList.add(new InterestDM("Pets", R.drawable.ic_add_image));
+//        interestDMArrayList.add(new InterestDM("Bikes", R.drawable.ic_add_image));
+//        interestDMArrayList.add(new InterestDM("Movies", R.drawable.ic_add_image));
+//        interestDMArrayList.add(new InterestDM("Study", R.drawable.ic_add_image));
+//        interestDMArrayList.add(new InterestDM("Music", R.drawable.ic_add_image));
+//        interestDMArrayList.add(new InterestDM("Songs", R.drawable.ic_add_image));
+//        interestDMArrayList.add(new InterestDM("Cricket", R.drawable.ic_add_image));
+//        interestDMArrayList.add(new InterestDM("Travel", R.drawable.ic_add_image));
+//        interestDMArrayList.add(new InterestDM("Pets", R.drawable.ic_add_image));
+//        interestDMArrayList.add(new InterestDM("Bikes", R.drawable.ic_add_image));
 
-        Adapter_Category_Interest adapter_category_interest = new Adapter_Category_Interest(context, interestDMArrayList);
+        if (connectionDetector.isConnectingToInternet()) {
+            String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+            //           progress = dialogUtil.showProgressDialog(Create_Account_Activity.this, getString(R.string.please_wait));
+            appController.paServices.TherapistHome(new Callback<TherapistHomeDM>() {
+                @Override
+                public void success(TherapistHomeDM therapistHomeDM, Response response) {
+                    //                   progress.dismiss();
+                    if (therapistHomeDM.getStatus().equalsIgnoreCase("1")) {
+
+                        Picasso.with(context).load( "http://207.154.215.156:8000"+therapistHomeDM.getUsers().get(0).getImage()).into(frontRoundedImg);
+                        userNameTxt.setText(therapistHomeDM.getUsers().get(0).getName());
+                        aboutTxt.setText(therapistHomeDM.getUsers().get(0).getAboutyou());
+
+        Adapter_Category_Interest adapter_category_interest = new Adapter_Category_Interest(context, therapistHomeDM.getUsers().get(0).getInterests());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
         categoryRcv.setLayoutManager(linearLayoutManager);
         categoryRcv.setAdapter(adapter_category_interest);
+
+                    } else
+                        Helper.showToast(context, getString(R.string.Api_data_not_found));
+                }
+
+                @Override
+                public void failure(RetrofitError retrofitError) {
+                    Log.e("error", retrofitError.toString());
+                }
+            });
+        } else
+            Helper.showToast(context, getString(R.string.no_internet_connection));
+
 
     }
 
