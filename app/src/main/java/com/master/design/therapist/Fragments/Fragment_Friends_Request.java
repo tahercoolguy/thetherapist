@@ -1,9 +1,11 @@
 package com.master.design.therapist.Fragments;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -19,11 +21,19 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.master.design.therapist.Activity.MainActivity;
+import com.master.design.therapist.Activity.Term_Privacy_TipsActivity;
 import com.master.design.therapist.Adapter.Adapter_Friends;
 import com.master.design.therapist.Adapter.Adapter_Request;
 import com.master.design.therapist.Controller.AppController;
 import com.master.design.therapist.DM.InterestDM;
+import com.master.design.therapist.DataModel.Friend_ListDM;
+import com.master.design.therapist.DataModel.Request_ListDM;
+import com.master.design.therapist.DataModel.Terms_ConditionsDM;
+import com.master.design.therapist.Helper.DialogUtil;
+import com.master.design.therapist.Helper.Helper;
+import com.master.design.therapist.Helper.User;
 import com.master.design.therapist.R;
 import com.master.design.therapist.Utils.ConnectionDetector;
 
@@ -35,11 +45,15 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import it.sephiroth.android.library.widget.HListView;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class Fragment_Friends_Request extends Fragment {
 
     private View rootView;
     private Context context;
+    User user;
 
     @BindView(R.id.progress_bar)
     ProgressBar progress_bar;
@@ -58,6 +72,8 @@ public class Fragment_Friends_Request extends Fragment {
     AppController appController;
     ConnectionDetector connectionDetector;
     ProgressDialog progressDialog;
+    DialogUtil dialogUtil;
+    Dialog progress;
 
     @Nullable
     @Override
@@ -75,6 +91,8 @@ public class Fragment_Friends_Request extends Fragment {
         if (rootView == null) {
             rootView = inflater.inflate(R.layout.friends_request_fragment_layout, container, false);
             ButterKnife.bind(this, rootView);
+            dialogUtil = new DialogUtil();
+            user = new User(getActivity());
             setMyFriendsAdapter();
         }
         return rootView;
@@ -116,71 +134,122 @@ public class Fragment_Friends_Request extends Fragment {
 
 
     private void setMyFriendsAdapter() {
-        ArrayList<InterestDM> interestDMArrayList = new ArrayList<>();
-        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
+//        ArrayList<InterestDM> interestDMArrayList = new ArrayList<>();
+//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
+//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
+//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
+//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
+//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
+//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
+//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
+//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
+//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
+//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
+//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
+//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
+//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
+//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
+//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
+//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
+//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
+//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
+//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
+//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
+//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
+//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
+//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
+//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
+//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
 
-        Adapter_Friends adapter_friends = new Adapter_Friends(context, interestDMArrayList);
+        if (connectionDetector.isConnectingToInternet()) {
+            String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+            progress = dialogUtil.showProgressDialog(getActivity(), getString(R.string.please_wait));
+            appController.paServices.TherapistFriend_List(String.valueOf(user.getId()),new Callback<Friend_ListDM>() {
+                @Override
+                public void success(Friend_ListDM friend_listDM, Response response) {
+                   progress.dismiss();
+                    if (friend_listDM.getStatus().equalsIgnoreCase("1")) {
+
+
+        Adapter_Friends adapter_friends = new Adapter_Friends(context, friend_listDM.getAll_friends());
         GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 3);
         rcvRcv.setLayoutManager(gridLayoutManager);
         rcvRcv.setAdapter(adapter_friends);
+
+                    } else
+                        Helper.showToast(getActivity(), getString(R.string.Api_data_not_found));
+                }
+
+                @Override
+                public void failure(RetrofitError retrofitError) {
+                    progress.dismiss();
+                    Log.e("error", retrofitError.toString());
+                }
+            });
+        } else
+            Helper.showToast(getActivity(), getString(R.string.no_internet_connection));
+
+
+
     }
 
     private void setRequestAdapter() {
-        ArrayList<InterestDM> interestDMArrayList = new ArrayList<>();
-        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
+//        ArrayList<InterestDM> interestDMArrayList = new ArrayList<>();
+//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
+//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
+//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
+//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
+//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
+//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
+//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
+//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
+//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
+//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
+//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
+//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
+//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
+//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
+//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
+//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
+//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
+//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
+//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
+//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
+//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
+//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
+//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
+//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
+//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
 
-        Adapter_Request adapter_request = new Adapter_Request(context, interestDMArrayList);
+        if (connectionDetector.isConnectingToInternet()) {
+            String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+            progress = dialogUtil.showProgressDialog(getActivity(), getString(R.string.please_wait));
+            appController.paServices.TherapistRequest_List(String.valueOf(user.getId()),new Callback<Request_ListDM>() {
+                @Override
+                public void success(Request_ListDM request_listDM, Response response) {
+                    progress.dismiss();
+                    if (request_listDM.getStatus().equalsIgnoreCase("1")) {
+
+
+        Adapter_Request adapter_request = new Adapter_Request(context, request_listDM.getSenders());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, RecyclerView.VERTICAL,false);
         rcvRcv.setLayoutManager(linearLayoutManager);
         rcvRcv.setAdapter(adapter_request);
+                    } else
+                        Helper.showToast(getActivity(), getString(R.string.Api_data_not_found));
+                }
+
+                @Override
+                public void failure(RetrofitError retrofitError) {
+                    progress.dismiss();
+                    Log.e("error", retrofitError.toString());
+                }
+            });
+        } else
+            Helper.showToast(getActivity(), getString(R.string.no_internet_connection));
+
+
+
     }
 
     @Override

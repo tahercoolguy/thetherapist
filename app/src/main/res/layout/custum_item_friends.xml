@@ -12,6 +12,7 @@
         android:layout_height="153dp"
         android:layout_gravity="center"
         android:minWidth="130dp"
+        android:scaleType="fitXY"
         app:riv_corner_radius="15dp"
         android:id="@+id/profileImageRIV"
         android:minHeight="153dp"

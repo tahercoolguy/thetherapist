@@ -17,15 +17,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.master.design.therapist.DM.InterestDM;
 import com.master.design.therapist.DM.SearchDM;
+import com.master.design.therapist.DataModel.All_friends;
 import com.master.design.therapist.Helper.User;
 import com.master.design.therapist.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 
 public class Adapter_Friends extends RecyclerView.Adapter<Adapter_Friends.ViewHolder> {
     private Context context;
-    private ArrayList<InterestDM> arrayList;
+    private ArrayList<All_friends> arrayList;
     private InterestDM selected;
     User user;
     Adapter_Friends.OnItemClickListener onItemClickListener;
@@ -33,7 +35,7 @@ public class Adapter_Friends extends RecyclerView.Adapter<Adapter_Friends.ViewHo
 
     int selectedPosition = 0;
 
-    public Adapter_Friends(Context context, ArrayList<InterestDM> arrayList) {
+    public Adapter_Friends(Context context, ArrayList<All_friends> arrayList) {
         this.context = context;
         this.arrayList = arrayList;
         user = new User(context);
@@ -80,8 +82,10 @@ public class Adapter_Friends extends RecyclerView.Adapter<Adapter_Friends.ViewHo
             }
         }, 100);
 
-        viewHolder.nameTxt.setText(arrayList.get(position).getTittleInterest());
-        viewHolder.profileImageRIV.setImageResource(arrayList.get(position).getImage());
+        viewHolder.nameTxt.setText(arrayList.get(position).getName());
+//        viewHolder.profileImageRIV.setImageResource(arrayList.get(position).getImage());
+
+        Picasso.with(context).load("http://207.154.215.156:8000"+arrayList.get(position).getImage()).into(viewHolder.profileImageRIV);
 
         viewHolder.clickLL.setOnClickListener(new View.OnClickListener() {
             @Override

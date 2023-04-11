@@ -5,6 +5,10 @@ package com.master.design.therapist.notification.Services;
 
 
 import com.master.design.therapist.Adapter.TherapistEducationDM;
+import com.master.design.therapist.DataModel.Friend_ListDM;
+import com.master.design.therapist.DataModel.Request_ListDM;
+import com.master.design.therapist.DataModel.Request_ResponseDM;
+import com.master.design.therapist.DataModel.Terms_ConditionsDM;
 import com.master.design.therapist.DataModel.TherapistAgeDM;
 import com.master.design.therapist.DataModel.TherapistCountriesDM;
 import com.master.design.therapist.DataModel.TherapistEthnicDM;
@@ -114,5 +118,36 @@ public interface PAServices {
     public void TherapistHome(Callback<TherapistHomeDM> therapistHomeDMCallback);
 
 
+    // 10
+    @GET("/terms_conditions")
+    public void TherapistTerms_conditions(Callback<Terms_ConditionsDM> terms_conditionsDMCallback);
 
+    // 11
+    @GET("/privacy_policy")
+    public void TherapistPrivacy_Policy(Callback<Terms_ConditionsDM> terms_conditionsDMCallback);
+
+    // 12
+    @GET("/tips")
+    public void TherapistTips(Callback<Terms_ConditionsDM> terms_conditionsDMCallback);
+
+    // 13
+    @FormUrlEncoded
+    @POST("/friend_list")
+    public void TherapistFriend_List(@Field("id") String id,
+                    Callback<Friend_ListDM> friend_listDMCallback);
+
+
+    // 14
+    @FormUrlEncoded
+    @POST("/request_list")
+    public void TherapistRequest_List(@Field("receiver_id") String receiver_id,
+                                     Callback<Request_ListDM> friend_listDMCallback);
+
+    // 15
+    @FormUrlEncoded
+    @POST("/request_response")
+    public void TherapistRequest_Response(@Field("sender") String sender,
+                                          @Field("receiver") String receiver,
+                                          @Field("response") String response,
+                                        Callback<Request_ResponseDM> friend_listDMCallback);
 }
