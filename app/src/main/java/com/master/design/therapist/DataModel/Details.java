@@ -19,6 +19,34 @@ public class Details {
     private String country_id;
     private String title;
     private String content;
+    private String image;
+
+    private String room_id;
+    private Front_user front_user;
+
+    public String getRoom_id() {
+        return room_id;
+    }
+
+    public void setRoom_id(String room_id) {
+        this.room_id = room_id;
+    }
+
+    public Front_user getFront_user() {
+        return front_user;
+    }
+
+    public void setFront_user(Front_user front_user) {
+        this.front_user = front_user;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 
     public String getTitle() {
         return title;

@@ -92,10 +92,9 @@ public class About_You_Activity extends AppCompatActivity {
     TextView educationET;
 
     @BindView(R.id.profileCircleImg)
-    ImageView profileCircleImg;
+    RoundedImageView profileCircleImg;
 
-    @BindView(R.id.my_account_img)
-    ImageView my_account_img;
+
 
     ArrayList<DataChangeDM> arrayList = new ArrayList();
     BottomForAll bottomForAll;
@@ -201,96 +200,96 @@ public class About_You_Activity extends AppCompatActivity {
             Helper.showToast(About_You_Activity.this, "kindly enter education");
         }
         if (correct) {
-//
-//            if(connectionDetector.isConnectingToInternet())
-//        {
-//            String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-//
-//            progress = dialogUtil.showProgressDialog(About_You_Activity.this, getString(R.string.please_wait));
-//
-//
-//
-//            MultipartTypedOutput multipartTypedOutput = new MultipartTypedOutput();
-//            multipartTypedOutput.addPart("name", new TypedString(username));
-//            multipartTypedOutput.addPart("dob", new TypedString(date));
-//            multipartTypedOutput.addPart("country", new TypedString(selectCountry));
-//            multipartTypedOutput.addPart("gender", new TypedString(gender));
-//            multipartTypedOutput.addPart("ethnicity", new TypedString(ethenicity));
-//            multipartTypedOutput.addPart("email", new TypedString(email));
-//            multipartTypedOutput.addPart("password", new TypedString(password));
-//            multipartTypedOutput.addPart("confirm_password", new TypedString(confirmPassword));
-//            multipartTypedOutput.addPart("interests", new TypedString(InterestIdList));
-//
-//            try
-//            {
-//                if (ifimg1) {
-//                    File f = new File(context.getCacheDir(), "temp.jpg");
-//                    f.createNewFile();
-//
-//                    Bitmap one = ((BitmapDrawable) profileCircleImg.getDrawable()).getBitmap();
-////Convert bitmap to byte array
-//                    Bitmap bitmap = one;
-//                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
-//                    bitmap.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
-//                    byte[] bitmapdata = bos.toByteArray();
-//
-////write the bytes in file
-//                    FileOutputStream fos = new FileOutputStream(f);
-//                    fos.write(bitmapdata);
-//                    fos.flush();
-//                    fos.close();
-//                    File resizedImage = new Resizer(context)
-//                            .setTargetLength(512)
-//                            .setQuality(80)
-//                            .setOutputFormat("JPEG")
-//                            .setOutputFilename("resized_image1")
-//                            .setSourceImage(f)
-//                            .getResizedFile();
-//                    multipartTypedOutput.addPart("image", new TypedFile("image/jpg", resizedImage));
-//                }
-//
-//
-//            } catch (Exception e) {
-//                Log.e("Error", e.toString());
-//            }
-//
-//            multipartTypedOutput.addPart("aboutyou", new TypedString(aboutYouET.getText().toString()));
-//            multipartTypedOutput.addPart("education", new TypedString(id));
-//            multipartTypedOutput.addPart("phone", new TypedString(mobilenumber));
-//
-//
-//
-//
-//            appController.paServices.TherapistRegister(multipartTypedOutput,new Callback<TherapistRegisterDM>() {
-//
-//                @Override
-//
-//                public void success(TherapistRegisterDM therapistRegisterDM, Response response ) {
-//                    progress.dismiss();
-//                    if (therapistRegisterDM.getStatus().equalsIgnoreCase("1")) {
-//
-//
-//                         user.setId(Integer.valueOf(therapistRegisterDM.getUser_id()));
-//
-//                        startActivity(new Intent(About_You_Activity.this, ThankYouActivity.class));
-//                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ECLAIR) {
-//                            overridePendingTransition(R.anim.fade_in, R.anim.fade_in);
-//                        }
-//
-//                    } else
-//                            Helper.showToast(About_You_Activity.this, "registration failed");
-//                    }
-//
-//                    @Override
-//                    public void failure ( RetrofitError retrofitError ) {
-//                        progress.dismiss();
-//                        Log.e("error", retrofitError.toString());
-//
-//                    }
-//                });
-//
-//        }else
-//            Helper.showToast(About_You_Activity.this,getString(R.string.no_internet_connection));
+
+            if(connectionDetector.isConnectingToInternet())
+        {
+            String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+
+            progress = dialogUtil.showProgressDialog(About_You_Activity.this, getString(R.string.please_wait));
+
+
+
+            MultipartTypedOutput multipartTypedOutput = new MultipartTypedOutput();
+            multipartTypedOutput.addPart("name", new TypedString(username));
+            multipartTypedOutput.addPart("dob", new TypedString(date));
+            multipartTypedOutput.addPart("country", new TypedString(selectCountry));
+            multipartTypedOutput.addPart("gender", new TypedString(gender));
+            multipartTypedOutput.addPart("ethnicity", new TypedString(ethenicity));
+            multipartTypedOutput.addPart("email", new TypedString(email));
+            multipartTypedOutput.addPart("password", new TypedString(password));
+            multipartTypedOutput.addPart("confirm_password", new TypedString(confirmPassword));
+            multipartTypedOutput.addPart("interests", new TypedString(InterestIdList));
+
+            try
+            {
+                if (ifimg1) {
+                    File f = new File(context.getCacheDir(), "temp.png");
+                    f.createNewFile();
+
+                    Bitmap one = ((BitmapDrawable) profileCircleImg.getDrawable()).getBitmap();
+//Convert bitmap to byte array
+                    Bitmap bitmap = one;
+                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
+                    byte[] bitmapdata = bos.toByteArray();
+
+//write the bytes in file
+                    FileOutputStream fos = new FileOutputStream(f);
+                    fos.write(bitmapdata);
+                    fos.flush();
+                    fos.close();
+                    File resizedImage = new Resizer(context)
+                            .setTargetLength(512)
+                            .setQuality(80)
+                            .setOutputFormat("JPEG")
+                            .setOutputFilename("resized_image1")
+                            .setSourceImage(f)
+                            .getResizedFile();
+                    multipartTypedOutput.addPart("image", new TypedFile("image/jpg", resizedImage));
+                }
+
+
+            } catch (Exception e) {
+                Log.e("Error", e.toString());
+            }
+
+            multipartTypedOutput.addPart("aboutyou", new TypedString(aboutYouET.getText().toString()));
+            multipartTypedOutput.addPart("education", new TypedString(id));
+            multipartTypedOutput.addPart("phone", new TypedString(mobilenumber));
+
+
+
+
+            appController.paServices.TherapistRegister(multipartTypedOutput,new Callback<TherapistRegisterDM>() {
+
+                @Override
+
+                public void success(TherapistRegisterDM therapistRegisterDM, Response response ) {
+                    progress.dismiss();
+                    if (therapistRegisterDM.getStatus().equalsIgnoreCase("1")) {
+
+
+                         user.setId(Integer.valueOf(therapistRegisterDM.getUser_id()));
+
+                        startActivity(new Intent(About_You_Activity.this, ThankYouActivity.class));
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ECLAIR) {
+                            overridePendingTransition(R.anim.fade_in, R.anim.fade_in);
+                        }
+
+                    } else
+                            Helper.showToast(About_You_Activity.this, therapistRegisterDM.getMsg());
+                    }
+
+                    @Override
+                    public void failure ( RetrofitError retrofitError ) {
+                        progress.dismiss();
+                        Log.e("error", retrofitError.toString());
+
+                    }
+                });
+
+        }else
+            Helper.showToast(About_You_Activity.this,getString(R.string.no_internet_connection));
 
 
 
@@ -320,7 +319,7 @@ public class About_You_Activity extends AppCompatActivity {
 
                     profileCircleImg.setVisibility(View.VISIBLE);
                    profileCircleImg.setImageBitmap(bitmap);
-//                    ifimg1 = true;
+                    ifimg1 = true;
 //                    EditProfileImageAPI();
 
                     // loading profile image from local cache

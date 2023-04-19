@@ -5,9 +5,13 @@ package com.master.design.therapist.notification.Services;
 
 
 import com.master.design.therapist.Adapter.TherapistEducationDM;
+import com.master.design.therapist.DataModel.Cancel_Friend_RequestDM;
+import com.master.design.therapist.DataModel.Edit_ProfileDM;
 import com.master.design.therapist.DataModel.Friend_ListDM;
+import com.master.design.therapist.DataModel.ProfileDM;
 import com.master.design.therapist.DataModel.Request_ListDM;
 import com.master.design.therapist.DataModel.Request_ResponseDM;
+import com.master.design.therapist.DataModel.Send_Friend_RequestDM;
 import com.master.design.therapist.DataModel.Terms_ConditionsDM;
 import com.master.design.therapist.DataModel.TherapistAgeDM;
 import com.master.design.therapist.DataModel.TherapistCountriesDM;
@@ -17,6 +21,7 @@ import com.master.design.therapist.DataModel.TherapistHomeDM;
 import com.master.design.therapist.DataModel.TherapistInterestDM;
 import com.master.design.therapist.DataModel.TherapistLoginDM;
 import com.master.design.therapist.DataModel.TherapistRegisterDM;
+import com.master.design.therapist.DataModel.Update_Pic_ProfileDM;
 
 import retrofit.Callback;
 import retrofit.http.Body;
@@ -113,10 +118,12 @@ public interface PAServices {
     @GET("/countries")
     public void TherapistCountries(Callback<TherapistCountriesDM> therapistCountriesDMCallback);
 
-    // 9
-    @GET("/home")
-    public void TherapistHome(Callback<TherapistHomeDM> therapistHomeDMCallback);
 
+    // 9
+    @FormUrlEncoded
+    @POST("/home")
+    public void TherapistHome(@Field("id") String id,
+                                     Callback<TherapistHomeDM> therapistHomeDMCallback);
 
     // 10
     @GET("/terms_conditions")
@@ -150,4 +157,42 @@ public interface PAServices {
                                           @Field("receiver") String receiver,
                                           @Field("response") String response,
                                         Callback<Request_ResponseDM> friend_listDMCallback);
+
+    // 16
+    @FormUrlEncoded
+    @POST("/send_friend_request")
+    public void TherapistSend_Friend_Request(@Field("sender_id") String sender_id,
+                                             @Field("receiver_id") String receiver_id,
+                                            Callback<Send_Friend_RequestDM> send_friend_requestDMCallback);
+
+
+    // 17
+    @FormUrlEncoded
+    @POST("/cancel_friend_request")
+    public void TherapistCancel_Friend_Request(@Field("sender_id") String sender_id,
+                                             @Field("receiver_id") String receiver_id,
+                                             Callback<Cancel_Friend_RequestDM> cancel_friend_requestDMCallback);
+
+    // 18
+    @FormUrlEncoded
+    @POST("/profile")
+    public void TherapistProfile(@Field("id") String id,
+                                  Callback<ProfileDM> profileDMCallback);
+
+    //19
+    @POST("/update_pic")
+    void TherapistUpdate_Pic(@Body MultipartTypedOutput multipartTypedOutput, Callback<Update_Pic_ProfileDM> update_pic_profileDMCallback);
+
+    // 18
+    @FormUrlEncoded
+    @POST("/edit_profile")
+    public void TherapistEdit_Profile(@Field("id") String id,
+                                      @Field("name") String  name,
+                                      @Field("dob") String dob,
+                                      @Field("country") String country,
+                                      @Field("gender") String gender,
+                                      @Field("phone") String phone,
+                                 Callback<Edit_ProfileDM> edit_profileDMCallback);
+
+
 }

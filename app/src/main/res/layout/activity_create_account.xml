@@ -69,6 +69,7 @@
 
 
         <LinearLayout
+            android:id="@+id/full_date"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_gravity="center"
@@ -80,7 +81,7 @@
             android:padding="10dp"
             android:paddingHorizontal="10dp">
 
-            <EditText
+            <TextView
                 android:id="@+id/dateET"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -91,13 +92,13 @@
                 android:elevation="10dp"
                 android:gravity="center"
                 android:hint="@string/date"
-                android:inputType="number"
+
 
                 android:padding="10dp"
                 android:singleLine="true"
-                android:textSize="@dimen/text_size_normal"></EditText>
+                android:textSize="@dimen/text_size_normal"></TextView>
 
-            <EditText
+            <TextView
                 android:id="@+id/monthET"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -110,12 +111,12 @@
                 android:gravity="center"
                 android:hint="Month"
 
-                android:inputType="number"
+
                 android:padding="10dp"
                 android:singleLine="true"
-                android:textSize="@dimen/text_size_normal"></EditText>
+                android:textSize="@dimen/text_size_normal"></TextView>
 
-            <EditText
+            <TextView
                 android:id="@+id/yearET"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -127,10 +128,10 @@
                 android:gravity="center"
                 android:hint="@string/year"
 
-                android:inputType="number"
+
                 android:padding="10dp"
                 android:singleLine="true"
-                android:textSize="@dimen/text_size_normal"></EditText>
+                android:textSize="@dimen/text_size_normal"></TextView>
 
         </LinearLayout>
 
@@ -270,7 +271,7 @@
             android:background="@drawable/rectangle_white_grey_border"
             android:backgroundTint="@color/white"
             android:elevation="10dp"
-            android:hint="123456789"
+            android:hint="+91123456789"
             android:padding="10dp"
             android:paddingHorizontal="10dp"
             android:paddingEnd="20dp"

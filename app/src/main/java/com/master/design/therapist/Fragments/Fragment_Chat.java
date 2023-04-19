@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -20,12 +21,15 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.master.design.therapist.Activity.Conversation_Activity;
 import com.master.design.therapist.Activity.MainActivity;
 import com.master.design.therapist.Activity.My_ProfileActivity;
 import com.master.design.therapist.Adapter.Adapter_Chat;
 import com.master.design.therapist.Controller.AppController;
 import com.master.design.therapist.DM.ChatDM;
+import com.master.design.therapist.DataModel.Friend_ListDM;
+import com.master.design.therapist.Helper.Helper;
 import com.master.design.therapist.R;
 import com.master.design.therapist.Utils.ConnectionDetector;
 
@@ -34,6 +38,9 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import it.sephiroth.android.library.widget.HListView;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class Fragment_Chat extends Fragment {
 
@@ -105,7 +112,18 @@ public class Fragment_Chat extends Fragment {
         chatDMArrayList.add(new ChatDM("Dude", "01:03 AM", "0", "How are you ?", R.drawable.img_profile));
 
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
+
+//        if (connectionDetector.isConnectingToInternet()) {
+//            String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+//            progress = dialogUtil.showProgressDialog(getActivity(), getString(R.string.please_wait));
+//            appController.paServices.TherapistFriend_List(String.valueOf(user.getId()),new Callback<Friend_ListDM>() {
+//                @Override
+//                public void success(Friend_ListDM friend_listDM, Response response) {
+//                    progress.dismiss();
+//                    if (friend_listDM.getStatus().equalsIgnoreCase("1")) {
+
+
+                        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
         Adapter_Chat adapter_chat = new Adapter_Chat(context, chatDMArrayList);
         rcvRcv.setLayoutManager(linearLayoutManager);
         rcvRcv.setAdapter(adapter_chat);
@@ -118,6 +136,21 @@ public class Fragment_Chat extends Fragment {
                 activity.overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
             }
         });
+//
+//                    } else
+//                        Helper.showToast(getActivity(), getString(R.string.Api_data_not_found));
+//                }
+//
+//                @Override
+//                public void failure(RetrofitError retrofitError) {
+//                    progress.dismiss();
+//                    Log.e("error", retrofitError.toString());
+//                }
+//            });
+//        } else
+//            Helper.showToast(getActivity(), getString(R.string.no_internet_connection));
+
+
 
     }
 

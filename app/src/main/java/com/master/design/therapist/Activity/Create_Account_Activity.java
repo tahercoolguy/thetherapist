@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.github.florent37.singledateandtimepicker.dialog.SingleDateAndTimePickerDialog;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.master.design.therapist.Controller.AppController;
 import com.master.design.therapist.DataModel.Details;
@@ -28,7 +29,9 @@ import com.master.design.therapist.Utils.ConnectionDetector;
 
 import org.w3c.dom.Text;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -64,13 +67,13 @@ public class Create_Account_Activity extends AppCompatActivity {
     EditText mobileET;
 
     @BindView(R.id.dateET)
-    EditText dateET;
+    TextView dateET;
 
     @BindView(R.id.monthET)
-    EditText monthET;
+    TextView monthET;
 
     @BindView(R.id.yearET)
-    EditText yearET;
+    TextView yearET;
 
 
     @BindView(R.id.selectCountryET)
@@ -86,9 +89,14 @@ public class Create_Account_Activity extends AppCompatActivity {
     @BindView(R.id.maleTV)
     TextView maleTV;
 
+//    @BindView(R.id.full_date)
+//    LinearLayout full_date;
+
+
     String Gender;
     String name;
-    String id;
+    String SelectCountryid;
+    String ethnicityyid;
     String Date;
 
     @OnClick(R.id.maleTV)
@@ -96,10 +104,26 @@ public class Create_Account_Activity extends AppCompatActivity {
         Gender="1";
     }
 
-    @OnClick({R.id.femaleTV})
+    @OnClick(R.id.femaleTV)
     public void femaleTV() {
         Gender="0";
+     }
+
+    @OnClick(R.id.dateET)
+    public void dateET() {
+        datepick();
     }
+    @OnClick(R.id.monthET)
+    public void monthET() {
+        datepick();
+    }
+
+    @OnClick(R.id.yearET)
+    public void yearET() {
+        datepick();
+    }
+
+
 
 //    @OnClick(R.id.continueTxt)
 //    public void continueTxt() {
@@ -119,7 +143,7 @@ BottomForAll bottomForAll;
                                 public void response(Object object) {
 
                                     name = ((DataChangeDM) object).getName();
-                                    id = ((DataChangeDM) object).getId();
+                                    ethnicityyid = ((DataChangeDM) object).getId();
 //                                    user.setAreaId(AreaID);
                                     ethnicityyET.setText(name);
 
@@ -144,7 +168,7 @@ BottomForAll bottomForAll;
             public void response(Object object) {
 
                 name = ((DataChangeDM) object).getName();
-                id = ((DataChangeDM) object).getId();
+                SelectCountryid = ((DataChangeDM) object).getId();
 //               user.setAreaId(AreaID);
                 selectCountryET.setText(name);
 
@@ -251,9 +275,9 @@ BottomForAll bottomForAll;
         intent.putExtra("string33", "string33");
         intent.putExtra("userName", userNameET.getText().toString());
         intent.putExtra("date", (yearET.getText().toString()+"-"+monthET.getText().toString()+"-"+dateET.getText().toString()));
-        intent.putExtra("selectCountry", selectCountryET.getText().toString());
+        intent.putExtra("selectCountry", SelectCountryid);
         intent.putExtra("gender", Gender);
-        intent.putExtra("ethnicity", id);
+        intent.putExtra("ethnicity", ethnicityyid);
         intent.putExtra("mobileNumber", mobileET.getText().toString());
         intent.putExtra("email", emailEt.getText().toString());
         intent.putExtra("password", PasswordEdT.getText().toString());
@@ -358,5 +382,60 @@ BottomForAll bottomForAll;
             Helper.showToast(Create_Account_Activity.this, getString(R.string.no_internet_connection));
     }
 
+
+    public void datepick()
+    {
+        new SingleDateAndTimePickerDialog.Builder(this)
+                .bottomSheet()
+                .curved()
+                .displayMinutes(false)
+                .displayHours(false)
+                .displayDays(false)
+                .displayMonth(true)
+                .mainColor(getColor(R.color.black))
+
+                .listener(new SingleDateAndTimePickerDialog.Listener() {
+                    @Override
+                    public void onDateSelected(java.util.Date date) {
+                        String inputPattern = "yyyy-MM-dd";
+                        SimpleDateFormat inputFormat = new SimpleDateFormat(inputPattern);
+
+                        String inputPattern2 = "yyyy-MMM-dd";
+                        SimpleDateFormat inputFormat2 = new SimpleDateFormat(inputPattern2);
+
+                      try {
+                            String str = inputFormat.format(date);
+                            String str1 = inputFormat2.format(date);
+//                            dateTxt.setText(str);
+//                            Date=str;
+
+                            String Month = "MM";
+                            inputFormat2 = new SimpleDateFormat(Month);
+                            String MonthText = inputFormat2.format(date);
+                            monthET.setText(MonthText);
+
+                            String Year = "yyyy";
+                            inputFormat = new SimpleDateFormat(Year);
+                            String YearText = inputFormat.format(date);
+                            yearET.setText(YearText);
+
+                            String Day = "dd";
+                            inputFormat = new SimpleDateFormat(Day);
+                            String DateText = inputFormat.format(date);
+                            dateET.setText(DateText);
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                })
+
+                .displayYears(true)
+                .displayDaysOfMonth(true)
+                .display();
+
+
+
+    }
 
 }

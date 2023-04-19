@@ -5,45 +5,113 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
+import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.master.design.therapist.Adapter.TherapistEducationDM;
+import com.master.design.therapist.Controller.AppController;
+import com.master.design.therapist.DataModel.ProfileDM;
+import com.master.design.therapist.DataModel.Update_Pic_ProfileDM;
+import com.master.design.therapist.Helper.DialogUtil;
+import com.master.design.therapist.Helper.Helper;
+import com.master.design.therapist.Helper.User;
 import com.master.design.therapist.R;
+import com.master.design.therapist.Utils.ConnectionDetector;
+import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import me.echodev.resizer.Resizer;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+import retrofit.mime.MultipartTypedOutput;
+import retrofit.mime.TypedFile;
+import retrofit.mime.TypedString;
 
 public class My_ProfileActivity extends AppCompatActivity {
 
-    @BindView(R.id.profileImgRIV)
-    RoundedImageView profileImgRIV;
+
+
+    AppController appController;
+    ConnectionDetector connectionDetector;
+    User user;
+    DialogUtil dialogUtil;
+    Dialog progress;
+    Context context;
 
     @BindView(R.id.editImg)
     ImageView editImg;
+
+    @BindView(R.id.userNameET)
+    EditText userNameET;
+
+    @BindView(R.id.emailET)
+    EditText emailET;
+
+    @BindView(R.id.phoneET)
+    EditText phoneET;
+
+    @BindView(R.id.genderET)
+    EditText genderET;
+
+    @BindView(R.id.dobET)
+    EditText dobET;
+
+    @BindView(R.id.profileImgRIV)
+    ImageView profileImgRIV;
+
+
+//    @OnClick(R.id. editProfileTxt)
+//    public void  editProfileTxt() {
+//       UpdateImageProfileAPI();
+//    }
+
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_profile);
         ButterKnife.bind(this);
+        appController = (AppController)  getApplicationContext();
+        connectionDetector = new ConnectionDetector(My_ProfileActivity.this);
+        user = new User(My_ProfileActivity.this);
+        dialogUtil = new DialogUtil();
+        context=getApplicationContext();
+        Binding();
+
     }
 
+    boolean ifimg1 = false;
     @OnClick(R.id.editImg)
     public void clickEditImg() {
+        ifimg1 = true;
         OpenImage();
     }
 
@@ -57,8 +125,8 @@ public class My_ProfileActivity extends AppCompatActivity {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(My_ProfileActivity.this.getContentResolver(), uri);
 
                     profileImgRIV.setImageBitmap(bitmap);
-//                    ifimg1 = true;
-//                    EditProfileImageAPI();
+                    ifimg1 = true;
+                    UpdateImageProfileAPI();
 
                     // loading profile image from local cache
 
@@ -188,4 +256,105 @@ public class My_ProfileActivity extends AppCompatActivity {
         super.finish();
         overridePendingTransition(R.anim.right_slide_in, R.anim.right_slide_in);
     }
+
+    public void Binding()
+    {
+        if (connectionDetector.isConnectingToInternet()) {
+            String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+            progress = dialogUtil.showProgressDialog(My_ProfileActivity.this, getString(R.string.please_wait));
+            appController.paServices.TherapistProfile(String.valueOf(user.getId()),new Callback<ProfileDM>() {
+                @Override
+                public void success(ProfileDM profileDM, Response response) {
+                    progress.dismiss();
+                    if (profileDM.getStatus().equalsIgnoreCase("1")) {
+
+                     userNameET.setText(profileDM.getUser_data().get(0).getName());
+                     emailET.setText(profileDM.getUser_data().get(0).getEmail());
+                     phoneET.setText(profileDM.getUser_data().get(0).getPhone());
+                     genderET.setText(profileDM.getUser_data().get(0).getGender());
+                     dobET.setText(profileDM.getUser_data().get(0).getDob());
+
+                  Picasso.with(context).load("http://207.154.215.156:8000"+profileDM.getUser_data().get(0).getImage()).into(profileImgRIV);
+
+
+                    } else
+                        Helper.showToast(My_ProfileActivity.this, getString(R.string.Api_data_not_found));
+            }
+
+            @Override
+            public void failure(RetrofitError retrofitError) {
+                Log.e("error", retrofitError.toString());
+            }
+        });
+    } else
+            Helper.showToast(My_ProfileActivity.this, getString(R.string.no_internet_connection));
+}
+
+
+
+  public void UpdateImageProfileAPI()
+        {
+            if (connectionDetector.isConnectingToInternet()) {
+
+                MultipartTypedOutput multipartTypedOutput = new MultipartTypedOutput();
+                multipartTypedOutput.addPart("id", new TypedString(String.valueOf(user.getId())));
+
+                try {
+                    if (ifimg1)
+                    {
+                        File f = new File(context.getCacheDir(), "temp.jpg");
+                        f.createNewFile();
+
+                        Bitmap one = ((BitmapDrawable) profileImgRIV.getDrawable()).getBitmap();
+//Convert bitmap to byte array
+                        Bitmap bitmap = one;
+                        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
+                        byte[] bitmapdata = bos.toByteArray();
+
+//write the bytes in file
+                        FileOutputStream fos = new FileOutputStream(f);
+                        fos.write(bitmapdata);
+                        fos.flush();
+                        fos.close();
+                        File resizedImage = new Resizer(context)
+                                .setTargetLength(512)
+                                .setQuality(80)
+                                .setOutputFormat("JPEG")
+                                .setOutputFilename("resized_image1")
+                                .setSourceImage(f)
+                                .getResizedFile();
+                        multipartTypedOutput.addPart("image", new TypedFile("image/jpg", resizedImage));
+                    }
+
+
+                } catch (Exception e) {
+                    Log.e("Error", e.toString());
+                }
+                progress = dialogUtil.showProgressDialog(My_ProfileActivity.this, getString(R.string.please_wait));
+
+                appController.paServices.TherapistUpdate_Pic(multipartTypedOutput, new Callback<Update_Pic_ProfileDM>() {
+                    @Override
+                    public void success(Update_Pic_ProfileDM update_pic_profileDM, Response response) {
+                        progress.dismiss();
+
+                        if (update_pic_profileDM.getStatus().equalsIgnoreCase("1")) {
+
+                            Helper.showToast(My_ProfileActivity.this, update_pic_profileDM.getMsg());
+                        } else
+                            Helper.showToast(My_ProfileActivity.this, update_pic_profileDM.getMsg());
+                    }
+
+                    @Override
+                    public void failure(RetrofitError retrofitError) {
+                        progress.dismiss();
+
+                        Log.e("error", retrofitError.toString());
+
+                    }
+                });
+            } else
+                Helper.showToast(My_ProfileActivity.this, getString(R.string.no_internet_connection));
+         }
+
 }
