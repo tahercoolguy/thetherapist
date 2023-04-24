@@ -6,6 +6,8 @@ package com.master.design.therapist.notification.Services;
 
 import com.master.design.therapist.Adapter.TherapistEducationDM;
 import com.master.design.therapist.DataModel.Cancel_Friend_RequestDM;
+import com.master.design.therapist.DataModel.ChatHistoryDM;
+import com.master.design.therapist.DataModel.ChatlistDM;
 import com.master.design.therapist.DataModel.Edit_ProfileDM;
 import com.master.design.therapist.DataModel.Friend_ListDM;
 import com.master.design.therapist.DataModel.ProfileDM;
@@ -183,7 +185,7 @@ public interface PAServices {
     @POST("/update_pic")
     void TherapistUpdate_Pic(@Body MultipartTypedOutput multipartTypedOutput, Callback<Update_Pic_ProfileDM> update_pic_profileDMCallback);
 
-    // 18
+    // 20
     @FormUrlEncoded
     @POST("/edit_profile")
     public void TherapistEdit_Profile(@Field("id") String id,
@@ -194,5 +196,18 @@ public interface PAServices {
                                       @Field("phone") String phone,
                                  Callback<Edit_ProfileDM> edit_profileDMCallback);
 
+    // 21
+    @FormUrlEncoded
+    @POST("/chatlist")
+    public void TherapistChatList(@Field("user_id") String user_id,
+                                     Callback<ChatlistDM> chatlistDMCallback);
+
+
+    // 22
+    @FormUrlEncoded
+    @POST("/chathistory")
+    public void TherapistChatHistory(@Field("user_1") String user_1,
+                                     @Field("user_2") String user_2,
+                                  Callback<ChatHistoryDM> chatHistoryDMCallback);
 
 }

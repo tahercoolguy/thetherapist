@@ -17,15 +17,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.master.design.therapist.DM.ChatDM;
 import com.master.design.therapist.DM.InterestDM;
+import com.master.design.therapist.DataModel.Details;
 import com.master.design.therapist.Helper.User;
 import com.master.design.therapist.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 
 public class Adapter_Chat extends RecyclerView.Adapter<Adapter_Chat.ViewHolder> {
     private Context context;
-    private ArrayList<ChatDM> arrayList;
+    private ArrayList<Details> arrayList;
     private ChatDM selected;
     User user;
     Adapter_Chat.OnItemClickListener onItemClickListener;
@@ -33,7 +35,7 @@ public class Adapter_Chat extends RecyclerView.Adapter<Adapter_Chat.ViewHolder> 
 
     int selectedPosition = 0;
 
-    public Adapter_Chat(Context context, ArrayList<ChatDM> arrayList) {
+    public Adapter_Chat(Context context, ArrayList<Details> arrayList) {
         this.context = context;
         this.arrayList = arrayList;
         user = new User(context);
@@ -81,15 +83,15 @@ public class Adapter_Chat extends RecyclerView.Adapter<Adapter_Chat.ViewHolder> 
         }, 100);
 
 
-        viewHolder.messageTxt.setText(arrayList.get(position).getMesseage());
-        viewHolder.messegeCountTxt.setText(arrayList.get(position).getMesseageCount());
-        viewHolder.timeTxt.setText(arrayList.get(position).getTime());
-        viewHolder.userNameTxt.setText(arrayList.get(position).getName());
-        viewHolder.profileRIV.setImageResource(arrayList.get(position).getImage());
-
-        if (arrayList.get(position).getMesseageCount().equalsIgnoreCase("0")) {
-            viewHolder.messegeCountTxt.setVisibility(View.GONE);
-        }
+//        viewHolder.messageTxt.setText(arrayList.get(position).getMesseage());
+//        viewHolder.messegeCountTxt.setText(arrayList.get(position).getMesseageCount());
+//        viewHolder.timeTxt.setText(arrayList.get(position).getTime());
+        viewHolder.userNameTxt.setText(arrayList.get(position).getFront_user().getName());
+ //       viewHolder.profileRIV.setImageResource(arrayList.get(position).getImage());
+        Picasso.with(context).load("http://207.154.215.156:8000"+arrayList.get(position).getFront_user().getImage()).into(viewHolder.profileRIV);
+//        if (arrayList.get(position).getMesseageCount().equalsIgnoreCase("0")) {
+//            viewHolder.messegeCountTxt.setVisibility(View.GONE);
+//        }
 
         if (position == 0 || position == 2 || position == 4 || position == 10 || position == 7) {
             viewHolder.messegeCountTxt.setVisibility(View.GONE);
@@ -99,7 +101,7 @@ public class Adapter_Chat extends RecyclerView.Adapter<Adapter_Chat.ViewHolder> 
         viewHolder.clickLL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onItemClickListener.onClickThis(position, arrayList.get(position).getImage(),arrayList.get(position).getName());
+                onItemClickListener.onClickThis(position, "http://207.154.215.156:8000"+arrayList.get(position).getFront_user().getImage(),arrayList.get(position).getFront_user().getName());
 
             }
         });
@@ -140,6 +142,6 @@ public class Adapter_Chat extends RecyclerView.Adapter<Adapter_Chat.ViewHolder> 
     public interface OnItemClickListener {
 
 
-        void onClickThis(int position, int img,String name);
+        void onClickThis(int position, String img,String name);
     }
 }

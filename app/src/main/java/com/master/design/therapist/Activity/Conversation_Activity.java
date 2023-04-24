@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -17,19 +18,29 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.master.design.therapist.Adapter.MessageChatAdapter;
+import com.master.design.therapist.Controller.AppController;
 import com.master.design.therapist.DM.MessageChatModel;
+import com.master.design.therapist.DataModel.ChatHistoryDM;
+import com.master.design.therapist.DataModel.TherapistInterestDM;
+import com.master.design.therapist.Helper.DialogUtil;
+import com.master.design.therapist.Helper.User;
 import com.master.design.therapist.R;
+import com.master.design.therapist.Utils.ConnectionDetector;
+import com.master.design.therapist.Utils.Helper;
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -39,6 +50,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class Conversation_Activity extends AppCompatActivity {
 
@@ -57,6 +71,15 @@ public class Conversation_Activity extends AppCompatActivity {
     @BindView(R.id.messageET)
     EditText messageET;
     MessageChatAdapter adapter;
+    String name,image;
+
+    AppController appController;
+
+    Dialog progress;
+    ConnectionDetector connectionDetector;
+    User user;
+    DialogUtil dialogUtil;
+    String FriendsId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,53 +88,99 @@ public class Conversation_Activity extends AppCompatActivity {
         ButterKnife.bind(this);
         context = getApplicationContext();
         activity = Conversation_Activity.this;
+        dialogUtil = new DialogUtil();
+        appController = (AppController) getApplicationContext();
+        connectionDetector = new ConnectionDetector(getApplicationContext());
+        user = new User(Conversation_Activity.this);
         LinearLayoutManager manager = new LinearLayoutManager(Conversation_Activity.this, RecyclerView.VERTICAL, false);
         rcvRcv.setLayoutManager(manager);
         setChatData();
+        name=getIntent().getStringExtra("Name");
+        image=getIntent().getStringExtra("image");
+        FriendsId=getIntent().getStringExtra("FriendId");
+        userNameTxt.setText(name);
+        Picasso.with(context).load(image).into(profileCircleImg);
     }
 
 
     List<MessageChatModel> messageChatModelList = new ArrayList<>();
 
     private void setChatData() {
-        MessageChatModel model1 = new MessageChatModel(
-                "Hello. How are you today?",
-                "10:00 PM", 0, R.drawable.marshall_img
+//        MessageChatModel model1 = new MessageChatModel(
+//                "Hello. How are you today?",
+//                "10:00 PM", 0, R.drawable.marshall_img
+//
+//        );
+//        MessageChatModel model2 = new MessageChatModel(
+//                "Hey! I'm fine. Thanks for asking!",
+//                "10:00 PM",
+//                1, R.drawable.marshall_img
+//        );
+//        MessageChatModel model3 = new MessageChatModel(
+//                "Sweet! So, what do you wanna do today?",
+//                "10:00 PM",
+//                0, R.drawable.marshall_img
+//        );
+//        MessageChatModel model4 = new MessageChatModel(
+//                "Nah, I dunno. Play soccer.. or learn more coding perhaps?",
+//                "10:00 PM",
+//                1, R.drawable.marshall_img
+//        );
+//
+//
+//        messageChatModelList.add(model1);
+//        messageChatModelList.add(model2);
+//        messageChatModelList.add(model3);
+//        messageChatModelList.add(model4);
+//        messageChatModelList.add(model1);
+//        messageChatModelList.add(model2);
+//        messageChatModelList.add(model3);
+//        messageChatModelList.add(model4);
+//        messageChatModelList.add(model1);
+//        messageChatModelList.add(model2);
+//        messageChatModelList.add(model3);
+//        messageChatModelList.add(model4);
 
-        );
-        MessageChatModel model2 = new MessageChatModel(
-                "Hey! I'm fine. Thanks for asking!",
-                "10:00 PM",
-                1, R.drawable.marshall_img
-        );
-        MessageChatModel model3 = new MessageChatModel(
-                "Sweet! So, what do you wanna do today?",
-                "10:00 PM",
-                0, R.drawable.marshall_img
-        );
-        MessageChatModel model4 = new MessageChatModel(
-                "Nah, I dunno. Play soccer.. or learn more coding perhaps?",
-                "10:00 PM",
-                1, R.drawable.marshall_img
-        );
 
 
-        messageChatModelList.add(model1);
-        messageChatModelList.add(model2);
-        messageChatModelList.add(model3);
-        messageChatModelList.add(model4);
-        messageChatModelList.add(model1);
-        messageChatModelList.add(model2);
-        messageChatModelList.add(model3);
-        messageChatModelList.add(model4);
-        messageChatModelList.add(model1);
-        messageChatModelList.add(model2);
-        messageChatModelList.add(model3);
-        messageChatModelList.add(model4);
+        if(connectionDetector.isConnectingToInternet())
+        {
+
+            String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+
+            progress = dialogUtil.showProgressDialog(Conversation_Activity.this, getString(R.string.please_wait));
+
+            appController.paServices.TherapistChatHistory(String.valueOf(user.getId()),FriendsId, new Callback<ChatHistoryDM>() {
+
+                @Override
+
+                public void success ( ChatHistoryDM chatHistoryDM, Response response ) {
+                    progress.dismiss();
+                    if (chatHistoryDM.getStatus().equalsIgnoreCase("1")) {
+
 
         rcvRcv.smoothScrollToPosition(messageChatModelList.size());
-        adapter = new MessageChatAdapter(messageChatModelList, context);
+        adapter = new MessageChatAdapter(chatHistoryDM.getAll_messages(), context,FriendsId);
         rcvRcv.setAdapter(adapter);
+
+                    } else
+                        Helper.showToast(Conversation_Activity.this, chatHistoryDM.getMsg());
+                }
+
+                @Override
+                public void failure ( RetrofitError retrofitError ) {
+                    progress.dismiss();
+
+                    Log.e("error", retrofitError.toString());
+
+                }
+            });
+
+        }else
+            Helper.showToast(Conversation_Activity.this,getString(R.string.no_internet_connection));
+
+
+
     }
 
     @OnClick(R.id.sendImg)

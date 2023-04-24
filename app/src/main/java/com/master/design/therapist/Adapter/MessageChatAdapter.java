@@ -15,36 +15,51 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.master.design.therapist.DM.MessageChatModel;
+import com.master.design.therapist.DataModel.All_messages;
+import com.master.design.therapist.Helper.User;
 import com.master.design.therapist.R;
 
 import java.util.List;
 
 public class MessageChatAdapter extends RecyclerView.Adapter {
 
-    List<MessageChatModel> messageChatModelList;
+    List<All_messages> messageChatModelList;
     Context context;
+    User user;
+   String  friendId ;
 
     private static final int VIEW_TYPE_MESSAGE_SENT = 1;
     private static final int VIEW_TYPE_MESSAGE_RECEIVED = 2;
 
 
-    public MessageChatAdapter(List<MessageChatModel> messageChatModelList, Context context) {
+
+    public MessageChatAdapter(List<All_messages> messageChatModelList, Context context,String friendId) {
         this.messageChatModelList = messageChatModelList;
         this.context = context;
+        this.friendId=friendId;
+        user= new User(context);
     }
 
     // Determines the appropriate ViewType according to the sender of the message.
     @Override
     public int getItemViewType(int position) {
-        MessageChatModel message = (MessageChatModel) messageChatModelList.get(position);
-        if (message.getViewType() == 0) {
+        All_messages message = (All_messages) messageChatModelList.get(position);
+        String senderID=message.getSender_user();
+        String userID= String.valueOf(user.getId());
+        if (userID.equalsIgnoreCase(senderID)) {
             // If the current user is the sender of the message
-            Log.e("getItemViewType", "0");
+            Log.e("getItemViewType", "1");
             return VIEW_TYPE_MESSAGE_SENT;
+//            Log.e("getItemViewType", "1");
+//            return VIEW_TYPE_MESSAGE_RECEIVED;
         } else {
             // If some other user sent the message
-            Log.e("getItemViewType", "1");
+
+            Log.e("getItemViewType", "2");
             return VIEW_TYPE_MESSAGE_RECEIVED;
+
+//            Log.e("getItemViewType", "2");
+//            return VIEW_TYPE_MESSAGE_SENT;
         }
 
     }
@@ -94,7 +109,7 @@ public class MessageChatAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-        MessageChatModel message = messageChatModelList.get(position);
+        All_messages message = messageChatModelList.get(position);
         switch (holder.getItemViewType()) {
             case VIEW_TYPE_MESSAGE_SENT:
                 ((SentMessageHolder) holder).bind(message);
@@ -123,10 +138,11 @@ public class MessageChatAdapter extends RecyclerView.Adapter {
 
         }
 
-        void bind(MessageChatModel messageModel) {
+        void bind(All_messages messageModel) {
 
-            message.setText(messageModel.getText());
-            time.setText(messageModel.getTime());
+            message.setText(messageModel.getMessage());
+
+            time.setText(messageModel.getTimestamp());
 
         }
 
@@ -142,9 +158,9 @@ public class MessageChatAdapter extends RecyclerView.Adapter {
             time = (TextView) itemView.findViewById(R.id.time);
         }
 
-        void bind(MessageChatModel messageModel) {
-            message.setText(messageModel.getText());
-            time.setText(messageModel.getTime());
+        void bind(All_messages messageModel) {
+            message.setText(messageModel.getMessage());
+            time.setText(messageModel.getTimestamp());
         }
     }
 }

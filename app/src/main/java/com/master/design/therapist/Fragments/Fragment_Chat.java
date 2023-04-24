@@ -1,6 +1,7 @@
 package com.master.design.therapist.Fragments;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -23,13 +24,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.master.design.therapist.Activity.Conversation_Activity;
+import com.master.design.therapist.Activity.Create_Account_Activity;
+import com.master.design.therapist.Activity.FriendSearch_SelectActivity;
 import com.master.design.therapist.Activity.MainActivity;
 import com.master.design.therapist.Activity.My_ProfileActivity;
 import com.master.design.therapist.Adapter.Adapter_Chat;
 import com.master.design.therapist.Controller.AppController;
 import com.master.design.therapist.DM.ChatDM;
+import com.master.design.therapist.DataModel.ChatlistDM;
 import com.master.design.therapist.DataModel.Friend_ListDM;
+import com.master.design.therapist.Helper.DialogUtil;
 import com.master.design.therapist.Helper.Helper;
+import com.master.design.therapist.Helper.User;
 import com.master.design.therapist.R;
 import com.master.design.therapist.Utils.ConnectionDetector;
 
@@ -58,12 +64,16 @@ public class Fragment_Chat extends Fragment {
     @BindView(R.id.rcvRcv)
     RecyclerView rcvRcv;
 
+    User user;
+
     @BindView(R.id.layout_parent)
     LinearLayout layout_parent;
     private HListView lst_latest_profiles, lst_latest_news, lst_featured_video;
     AppController appController;
     ConnectionDetector connectionDetector;
     ProgressDialog progressDialog;
+    DialogUtil dialogUtil;
+    Dialog progress;
 
     @Nullable
     @Override
@@ -82,7 +92,8 @@ public class Fragment_Chat extends Fragment {
         if (rootView == null) {
             rootView = inflater.inflate(R.layout.chat_fragment_layout, container, false);
             ButterKnife.bind(this, rootView);
-
+            dialogUtil = new DialogUtil();
+            user = new User(getActivity());
             setChatData();
 
         }
@@ -91,64 +102,70 @@ public class Fragment_Chat extends Fragment {
 
     private void setChatData() {
 
-        ArrayList<ChatDM> chatDMArrayList = new ArrayList<>();
-        chatDMArrayList.add(new ChatDM("Rachel", "10:36 PM", "5", "Today I work in a cafe. Come there, I’ll buy you", R.drawable.img_profile));
-        chatDMArrayList.add(new ChatDM("Dude", "01:03 AM", "0", "How are you ?", R.drawable.img_profile));
-        chatDMArrayList.add(new ChatDM("Rachel", "10:36 PM", "5", "Today I work in a cafe. Come there, I’ll buy you", R.drawable.img_profile));
-        chatDMArrayList.add(new ChatDM("Dude", "Fri", "0", "How are you ?", R.drawable.img_profile));
-        chatDMArrayList.add(new ChatDM("Rachel", "Sat", "3", "Today I work in a cafe. Come there, I’ll buy you", R.drawable.img_profile));
-        chatDMArrayList.add(new ChatDM("Dude", "Sun", "0", "How are you ?", R.drawable.img_profile));
-        chatDMArrayList.add(new ChatDM("Rachel", "10:36 PM", "1", "Today I work in a cafe. Come there, I’ll buy you", R.drawable.img_profile));
-        chatDMArrayList.add(new ChatDM("Dude", "01:03 AM", "0", "How are you ?", R.drawable.img_profile));
-        chatDMArrayList.add(new ChatDM("Rachel", "10:36 PM", "7", "Today I work in a cafe. Come there, I’ll buy you", R.drawable.img_profile));
-        chatDMArrayList.add(new ChatDM("Dude", "01:03 AM", "4", "How are you ?", R.drawable.img_profile));
-        chatDMArrayList.add(new ChatDM("Rachel", "10:36 PM", "6", "Today I work in a cafe. Come there, I’ll buy you", R.drawable.img_profile));
-        chatDMArrayList.add(new ChatDM("Dude", "01:03 AM", "0", "How are you ?", R.drawable.img_profile));
-        chatDMArrayList.add(new ChatDM("Rachel", "10:36 PM", "2", "Today I work in a cafe. Come there, I’ll buy you", R.drawable.img_profile));
-        chatDMArrayList.add(new ChatDM("Dude", "01:03 AM", "0", "How are you ?", R.drawable.img_profile));
-        chatDMArrayList.add(new ChatDM("Rachel", "10:36 PM", "5", "Today I work in a cafe. Come there, I’ll buy you", R.drawable.img_profile));
-        chatDMArrayList.add(new ChatDM("Dude", "01:03 AM", "0", "How are you ?", R.drawable.img_profile));
-        chatDMArrayList.add(new ChatDM("Rachel", "10:36 PM", "5", "Today I work in a cafe. Come there, I’ll buy you", R.drawable.img_profile));
-        chatDMArrayList.add(new ChatDM("Dude", "01:03 AM", "0", "How are you ?", R.drawable.img_profile));
+//        ArrayList<ChatDM> chatDMArrayList = new ArrayList<>();
+//        chatDMArrayList.add(new ChatDM("Rachel", "10:36 PM", "5", "Today I work in a cafe. Come there, I’ll buy you", R.drawable.img_profile));
+//        chatDMArrayList.add(new ChatDM("Dude", "01:03 AM", "0", "How are you ?", R.drawable.img_profile));
+//        chatDMArrayList.add(new ChatDM("Rachel", "10:36 PM", "5", "Today I work in a cafe. Come there, I’ll buy you", R.drawable.img_profile));
+//        chatDMArrayList.add(new ChatDM("Dude", "Fri", "0", "How are you ?", R.drawable.img_profile));
+//        chatDMArrayList.add(new ChatDM("Rachel", "Sat", "3", "Today I work in a cafe. Come there, I’ll buy you", R.drawable.img_profile));
+//        chatDMArrayList.add(new ChatDM("Dude", "Sun", "0", "How are you ?", R.drawable.img_profile));
+//        chatDMArrayList.add(new ChatDM("Rachel", "10:36 PM", "1", "Today I work in a cafe. Come there, I’ll buy you", R.drawable.img_profile));
+//        chatDMArrayList.add(new ChatDM("Dude", "01:03 AM", "0", "How are you ?", R.drawable.img_profile));
+//        chatDMArrayList.add(new ChatDM("Rachel", "10:36 PM", "7", "Today I work in a cafe. Come there, I’ll buy you", R.drawable.img_profile));
+//        chatDMArrayList.add(new ChatDM("Dude", "01:03 AM", "4", "How are you ?", R.drawable.img_profile));
+//        chatDMArrayList.add(new ChatDM("Rachel", "10:36 PM", "6", "Today I work in a cafe. Come there, I’ll buy you", R.drawable.img_profile));
+//        chatDMArrayList.add(new ChatDM("Dude", "01:03 AM", "0", "How are you ?", R.drawable.img_profile));
+//        chatDMArrayList.add(new ChatDM("Rachel", "10:36 PM", "2", "Today I work in a cafe. Come there, I’ll buy you", R.drawable.img_profile));
+//        chatDMArrayList.add(new ChatDM("Dude", "01:03 AM", "0", "How are you ?", R.drawable.img_profile));
+//        chatDMArrayList.add(new ChatDM("Rachel", "10:36 PM", "5", "Today I work in a cafe. Come there, I’ll buy you", R.drawable.img_profile));
+//        chatDMArrayList.add(new ChatDM("Dude", "01:03 AM", "0", "How are you ?", R.drawable.img_profile));
+//        chatDMArrayList.add(new ChatDM("Rachel", "10:36 PM", "5", "Today I work in a cafe. Come there, I’ll buy you", R.drawable.img_profile));
+//        chatDMArrayList.add(new ChatDM("Dude", "01:03 AM", "0", "How are you ?", R.drawable.img_profile));
 
 
 
-//        if (connectionDetector.isConnectingToInternet()) {
-//            String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-//            progress = dialogUtil.showProgressDialog(getActivity(), getString(R.string.please_wait));
-//            appController.paServices.TherapistFriend_List(String.valueOf(user.getId()),new Callback<Friend_ListDM>() {
-//                @Override
-//                public void success(Friend_ListDM friend_listDM, Response response) {
-//                    progress.dismiss();
-//                    if (friend_listDM.getStatus().equalsIgnoreCase("1")) {
+        if (connectionDetector.isConnectingToInternet()) {
+            String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+            progress = dialogUtil.showProgressDialog(getActivity(), getString(R.string.please_wait));
+            appController.paServices.TherapistChatList(String.valueOf(user.getId()),new Callback<ChatlistDM>() {
+                @Override
+                public void success(ChatlistDM chatlistDM, Response response) {
+                    progress.dismiss();
+                    if (chatlistDM.getStatus().equalsIgnoreCase("1")) {
 
 
-                        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
-        Adapter_Chat adapter_chat = new Adapter_Chat(context, chatDMArrayList);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
+        Adapter_Chat adapter_chat = new Adapter_Chat(context, chatlistDM.getDetails());
         rcvRcv.setLayoutManager(linearLayoutManager);
         rcvRcv.setAdapter(adapter_chat);
 
 
         adapter_chat.setOnItemClickListener(new Adapter_Chat.OnItemClickListener() {
             @Override
-            public void onClickThis(int position, int img, String name) {
-                startActivity(new Intent(getActivity(), Conversation_Activity.class));
+            public void onClickThis(int position, String img, String name) {
+                Intent intent = new Intent(getActivity(), Conversation_Activity.class);
+                intent.putExtra("Name", name);
+                intent.putExtra("image", img);
+
+
+                startActivity(intent);
+//                startActivity(new Intent(getActivity(), Conversation_Activity.class));
                 activity.overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
             }
         });
-//
-//                    } else
-//                        Helper.showToast(getActivity(), getString(R.string.Api_data_not_found));
-//                }
-//
-//                @Override
-//                public void failure(RetrofitError retrofitError) {
-//                    progress.dismiss();
-//                    Log.e("error", retrofitError.toString());
-//                }
-//            });
-//        } else
-//            Helper.showToast(getActivity(), getString(R.string.no_internet_connection));
+
+                    } else
+                        Helper.showToast(getActivity(), getString(R.string.Api_data_not_found));
+                }
+
+                @Override
+                public void failure(RetrofitError retrofitError) {
+                    progress.dismiss();
+                    Log.e("error", retrofitError.toString());
+                }
+            });
+        } else
+            Helper.showToast(getActivity(), getString(R.string.no_internet_connection));
 
 
 

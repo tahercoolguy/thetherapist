@@ -1,6 +1,7 @@
 package com.master.design.therapist.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -15,6 +16,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.master.design.therapist.Activity.Conversation_Activity;
+import com.master.design.therapist.Activity.Create_Account_Activity;
+import com.master.design.therapist.Activity.FriendSearch_SelectActivity;
 import com.master.design.therapist.DM.InterestDM;
 import com.master.design.therapist.DM.SearchDM;
 import com.master.design.therapist.DataModel.All_friends;
@@ -91,6 +95,9 @@ public class Adapter_Friends extends RecyclerView.Adapter<Adapter_Friends.ViewHo
             @Override
             public void onClick(View view) {
 //                onItemClickListener.onClickThis(position);
+                Intent intent = new Intent(context, Conversation_Activity.class);
+                intent.putExtra("FriendId", arrayList.get(position).getId());
+                context. startActivity(intent);
 
             }
         });
