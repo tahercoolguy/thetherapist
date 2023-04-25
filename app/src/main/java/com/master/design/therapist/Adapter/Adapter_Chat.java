@@ -101,7 +101,7 @@ public class Adapter_Chat extends RecyclerView.Adapter<Adapter_Chat.ViewHolder> 
         viewHolder.clickLL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onItemClickListener.onClickThis(position, "http://207.154.215.156:8000"+arrayList.get(position).getFront_user().getImage(),arrayList.get(position).getFront_user().getName());
+                onItemClickListener.onClickThis(position, "http://207.154.215.156:8000"+arrayList.get(position).getFront_user().getImage(),arrayList.get(position).getFront_user().getName(),arrayList.get(position).getFront_user().getId());
 
             }
         });
@@ -142,6 +142,6 @@ public class Adapter_Chat extends RecyclerView.Adapter<Adapter_Chat.ViewHolder> 
     public interface OnItemClickListener {
 
 
-        void onClickThis(int position, String img,String name);
+        void onClickThis(int position, String img,String name,String FriendId);
     }
 }

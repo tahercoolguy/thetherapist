@@ -8,6 +8,7 @@ import com.master.design.therapist.Adapter.TherapistEducationDM;
 import com.master.design.therapist.DataModel.Cancel_Friend_RequestDM;
 import com.master.design.therapist.DataModel.ChatHistoryDM;
 import com.master.design.therapist.DataModel.ChatlistDM;
+import com.master.design.therapist.DataModel.ChatroomDM;
 import com.master.design.therapist.DataModel.Edit_ProfileDM;
 import com.master.design.therapist.DataModel.Friend_ListDM;
 import com.master.design.therapist.DataModel.ProfileDM;
@@ -209,5 +210,14 @@ public interface PAServices {
     public void TherapistChatHistory(@Field("user_1") String user_1,
                                      @Field("user_2") String user_2,
                                   Callback<ChatHistoryDM> chatHistoryDMCallback);
+
+    // 23
+    @FormUrlEncoded
+    @POST("/chatroom")
+    public void TherapistChatChatRoom(@Field("sender_user") String sender_user,
+                                     @Field("receiver_user") String receiver_user,
+                                     Callback<ChatroomDM> chatroomDMCallback);
+
+
 
 }

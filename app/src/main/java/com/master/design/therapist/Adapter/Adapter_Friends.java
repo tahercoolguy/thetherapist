@@ -1,8 +1,10 @@
 package com.master.design.therapist.Adapter;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,18 +17,29 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.master.design.therapist.Activity.Conversation_Activity;
 import com.master.design.therapist.Activity.Create_Account_Activity;
 import com.master.design.therapist.Activity.FriendSearch_SelectActivity;
+import com.master.design.therapist.Controller.AppController;
 import com.master.design.therapist.DM.InterestDM;
 import com.master.design.therapist.DM.SearchDM;
 import com.master.design.therapist.DataModel.All_friends;
+import com.master.design.therapist.DataModel.ChatlistDM;
+import com.master.design.therapist.DataModel.ChatroomDM;
+import com.master.design.therapist.Helper.DialogUtil;
+import com.master.design.therapist.Helper.Helper;
 import com.master.design.therapist.Helper.User;
 import com.master.design.therapist.R;
+import com.master.design.therapist.Utils.ConnectionDetector;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 
 public class Adapter_Friends extends RecyclerView.Adapter<Adapter_Friends.ViewHolder> {
@@ -34,6 +47,12 @@ public class Adapter_Friends extends RecyclerView.Adapter<Adapter_Friends.ViewHo
     private ArrayList<All_friends> arrayList;
     private InterestDM selected;
     User user;
+
+    Dialog progress;
+    DialogUtil dialogUtil;
+
+    AppController appController;
+    ConnectionDetector connectionDetector;
     Adapter_Friends.OnItemClickListener onItemClickListener;
 
 
@@ -42,7 +61,12 @@ public class Adapter_Friends extends RecyclerView.Adapter<Adapter_Friends.ViewHo
     public Adapter_Friends(Context context, ArrayList<All_friends> arrayList) {
         this.context = context;
         this.arrayList = arrayList;
-        user = new User(context);
+        user=new User(context);
+        dialogUtil = new DialogUtil();
+        appController = (AppController) context.getApplicationContext();
+        connectionDetector = new ConnectionDetector(context);
+
+
 
     }
 
@@ -95,12 +119,41 @@ public class Adapter_Friends extends RecyclerView.Adapter<Adapter_Friends.ViewHo
             @Override
             public void onClick(View view) {
 //                onItemClickListener.onClickThis(position);
+                if (connectionDetector.isConnectingToInternet()) {
+                    String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+                    progress = dialogUtil.showProgressDialog( context, context.getString(R.string.please_wait));
+                    appController.paServices.TherapistChatChatRoom(String.valueOf(user.getId()),arrayList.get(position).getId(),new Callback<ChatroomDM>() {
+                        @Override
+                        public void success(ChatroomDM chatroomDM, Response response) {
+                            progress.dismiss();
+                            if (chatroomDM.getStatus().equalsIgnoreCase("1")) {
+
+
+
                 Intent intent = new Intent(context, Conversation_Activity.class);
                 intent.putExtra("FriendId", arrayList.get(position).getId());
+                intent.putExtra("image","http://207.154.215.156:8000"+arrayList.get(position).getImage());
+                intent.putExtra("Name", arrayList.get(position).getName());
                 context. startActivity(intent);
+                                Helper.showToast(context, chatroomDM.getMsg());
+                            } else
+                                Helper.showToast(context,chatroomDM.getMsg());
+                        }
+
+                        @Override
+                        public void failure(RetrofitError retrofitError) {
+                            progress.dismiss();
+                            Log.e("error", retrofitError.toString());
+                        }
+                    });
+                } else
+                    Helper.showToast(context,  String.valueOf(R.string.no_internet_connection));
 
             }
         });
+
+
+
     }
 
     public void setOnItemClickListener(Adapter_Friends.OnItemClickListener onItemClickListener) {

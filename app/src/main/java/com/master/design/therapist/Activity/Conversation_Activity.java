@@ -80,6 +80,7 @@ public class Conversation_Activity extends AppCompatActivity {
     User user;
     DialogUtil dialogUtil;
     String FriendsId;
+    String user_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,12 +95,13 @@ public class Conversation_Activity extends AppCompatActivity {
         user = new User(Conversation_Activity.this);
         LinearLayoutManager manager = new LinearLayoutManager(Conversation_Activity.this, RecyclerView.VERTICAL, false);
         rcvRcv.setLayoutManager(manager);
-        setChatData();
+
         name=getIntent().getStringExtra("Name");
         image=getIntent().getStringExtra("image");
         FriendsId=getIntent().getStringExtra("FriendId");
         userNameTxt.setText(name);
         Picasso.with(context).load(image).into(profileCircleImg);
+        setChatData();
     }
 
 
@@ -150,7 +152,9 @@ public class Conversation_Activity extends AppCompatActivity {
 
             progress = dialogUtil.showProgressDialog(Conversation_Activity.this, getString(R.string.please_wait));
 
-            appController.paServices.TherapistChatHistory(String.valueOf(user.getId()),FriendsId, new Callback<ChatHistoryDM>() {
+            user_id=String.valueOf(user.getId());
+
+            appController.paServices.TherapistChatHistory(user_id,FriendsId, new Callback<ChatHistoryDM>() {
 
                 @Override
 

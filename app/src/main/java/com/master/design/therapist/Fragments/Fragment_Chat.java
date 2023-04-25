@@ -142,11 +142,11 @@ public class Fragment_Chat extends Fragment {
 
         adapter_chat.setOnItemClickListener(new Adapter_Chat.OnItemClickListener() {
             @Override
-            public void onClickThis(int position, String img, String name) {
+            public void onClickThis(int position, String img, String name,String FriendIddd) {
                 Intent intent = new Intent(getActivity(), Conversation_Activity.class);
                 intent.putExtra("Name", name);
                 intent.putExtra("image", img);
-
+                intent.putExtra("FriendId", FriendIddd);
 
                 startActivity(intent);
 //                startActivity(new Intent(getActivity(), Conversation_Activity.class));
