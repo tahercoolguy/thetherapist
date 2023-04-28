@@ -145,10 +145,12 @@ dependencies {
     implementation 'com.github.codecameo:ImageSlider:1.0'
 
     implementation 'com.github.florent37:singledateandtimepicker:2.2.7'
-
+    implementation 'dev.gustavoavila:java-android-websocket-client:2.0.2'
 
 
     implementation 'com.github.shts:StoriesProgressView:3.0.0'
+
+
 //
 //    implementation 'com.github.sundeepk:compact-calendar-view:3.0.0'
 //

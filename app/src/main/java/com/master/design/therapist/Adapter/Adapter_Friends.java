@@ -1,7 +1,9 @@
 package com.master.design.therapist.Adapter;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
 import android.util.Log;
@@ -11,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -22,12 +25,15 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import com.master.design.therapist.Activity.Conversation_Activity;
 import com.master.design.therapist.Activity.Create_Account_Activity;
 import com.master.design.therapist.Activity.FriendSearch_SelectActivity;
+import com.master.design.therapist.Activity.MainActivity;
 import com.master.design.therapist.Controller.AppController;
 import com.master.design.therapist.DM.InterestDM;
 import com.master.design.therapist.DM.SearchDM;
 import com.master.design.therapist.DataModel.All_friends;
 import com.master.design.therapist.DataModel.ChatlistDM;
 import com.master.design.therapist.DataModel.ChatroomDM;
+import com.master.design.therapist.DataModel.UnfriendDM;
+import com.master.design.therapist.Fragments.Fragment_Friends_Request;
 import com.master.design.therapist.Helper.DialogUtil;
 import com.master.design.therapist.Helper.Helper;
 import com.master.design.therapist.Helper.User;
@@ -54,6 +60,7 @@ public class Adapter_Friends extends RecyclerView.Adapter<Adapter_Friends.ViewHo
     AppController appController;
     ConnectionDetector connectionDetector;
     Adapter_Friends.OnItemClickListener onItemClickListener;
+
 
 
     int selectedPosition = 0;
@@ -154,6 +161,83 @@ public class Adapter_Friends extends RecyclerView.Adapter<Adapter_Friends.ViewHo
 
 
 
+
+        viewHolder.uunfriendIV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                onItemClickListener.onClickThis(position);
+
+                AlertDialog.Builder adb = new AlertDialog.Builder(context);
+//                adb.setView(alertDialogView);
+                adb.setTitle("Unfriend Friend");
+//                adb.setIcon(android.R.drawable.ic_dialog_alert);
+                adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+
+
+                        if (connectionDetector.isConnectingToInternet())
+                        {
+                            String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+                            progress = dialogUtil.showProgressDialog( context, context.getString(R.string.please_wait));
+                            appController.paServices.TherapistUnfriend(String.valueOf(user.getId()),arrayList.get(position).getId(),new Callback<UnfriendDM>() {
+                                @Override
+                                public void success(UnfriendDM unfriendDM, Response response) {
+                                    progress.dismiss();
+                                    if (unfriendDM.getStatus().equalsIgnoreCase("1")) {
+
+                                        Helper.showToast(context, unfriendDM.getMsg());
+                                        ((MainActivity)context).addFragment(new Fragment_Friends_Request(),false);
+
+                                    } else
+                                        Helper.showToast(context,unfriendDM.getMsg());
+                                }
+
+                                @Override
+                                public void failure(RetrofitError retrofitError) {
+                                    progress.dismiss();
+                                    Log.e("error", retrofitError.toString());
+                                }
+                            });
+                        } else
+                            Helper.showToast(context,  String.valueOf(R.string.no_internet_connection));
+
+
+
+
+
+
+
+
+
+                    }
+                });
+                adb.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+     //                  ((MainActivity)context).addFragment(new Fragment_Friends_Request(),false);
+     //                    adb.setCancelable(true);
+                        dialog.dismiss();
+                    }
+                });
+                adb.show();
+
+
+
+
+
+
+
+
+
+
+
+            }
+        });
+
+
+
+
+
     }
 
     public void setOnItemClickListener(Adapter_Friends.OnItemClickListener onItemClickListener) {
@@ -173,12 +257,15 @@ public class Adapter_Friends extends RecyclerView.Adapter<Adapter_Friends.ViewHo
         private TextView nameTxt;
         private LinearLayout clickLL;
         private RoundedImageView profileImageRIV;
+        ImageView uunfriendIV;
 
         public ViewHolder(View itemView) {
             super(itemView);
             profileImageRIV = itemView.findViewById(R.id.profileImageRIV);
             clickLL = itemView.findViewById(R.id.clickLL);
             nameTxt = itemView.findViewById(R.id.nameTxt);
+            uunfriendIV = itemView.findViewById(R.id.unfriend);
+
 
 
         }

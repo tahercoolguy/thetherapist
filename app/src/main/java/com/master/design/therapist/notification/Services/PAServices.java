@@ -24,6 +24,7 @@ import com.master.design.therapist.DataModel.TherapistHomeDM;
 import com.master.design.therapist.DataModel.TherapistInterestDM;
 import com.master.design.therapist.DataModel.TherapistLoginDM;
 import com.master.design.therapist.DataModel.TherapistRegisterDM;
+import com.master.design.therapist.DataModel.UnfriendDM;
 import com.master.design.therapist.DataModel.Update_Pic_ProfileDM;
 
 import retrofit.Callback;
@@ -219,5 +220,11 @@ public interface PAServices {
                                      Callback<ChatroomDM> chatroomDMCallback);
 
 
+    // 23
+    @FormUrlEncoded
+    @POST("/unfriend")
+    public void TherapistUnfriend(@Field("user_id") String user_id,
+                                      @Field("friend_id") String friend_id,
+                                      Callback<UnfriendDM> unfriendDMCallback);
 
 }

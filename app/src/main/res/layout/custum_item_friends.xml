@@ -7,6 +7,12 @@
     android:padding="5dp"
     android:layout_height="wrap_content">
 
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+
     <com.makeramen.roundedimageview.RoundedImageView
         android:layout_width="120dp"
         android:layout_height="153dp"
@@ -17,7 +23,15 @@
         android:id="@+id/profileImageRIV"
         android:minHeight="153dp"
         android:src="@drawable/img_profile"></com.makeramen.roundedimageview.RoundedImageView>
+   <ImageView
+       android:id="@+id/unfriend"
+       android:visibility="gone"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:src="@drawable/ic_baseline_workspaces_24"
+       android:layout_alignEnd="@id/profileImageRIV"></ImageView>
 
+    </RelativeLayout>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

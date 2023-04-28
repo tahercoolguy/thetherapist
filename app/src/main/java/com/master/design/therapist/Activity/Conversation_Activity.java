@@ -23,8 +23,12 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -33,6 +37,7 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.master.design.therapist.Adapter.MessageChatAdapter;
 import com.master.design.therapist.Controller.AppController;
 import com.master.design.therapist.DM.MessageChatModel;
+import com.master.design.therapist.DataModel.All_messages;
 import com.master.design.therapist.DataModel.ChatHistoryDM;
 import com.master.design.therapist.DataModel.TherapistInterestDM;
 import com.master.design.therapist.Helper.DialogUtil;
@@ -42,7 +47,12 @@ import com.master.design.therapist.Utils.ConnectionDetector;
 import com.master.design.therapist.Utils.Helper;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,11 +60,19 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
+import dev.gustavoavila.websocketclient.WebSocketClient;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.WebSocket;
+import okhttp3.WebSocketListener;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class Conversation_Activity extends AppCompatActivity {
+
+//    private String SERVER_PATH = "";
+//    private WebSocket webSocket;
 
     private Context context;
     private Activity activity;
@@ -70,8 +88,9 @@ public class Conversation_Activity extends AppCompatActivity {
     ImageView notificationImg;
     @BindView(R.id.messageET)
     EditText messageET;
-    MessageChatAdapter adapter;
-    String name,image;
+   public MessageChatAdapter adapter;
+    String name, image;
+    LinearLayoutManager lm;
 
     AppController appController;
 
@@ -81,6 +100,10 @@ public class Conversation_Activity extends AppCompatActivity {
     DialogUtil dialogUtil;
     String FriendsId;
     String user_id;
+    String message,Id;
+
+    @BindView(R.id.sendImg)
+    ImageView sendImg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,16 +119,20 @@ public class Conversation_Activity extends AppCompatActivity {
         LinearLayoutManager manager = new LinearLayoutManager(Conversation_Activity.this, RecyclerView.VERTICAL, false);
         rcvRcv.setLayoutManager(manager);
 
-        name=getIntent().getStringExtra("Name");
-        image=getIntent().getStringExtra("image");
-        FriendsId=getIntent().getStringExtra("FriendId");
+        name = getIntent().getStringExtra("Name");
+        image = getIntent().getStringExtra("image");
+        FriendsId = getIntent().getStringExtra("FriendId");
         userNameTxt.setText(name);
         Picasso.with(context).load(image).into(profileCircleImg);
+
         setChatData();
+        createWebSocketClient();
+
+
     }
 
 
-    List<MessageChatModel> messageChatModelList = new ArrayList<>();
+    List<All_messages> messageChatModelList = new ArrayList<>();
 
     private void setChatData() {
 //        MessageChatModel model1 = new MessageChatModel(
@@ -144,35 +171,38 @@ public class Conversation_Activity extends AppCompatActivity {
 //        messageChatModelList.add(model4);
 
 
-
-        if(connectionDetector.isConnectingToInternet())
-        {
+        if (connectionDetector.isConnectingToInternet()) {
 
             String refreshedToken = FirebaseInstanceId.getInstance().getToken();
 
             progress = dialogUtil.showProgressDialog(Conversation_Activity.this, getString(R.string.please_wait));
 
-            user_id=String.valueOf(user.getId());
+            user_id = String.valueOf(user.getId());
 
-            appController.paServices.TherapistChatHistory(user_id,FriendsId, new Callback<ChatHistoryDM>() {
+            appController.paServices.TherapistChatHistory(user_id, FriendsId, new Callback<ChatHistoryDM>() {
 
                 @Override
 
-                public void success ( ChatHistoryDM chatHistoryDM, Response response ) {
+                public void success(ChatHistoryDM chatHistoryDM, Response response) {
                     progress.dismiss();
                     if (chatHistoryDM.getStatus().equalsIgnoreCase("1")) {
 
+                        messageChatModelList = chatHistoryDM.getAll_messages();
 
-        rcvRcv.smoothScrollToPosition(messageChatModelList.size());
-        adapter = new MessageChatAdapter(chatHistoryDM.getAll_messages(), context,FriendsId);
-        rcvRcv.setAdapter(adapter);
+                        adapter = new MessageChatAdapter(messageChatModelList, context, FriendsId,message,Id,sendImg);
+                         lm = new LinearLayoutManager(Conversation_Activity.this,LinearLayoutManager.VERTICAL,false);
+
+                        rcvRcv.setAdapter(adapter);
+                        rcvRcv.setLayoutManager(lm);
+                       rcvRcv.smoothScrollToPosition(messageChatModelList.size());
+                        lm.setReverseLayout(false);
 
                     } else
                         Helper.showToast(Conversation_Activity.this, chatHistoryDM.getMsg());
                 }
 
                 @Override
-                public void failure ( RetrofitError retrofitError ) {
+                public void failure(RetrofitError retrofitError) {
                     progress.dismiss();
 
                     Log.e("error", retrofitError.toString());
@@ -180,9 +210,8 @@ public class Conversation_Activity extends AppCompatActivity {
                 }
             });
 
-        }else
-            Helper.showToast(Conversation_Activity.this,getString(R.string.no_internet_connection));
-
+        } else
+            Helper.showToast(Conversation_Activity.this, getString(R.string.no_internet_connection));
 
 
     }
@@ -190,29 +219,40 @@ public class Conversation_Activity extends AppCompatActivity {
     @OnClick(R.id.sendImg)
     public void setsendImg() {
         String msg = messageET.getText().toString();
-        if (!msg.equalsIgnoreCase("")){
-            MessageChatModel model = new MessageChatModel(
-                    msg,
-                    "10:00 PM",
-                    0, R.drawable.marshall_img
-            );
-            messageChatModelList.add(model);
-            rcvRcv.smoothScrollToPosition(messageChatModelList.size());
-            adapter.notifyDataSetChanged();
+        if (!msg.equalsIgnoreCase("")) {
+//            MessageChatModel model = new MessageChatModel(
+//                    msg,
+//                    "10:00 PM",
+//                    0, R.drawable.marshall_img
+//
+//            );
+//            setChatData();
+            // First, create a new JsonObject
+            JsonObject jsonObject = new JsonObject();
+
+// Add properties to the JsonObject
+            jsonObject.addProperty("type", "chat_message");
+            jsonObject.addProperty("message", msg);
+            jsonObject.addProperty("sender_id", user_id);
+//            jsonObject.addProperty("sender_id", user_id);
+
+
+            String ne = "{\"type\":\"chat_message\",\"message\":\""+msg+"\",\"sender_id\":"+user_id+"}";
+            webSocketClient.send(ne);
             messageET.setText("");
         }
 
 
-        if (imageFromgallery != null) {
-            MessageChatModel imagemodel = new MessageChatModel(
-                    msg,
-                    "10:00 PM",
-                    2, R.drawable.marshall_img);
-            messageChatModelList.add(imagemodel);
-            rcvRcv.smoothScrollToPosition(messageChatModelList.size());
-            adapter.notifyDataSetChanged();
-            messageET.setText("");
-        }
+//        if (imageFromgallery != null) {
+//            MessageChatModel imagemodel = new MessageChatModel(
+//                    msg,
+//                    "10:00 PM",
+//                    2, R.drawable.marshall_img);
+//            messageChatModelList.add(imagemodel);
+//            rcvRcv.smoothScrollToPosition(messageChatModelList.size());
+//            adapter.notifyDataSetChanged();
+//            messageET.setText("");
+//        }
         ;
 
     }
@@ -363,4 +403,117 @@ public class Conversation_Activity extends AppCompatActivity {
         super.finish();
         overridePendingTransition(R.anim.right_slide_in, R.anim.right_slide_in);
     }
+
+
+        private WebSocketClient webSocketClient;
+
+        public void createWebSocketClient() {
+        URI uri;
+        try {
+            uri = new URI("ws://207.154.215.156:8000/ws/chat/1/");
+        }
+        catch (URISyntaxException e) {
+            e.printStackTrace();
+            return;
+        }
+
+        webSocketClient = new WebSocketClient(uri) {
+            @Override
+            public void onOpen() {
+                System.out.println("onOpen");
+//                webSocketClient.send("Hello, World!");
+//                Helper.showToast(Conversation_Activity.this,message);
+            }
+
+            @Override
+            public void onTextReceived(String msg) {
+                System.out.println("onTextReceived");
+                JSONObject obj = null;
+                try {
+                    obj = new JSONObject(msg);
+                    Log.d("My App", obj.toString());
+//                    Log.d("phonetype value ", obj.getString("phonetype"));
+                     message=obj.getString("message");
+                     Id=obj.getString("sender_id");
+                    if(Id == user_id)
+                    {
+                        All_messages model = new All_messages();
+                        model.setMessage(message);
+                        model.setReceiver_user(FriendsId);
+                        model.setSender_user(user_id);
+                        messageChatModelList.add(model);
+
+                        rcvRcv.smoothScrollToPosition(messageChatModelList.size());
+//                        messageET.setText("");
+                        adapter.notifyDataSetChanged();
+                        rcvRcv.scrollToPosition(messageChatModelList.size());
+                    }else
+                    {
+                        All_messages model = new All_messages();
+                        model.setMessage(message);
+                        model.setReceiver_user(user_id);
+                        model.setSender_user(Id);
+                        messageChatModelList.add(model);
+
+                        rcvRcv.smoothScrollToPosition(messageChatModelList.size());
+                        adapter.notifyDataSetChanged();
+                        rcvRcv.scrollToPosition(messageChatModelList.size());
+//                        messageET.setText("");
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+//                JSONObject foo = msg;
+//                String id = foo.get("CNo").isString().toString();
+//                String message= foo.get("CName").isString().toString();
+//               Helper.showToast(Conversation_Activity.this,msg);
+
+            }
+
+
+            @Override
+            public void onBinaryReceived(byte[] data) {
+                System.out.println("onBinaryReceived");
+            }
+
+            @Override
+            public void onPingReceived(byte[] data) {
+                System.out.println("onPingReceived" );
+            }
+
+            @Override
+            public void onPongReceived(byte[] data) {
+                System.out.println("onPongReceived");
+            }
+
+            @Override
+            public void onException(Exception e) {
+                System.out.println(e.getMessage());
+                rcvRcv.smoothScrollToPosition(messageChatModelList.size());
+                adapter.notifyDataSetChanged();
+                rcvRcv.scrollToPosition(messageChatModelList.size());
+                createWebSocketClient();
+            }
+
+            @Override
+            public void onCloseReceived(int reason, String description) {
+                System.out.println("onCloseReceived"+description);
+                Helper.showToast(Conversation_Activity.this,description);
+            }
+
+
+        };
+
+        webSocketClient.setConnectTimeout(10000);
+        webSocketClient.setReadTimeout(60000);
+//        webSocketClient.addHeader("Origin", "http://developer.example.com");
+        webSocketClient.enableAutomaticReconnection(5000);
+        webSocketClient.connect();
+    }
+
+
 }
+

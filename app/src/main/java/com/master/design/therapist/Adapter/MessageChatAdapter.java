@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -26,17 +27,24 @@ public class MessageChatAdapter extends RecyclerView.Adapter {
     List<All_messages> messageChatModelList;
     Context context;
     User user;
-   String  friendId ;
+   String friendId ;
+   String Id;
+   String message;
+   ImageView sendImg;
+   MessageChatAdapter.Onitemclicklistener onitemClickListener;
 
     private static final int VIEW_TYPE_MESSAGE_SENT = 1;
     private static final int VIEW_TYPE_MESSAGE_RECEIVED = 2;
 
 
 
-    public MessageChatAdapter(List<All_messages> messageChatModelList, Context context,String friendId) {
+    public MessageChatAdapter(List<All_messages> messageChatModelList, Context context,String friendId,String message,String Id,ImageView sendImg) {
         this.messageChatModelList = messageChatModelList;
         this.context = context;
         this.friendId=friendId;
+        this.Id=Id;
+        this.sendImg=sendImg;
+        this.message=message;
         user= new User(context);
     }
 
@@ -117,13 +125,21 @@ public class MessageChatAdapter extends RecyclerView.Adapter {
             case VIEW_TYPE_MESSAGE_RECEIVED:
                 ((ReceivedMessageHolder) holder).bind(message);
         }
+
+
     }
+
+
 
     @Override
     public int getItemCount() {
         return messageChatModelList.size();
     }
 
+    public void setOnitemClickListener(MessageChatAdapter.Onitemclicklistener onitemClickListener)
+    {
+        this.onitemClickListener=onitemClickListener;
+    }
 
     private class SentMessageHolder extends RecyclerView.ViewHolder {
 
@@ -144,6 +160,7 @@ public class MessageChatAdapter extends RecyclerView.Adapter {
 
             time.setText(messageModel.getTimestamp());
 
+
         }
 
     }
@@ -161,7 +178,14 @@ public class MessageChatAdapter extends RecyclerView.Adapter {
         void bind(All_messages messageModel) {
             message.setText(messageModel.getMessage());
             time.setText(messageModel.getTimestamp());
+
+
         }
+    }
+
+    public interface Onitemclicklistener
+    {
+       void    fun(String message);
     }
 }
 
