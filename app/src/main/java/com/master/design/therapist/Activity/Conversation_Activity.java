@@ -190,12 +190,13 @@ public class Conversation_Activity extends AppCompatActivity {
                         messageChatModelList = chatHistoryDM.getAll_messages();
 
                         adapter = new MessageChatAdapter(messageChatModelList, context, FriendsId,message,Id,sendImg);
-                         lm = new LinearLayoutManager(Conversation_Activity.this,LinearLayoutManager.VERTICAL,false);
+                        lm = new LinearLayoutManager(Conversation_Activity.this,LinearLayoutManager.VERTICAL,false);
 
                         rcvRcv.setAdapter(adapter);
                         rcvRcv.setLayoutManager(lm);
-                       rcvRcv.smoothScrollToPosition(messageChatModelList.size());
+                        rcvRcv.smoothScrollToPosition(messageChatModelList.size());
                         lm.setReverseLayout(false);
+
 
                     } else
                         Helper.showToast(Conversation_Activity.this, chatHistoryDM.getMsg());
@@ -458,6 +459,7 @@ public class Conversation_Activity extends AppCompatActivity {
                         rcvRcv.smoothScrollToPosition(messageChatModelList.size());
                         adapter.notifyDataSetChanged();
                         rcvRcv.scrollToPosition(messageChatModelList.size());
+
 //                        messageET.setText("");
 
                     }
@@ -504,7 +506,10 @@ public class Conversation_Activity extends AppCompatActivity {
                 Helper.showToast(Conversation_Activity.this,description);
             }
 
-
+            @Override
+            public void sendPong(byte[] data) {
+                super.sendPong(data);
+            }
         };
 
         webSocketClient.setConnectTimeout(10000);

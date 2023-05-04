@@ -2,8 +2,12 @@ package com.master.design.therapist.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.EditText;
@@ -99,13 +103,23 @@ public class Create_Account_Activity extends AppCompatActivity {
     String ethnicityyid;
     String Date;
 
+
     @OnClick(R.id.maleTV)
     public void maleTV() {
+
+        maleTV.setBackgroundResource(R.drawable.rounded_rectagle_blue);
+        maleTV.setTextColor(Color.parseColor("#FFFFFF"));
+        femaleTV.setBackgroundResource(R.drawable.rounded_rectangle_white);
+        femaleTV.setTextColor(Color.parseColor("#000000"));
         Gender="1";
     }
 
     @OnClick(R.id.femaleTV)
     public void femaleTV() {
+        maleTV.setBackgroundResource(R.drawable.rounded_rectangle_white);
+        maleTV.setTextColor(Color.parseColor("#000000"));
+        femaleTV.setBackgroundResource(R.drawable.rounded_rectagle_blue);
+        femaleTV.setTextColor(Color.parseColor("#FFFFFF"));
         Gender="0";
      }
 
@@ -248,7 +262,7 @@ BottomForAll bottomForAll;
             Helper.showToast(Create_Account_Activity.this, "kindly enter your Ethnicity");
         } else if (mobileET.getText().toString().equalsIgnoreCase("")) {
             correct = false;
-            Helper.showToast(Create_Account_Activity.this, "kindly enter your Email");
+            Helper.showToast(Create_Account_Activity.this, "kindly enter your mobile number");
         } else if (emailEt.getText().toString().equalsIgnoreCase("")) {
             correct = false;
             Helper.showToast(Create_Account_Activity.this, "kindly enter your mobile Number");
@@ -385,55 +399,56 @@ BottomForAll bottomForAll;
 
     public void datepick()
     {
-        new SingleDateAndTimePickerDialog.Builder(this)
-                .bottomSheet()
-                .curved()
-                .displayMinutes(false)
-                .displayHours(false)
-                .displayDays(false)
-                .displayMonth(true)
-                .mainColor(getColor(R.color.black))
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            new SingleDateAndTimePickerDialog.Builder(this)
+                    .bottomSheet()
+                    .curved()
+                    .displayMinutes(false)
+                    .displayHours(false)
+                    .displayDays(false)
+                    .displayMonth(true)
+                    .mainColor(getColor(R.color.black))
 
-                .listener(new SingleDateAndTimePickerDialog.Listener() {
-                    @Override
-                    public void onDateSelected(java.util.Date date) {
-                        String inputPattern = "yyyy-MM-dd";
-                        SimpleDateFormat inputFormat = new SimpleDateFormat(inputPattern);
+                    .listener(new SingleDateAndTimePickerDialog.Listener() {
+                        @Override
+                        public void onDateSelected(java.util.Date date) {
+                            String inputPattern = "yyyy-MM-dd";
+                            SimpleDateFormat inputFormat = new SimpleDateFormat(inputPattern);
 
-                        String inputPattern2 = "yyyy-MMM-dd";
-                        SimpleDateFormat inputFormat2 = new SimpleDateFormat(inputPattern2);
+                            String inputPattern2 = "yyyy-MMM-dd";
+                            SimpleDateFormat inputFormat2 = new SimpleDateFormat(inputPattern2);
 
-                      try {
-                            String str = inputFormat.format(date);
-                            String str1 = inputFormat2.format(date);
-//                            dateTxt.setText(str);
-//                            Date=str;
+                          try {
+                                String str = inputFormat.format(date);
+                                String str1 = inputFormat2.format(date);
+    //                            dateTxt.setText(str);
+    //                            Date=str;
 
-                            String Month = "MM";
-                            inputFormat2 = new SimpleDateFormat(Month);
-                            String MonthText = inputFormat2.format(date);
-                            monthET.setText(MonthText);
+                                String Month = "MM";
+                                inputFormat2 = new SimpleDateFormat(Month);
+                                String MonthText = inputFormat2.format(date);
+                                monthET.setText(MonthText);
 
-                            String Year = "yyyy";
-                            inputFormat = new SimpleDateFormat(Year);
-                            String YearText = inputFormat.format(date);
-                            yearET.setText(YearText);
+                                String Year = "yyyy";
+                                inputFormat = new SimpleDateFormat(Year);
+                                String YearText = inputFormat.format(date);
+                                yearET.setText(YearText);
 
-                            String Day = "dd";
-                            inputFormat = new SimpleDateFormat(Day);
-                            String DateText = inputFormat.format(date);
-                            dateET.setText(DateText);
+                                String Day = "dd";
+                                inputFormat = new SimpleDateFormat(Day);
+                                String DateText = inputFormat.format(date);
+                                dateET.setText(DateText);
 
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         }
-                    }
-                })
+                    })
 
-                .displayYears(true)
-                .displayDaysOfMonth(true)
-                .display();
-
+                    .displayYears(true)
+                    .displayDaysOfMonth(true)
+                    .display();
+        }
 
 
     }

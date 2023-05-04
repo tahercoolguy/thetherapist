@@ -79,7 +79,6 @@
             android:background="@drawable/rectangle_white_grey_border"
             android:backgroundTint="@color/white"
             android:elevation="10dp"
-            android:hint="monicageller@gmail.com"
             android:paddingHorizontal="10dp"
             android:singleLine="true"
             android:textColor="@color/black"
@@ -104,7 +103,6 @@
             android:background="@drawable/rectangle_white_grey_border"
             android:backgroundTint="@color/white"
             android:elevation="10dp"
-            android:hint="**********"
             android:padding="10dp"
             android:paddingHorizontal="10dp"
             android:paddingEnd="20dp"
@@ -180,12 +178,12 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center"
-                android:layout_margin="20dp"
-                android:src="@drawable/ic_facebook"></ImageView>
+<!--            <ImageView-->
+<!--                android:layout_width="30dp"-->
+<!--                android:layout_height="30dp"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:layout_margin="20dp"-->
+<!--                android:src="@drawable/ic_facebook"></ImageView>-->
 
             <ImageView
                 android:layout_width="30dp"

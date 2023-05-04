@@ -56,7 +56,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:padding="5dp"
-            android:src="@drawable/ic_read">
+            android:src="@drawable/new_right_one">
 
         </ImageView>
 
