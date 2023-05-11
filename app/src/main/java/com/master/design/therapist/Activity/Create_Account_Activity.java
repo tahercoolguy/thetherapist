@@ -157,6 +157,7 @@ BottomForAll bottomForAll;
                   bottomForAll = new BottomForAll();
                         bottomForAll.arrayList = arrayList;
 
+
                             bottomForAll.setResponseListener(new ResponseListener() {
                                 @Override
                                 public void response(Object object) {
@@ -165,6 +166,7 @@ BottomForAll bottomForAll;
                                     ethnicityyid = ((DataChangeDM) object).getId();
 //                                    user.setAreaId(AreaID);
                                     ethnicityyET.setText(name);
+
 
 
                                 }

@@ -188,7 +188,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'androidx.work:work-runtime:2.7.1'
     implementation 'com.google.firebase:firebase-iid:21.1.0'
-//    implementation 'com.google.firebase:firebase-messaging:23.0.6'
+    implementation 'com.google.firebase:firebase-messaging:23.0.6'
 
 }
 apply plugin: 'com.google.gms.google-services'

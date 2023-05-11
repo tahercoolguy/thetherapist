@@ -1,6 +1,7 @@
 package com.master.design.therapist.Adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,10 +22,11 @@ public class Adapter_Bottom extends BaseAdapter {
     private ArrayList<DataChangeDM> arrayList;
     private DataChangeDM selected;
     private int position;
+//    private String selected;
+    Boolean checck=true;
+
     User user;
 
-    int selectedPosition;
-    boolean correct = false;
 
     public Adapter_Bottom(Context context, ArrayList<DataChangeDM> arrayList) {
         this.context = context;
@@ -79,8 +81,20 @@ public class Adapter_Bottom extends BaseAdapter {
 //            viewHolder.price.setText(data.getUnitPriceKWDAr());
         }
 
+//        viewHolder.ll.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if(checck)
+//                {
+//                    viewHolder.image.setVisibility(View.VISIBLE);
+//                    checck=false;
+//                }
+//            }
+//        });
 
     }
+
+
 
     public DataChangeDM getSelected() {
         return selected;
