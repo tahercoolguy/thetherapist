@@ -67,6 +67,9 @@ public class Create_Account_Activity extends AppCompatActivity {
     @BindView(R.id.ethnicityyET)
     TextView ethnicityyET;
 
+    @BindView(R.id.mobilecodeET)
+    TextView mobilecodeET;
+
     @BindView(R.id.mobileET)
     EditText mobileET;
 
@@ -99,9 +102,11 @@ public class Create_Account_Activity extends AppCompatActivity {
 
     String Gender;
     String name;
-    String SelectCountryid;
+    String SelectCountryid,SelectCountryCode;
     String ethnicityyid;
     String Date;
+    String DialCode;
+
 
 
     @OnClick(R.id.maleTV)
@@ -194,6 +199,32 @@ BottomForAll bottomForAll;
     }
 
 
+    ArrayList<DataChangeDM> arrayList2 = new ArrayList();
+    @OnClick(R.id.mobilecodeET)
+    public void mobilecodeET()
+    {
+
+
+        bottomForAll = new BottomForAll();
+        bottomForAll.arrayList = arrayList2;
+
+        bottomForAll.setResponseListener(new ResponseListener() {
+            @Override
+            public void response(Object object) {
+
+                DialCode = ((DataChangeDM) object).getName();
+                SelectCountryCode = ((DataChangeDM) object).getId();
+//               user.setAreaId(AreaID);
+                mobilecodeET.setText(SelectCountryCode);
+
+            }
+        });
+        bottomForAll.show(Create_Account_Activity.this.getSupportFragmentManager(), "bottomSheetCountry");
+
+
+    }
+
+
 
 
     @Override
@@ -208,6 +239,7 @@ BottomForAll bottomForAll;
         dialogUtil = new DialogUtil();
         BindingEthenicity();
         SelectCountry();
+        SelectMobileCode();
 
 
 
@@ -292,7 +324,7 @@ BottomForAll bottomForAll;
         intent.putExtra("selectCountry", SelectCountryid);
         intent.putExtra("gender", Gender);
         intent.putExtra("ethnicity", ethnicityyid);
-        intent.putExtra("mobileNumber", mobileET.getText().toString());
+        intent.putExtra("mobileNumber", mobilecodeET.getText().toString()+mobileET.getText().toString());
         intent.putExtra("email", emailEt.getText().toString());
         intent.putExtra("password", PasswordEdT.getText().toString());
         intent.putExtra("confirmPassword", confirmPasswordET.getText().toString());
@@ -378,8 +410,9 @@ BottomForAll bottomForAll;
 
                         for (Details obj : therapistCountriesDM.getDetails()) {
                             DataChangeDM s = new DataChangeDM();
-                            s.setName(obj.getCountry_name());
+                            s.setName(obj.getName_en());
                             s.setId(obj.getCountry_id());
+
                             arrayList1.add(s);
                         }
                     } else
@@ -395,6 +428,41 @@ BottomForAll bottomForAll;
         } else
             Helper.showToast(Create_Account_Activity.this, getString(R.string.no_internet_connection));
     }
+
+
+    public void SelectMobileCode()
+    {
+        if (connectionDetector.isConnectingToInternet()) {
+            String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+            //           progress = dialogUtil.showProgressDialog(Create_Account_Activity.this, getString(R.string.please_wait));
+            appController.paServices.TherapistCountries(new Callback<TherapistCountriesDM>() {
+                @Override
+                public void success(TherapistCountriesDM therapistCountriesDM, Response response) {
+                    //                   progress.dismiss();
+                    if (therapistCountriesDM.getStatus().equalsIgnoreCase("1")) {
+
+                        for (Details obj : therapistCountriesDM.getDetails()) {
+                            DataChangeDM s = new DataChangeDM();
+                            s.setName(obj.getName_en());
+                            s.setId(obj.getDialCode());
+
+                            arrayList2.add(s);
+                        }
+                    } else
+                        Helper.showToast(Create_Account_Activity.this, getString(R.string.Api_data_not_found));
+                }
+
+                @Override
+                public void failure(RetrofitError retrofitError) {
+                    //                   progress.dismiss();
+                    Log.e("error", retrofitError.toString());
+                }
+            });
+        } else
+            Helper.showToast(Create_Account_Activity.this, getString(R.string.no_internet_connection));
+    }
+
+
 
 
     public void datepick()

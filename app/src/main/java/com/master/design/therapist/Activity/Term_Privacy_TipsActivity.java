@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
@@ -95,7 +96,9 @@ public class Term_Privacy_TipsActivity extends AppCompatActivity {
                         progress.dismiss();
                         if (terms_conditionsDM.getStatus().equalsIgnoreCase("1")) {
 
-                            conditionTxt.setText(Html.fromHtml(terms_conditionsDM.getDetails().get(0).getContent(), Html.FROM_HTML_MODE_COMPACT));
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                                conditionTxt.setText(Html.fromHtml(terms_conditionsDM.getDetails().get(0).getContent(), Html.FROM_HTML_MODE_COMPACT));
+                            }
                         } else
                             Helper.showToast(Term_Privacy_TipsActivity.this, getString(R.string.Api_data_not_found));
                     }
@@ -133,7 +136,9 @@ public class Term_Privacy_TipsActivity extends AppCompatActivity {
                         progress.dismiss();
                         if (terms_conditionsDM.getStatus().equalsIgnoreCase("1")) {
 
-                            conditionTxt.setText(Html.fromHtml(terms_conditionsDM.getDetails().get(0).getContent(), Html.FROM_HTML_MODE_COMPACT));
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                                conditionTxt.setText(Html.fromHtml(terms_conditionsDM.getDetails().get(0).getContent(), Html.FROM_HTML_MODE_COMPACT));
+                            }
                         } else
                             Helper.showToast(Term_Privacy_TipsActivity.this, getString(R.string.Api_data_not_found));
                     }
@@ -170,7 +175,9 @@ public class Term_Privacy_TipsActivity extends AppCompatActivity {
                         progress.dismiss();
                         if (terms_conditionsDM.getStatus().equalsIgnoreCase("1")) {
 
-                            conditionTxt.setText(Html.fromHtml(terms_conditionsDM.getDetails().get(0).getContent(), Html.FROM_HTML_MODE_COMPACT));
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                                conditionTxt.setText(Html.fromHtml(terms_conditionsDM.getDetails().get(0).getContent(), Html.FROM_HTML_MODE_COMPACT));
+                            }
                         } else
                             Helper.showToast(Term_Privacy_TipsActivity.this, getString(R.string.Api_data_not_found));
                     }

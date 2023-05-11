@@ -10,7 +10,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
-
         android:orientation="vertical">
         <ImageView
             android:id="@+id/backImg"
@@ -23,12 +22,14 @@
             android:id="@+id/slider"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+
             app:sliderAnimationDuration="600"
             app:sliderAutoCycleDirection="back_and_forth"
             app:sliderIndicatorAnimationDuration="600"
             app:sliderIndicatorEnabled="true"
             app:sliderIndicatorGravity="center_horizontal|bottom"
             app:sliderIndicatorMargin="15dp"
+            app:sliderIndicatorMarginTop="30dp"
             app:sliderIndicatorOrientation="horizontal"
             app:sliderIndicatorPadding="7dp"
             app:sliderIndicatorRadius="3dp"

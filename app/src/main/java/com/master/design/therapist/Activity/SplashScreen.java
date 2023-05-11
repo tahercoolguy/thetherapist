@@ -1,5 +1,6 @@
 package com.master.design.therapist.Activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -11,7 +12,10 @@ import android.os.Handler;
 import android.util.Base64;
 import android.util.Log;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.master.design.therapist.Models.User;
 import com.master.design.therapist.R;
 
@@ -30,6 +34,9 @@ public class SplashScreen extends AppCompatActivity {
 
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
         Log.d("Android Token", "Refreshed token: " + refreshedToken);
+
+
+        fireBaseNotification();
         try {
             PackageInfo info = getPackageManager().getPackageInfo(
                     getPackageName(),
@@ -58,7 +65,7 @@ public class SplashScreen extends AppCompatActivity {
 //                    startActivity(new Intent(SplashScreen.this, AdvertiseSelector.class));
 //                    finish();
 //                }
-//                startActivity(new Intent(SplashScreen.this, MainActivity.class));
+//              startActivity(new Intent(SplashScreen.this, MainActivity.class));
                startActivity(new Intent(SplashScreen.this, LanguageActivity.class));
                 finish();
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_in);
@@ -66,4 +73,24 @@ public class SplashScreen extends AppCompatActivity {
         }, secondsDelayed * 1000);
     }
 
+    public void fireBaseNotification(){
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+//                            Log.w(TAG, "Fetching FCM registration token failed", task.getException());
+                            return;
+                        }
+
+                        // Get new FCM registration token
+                        String token = task.getResult();
+//                        notificationGuestAPI(token);
+                        // Log and toast
+                        String msg =  token;
+//                        Log.d(TAG, msg);
+//                        Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
 }

@@ -100,8 +100,8 @@ public class Conversation_Activity extends AppCompatActivity {
     DialogUtil dialogUtil;
     String FriendsId;
     String user_id;
-    String message,Id;
-
+    String message,Id,status,messageId,type;
+   String statusCheck="send";
     @BindView(R.id.sendImg)
     ImageView sendImg;
 
@@ -189,7 +189,7 @@ public class Conversation_Activity extends AppCompatActivity {
 
                         messageChatModelList = chatHistoryDM.getAll_messages();
 
-                        adapter = new MessageChatAdapter(messageChatModelList, context, FriendsId,message,Id,sendImg);
+                        adapter = new MessageChatAdapter(messageChatModelList, context, FriendsId,status);
                         lm = new LinearLayoutManager(Conversation_Activity.this,LinearLayoutManager.VERTICAL,false);
 
                         rcvRcv.setAdapter(adapter);
@@ -234,11 +234,12 @@ public class Conversation_Activity extends AppCompatActivity {
 // Add properties to the JsonObject
             jsonObject.addProperty("type", "chat_message");
             jsonObject.addProperty("message", msg);
+            jsonObject.addProperty("status", "send");
             jsonObject.addProperty("sender_id", user_id);
 //            jsonObject.addProperty("sender_id", user_id);
 
 
-            String ne = "{\"type\":\"chat_message\",\"message\":\""+msg+"\",\"sender_id\":"+user_id+"}";
+            String ne = "{\"type\":\"chat_message\",\"message\":\""+msg+"\",\"status\":\"send\",\"sender_id\":"+user_id+"}";
             webSocketClient.send(ne);
             messageET.setText("");
         }
@@ -281,7 +282,7 @@ public class Conversation_Activity extends AppCompatActivity {
                     // You can update this bitmap to your server
                     bitmap = MediaStore.Images.Media.getBitmap(Conversation_Activity.this.getContentResolver(), uri);
 
-//               /////////////////////////////////////////////////////////////////////////     profileImgRIV.setImageBitmap(bitmap);
+//                   profileImgRIV.setImageBitmap(bitmap);
 
                     imageFromgallery = new BitmapDrawable(getResources(), bitmap);
 
@@ -434,35 +435,87 @@ public class Conversation_Activity extends AppCompatActivity {
                     obj = new JSONObject(msg);
                     Log.d("My App", obj.toString());
 //                    Log.d("phonetype value ", obj.getString("phonetype"));
-                     message=obj.getString("message");
-                     Id=obj.getString("sender_id");
-                    if(Id == user_id)
-                    {
-                        All_messages model = new All_messages();
-                        model.setMessage(message);
-                        model.setReceiver_user(FriendsId);
-                        model.setSender_user(user_id);
-                        messageChatModelList.add(model);
+                    status = obj.getString("status");
+                        if(status.equalsIgnoreCase("send")) {
+                            message = obj.getString("message");
+                            Id = obj.getString("sender_id");
+                            status = obj.getString("status");
+                            messageId = obj.getString("message_id");
 
-                        rcvRcv.smoothScrollToPosition(messageChatModelList.size());
+                            if (Id == user_id) {
+
+                                messageId = obj.getString("message_id");
+//                            All_messages model = new All_messages();
+//                            model.setStatus(status);
+//                            messageChatModelList.add(model);
+
+                                JsonObject jsonObject = new JsonObject();
+
+// Add properties to the JsonObject
+                                jsonObject.addProperty("type", "delivered_message");
+                                jsonObject.addProperty("message_id", messageId);
+                                jsonObject.addProperty("status", "delivered");
+                                jsonObject.addProperty("sender_id", user_id);
+//            jsonObject.addProperty("sender_id", user_id);
+
+
+                                String ne = "{\"type\":\"delivered_message\",\"message_id\":\"+messageId+\",\"status\":\"delivered\",\"sender_id\":"+user_id+"}";
+                                webSocketClient.send(ne);
+
+                                All_messages model = new All_messages();
+                                model.setMessage(message);
+                                model.setReceiver_user(FriendsId);
+                                model.setSender_user(user_id);
+                                model.setStatus(status);
+                                messageChatModelList.add(model);
+
+                                rcvRcv.smoothScrollToPosition(messageChatModelList.size());
+//                              messageET.setText("");
+                                adapter.notifyDataSetChanged();
+                                rcvRcv.scrollToPosition(messageChatModelList.size());
+                            } else {
+
+                                All_messages model = new All_messages();
+                                model.setMessage(message);
+                                model.setReceiver_user(user_id);
+                                model.setSender_user(Id);
+                                model.setStatus(status);
+                                messageChatModelList.add(model);
+
+                                rcvRcv.smoothScrollToPosition(messageChatModelList.size());
+                                rcvRcv.scrollToPosition(messageChatModelList.size());
+//                                adapter.notifyItemInserted(messageChatModelList.size());
+
 //                        messageET.setText("");
-                        adapter.notifyDataSetChanged();
-                        rcvRcv.scrollToPosition(messageChatModelList.size());
-                    }else
-                    {
-                        All_messages model = new All_messages();
-                        model.setMessage(message);
-                        model.setReceiver_user(user_id);
-                        model.setSender_user(Id);
-                        messageChatModelList.add(model);
 
-                        rcvRcv.smoothScrollToPosition(messageChatModelList.size());
-                        adapter.notifyDataSetChanged();
-                        rcvRcv.scrollToPosition(messageChatModelList.size());
+                            }
+                        }else
+                        {
+                            status = obj.getString("status");
+//                            messageId = obj.getString("message_id");
+//                            All_messages model = new All_messages();
+//                            model.setStatus(status);
+//                            messageChatModelList.add(model);
+//
+//                            JsonObject jsonObject = new JsonObject();
+//
+//// Add properties to the JsonObject
+//                            jsonObject.addProperty("type", "delivered_message");
+//                            jsonObject.addProperty("message_id", messageId);
+//                            jsonObject.addProperty("status", "delivered");
+//                            jsonObject.addProperty("sender_id", user_id);
+////            jsonObject.addProperty("sender_id", user_id);
+//
+//
+//                            String ne = "{\"type\":\"delivered_message\",\"message_id\":\""+messageId+"\",\"status\":\"delivered\",\"sender_id\":"+user_id+"}";
+//                            webSocketClient.send(ne);
 
-//                        messageET.setText("");
+                            rcvRcv.smoothScrollToPosition(messageChatModelList.size());
+                            adapter.notifyDataSetChanged();
+                            rcvRcv.scrollToPosition(messageChatModelList.size());
 
-                    }
+                        }
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -478,6 +531,7 @@ public class Conversation_Activity extends AppCompatActivity {
 
             @Override
             public void onBinaryReceived(byte[] data) {
+
                 System.out.println("onBinaryReceived");
             }
 

@@ -1,42 +1,34 @@
 {
   "project_info": {
-    "project_number": "62820884284",
-    "firebase_url": "https://testapp-66830.firebaseio.com",
-    "project_id": "testapp-66830",
-    "storage_bucket": "testapp-66830.appspot.com"
+    "project_number": "117622585546",
+    "project_id": "the-therapist-8c2cc",
+    "storage_bucket": "the-therapist-8c2cc.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:62820884284:android:6a36e5f60a793def524839",
+        "mobilesdk_app_id": "1:117622585546:android:25429935dffa2ea5cb1c33",
         "android_client_info": {
           "package_name": "com.master.design.therapist"
         }
       },
       "oauth_client": [
         {
-          "client_id": "62820884284-tmrfi73ebrj3ocvg4nojkvtrotc4nh4b.apps.googleusercontent.com",
+          "client_id": "117622585546-tavkqcmngompuul60u5f8tekbfo4v8mv.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAwWr-Jk6-M3B44uaAlCLVpRl5_ovAXElQ"
+          "current_key": "AIzaSyA8NdzLGckmOQlzfX6-v2pr2xrMFMuLGRc"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "62820884284-tmrfi73ebrj3ocvg4nojkvtrotc4nh4b.apps.googleusercontent.com",
+              "client_id": "117622585546-tavkqcmngompuul60u5f8tekbfo4v8mv.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "62820884284-435h2kjh3usp4jnijj2a2t49mfpsroqa.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.designmaster.chattest"
-              }
             }
           ]
         }

@@ -20,6 +20,51 @@ public class Details {
     private String title;
     private String content;
     private String image;
+    private String flag;
+    private String isoCode;
+    private String dialCode;
+    private String name_ar;
+    private String name_en;
+
+    public String getFlag() {
+        return flag;
+    }
+
+    public void setFlag(String flag) {
+        this.flag = flag;
+    }
+
+    public String getIsoCode() {
+        return isoCode;
+    }
+
+    public void setIsoCode(String isoCode) {
+        this.isoCode = isoCode;
+    }
+
+    public String getDialCode() {
+        return dialCode;
+    }
+
+    public void setDialCode(String dialCode) {
+        this.dialCode = dialCode;
+    }
+
+    public String getName_ar() {
+        return name_ar;
+    }
+
+    public void setName_ar(String name_ar) {
+        this.name_ar = name_ar;
+    }
+
+    public String getName_en() {
+        return name_en;
+    }
+
+    public void setName_en(String name_en) {
+        this.name_en = name_en;
+    }
 
     private String room_id;
     private Front_user front_user;

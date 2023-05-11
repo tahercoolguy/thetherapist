@@ -23,10 +23,13 @@ public class Adapter_Bottom extends BaseAdapter {
     private int position;
     User user;
 
-    public Adapter_Bottom(Context context, ArrayList<DataChangeDM>arrayList) {
+    int selectedPosition;
+    boolean correct = false;
+
+    public Adapter_Bottom(Context context, ArrayList<DataChangeDM> arrayList) {
         this.context = context;
         this.arrayList = arrayList;
-        user=new User(context);
+        user = new User(context);
     }
 
     @Override
@@ -71,14 +74,10 @@ public class Adapter_Bottom extends BaseAdapter {
             viewHolder.size.setText(data.getName());
 //            viewHolder.price.setText(data.getUnitPriceKWD());
 
-        }else{
+        } else {
             viewHolder.size.setText(data.getName());
 //            viewHolder.price.setText(data.getUnitPriceKWDAr());
-
         }
-
-
-
 
 
     }
@@ -100,7 +99,7 @@ public class Adapter_Bottom extends BaseAdapter {
     }
 
     private static class ViewHolder {
-        private TextView price,size;
+        private TextView price, size;
         ImageView image;
         LinearLayout ll;
 
@@ -109,7 +108,7 @@ public class Adapter_Bottom extends BaseAdapter {
             size = view.findViewById(R.id.sizeTV);
 //            price = view.findViewById(R.id.prizeTV);
             image = view.findViewById(R.id.iv_selected);
-            ll=view.findViewById(R.id.linearLayout);
+            ll = view.findViewById(R.id.linearLayout);
         }
     }
 }

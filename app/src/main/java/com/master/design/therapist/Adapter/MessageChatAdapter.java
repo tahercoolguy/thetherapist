@@ -8,7 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.webkit.ConsoleMessage;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -27,10 +29,9 @@ public class MessageChatAdapter extends RecyclerView.Adapter {
     List<All_messages> messageChatModelList;
     Context context;
     User user;
-   String friendId ;
-   String Id;
-   String message;
-   ImageView sendImg;
+    String friendId ;
+    String status;
+
    MessageChatAdapter.Onitemclicklistener onitemClickListener;
 
     private static final int VIEW_TYPE_MESSAGE_SENT = 1;
@@ -38,13 +39,11 @@ public class MessageChatAdapter extends RecyclerView.Adapter {
 
 
 
-    public MessageChatAdapter(List<All_messages> messageChatModelList, Context context,String friendId,String message,String Id,ImageView sendImg) {
+    public MessageChatAdapter(List<All_messages> messageChatModelList, Context context,String friendId,String status) {
         this.messageChatModelList = messageChatModelList;
         this.context = context;
         this.friendId=friendId;
-        this.Id=Id;
-        this.sendImg=sendImg;
-        this.message=message;
+        this.status=status;
         user= new User(context);
     }
 
@@ -145,12 +144,15 @@ public class MessageChatAdapter extends RecyclerView.Adapter {
 
         TextView message;
         TextView time;
+        ImageView image1,image2;
 
 
         public SentMessageHolder(@NonNull View itemView) {
             super(itemView);
             message = (TextView) itemView.findViewById(R.id.message);
             time = (TextView) itemView.findViewById(R.id.time);
+            image1 = (ImageView) itemView.findViewById(R.id.one_right_image);
+            image2 = (ImageView) itemView.findViewById(R.id.two_right_image);
 
         }
 
@@ -159,6 +161,22 @@ public class MessageChatAdapter extends RecyclerView.Adapter {
             message.setText(messageModel.getMessage());
 
             time.setText(messageModel.getTimestamp());
+            if(messageModel.getStatus().equalsIgnoreCase("send"))
+            {
+                 image1.setVisibility(View.VISIBLE);
+                 image2.setVisibility(View.GONE);
+            }
+            else if(messageModel.getStatus().equalsIgnoreCase("delivered")) {
+                    image2.setVisibility(View.VISIBLE);
+                    image1.setVisibility(View.GONE);
+
+            }  else if(status.equalsIgnoreCase("delivered")) {
+                image2.setVisibility(View.VISIBLE);
+                image1.setVisibility(View.GONE);
+
+            }
+
+
 
 
         }

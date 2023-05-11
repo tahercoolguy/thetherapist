@@ -52,10 +52,11 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'com.google.android.libraries.places:places:2.6.0'
+    implementation 'com.google.firebase:firebase-messaging:23.1.2'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    implementation 'com.google.firebase:firebase-messaging:15.0.2'
+//    implementation 'com.google.firebase:firebase-messaging:15.0.2'
     implementation 'com.google.code.gson:gson:2.8.2'
     implementation 'com.android.volley:volley:1.1.0'
     implementation 'pub.devrel:easypermissions:1.0.1'
@@ -88,8 +89,8 @@ dependencies {
     implementation 'com.jaedongchicken:ytplayer:1.4.4'
     implementation 'com.github.hkk595:Resizer:v1.5'
 //    implementation 'com.github.jrvansuita:PickImage:+'
-    implementation 'com.google.firebase:firebase-core:16.0.1'
-    implementation 'com.google.firebase:firebase-messaging:17.3.0'
+//    implementation 'com.google.firebase:firebase-core:16.0.1'
+//    implementation 'com.google.firebase:firebase-messaging:17.3.0'
     implementation 'com.github.warkiz.widget:indicatorseekbar:2.1.2'
     implementation 'com.karumi:dexter:4.2.0'
     implementation 'com.github.congfandi:simpleDatePicker:Dateicker'
@@ -178,7 +179,18 @@ dependencies {
 
 //compatible with androidX
 
+    // Import the Firebase BoM
+    implementation platform('com.google.firebase:firebase-bom:32.0.0')
 
- }
+
+    // TODO: Add the dependencies for Firebase products you want to use
+    // When using the BoM, don't specify versions in Firebase dependencies
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'androidx.work:work-runtime:2.7.1'
+    implementation 'com.google.firebase:firebase-iid:21.1.0'
+//    implementation 'com.google.firebase:firebase-messaging:23.0.6'
+
+}
 apply plugin: 'com.google.gms.google-services'
 com.google.gms.googleservices.GoogleServicesPlugin.config.disableVersionCheck = true
+

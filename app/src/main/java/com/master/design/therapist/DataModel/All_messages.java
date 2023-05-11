@@ -7,9 +7,15 @@ public class All_messages {
     private String message;
     private String receiver_user;
     private String timestamp;
+    private String status;
 
+    public String getStatus() {
+        return status;
+    }
 
-
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public String getSender_user() {
         return sender_user;

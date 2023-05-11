@@ -4,6 +4,15 @@ public class DataChangeDM {
 
     String id;
     String name;
+    String dialCode;
+
+    public String getDialCode() {
+        return dialCode;
+    }
+
+    public void setDialCode(String dialCode) {
+        this.dialCode = dialCode;
+    }
 
     public String getId() {
         return id;

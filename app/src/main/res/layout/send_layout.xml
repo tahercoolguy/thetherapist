@@ -56,8 +56,17 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:padding="5dp"
+            android:id="@+id/one_right_image"
             android:src="@drawable/new_right_one">
+        </ImageView>
 
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:padding="5dp"
+            android:id="@+id/two_right_image"
+            android:visibility="gone"
+            android:src="@drawable/ic_read">
         </ImageView>
 
     </LinearLayout>
