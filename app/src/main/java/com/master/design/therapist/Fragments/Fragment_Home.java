@@ -29,6 +29,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -97,7 +98,8 @@ public class Fragment_Home extends Fragment {
     @BindView(R.id.bgRoundedImg)
     RoundedImageView bgRoundedImg;
     @BindView(R.id.frontRoundedImg)
-    RoundedImageView frontRoundedImg; @BindView(R.id.ll)
+    RoundedImageView frontRoundedImg;
+    @BindView(R.id.ll)
     LinearLayout ll;
 
     @BindView(R.id.layout_parent)
@@ -114,6 +116,8 @@ public class Fragment_Home extends Fragment {
 
     @BindView(R.id.slider)
     SliderView slider;
+    @BindView(R.id.swiperefresh)
+    SwipeRefreshLayout swiperefresh;
 
 
     @Nullable
@@ -137,17 +141,35 @@ public class Fragment_Home extends Fragment {
             user = new User(getActivity());
             dialogUtil = new DialogUtil();
 
-            Bitmap resultBmp = BlurBuilder.blur(getActivity(), BitmapFactory.decodeResource(getResources(), R.drawable.marshall_img));
-            Drawable dr = new BitmapDrawable(resultBmp);
-            bgRoundedImg.setImageDrawable(dr);
+//            Bitmap resultBmp = BlurBuilder.blur(getActivity(), BitmapFactory.decodeResource(getResources(), R.drawable.marshall_img));
+//            Drawable dr = new BitmapDrawable(resultBmp);
+//            bgRoundedImg.setImageDrawable(dr);
 
 //            setInterestData();
 
+            setDetails();
             setsliderData();
+
+            /*
+             * Sets up a SwipeRefreshLayout.OnRefreshListener that is invoked when the user
+             * performs a swipe-to-refresh gesture.
+             */
+            swiperefresh.setOnRefreshListener(
+                    new SwipeRefreshLayout.OnRefreshListener() {
+                        @Override
+                        public void onRefresh() {
+
+                            // This method performs the actual data-refresh operation.
+                            // The method calls setRefreshing(false) when it's finished.
+                            setsliderData();
+                        }
+                    }
+            );
 
         }
         return rootView;
     }
+
 
     @OnClick(R.id.sendRequestImg)
     public void clicksendRequestImg() {
@@ -191,9 +213,9 @@ public class Fragment_Home extends Fragment {
 
             // below method is used to set auto cycle direction in left to
             // right direction you can change according to requirement.
-            Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.left_slide_in);
-            slider.startAnimation(animation);
-            slider.setAutoCycleDirection(SliderView.LAYOUT_DIRECTION_LTR);
+//            Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.left_slide_in);
+//            slider.startAnimation(animation);
+//            slider.setAutoCycleDirection(SliderView.LAYOUT_DIRECTION_LTR);
 
 
             imageadapter.setOnItemClickListener(new SliderHomeAdapter.OnItemClickListener() {
@@ -241,75 +263,8 @@ public class Fragment_Home extends Fragment {
 
         } else {
             listposition = 0;
-            sendRequestImg.setVisibility(View.VISIBLE);
-            recieveRequestImg.setVisibility(View.GONE);
-            nextUserID = therapistHomeDMPosition.getUsers().get(listposition).getId();
-            userNameTxt.setText(therapistHomeDMPosition.getUsers().get(listposition).getName());
-            aboutTxt.setText(therapistHomeDMPosition.getUsers().get(listposition).getAboutyou());
-
-
-            Adapter_Category_Interest adapter_category_interest = new Adapter_Category_Interest(context, therapistHomeDMPosition.getUsers().get(listposition).getInterests());
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
-            categoryRcv.setLayoutManager(linearLayoutManager);
-            categoryRcv.setAdapter(adapter_category_interest);
-
-            SliderHomeAdapter imageadapter = new SliderHomeAdapter(activity, therapistHomeDMPosition.getUsers().get(listposition).getImage(), slider);
-
-            // below method is used to set auto cycle direction in left to
-            // right direction you can change according to requirement.
-            Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.left_slide_in);
-            slider.startAnimation(animation);
-            slider.setAutoCycleDirection(SliderView.LAYOUT_DIRECTION_LTR);
-
-
-            imageadapter.setOnItemClickListener(new SliderHomeAdapter.OnItemClickListener() {
-                @Override
-                public void onNextClick(int position) {
-
-                    //               slider.slideToNextPosition();
-
-                }
-
-                @Override
-                public void onSendRequest(String id) {
-
-//               SendRequestBinding(id);
-
-                }
-
-                @Override
-                public void onCancelRequest(String id) {
-
-                    //               cancelRequestBinding(id);
-
-                }
-            });
-
-
-            // below method is used to
-            // setadapter to sliderview.
-            slider.setSliderAdapter(imageadapter);
-            slider.setInfiniteAdapterEnabled(false);
-            // below method is use to set
-            // scroll time in seconds.
-
-            slider.setScrollTimeInSec(3);
-//
-//                        // to set it scrollable automatically
-//                        // we use below method.
-
-//                            slider.setAutoCycle(true);
-//
-//                        // to start autocycle below method is used.
-
-//                            slider.startAutoCycle();
-
+            setsliderData();
         }
-//        slider.slideToNextPosition();
-//        Animation animation = AnimationUtils.loadAnimation(context, R.anim.left_slide_out);
-//        layout_parent.startAnimation(animation);
-//        sendRequestImg.setVisibility(View.VISIBLE);
-//        recieveRequestImg.setVisibility(View.GONE);
 
     }
 
@@ -319,60 +274,60 @@ public class Fragment_Home extends Fragment {
         activity.overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
     }
 
-    private void setInterestData() {
-
-//        ArrayList<InterestDM> interestDMArrayList = new ArrayList<>();
-//        interestDMArrayList.add(new InterestDM("Movies", R.drawable.ic_add_image));
-//        interestDMArrayList.add(new InterestDM("Study", R.drawable.ic_add_image));
-//        interestDMArrayList.add(new InterestDM("Music", R.drawable.ic_add_image));
-//        interestDMArrayList.add(new InterestDM("Songs", R.drawable.ic_add_image));
-//        interestDMArrayList.add(new InterestDM("Cricket", R.drawable.ic_add_image));
-//        interestDMArrayList.add(new InterestDM("Travel", R.drawable.ic_add_image));
-//        interestDMArrayList.add(new InterestDM("Pets", R.drawable.ic_add_image));
-//        interestDMArrayList.add(new InterestDM("Bikes", R.drawable.ic_add_image));
-//        interestDMArrayList.add(new InterestDM("Movies", R.drawable.ic_add_image));
-//        interestDMArrayList.add(new InterestDM("Study", R.drawable.ic_add_image));
-//        interestDMArrayList.add(new InterestDM("Music", R.drawable.ic_add_image));
-//        interestDMArrayList.add(new InterestDM("Songs", R.drawable.ic_add_image));
-//        interestDMArrayList.add(new InterestDM("Cricket", R.drawable.ic_add_image));
-//        interestDMArrayList.add(new InterestDM("Travel", R.drawable.ic_add_image));
-//        interestDMArrayList.add(new InterestDM("Pets", R.drawable.ic_add_image));
-//        interestDMArrayList.add(new InterestDM("Bikes", R.drawable.ic_add_image));
-
-        if (connectionDetector.isConnectingToInternet()) {
-            String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-            //           progress = dialogUtil.showProgressDialog(Create_Account_Activity.this, getString(R.string.please_wait));
-            appController.paServices.TherapistHome(String.valueOf(user.getId()), new Callback<TherapistHomeDM>() {
-                @Override
-                public void success(TherapistHomeDM therapistHomeDM, Response response) {
-                    //                   progress.dismiss();
-                    if (therapistHomeDM.getStatus().equalsIgnoreCase("1")) {
-
-                        Picasso.with(context).load(AppController.THERAPIST_IMAGE + therapistHomeDM.getUsers().get(0).getImage()).into(frontRoundedImg);
-                        userNameTxt.setText(therapistHomeDM.getUsers().get(0).getName());
-                        aboutTxt.setText(therapistHomeDM.getUsers().get(0).getAboutyou());
-
-                        Adapter_Category_Interest adapter_category_interest = new Adapter_Category_Interest(context, therapistHomeDM.getUsers().get(0).getInterests());
-                        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
-                        categoryRcv.setLayoutManager(linearLayoutManager);
-                        categoryRcv.setAdapter(adapter_category_interest);
-
-                    } else {
-
-                    }
-//                        Helper.showToast(context, getString(R.string.Api_data_not_found));
-                }
-
-                @Override
-                public void failure(RetrofitError retrofitError) {
-                    Log.e("error", retrofitError.toString());
-                }
-            });
-        } else
-            Helper.showToast(context, getString(R.string.no_internet_connection));
+//    private void setInterestData() {
 //
-
-    }
+////        ArrayList<InterestDM> interestDMArrayList = new ArrayList<>();
+////        interestDMArrayList.add(new InterestDM("Movies", R.drawable.ic_add_image));
+////        interestDMArrayList.add(new InterestDM("Study", R.drawable.ic_add_image));
+////        interestDMArrayList.add(new InterestDM("Music", R.drawable.ic_add_image));
+////        interestDMArrayList.add(new InterestDM("Songs", R.drawable.ic_add_image));
+////        interestDMArrayList.add(new InterestDM("Cricket", R.drawable.ic_add_image));
+////        interestDMArrayList.add(new InterestDM("Travel", R.drawable.ic_add_image));
+////        interestDMArrayList.add(new InterestDM("Pets", R.drawable.ic_add_image));
+////        interestDMArrayList.add(new InterestDM("Bikes", R.drawable.ic_add_image));
+////        interestDMArrayList.add(new InterestDM("Movies", R.drawable.ic_add_image));
+////        interestDMArrayList.add(new InterestDM("Study", R.drawable.ic_add_image));
+////        interestDMArrayList.add(new InterestDM("Music", R.drawable.ic_add_image));
+////        interestDMArrayList.add(new InterestDM("Songs", R.drawable.ic_add_image));
+////        interestDMArrayList.add(new InterestDM("Cricket", R.drawable.ic_add_image));
+////        interestDMArrayList.add(new InterestDM("Travel", R.drawable.ic_add_image));
+////        interestDMArrayList.add(new InterestDM("Pets", R.drawable.ic_add_image));
+////        interestDMArrayList.add(new InterestDM("Bikes", R.drawable.ic_add_image));
+//
+//        if (connectionDetector.isConnectingToInternet()) {
+//            String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+//            //           progress = dialogUtil.showProgressDialog(Create_Account_Activity.this, getString(R.string.please_wait));
+//            appController.paServices.TherapistHome(String.valueOf(user.getId()), new Callback<TherapistHomeDM>() {
+//                @Override
+//                public void success(TherapistHomeDM therapistHomeDM, Response response) {
+//                    //                   progress.dismiss();
+//                    if (therapistHomeDM.getStatus().equalsIgnoreCase("1")) {
+//
+//                        Picasso.with(context).load(AppController.THERAPIST_IMAGE + therapistHomeDM.getUsers().get(0).getImage()).into(frontRoundedImg);
+//                        userNameTxt.setText(therapistHomeDM.getUsers().get(0).getName());
+//                        aboutTxt.setText(therapistHomeDM.getUsers().get(0).getAboutyou());
+//
+//                        Adapter_Category_Interest adapter_category_interest = new Adapter_Category_Interest(context, therapistHomeDM.getUsers().get(0).getInterests());
+//                        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+//                        categoryRcv.setLayoutManager(linearLayoutManager);
+//                        categoryRcv.setAdapter(adapter_category_interest);
+//
+//                    } else {
+//
+//                    }
+////                        Helper.showToast(context, getString(R.string.Api_data_not_found));
+//                }
+//
+//                @Override
+//                public void failure(RetrofitError retrofitError) {
+//                    Log.e("error", retrofitError.toString());
+//                }
+//            });
+//        } else
+//            Helper.showToast(context, getString(R.string.no_internet_connection));
+////
+//
+//    }
 
 
     @Override
@@ -387,7 +342,7 @@ public class Fragment_Home extends Fragment {
             public void run() {
                 DismissProgress();
             }
-        }, 1500);
+        }, 800);
 
 
     }
@@ -448,7 +403,7 @@ public class Fragment_Home extends Fragment {
 
     TherapistHomeDM therapistHomeDMPosition;
 
-    private void setsliderData() {
+    public void setsliderData() {
 
 //        ArrayList<IntroSliderDM> introSliderDMArrayList = new ArrayList<>();
 //        introSliderDMArrayList.add(new IntroSliderDM(getString(R.string.intro1_head) +
@@ -464,61 +419,61 @@ public class Fragment_Home extends Fragment {
                 public void success(TherapistHomeDM therapistHomeDM, Response response) {
                     //                   progress.dismiss();
                     if (therapistHomeDM.getStatus().equalsIgnoreCase("1")) {
-                         try {
-                             therapistHomeDMPosition = therapistHomeDM;
-                             nextUserID = therapistHomeDMPosition.getUsers().get(0).getId();
-
+                        try {
+                            therapistHomeDMPosition = therapistHomeDM;
+                            nextUserID = therapistHomeDMPosition.getUsers().get(0).getId();
+                            swiperefresh.setRefreshing(false);
 //                        Picasso.with(context).load("http://207.154.215.156:8000" + therapistHomeDM.getUsers().get(0).getImage()).into(frontRoundedImg);
-                             userNameTxt.setText(therapistHomeDM.getUsers().get(0).getName());
-                             aboutTxt.setText(therapistHomeDM.getUsers().get(0).getAboutyou());
+                            userNameTxt.setText(therapistHomeDM.getUsers().get(0).getName());
+                            aboutTxt.setText(therapistHomeDM.getUsers().get(0).getAboutyou());
 
 
-                             Adapter_Category_Interest adapter_category_interest = new Adapter_Category_Interest(context, therapistHomeDM.getUsers().get(0).getInterests());
-                             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
-                             categoryRcv.setLayoutManager(linearLayoutManager);
-                             categoryRcv.setAdapter(adapter_category_interest);
+                            Adapter_Category_Interest adapter_category_interest = new Adapter_Category_Interest(context, therapistHomeDM.getUsers().get(0).getInterests());
+                            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+                            categoryRcv.setLayoutManager(linearLayoutManager);
+                            categoryRcv.setAdapter(adapter_category_interest);
 
-                             SliderHomeAdapter imageadapter = new SliderHomeAdapter(activity, therapistHomeDM.getUsers().get(0).getImage(), slider);
+                            SliderHomeAdapter imageadapter = new SliderHomeAdapter(activity, therapistHomeDM.getUsers().get(0).getImage(), slider);
 
-                             // below method is used to set auto cycle direction in left to
-                             // right direction you can change according to requirement.
-                             Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.left_slide_in);
-                             slider.startAnimation(animation);
-                             slider.setAutoCycleDirection(SliderView.LAYOUT_DIRECTION_LTR);
+                            // below method is used to set auto cycle direction in left to
+                            // right direction you can change according to requirement.
+                            Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.left_slide_in);
+                            slider.startAnimation(animation);
+                            slider.setAutoCycleDirection(SliderView.LAYOUT_DIRECTION_LTR);
 
 
-                             imageadapter.setOnItemClickListener(new SliderHomeAdapter.OnItemClickListener() {
-                                 @Override
-                                 public void onNextClick(int position) {
+                            imageadapter.setOnItemClickListener(new SliderHomeAdapter.OnItemClickListener() {
+                                @Override
+                                public void onNextClick(int position) {
 
-                                     //               slider.slideToNextPosition();
+                                    //               slider.slideToNextPosition();
 
-                                 }
+                                }
 
-                                 @Override
-                                 public void onSendRequest(String id) {
+                                @Override
+                                public void onSendRequest(String id) {
 
 //               SendRequestBinding(id);
 
-                                 }
+                                }
 
-                                 @Override
-                                 public void onCancelRequest(String id) {
+                                @Override
+                                public void onCancelRequest(String id) {
 
-                                     //               cancelRequestBinding(id);
+                                    //               cancelRequestBinding(id);
 
-                                 }
-                             });
+                                }
+                            });
 
 
-                             // below method is used to
-                             // setadapter to sliderview.
-                             slider.setSliderAdapter(imageadapter);
-                             slider.setInfiniteAdapterEnabled(false);
-                             // below method is use to set
-                             // scroll time in seconds.
+                            // below method is used to
+                            // setadapter to sliderview.
+                            slider.setSliderAdapter(imageadapter);
+                            slider.setInfiniteAdapterEnabled(false);
+                            // below method is use to set
+                            // scroll time in seconds.
 
-                             slider.setScrollTimeInSec(3);
+                            slider.setScrollTimeInSec(3);
 //
 //                        // to set it scrollable automatically
 //                        // we use below method.
@@ -530,13 +485,14 @@ public class Fragment_Home extends Fragment {
 //                            slider.startAutoCycle();
 
 
-                         } catch (Exception e) {
-                             ll.setVisibility(View.GONE);
-                             e.printStackTrace();
-                         }
+                        } catch (Exception e) {
+                            ll.setVisibility(View.GONE);
+                            e.printStackTrace();
+                        }
 
 
                     } else {
+                        swiperefresh.setRefreshing(false);
                         Helper.showToast(context, getString(R.string.Api_data_not_found));
                     }
                 }

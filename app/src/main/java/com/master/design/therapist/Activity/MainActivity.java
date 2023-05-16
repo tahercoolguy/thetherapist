@@ -12,7 +12,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Display;
@@ -137,6 +139,21 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 //        setDrawer();
         setToolBar();
         setOnClickListeners();
+    }
+
+    public void showdialogNoData(Context context, String tittle,String msg) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle(tittle)
+                .setMessage(msg)
+                .setCancelable(false)
+                .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        final AlertDialog alert = builder.create();
+
+        alert.show();
     }
 
     @Override

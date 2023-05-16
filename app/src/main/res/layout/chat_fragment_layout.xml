@@ -1,16 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/swiperefresh"
     android:layout_width="match_parent"
+
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
     android:background="@color/white">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
 
     <LinearLayout
         android:id="@+id/layout_parent"
         android:layout_width="match_parent"
-        android:padding="10dp"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="10dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -43,18 +49,18 @@
 
 
         <EditText
-            android:layout_width="match_parent"
-            android:layout_marginTop="10dp"
-             android:layout_height="wrap_content"
-            android:hint="@string/search"
             android:id="@+id/searchET"
-            android:singleLine="true"
-            android:padding="12dp"
-            android:textSize="@dimen/text_size_normal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="15dp"
-             android:backgroundTint="@color/grey"
             android:background="@drawable/rounded_grey_new"
-            android:layout_marginHorizontal="10dp"></EditText>
+            android:backgroundTint="@color/grey"
+            android:hint="@string/search"
+            android:padding="12dp"
+            android:singleLine="true"
+            android:textSize="@dimen/text_size_normal"></EditText>
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -76,4 +82,6 @@
     </LinearLayout>
 
     <include layout="@layout/layout_error" />
-</RelativeLayout>
+
+    </RelativeLayout>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

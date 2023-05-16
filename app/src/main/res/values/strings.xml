@@ -132,5 +132,9 @@
     <string name="select_video_from_gallery">select video from gallery</string>
     <string name="user_login_failed">User Login Failed</string>
     <string name="kindly_select_interest">Kindly Select Interest</string>
+    <string name="friend_request">Friend request</string>
+    <string name="no_friend_request">no friend request</string>
+    <string name="no_friends">no friends</string>
+    <string name="no_chats">no chats</string>
 
 </resources>

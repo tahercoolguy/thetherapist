@@ -71,17 +71,17 @@ public class Adapter_Chat extends RecyclerView.Adapter<Adapter_Chat.ViewHolder> 
 
     private void setDetails(Adapter_Chat.ViewHolder viewHolder, int position) {
 
-        Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-
-                // on the below line we are finishing
-                // our current activity.
-                viewHolder.itemView.startAnimation(animation);
-
-            }
-        }, 100);
+//        Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//
+//                // on the below line we are finishing
+//                // our current activity.
+//                viewHolder.itemView.startAnimation(animation);
+//
+//            }
+//        }, 100);
 
 
 //        viewHolder.messageTxt.setText(arrayList.get(position).getMesseage());
@@ -141,7 +141,6 @@ public class Adapter_Chat extends RecyclerView.Adapter<Adapter_Chat.ViewHolder> 
     }
 
     public interface OnItemClickListener {
-
 
         void onClickThis(int position, String img, String name, String FriendId);
     }

@@ -103,17 +103,17 @@ public class Adapter_Friends extends RecyclerView.Adapter<Adapter_Friends.ViewHo
 
     private void setDetails(Adapter_Friends.ViewHolder viewHolder, int position) {
 
-        Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-
-                // on the below line we are finishing
-                // our current activity.
-                viewHolder.itemView.startAnimation(animation);
-
-            }
-        }, 100);
+//        Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//
+//                // on the below line we are finishing
+//                // our current activity.
+//                viewHolder.itemView.startAnimation(animation);
+//
+//            }
+//        }, 100);
 
         viewHolder.nameTxt.setText(arrayList.get(position).getName());
 //        viewHolder.profileImageRIV.setImageResource(arrayList.get(position).getImage());

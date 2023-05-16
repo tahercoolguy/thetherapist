@@ -21,6 +21,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.master.design.therapist.Activity.Conversation_Activity;
@@ -63,7 +64,8 @@ public class Fragment_Chat extends Fragment {
     EditText searchET;
     @BindView(R.id.rcvRcv)
     RecyclerView rcvRcv;
-
+    @BindView(R.id.swiperefresh)
+    SwipeRefreshLayout swiperefresh;
     User user;
 
     @BindView(R.id.layout_parent)
@@ -94,7 +96,24 @@ public class Fragment_Chat extends Fragment {
             ButterKnife.bind(this, rootView);
             dialogUtil = new DialogUtil();
             user = new User(getActivity());
+            setDetails();
             setChatData();
+
+            /*
+             * Sets up a SwipeRefreshLayout.OnRefreshListener that is invoked when the user
+             * performs a swipe-to-refresh gesture.
+             */
+            swiperefresh.setOnRefreshListener(
+                    new SwipeRefreshLayout.OnRefreshListener() {
+                        @Override
+                        public void onRefresh() {
+
+                            // This method performs the actual data-refresh operation.
+                            // The method calls setRefreshing(false) when it's finished.
+                            setChatData();
+                        }
+                    }
+            );
 
         }
         return rootView;
@@ -133,7 +152,7 @@ public class Fragment_Chat extends Fragment {
                     if (chatlistDM.getStatus().equalsIgnoreCase("1")) {
 
                         rcvRcv.setVisibility(View.VISIBLE);
-
+                        swiperefresh.setRefreshing(false);
                         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
                         Adapter_Chat adapter_chat = new Adapter_Chat(context, chatlistDM.getDetails());
                         rcvRcv.setLayoutManager(linearLayoutManager);
@@ -156,6 +175,8 @@ public class Fragment_Chat extends Fragment {
 
                     } else {
                         rcvRcv.setVisibility(View.GONE);
+                        swiperefresh.setRefreshing(false);
+                        ((MainActivity) context).showdialogNoData(context, getString(R.string.chat), getString(R.string.no_chats));
                     }
 //                        Helper.showToast(getActivity(), getString(R.string.Api_data_not_found));
                 }
@@ -185,7 +206,7 @@ public class Fragment_Chat extends Fragment {
             public void run() {
                 DismissProgress();
             }
-        }, 1500);
+        }, 800);
 
 
     }
