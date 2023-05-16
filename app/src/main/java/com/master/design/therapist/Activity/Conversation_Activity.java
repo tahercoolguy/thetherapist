@@ -104,6 +104,8 @@ public class Conversation_Activity extends AppCompatActivity {
    String statusCheck="send";
     @BindView(R.id.sendImg)
     ImageView sendImg;
+    @BindView(R.id.addImg)
+    ImageView addImg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

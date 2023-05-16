@@ -5,6 +5,15 @@ public class DataChangeDM {
     String id;
     String name;
     String dialCode;
+    Boolean isSelected;
+
+    public Boolean getSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(Boolean selected) {
+        isSelected = selected;
+    }
 
     public String getDialCode() {
         return dialCode;

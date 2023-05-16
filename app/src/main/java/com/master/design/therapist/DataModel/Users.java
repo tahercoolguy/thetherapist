@@ -4,19 +4,20 @@ import java.util.ArrayList;
 
 public class Users {
 
-    private String image;
+
+
     private String aboutyou;
     private String name;
     private String id;
     private ArrayList<Interests> interests;
+    private ArrayList<Image> image;
 
-
-    public String getImage() {
-        return image;
+    public void setImage(ArrayList<Image> image) {
+        this.image = image;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public ArrayList<Image> getImage() {
+        return image;
     }
 
     public String getAboutyou() {

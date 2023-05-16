@@ -20,7 +20,7 @@ public class Adapter_Bottom extends BaseAdapter {
 
     private Context context;
     private ArrayList<DataChangeDM> arrayList;
-    private DataChangeDM selected;
+    public DataChangeDM selected;
     private int position;
 //    private String selected;
     Boolean checck=true;
@@ -92,6 +92,9 @@ public class Adapter_Bottom extends BaseAdapter {
 //            }
 //        });
 
+
+
+//
     }
 
 
