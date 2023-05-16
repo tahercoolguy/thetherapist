@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -99,6 +101,7 @@ public class Fragment_Friends_Request extends Fragment {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @SuppressLint({"UseCompatLoadingForDrawables", "UseCompatLoadingForColorStateLists"})
     @OnClick(R.id.myFriendsTxt)
     public void clickMyFriends() {
@@ -116,6 +119,7 @@ public class Fragment_Friends_Request extends Fragment {
         setMyFriendsAdapter();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @SuppressLint({"UseCompatLoadingForDrawables", "UseCompatLoadingForColorStateLists"})
     @OnClick(R.id.requestTxt)
     public void clickRequestTxt() {
@@ -138,57 +142,37 @@ public class Fragment_Friends_Request extends Fragment {
 //        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
 //        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
 //        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
-//        interestDMArrayList.add(new InterestDM("User Name", R.drawable.img_profile));
 
         if (connectionDetector.isConnectingToInternet()) {
             String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-            progress = dialogUtil.showProgressDialog(getActivity(), getString(R.string.please_wait));
-            appController.paServices.TherapistFriend_List(String.valueOf(user.getId()),new Callback<Friend_ListDM>() {
+//            progress = dialogUtil.showProgressDialog(getActivity(), getString(R.string.please_wait));
+            appController.paServices.TherapistFriend_List(String.valueOf(user.getId()), new Callback<Friend_ListDM>() {
                 @Override
                 public void success(Friend_ListDM friend_listDM, Response response) {
-                   progress.dismiss();
+
                     if (friend_listDM.getStatus().equalsIgnoreCase("1")) {
+//                        progress.dismiss();
+                        rcvRcv.setVisibility(View.VISIBLE);
 
-
-        Adapter_Friends adapter_friends = new Adapter_Friends(context, friend_listDM.getAll_friends());
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 3);
-        rcvRcv.setLayoutManager(gridLayoutManager);
-        rcvRcv.setAdapter(adapter_friends);
+                        Adapter_Friends adapter_friends = new Adapter_Friends(context, friend_listDM.getAll_friends());
+                        GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 3);
+                        rcvRcv.setLayoutManager(gridLayoutManager);
+                        rcvRcv.setAdapter(adapter_friends);
 
                     } else
-                        Helper.showToast(getActivity(), getString(R.string.Api_data_not_found));
+                        rcvRcv.setVisibility(View.GONE);
+//                    progress.dismiss();
+//                    Helper.showToast(getActivity(), getString(R.string.Api_data_not_found));
                 }
 
                 @Override
                 public void failure(RetrofitError retrofitError) {
-                    progress.dismiss();
+//                    progress.dismiss();
                     Log.e("error", retrofitError.toString());
                 }
             });
         } else
             Helper.showToast(getActivity(), getString(R.string.no_internet_connection));
-
 
 
     }
@@ -223,31 +207,34 @@ public class Fragment_Friends_Request extends Fragment {
 
         if (connectionDetector.isConnectingToInternet()) {
             String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-            progress = dialogUtil.showProgressDialog(getActivity(), getString(R.string.please_wait));
-            appController.paServices.TherapistRequest_List(String.valueOf(user.getId()),new Callback<Request_ListDM>() {
+//            progress = dialogUtil.showProgressDialog(getActivity(), getString(R.string.please_wait));
+            appController.paServices.TherapistRequest_List(String.valueOf(user.getId()), new Callback<Request_ListDM>() {
                 @Override
                 public void success(Request_ListDM request_listDM, Response response) {
-                    progress.dismiss();
                     if (request_listDM.getStatus().equalsIgnoreCase("1")) {
+//                        progress.dismiss();
 
+                        rcvRcv.setVisibility(View.VISIBLE);
 
-        Adapter_Request adapter_request = new Adapter_Request(context, request_listDM.getSenders());
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, RecyclerView.VERTICAL,false);
-        rcvRcv.setLayoutManager(linearLayoutManager);
-        rcvRcv.setAdapter(adapter_request);
-                    } else
-                        Helper.showToast(getActivity(), getString(R.string.Api_data_not_found));
+                        Adapter_Request adapter_request = new Adapter_Request(context, request_listDM.getSenders());
+                        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, RecyclerView.VERTICAL, false);
+                        rcvRcv.setLayoutManager(linearLayoutManager);
+                        rcvRcv.setAdapter(adapter_request);
+                    } else {
+                        rcvRcv.setVisibility(View.GONE);
+//                        progress.dismiss();
+//                        Helper.showToast(getActivity(), getString(R.string.Api_data_not_found));
+                    }
                 }
 
                 @Override
                 public void failure(RetrofitError retrofitError) {
-                    progress.dismiss();
+//                    progress.dismiss();
                     Log.e("error", retrofitError.toString());
                 }
             });
         } else
             Helper.showToast(getActivity(), getString(R.string.no_internet_connection));
-
 
 
     }

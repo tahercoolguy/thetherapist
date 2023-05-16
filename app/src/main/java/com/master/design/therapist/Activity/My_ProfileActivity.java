@@ -274,7 +274,7 @@ public class My_ProfileActivity extends AppCompatActivity {
                      genderET.setText(profileDM.getUser_data().get(0).getGender());
                      dobET.setText(profileDM.getUser_data().get(0).getDob());
 
-                  Picasso.with(context).load("http://207.154.215.156:8000"+profileDM.getUser_data().get(0).getImage()).into(profileImgRIV);
+                  Picasso.with(context).load(AppController.THERAPIST_IMAGE+profileDM.getUser_data().get(0).getImage()).into(profileImgRIV);
 
 
                     } else

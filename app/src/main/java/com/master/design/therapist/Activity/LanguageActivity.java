@@ -38,7 +38,7 @@ public class LanguageActivity extends AppCompatActivity {
         arabicRL.setBackground(getDrawable(R.drawable.language_unselect_bg));
         startActivity(new Intent(LanguageActivity.this, IntroActivity.class));
         overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
-
+        finish();
     }
 
     @OnClick(R.id.arabicRL)
@@ -53,14 +53,14 @@ public class LanguageActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        overridePendingTransition(R.anim.right_slide_in,R.anim.right_slide_in);
+        overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
         super.onBackPressed();
     }
 
     @Override
     public void finish() {
         super.finish();
-        overridePendingTransition(R.anim.right_slide_in,R.anim.right_slide_in);
+        overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
 
     }
 }

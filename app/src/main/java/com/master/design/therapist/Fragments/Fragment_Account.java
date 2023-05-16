@@ -22,8 +22,10 @@ import com.master.design.therapist.Activity.FriendSearchActivity;
 import com.master.design.therapist.Activity.LanguageActivity;
 import com.master.design.therapist.Activity.MainActivity;
 import com.master.design.therapist.Activity.My_ProfileActivity;
+import com.master.design.therapist.Activity.Sign_InActivity;
 import com.master.design.therapist.Activity.SplashScreen;
 import com.master.design.therapist.Controller.AppController;
+import com.master.design.therapist.Helper.User;
 import com.master.design.therapist.R;
 import com.master.design.therapist.Utils.ConnectionDetector;
 
@@ -58,7 +60,7 @@ public class Fragment_Account extends Fragment {
     AppController appController;
     ConnectionDetector connectionDetector;
     ProgressDialog progressDialog;
-
+    User user;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -66,7 +68,7 @@ public class Fragment_Account extends Fragment {
         context = getActivity();
         activity=this.getActivity();
         appController = (AppController) getActivity().getApplicationContext();
-
+        user = new User(context);
         connectionDetector = new ConnectionDetector(getActivity());
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage(getResources().getString(R.string.please_wait));
@@ -108,6 +110,9 @@ public class Fragment_Account extends Fragment {
     @OnClick(R.id.logoutLL)
     public void clicklogoutLL() {
         ((MainActivity)context).finish();
+        startActivity(new Intent(getActivity(), Sign_InActivity.class));
+//        ((MainActivity)context).finish();
+        user.setId(0);
          activity.overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
     }
 

@@ -106,7 +106,7 @@ public class Adapter_Request extends RecyclerView.Adapter<Adapter_Request.ViewHo
         viewHolder.nameTxt.setText(arrayList.get(position).getName());
 //        viewHolder.profileImageRIV.setImageResource(arrayList.get(position).getImage());
 
-        Picasso.with(context).load("http://207.154.215.156:8000"+arrayList.get(position).getImage()).into(viewHolder.profileImageRIV);
+        Picasso.with(context).load(AppController.THERAPIST_IMAGE+arrayList.get(position).getImage()).placeholder(R.drawable.tab_selector).into(viewHolder.profileImageRIV);
 
         viewHolder.clickLL.setOnClickListener(new View.OnClickListener() {
             @Override

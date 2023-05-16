@@ -33,6 +33,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import jp.wasabeef.picasso.transformations.BlurTransformation;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -79,8 +80,8 @@ public class SliderHomeAdapter extends SliderViewAdapter<SliderHomeAdapter.Slide
     public void onBindViewHolder(SliderAdapterViewHolder viewHolder, int position) {
 
 //        viewHolder.img.setImageResource(eventsDetailsData.get(position).getImage());
-        Picasso.with(context).load("http://207.154.215.156:8000"+eventsDetailsData.get(position).getImage_link()).into(viewHolder.fontRoundedimg);
-        Picasso.with(context).load("http://207.154.215.156:8000"+eventsDetailsData.get(position).getImage_link()).into(viewHolder.bgRoundedimg);
+        Picasso.with(context).load(AppController.THERAPIST_IMAGE+eventsDetailsData.get(position).getImage_link()).placeholder(R.drawable.tab_selector).into(viewHolder.fontRoundedimg);
+        Picasso.with(context).load(AppController.THERAPIST_IMAGE+eventsDetailsData.get(position).getImage_link()).placeholder(R.drawable.tab_selector).transform(new BlurTransformation(context, 25, 1)).into(viewHolder.bgRoundedimg);
 //        viewHolder.username.setText(eventsDetailsData.get(position).getName());
 //        viewHolder.aboutTxt.setText(eventsDetailsData.get(position).getAboutyou());
 //        viewHolder.tittleTxt.setText(eventsDetailsData.get(position).getTittleTxt());

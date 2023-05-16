@@ -1,6 +1,7 @@
 package com.master.design.therapist.Adapter;
 
 import android.content.Context;
+import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,11 +11,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.master.design.therapist.Activity.FriendSearch_SelectActivity;
+import com.master.design.therapist.Controller.AppController;
 import com.master.design.therapist.DM.InterestDM;
 import com.master.design.therapist.DataModel.Interest_details;
 import com.master.design.therapist.Helper.User;
@@ -84,11 +87,12 @@ public class Adapter_Interest_new extends RecyclerView.Adapter<Adapter_Interest_
 //        viewHolder.mainTxt.setText(arrayList.get(position).getHead());
         viewHolder.interestTxt.setText(arrayList.get(position).getInterest_eg());
         if(arrayList.get(position).getInterest_img()!=null) {
-            Picasso.with(context).load("http://207.154.215.156:8000"+arrayList.get(position).getInterest_img()).into(viewHolder.img);
+            Picasso.with(context).load(AppController.THERAPIST_IMAGE+arrayList.get(position).getInterest_img()).placeholder(R.drawable.tab_selector).into(viewHolder.img);
         }
 //        viewHolder.img.setImageResource(arrayList.get(position).getImage());
 
         viewHolder.clickLL.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View view) {
 //                onItemClickListener.onClickThis(position, arrayList.get(position).getTittleInterest());

@@ -14,7 +14,7 @@ import com.google.gson.GsonBuilder;
 import com.izikode.izilib.roguin.endpoint.FacebookEndpoint;
 import com.izikode.izilib.roguin.endpoint.GoogleEndpoint;
 
-import com.master.design.therapist.notification.Services.PAServices;
+import com.master.design.therapist.Services.PAServices;
 import com.master.design.therapist.Utils.MyUrlConnectionClient;
 
 import java.util.Locale;
@@ -36,6 +36,7 @@ public class AppController extends Application {
     RestAdapter restAdaptergoogle;
 
     private static final String SHOPCH11_SERVER = "http://207.154.215.156:8000/therapist";
+    public static final String THERAPIST_IMAGE = "http://207.154.215.156:8000";
 
     public static final String TAG = AppController.class.getSimpleName();
 

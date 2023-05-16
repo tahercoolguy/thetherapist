@@ -62,17 +62,15 @@ public class Adapter_Friends extends RecyclerView.Adapter<Adapter_Friends.ViewHo
     Adapter_Friends.OnItemClickListener onItemClickListener;
 
 
-
     int selectedPosition = 0;
 
     public Adapter_Friends(Context context, ArrayList<All_friends> arrayList) {
         this.context = context;
         this.arrayList = arrayList;
-        user=new User(context);
+        user = new User(context);
         dialogUtil = new DialogUtil();
         appController = (AppController) context.getApplicationContext();
         connectionDetector = new ConnectionDetector(context);
-
 
 
     }
@@ -120,7 +118,7 @@ public class Adapter_Friends extends RecyclerView.Adapter<Adapter_Friends.ViewHo
         viewHolder.nameTxt.setText(arrayList.get(position).getName());
 //        viewHolder.profileImageRIV.setImageResource(arrayList.get(position).getImage());
 
-        Picasso.with(context).load("http://207.154.215.156:8000"+arrayList.get(position).getImage()).into(viewHolder.profileImageRIV);
+        Picasso.with(context).load(AppController.THERAPIST_IMAGE + arrayList.get(position).getImage()).placeholder(R.drawable.tab_selector).into(viewHolder.profileImageRIV);
 
         viewHolder.clickLL.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,23 +126,22 @@ public class Adapter_Friends extends RecyclerView.Adapter<Adapter_Friends.ViewHo
 //                onItemClickListener.onClickThis(position);
                 if (connectionDetector.isConnectingToInternet()) {
                     String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-                    progress = dialogUtil.showProgressDialog( context, context.getString(R.string.please_wait));
-                    appController.paServices.TherapistChatChatRoom(String.valueOf(user.getId()),arrayList.get(position).getId(),new Callback<ChatroomDM>() {
+                    progress = dialogUtil.showProgressDialog(context, context.getString(R.string.please_wait));
+                    appController.paServices.TherapistChatChatRoom(String.valueOf(user.getId()), arrayList.get(position).getId(), new Callback<ChatroomDM>() {
                         @Override
                         public void success(ChatroomDM chatroomDM, Response response) {
                             progress.dismiss();
                             if (chatroomDM.getStatus().equalsIgnoreCase("1")) {
 
 
-
-                Intent intent = new Intent(context, Conversation_Activity.class);
-                intent.putExtra("FriendId", arrayList.get(position).getId());
-                intent.putExtra("image","http://207.154.215.156:8000"+arrayList.get(position).getImage());
-                intent.putExtra("Name", arrayList.get(position).getName());
-                context. startActivity(intent);
+                                Intent intent = new Intent(context, Conversation_Activity.class);
+                                intent.putExtra("FriendId", arrayList.get(position).getId());
+                                intent.putExtra("image", AppController.THERAPIST_IMAGE + arrayList.get(position).getImage());
+                                intent.putExtra("Name", arrayList.get(position).getName());
+                                context.startActivity(intent);
                                 Helper.showToast(context, chatroomDM.getMsg());
                             } else
-                                Helper.showToast(context,chatroomDM.getMsg());
+                                Helper.showToast(context, chatroomDM.getMsg());
                         }
 
                         @Override
@@ -154,12 +151,10 @@ public class Adapter_Friends extends RecyclerView.Adapter<Adapter_Friends.ViewHo
                         }
                     });
                 } else
-                    Helper.showToast(context,  String.valueOf(R.string.no_internet_connection));
+                    Helper.showToast(context, String.valueOf(R.string.no_internet_connection));
 
             }
         });
-
-
 
 
         viewHolder.uunfriendIV.setOnClickListener(new View.OnClickListener() {
@@ -175,22 +170,20 @@ public class Adapter_Friends extends RecyclerView.Adapter<Adapter_Friends.ViewHo
                     public void onClick(DialogInterface dialog, int which) {
 
 
-
-                        if (connectionDetector.isConnectingToInternet())
-                        {
+                        if (connectionDetector.isConnectingToInternet()) {
                             String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-                            progress = dialogUtil.showProgressDialog( context, context.getString(R.string.please_wait));
-                            appController.paServices.TherapistUnfriend(String.valueOf(user.getId()),arrayList.get(position).getId(),new Callback<UnfriendDM>() {
+                            progress = dialogUtil.showProgressDialog(context, context.getString(R.string.please_wait));
+                            appController.paServices.TherapistUnfriend(String.valueOf(user.getId()), arrayList.get(position).getId(), new Callback<UnfriendDM>() {
                                 @Override
                                 public void success(UnfriendDM unfriendDM, Response response) {
                                     progress.dismiss();
                                     if (unfriendDM.getStatus().equalsIgnoreCase("1")) {
 
                                         Helper.showToast(context, unfriendDM.getMsg());
-                                        ((MainActivity)context).addFragment(new Fragment_Friends_Request(),false);
+                                        ((MainActivity) context).addFragment(new Fragment_Friends_Request(), false);
 
                                     } else
-                                        Helper.showToast(context,unfriendDM.getMsg());
+                                        Helper.showToast(context, unfriendDM.getMsg());
                                 }
 
                                 @Override
@@ -200,42 +193,23 @@ public class Adapter_Friends extends RecyclerView.Adapter<Adapter_Friends.ViewHo
                                 }
                             });
                         } else
-                            Helper.showToast(context,  String.valueOf(R.string.no_internet_connection));
-
-
-
-
-
-
-
+                            Helper.showToast(context, String.valueOf(R.string.no_internet_connection));
 
 
                     }
                 });
                 adb.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-     //                  ((MainActivity)context).addFragment(new Fragment_Friends_Request(),false);
-     //                    adb.setCancelable(true);
+                        //                  ((MainActivity)context).addFragment(new Fragment_Friends_Request(),false);
+                        //                    adb.setCancelable(true);
                         dialog.dismiss();
                     }
                 });
                 adb.show();
 
 
-
-
-
-
-
-
-
-
-
             }
         });
-
-
-
 
 
     }
@@ -265,7 +239,6 @@ public class Adapter_Friends extends RecyclerView.Adapter<Adapter_Friends.ViewHo
             clickLL = itemView.findViewById(R.id.clickLL);
             nameTxt = itemView.findViewById(R.id.nameTxt);
             uunfriendIV = itemView.findViewById(R.id.unfriend);
-
 
 
         }

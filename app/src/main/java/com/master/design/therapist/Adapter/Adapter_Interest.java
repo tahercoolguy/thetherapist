@@ -18,6 +18,7 @@ import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.master.design.therapist.Controller.AppController;
 import com.master.design.therapist.DM.InterestDM;
 import com.master.design.therapist.DM.SearchDM;
 import com.master.design.therapist.DataModel.Interest_details;
@@ -88,7 +89,7 @@ public class Adapter_Interest extends RecyclerView.Adapter<Adapter_Interest.View
 //        viewHolder.mainTxt.setText(arrayList.get(position).getHead());
         viewHolder.interestTxt.setText(arrayList.get(position).getInterest_eg());
         if(arrayList.get(position).getInterest_img()!=null) {
-            Picasso.with(context).load(arrayList.get(position).getInterest_img()).into(viewHolder.img);
+            Picasso.with(context).load(AppController.THERAPIST_IMAGE+arrayList.get(position).getInterest_img()).placeholder(R.drawable.tab_selector).into(viewHolder.img);
         }
 
 

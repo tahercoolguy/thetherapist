@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.master.design.therapist.Controller.AppController;
 import com.master.design.therapist.DM.ChatDM;
 import com.master.design.therapist.DM.InterestDM;
 import com.master.design.therapist.DataModel.Details;
@@ -87,8 +88,8 @@ public class Adapter_Chat extends RecyclerView.Adapter<Adapter_Chat.ViewHolder> 
 //        viewHolder.messegeCountTxt.setText(arrayList.get(position).getMesseageCount());
 //        viewHolder.timeTxt.setText(arrayList.get(position).getTime());
         viewHolder.userNameTxt.setText(arrayList.get(position).getFront_user().getName());
- //       viewHolder.profileRIV.setImageResource(arrayList.get(position).getImage());
-        Picasso.with(context).load("http://207.154.215.156:8000"+arrayList.get(position).getFront_user().getImage()).into(viewHolder.profileRIV);
+        //       viewHolder.profileRIV.setImageResource(arrayList.get(position).getImage());
+        Picasso.with(context).load(AppController.THERAPIST_IMAGE + arrayList.get(position).getFront_user().getImage()).into(viewHolder.profileRIV);
 //        if (arrayList.get(position).getMesseageCount().equalsIgnoreCase("0")) {
 //            viewHolder.messegeCountTxt.setVisibility(View.GONE);
 //        }
@@ -101,7 +102,7 @@ public class Adapter_Chat extends RecyclerView.Adapter<Adapter_Chat.ViewHolder> 
         viewHolder.clickLL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onItemClickListener.onClickThis(position, "http://207.154.215.156:8000"+arrayList.get(position).getFront_user().getImage(),arrayList.get(position).getFront_user().getName(),arrayList.get(position).getFront_user().getId());
+                onItemClickListener.onClickThis(position, AppController.THERAPIST_IMAGE + arrayList.get(position).getFront_user().getImage(), arrayList.get(position).getFront_user().getName(), arrayList.get(position).getFront_user().getId());
 
             }
         });
@@ -142,6 +143,6 @@ public class Adapter_Chat extends RecyclerView.Adapter<Adapter_Chat.ViewHolder> 
     public interface OnItemClickListener {
 
 
-        void onClickThis(int position, String img,String name,String FriendId);
+        void onClickThis(int position, String img, String name, String FriendId);
     }
 }

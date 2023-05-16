@@ -123,50 +123,51 @@ public class Fragment_Chat extends Fragment {
 //        chatDMArrayList.add(new ChatDM("Dude", "01:03 AM", "0", "How are you ?", R.drawable.img_profile));
 
 
-
         if (connectionDetector.isConnectingToInternet()) {
             String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-            progress = dialogUtil.showProgressDialog(getActivity(), getString(R.string.please_wait));
-            appController.paServices.TherapistChatList(String.valueOf(user.getId()),new Callback<ChatlistDM>() {
+//            progress = dialogUtil.showProgressDialog(getActivity(), getString(R.string.please_wait));
+            appController.paServices.TherapistChatList(String.valueOf(user.getId()), new Callback<ChatlistDM>() {
                 @Override
                 public void success(ChatlistDM chatlistDM, Response response) {
-                    progress.dismiss();
+//                    progress.dismiss();
                     if (chatlistDM.getStatus().equalsIgnoreCase("1")) {
 
+                        rcvRcv.setVisibility(View.VISIBLE);
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
-        Adapter_Chat adapter_chat = new Adapter_Chat(context, chatlistDM.getDetails());
-        rcvRcv.setLayoutManager(linearLayoutManager);
-        rcvRcv.setAdapter(adapter_chat);
+                        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
+                        Adapter_Chat adapter_chat = new Adapter_Chat(context, chatlistDM.getDetails());
+                        rcvRcv.setLayoutManager(linearLayoutManager);
+                        rcvRcv.setAdapter(adapter_chat);
 
 
-        adapter_chat.setOnItemClickListener(new Adapter_Chat.OnItemClickListener() {
-            @Override
-            public void onClickThis(int position, String img, String name,String FriendIddd) {
-                Intent intent = new Intent(getActivity(), Conversation_Activity.class);
-                intent.putExtra("Name", name);
-                intent.putExtra("image", img);
-                intent.putExtra("FriendId", FriendIddd);
+                        adapter_chat.setOnItemClickListener(new Adapter_Chat.OnItemClickListener() {
+                            @Override
+                            public void onClickThis(int position, String img, String name, String FriendIddd) {
+                                Intent intent = new Intent(getActivity(), Conversation_Activity.class);
+                                intent.putExtra("Name", name);
+                                intent.putExtra("image", img);
+                                intent.putExtra("FriendId", FriendIddd);
 
-                startActivity(intent);
+                                startActivity(intent);
 //                startActivity(new Intent(getActivity(), Conversation_Activity.class));
-                activity.overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
-            }
-        });
+                                activity.overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
+                            }
+                        });
 
-                    } else
-                        Helper.showToast(getActivity(), getString(R.string.Api_data_not_found));
+                    } else {
+                        rcvRcv.setVisibility(View.GONE);
+                    }
+//                        Helper.showToast(getActivity(), getString(R.string.Api_data_not_found));
                 }
 
                 @Override
                 public void failure(RetrofitError retrofitError) {
-                    progress.dismiss();
+//                    progress.dismiss();
                     Log.e("error", retrofitError.toString());
                 }
             });
         } else
             Helper.showToast(getActivity(), getString(R.string.no_internet_connection));
-
 
 
     }

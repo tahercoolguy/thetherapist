@@ -16,7 +16,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
-import com.master.design.therapist.Models.User;
+import com.master.design.therapist.Helper.User;
 import com.master.design.therapist.R;
 
 import java.security.MessageDigest;
@@ -24,13 +24,12 @@ import java.security.NoSuchAlgorithmException;
 
 
 public class SplashScreen extends AppCompatActivity {
-    User user;
-
+ com.master.design.therapist.Helper.User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
-        user = new User(SplashScreen.this);
+        user = new User(this);
 
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
         Log.d("Android Token", "Refreshed token: " + refreshedToken);
@@ -65,15 +64,24 @@ public class SplashScreen extends AppCompatActivity {
 //                    startActivity(new Intent(SplashScreen.this, AdvertiseSelector.class));
 //                    finish();
 //                }
-              startActivity(new Intent(SplashScreen.this, MainActivity.class));
-//               startActivity(new Intent(SplashScreen.this, LanguageActivity.class));
-                finish();
-                overridePendingTransition(R.anim.fade_in, R.anim.fade_in);
+//              startActivity(new Intent(SplashScreen.this, MainActivity.class));
+
+                String userID = String.valueOf(user.getId());
+                if (userID.equalsIgnoreCase("0")) {
+                    startActivity(new Intent(SplashScreen.this, LanguageActivity.class));
+                    finish();
+                    overridePendingTransition(R.anim.fade_in, R.anim.fade_in);
+                } else {
+                    startActivity(new Intent(SplashScreen.this, MainActivity.class));
+                    finish();
+//                    overridePendingTransition(R.anim.fade_in, R.anim.fade_in);
+                }
+
             }
         }, secondsDelayed * 1000);
     }
 
-    public void fireBaseNotification(){
+    public void fireBaseNotification() {
         FirebaseMessaging.getInstance().getToken()
                 .addOnCompleteListener(new OnCompleteListener<String>() {
                     @Override
@@ -87,7 +95,7 @@ public class SplashScreen extends AppCompatActivity {
                         String token = task.getResult();
 //                        notificationGuestAPI(token);
                         // Log and toast
-                        String msg =  token;
+                        String msg = token;
 //                        Log.d(TAG, msg);
 //                        Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
                     }
