@@ -1,11 +1,13 @@
 package com.master.design.therapist.Activity;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.EditText;
@@ -132,6 +134,7 @@ public class Edit_ProfileActivity extends AppCompatActivity {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     public void datepick()
     {
         new SingleDateAndTimePickerDialog.Builder(this)
@@ -218,7 +221,7 @@ public class Edit_ProfileActivity extends AppCompatActivity {
     @Override
     public void finish() {
         super.finish();
-        overridePendingTransition(R.anim.right_slide_in, R.anim.right_slide_in);
+        overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
     }
 
     @SuppressLint("SuspiciousIndentation")

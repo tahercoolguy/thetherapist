@@ -398,14 +398,14 @@ public class Conversation_Activity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        overridePendingTransition(R.anim.right_slide_in, R.anim.right_slide_in);
+        activity.overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
         super.onBackPressed();
     }
 
     @Override
     public void finish() {
         super.finish();
-        overridePendingTransition(R.anim.right_slide_in, R.anim.right_slide_in);
+        activity.overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
     }
 
 

@@ -2,7 +2,10 @@ package com.master.design.therapist.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -34,6 +37,7 @@ public class Term_Privacy_TipsActivity extends AppCompatActivity {
     User user;
     DialogUtil dialogUtil;
     Dialog progress;
+    Context context;
 
     @BindView(R.id.conditionTxt)
     TextView conditionTxt;
@@ -47,11 +51,11 @@ public class Term_Privacy_TipsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_term_privacy_tips);
         ButterKnife.bind(this);
-        appController = (AppController)  getApplicationContext();
+        appController = (AppController) getApplicationContext();
         connectionDetector = new ConnectionDetector(Term_Privacy_TipsActivity.this);
         user = new User(Term_Privacy_TipsActivity.this);
         dialogUtil = new DialogUtil();
-
+        context = getApplicationContext();
 
         Intent intent = getIntent();
         if (intent != null) {
@@ -99,8 +103,11 @@ public class Term_Privacy_TipsActivity extends AppCompatActivity {
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                                 conditionTxt.setText(Html.fromHtml(terms_conditionsDM.getDetails().get(0).getContent(), Html.FROM_HTML_MODE_COMPACT));
                             }
-                        } else
-                            Helper.showToast(Term_Privacy_TipsActivity.this, getString(R.string.Api_data_not_found));
+                        } else{
+
+                            showdialogNoData(context,getString(R.string.terms),getString(R.string.no_terms_and_condition));
+                        }
+//                            Helper.showToast(Term_Privacy_TipsActivity.this, getString(R.string.Api_data_not_found));
                     }
 
                     @Override
@@ -111,7 +118,7 @@ public class Term_Privacy_TipsActivity extends AppCompatActivity {
             } else
                 Helper.showToast(Term_Privacy_TipsActivity.this, getString(R.string.no_internet_connection));
 
-     }
+        }
         if (policy != null) {
             tittleTxt.setText(getString(R.string.privacy_policy));
 
@@ -139,8 +146,10 @@ public class Term_Privacy_TipsActivity extends AppCompatActivity {
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                                 conditionTxt.setText(Html.fromHtml(terms_conditionsDM.getDetails().get(0).getContent(), Html.FROM_HTML_MODE_COMPACT));
                             }
-                        } else
-                            Helper.showToast(Term_Privacy_TipsActivity.this, getString(R.string.Api_data_not_found));
+                        } else{
+                            showdialogNoData(context,getString(R.string.privacy_policy),getString(R.string.no_privacy_policy));
+                        }
+//                            Helper.showToast(Term_Privacy_TipsActivity.this, getString(R.string.Api_data_not_found));
                     }
 
                     @Override
@@ -178,8 +187,11 @@ public class Term_Privacy_TipsActivity extends AppCompatActivity {
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                                 conditionTxt.setText(Html.fromHtml(terms_conditionsDM.getDetails().get(0).getContent(), Html.FROM_HTML_MODE_COMPACT));
                             }
-                        } else
-                            Helper.showToast(Term_Privacy_TipsActivity.this, getString(R.string.Api_data_not_found));
+                        } else{
+
+                            showdialogNoData(context,getString(R.string.tips),getString(R.string.no_tips));
+                        }
+
                     }
 
                     @Override
@@ -191,10 +203,23 @@ public class Term_Privacy_TipsActivity extends AppCompatActivity {
                 Helper.showToast(Term_Privacy_TipsActivity.this, getString(R.string.no_internet_connection));
 
 
-
         }
     }
 
+    public void showdialogNoData(Context context, String tittle, String msg) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle(tittle)
+                .setMessage(msg)
+                .setCancelable(false)
+                .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        final AlertDialog alert = builder.create();
+
+        alert.show();
+    }
 
     @OnClick(R.id.backImg)
     public void clickBack() {

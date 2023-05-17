@@ -136,5 +136,8 @@
     <string name="no_friend_request">no friend request</string>
     <string name="no_friends">no friends</string>
     <string name="no_chats">no chats</string>
+    <string name="no_tips">no tips</string>
+    <string name="no_privacy_policy">no privacy policy</string>
+    <string name="no_terms_and_condition">no terms and condition</string>
 
 </resources>

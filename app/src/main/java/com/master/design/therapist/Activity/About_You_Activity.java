@@ -272,6 +272,7 @@ public class About_You_Activity extends AppCompatActivity {
                          user.setId(Integer.valueOf(therapistRegisterDM.getUser_id()));
 
                         startActivity(new Intent(About_You_Activity.this, ThankYouActivity.class));
+
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ECLAIR) {
                             overridePendingTransition(R.anim.fade_in, R.anim.fade_in);
                         }
@@ -430,7 +431,7 @@ public class About_You_Activity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ECLAIR) {
-            overridePendingTransition(R.anim.right_slide_in, R.anim.right_slide_in);
+            activity.overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
         }
         super.onBackPressed();
     }
@@ -439,7 +440,7 @@ public class About_You_Activity extends AppCompatActivity {
     public void finish() {
         super.finish();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ECLAIR) {
-            overridePendingTransition(R.anim.right_slide_in, R.anim.right_slide_in);
+            activity.overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
         }
     }
 
