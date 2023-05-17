@@ -1,9 +1,11 @@
 package com.master.design.therapist.Fragments;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -33,7 +35,9 @@ import com.master.design.therapist.Controller.AppController;
 import com.master.design.therapist.DM.InterestDM;
 import com.master.design.therapist.DataModel.Friend_ListDM;
 import com.master.design.therapist.DataModel.Request_ListDM;
+import com.master.design.therapist.DataModel.Request_ResponseDM;
 import com.master.design.therapist.DataModel.Terms_ConditionsDM;
+import com.master.design.therapist.DataModel.UnfriendDM;
 import com.master.design.therapist.Helper.DialogUtil;
 import com.master.design.therapist.Helper.Helper;
 import com.master.design.therapist.Helper.User;
@@ -98,8 +102,9 @@ public class Fragment_Friends_Request extends Fragment {
             ButterKnife.bind(this, rootView);
             dialogUtil = new DialogUtil();
             user = new User(getActivity());
-            setMyFriendsAdapter();
+
             setDetails();
+            setMyFriendsAdapter();
             /*
              * Sets up a SwipeRefreshLayout.OnRefreshListener that is invoked when the user
              * performs a swipe-to-refresh gesture.
@@ -109,11 +114,11 @@ public class Fragment_Friends_Request extends Fragment {
                         @Override
                         public void onRefresh() {
 
-                            if(myfriend_request.equalsIgnoreCase("my_friends")){
+                            if (myfriend_request.equalsIgnoreCase("my_friends")) {
                                 // This method performs the actual data-refresh operation.
                                 // The method calls setRefreshing(false) when it's finished.
                                 setMyFriendsAdapter();
-                            }else{
+                            } else {
                                 setRequestAdapter();
                             }
 
@@ -188,6 +193,14 @@ public class Fragment_Friends_Request extends Fragment {
                         rcvRcv.setLayoutManager(gridLayoutManager);
                         rcvRcv.setAdapter(adapter_friends);
 
+                        adapter_friends.setOnItemClickListener(new Adapter_Friends.OnItemClickListener() {
+                            @Override
+                            public void removeFriend(int position, String userId) {
+
+                                unFriendAPI(userId);
+                            }
+                        });
+
                     } else {
                         rcvRcv.setVisibility(View.GONE);
                         ((MainActivity) context).showdialogNoData(context, getString(R.string.my_friends), getString(R.string.no_friends));
@@ -229,6 +242,23 @@ public class Fragment_Friends_Request extends Fragment {
                         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, RecyclerView.VERTICAL, false);
                         rcvRcv.setLayoutManager(linearLayoutManager);
                         rcvRcv.setAdapter(adapter_request);
+
+                        adapter_request.setOnItemClickListener(new Adapter_Request.OnItemClickListener() {
+                            @Override
+                            public void clickAcceptButton(int position, String id, String response) {
+
+                                acceptRequestAPI(id, response);
+                            }
+
+
+                            @Override
+                            public void clickRejectButton(int position, String id, String response) {
+
+                                rejectRequestAPI(id, response);
+                            }
+                        });
+
+
                     } else {
                         rcvRcv.setVisibility(View.GONE);
                         swiperefresh.setRefreshing(false);
@@ -252,6 +282,117 @@ public class Fragment_Friends_Request extends Fragment {
 
     }
 
+    private void acceptRequestAPI(String id, String response) {
+        if (connectionDetector.isConnectingToInternet()) {
+            String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+//            progress = dialogUtil.showProgressDialog(context, String.valueOf(R.string.please_wait));
+            appController.paServices.TherapistRequest_Response(id, String.valueOf(user.getId()), response, new Callback<Request_ResponseDM>() {
+                @Override
+                public void success(Request_ResponseDM request_responseDM, Response response) {
+//                    progress.dismiss();
+                    if (request_responseDM.getStatus().equalsIgnoreCase("1")) {
+//                        Helper.showToast(context, request_responseDM.getMsg());
+
+                        setRequestAdapter();
+
+                    } else {
+//                        Helper.showToast(context, String.valueOf(R.string.Api_data_not_found));
+                    }
+
+                }
+
+                @Override
+                public void failure(RetrofitError retrofitError) {
+//                    progress.dismiss();
+                    Log.e("error", retrofitError.toString());
+                }
+            });
+        } else
+            Helper.showToast(context, String.valueOf(R.string.no_internet_connection));
+
+    }
+
+    private void rejectRequestAPI(String id, String response) {
+        if (connectionDetector.isConnectingToInternet()) {
+            String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+//            progress = dialogUtil.showProgressDialog(context, String.valueOf(R.string.please_wait));
+            appController.paServices.TherapistRequest_Response(id, String.valueOf(user.getId()), response, new Callback<Request_ResponseDM>() {
+                @Override
+                public void success(Request_ResponseDM request_responseDM, Response response) {
+//                    progress.dismiss();
+                    if (request_responseDM.getStatus().equalsIgnoreCase("1")) {
+//                        Helper.showToast(context, request_responseDM.getMsg());
+                        setRequestAdapter();
+
+                    } else {
+//                        Helper.showToast(context, String.valueOf(R.string.Api_data_not_found));
+                    }
+
+                }
+
+                @Override
+                public void failure(RetrofitError retrofitError) {
+//                    progress.dismiss();
+                    Log.e("error", retrofitError.toString());
+                }
+            });
+        } else
+            Helper.showToast(context, String.valueOf(R.string.no_internet_connection));
+
+
+    }
+
+
+    private void unFriendAPI(String id) {
+        AlertDialog.Builder adb = new AlertDialog.Builder(context);
+//                adb.setView(alertDialogView);
+        adb.setTitle(R.string.are_you_sure_want_to_unfriend);
+//                adb.setIcon(android.R.drawable.ic_dialog_alert);
+        adb.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+
+
+                if (connectionDetector.isConnectingToInternet()) {
+                    String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+//                    progress = dialogUtil.showProgressDialog(context, context.getString(R.string.please_wait));
+                    appController.paServices.TherapistUnfriend(String.valueOf(user.getId()), id, new Callback<UnfriendDM>() {
+                        @Override
+                        public void success(UnfriendDM unfriendDM, Response response) {
+//                            progress.dismiss();
+                            if (unfriendDM.getStatus().equalsIgnoreCase("1")) {
+                                setMyFriendsAdapter();
+//                                Helper.showToast(context, unfriendDM.getMsg());
+//                                ((MainActivity) context).addFragment(new Fragment_Friends_Request(), false);
+
+                            } else {
+//                                Helper.showToast(context, unfriendDM.getMsg());
+                            }
+
+                        }
+
+                        @Override
+                        public void failure(RetrofitError retrofitError) {
+//                            progress.dismiss();
+                            Log.e("error", retrofitError.toString());
+                        }
+                    });
+                } else {
+                    Helper.showToast(context, String.valueOf(R.string.no_internet_connection));
+                }
+
+            }
+        });
+        adb.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                //                  ((MainActivity)context).addFragment(new Fragment_Friends_Request(),false);
+                //                    adb.setCancelable(true);
+                dialog.dismiss();
+            }
+        });
+        adb.show();
+
+
+    }
 
     @Override
     public void onResume() {

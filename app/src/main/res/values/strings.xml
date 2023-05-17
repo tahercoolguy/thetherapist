@@ -163,5 +163,6 @@
     <string name="sure_you_want_to_delete_this_image">Are You Sure want to Delete This Image</string>
     <string name="delete_image_successfully">delete image Successfully</string>
     <string name="delete_image">delete Image</string>
+    <string name="are_you_sure_want_to_unfriend">Are you sure want to unfriend your friend</string>
 
 </resources>

@@ -106,7 +106,7 @@ public class Adapter_Request extends RecyclerView.Adapter<Adapter_Request.ViewHo
         viewHolder.nameTxt.setText(arrayList.get(position).getName());
 //        viewHolder.profileImageRIV.setImageResource(arrayList.get(position).getImage());
 
-        Picasso.with(context).load(AppController.THERAPIST_IMAGE+arrayList.get(position).getImage()).placeholder(R.drawable.tab_selector).into(viewHolder.profileImageRIV);
+        Picasso.with(context).load(AppController.THERAPIST_IMAGE + arrayList.get(position).getImage()).placeholder(R.drawable.tab_selector).into(viewHolder.profileImageRIV);
 
         viewHolder.clickLL.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,28 +120,7 @@ public class Adapter_Request extends RecyclerView.Adapter<Adapter_Request.ViewHo
             @Override
             public void onClick(View v) {
 
-                if (connectionDetector.isConnectingToInternet()) {
-                    String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-                    progress = dialogUtil.showProgressDialog(context, String.valueOf(R.string.please_wait));
-                    appController.paServices.TherapistRequest_Response(arrayList.get(position).getId(),String.valueOf(user.getId()),"1",new Callback<Request_ResponseDM>() {
-                        @Override
-                        public void success(Request_ResponseDM request_responseDM, Response response) {
-                            progress.dismiss();
-                            if (request_responseDM.getStatus().equalsIgnoreCase("1")) {
-                                Helper.showToast(context,request_responseDM.getMsg() );
-
-                            } else
-                                Helper.showToast(context, String.valueOf(R.string.Api_data_not_found));
-                        }
-
-                        @Override
-                        public void failure(RetrofitError retrofitError) {
-                            progress.dismiss();
-                            Log.e("error", retrofitError.toString());
-                        }
-                    });
-                } else
-                    Helper.showToast(context,String.valueOf(R.string.no_internet_connection));
+                onItemClickListener.clickAcceptButton(position, arrayList.get(position).getId(), "1");
 
 
             }
@@ -150,30 +129,7 @@ public class Adapter_Request extends RecyclerView.Adapter<Adapter_Request.ViewHo
         viewHolder.rejectTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if (connectionDetector.isConnectingToInternet()) {
-                    String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-                    progress = dialogUtil.showProgressDialog(context, String.valueOf(R.string.please_wait));
-                    appController.paServices.TherapistRequest_Response(arrayList.get(position).getId(),String.valueOf(user.getId()),"2",new Callback<Request_ResponseDM>() {
-                        @Override
-                        public void success(Request_ResponseDM request_responseDM, Response response) {
-                            progress.dismiss();
-                            if (request_responseDM.getStatus().equalsIgnoreCase("1")) {
-                                Helper.showToast(context, request_responseDM.getMsg());
-
-                            } else
-                                Helper.showToast(context, String.valueOf(R.string.Api_data_not_found));
-                        }
-
-                        @Override
-                        public void failure(RetrofitError retrofitError) {
-                            progress.dismiss();
-                            Log.e("error", retrofitError.toString());
-                        }
-                    });
-                } else
-                    Helper.showToast(context,String.valueOf(R.string.no_internet_connection));
-
+                onItemClickListener.clickRejectButton(position, arrayList.get(position).getId(), "1");
 
             }
         });
@@ -193,7 +149,7 @@ public class Adapter_Request extends RecyclerView.Adapter<Adapter_Request.ViewHo
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView nameTxt,acceptTxt,rejectTxt;
+        private TextView nameTxt, acceptTxt, rejectTxt;
         private RelativeLayout clickLL;
         private RoundedImageView profileImageRIV;
 
@@ -212,6 +168,8 @@ public class Adapter_Request extends RecyclerView.Adapter<Adapter_Request.ViewHo
     public interface OnItemClickListener {
 
 
-        void onClickThis(int position);
+        void clickAcceptButton(int position, String id, String resonse);
+
+        void clickRejectButton(int position, String id, String resonse);
     }
 }

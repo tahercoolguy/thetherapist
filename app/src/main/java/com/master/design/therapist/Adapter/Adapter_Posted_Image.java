@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -72,9 +73,9 @@ public class Adapter_Posted_Image extends RecyclerView.Adapter<Adapter_Posted_Im
 
     private void setDetails(Adapter_Posted_Image.ViewHolder viewHolder, int position) {
 
-        Picasso.with(context).load(AppController.THERAPIST_IMAGE+arrayList.get(position).getOther_image()).placeholder(R.drawable.black_transparent_gradient).into(viewHolder.frontRoundedImg);
+        Picasso.with(context).load(AppController.THERAPIST_IMAGE + arrayList.get(position).getOther_image()).placeholder(R.drawable.black_transparent_gradient).into(viewHolder.frontRoundedImg);
 
-        viewHolder.deleteRL.setOnClickListener(new View.OnClickListener() {
+        viewHolder.deleteImgBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 //                onItemClickListener.onClickThis(position, arrayList.get(position).getHead(), arrayList.get(position).getDes());
@@ -98,12 +99,12 @@ public class Adapter_Posted_Image extends RecyclerView.Adapter<Adapter_Posted_Im
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         private RoundedImageView frontRoundedImg;
-        private RelativeLayout deleteRL;
+        private ImageButton deleteImgBtn;
 
         public ViewHolder(View itemView) {
             super(itemView);
             frontRoundedImg = itemView.findViewById(R.id.frontRoundedImg);
-            deleteRL = itemView.findViewById(R.id.deleteRL);
+            deleteImgBtn = itemView.findViewById(R.id.deleteImgBtn);
 
         }
     }

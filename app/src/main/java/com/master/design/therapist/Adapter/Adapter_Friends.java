@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -157,56 +158,10 @@ public class Adapter_Friends extends RecyclerView.Adapter<Adapter_Friends.ViewHo
         });
 
 
-        viewHolder.uunfriendIV.setOnClickListener(new View.OnClickListener() {
+        viewHolder.removeFriendImgBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                onItemClickListener.onClickThis(position);
-
-                AlertDialog.Builder adb = new AlertDialog.Builder(context);
-//                adb.setView(alertDialogView);
-                adb.setTitle("Unfriend Friend");
-//                adb.setIcon(android.R.drawable.ic_dialog_alert);
-                adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-
-
-                        if (connectionDetector.isConnectingToInternet()) {
-                            String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-                            progress = dialogUtil.showProgressDialog(context, context.getString(R.string.please_wait));
-                            appController.paServices.TherapistUnfriend(String.valueOf(user.getId()), arrayList.get(position).getId(), new Callback<UnfriendDM>() {
-                                @Override
-                                public void success(UnfriendDM unfriendDM, Response response) {
-                                    progress.dismiss();
-                                    if (unfriendDM.getStatus().equalsIgnoreCase("1")) {
-
-                                        Helper.showToast(context, unfriendDM.getMsg());
-                                        ((MainActivity) context).addFragment(new Fragment_Friends_Request(), false);
-
-                                    } else
-                                        Helper.showToast(context, unfriendDM.getMsg());
-                                }
-
-                                @Override
-                                public void failure(RetrofitError retrofitError) {
-                                    progress.dismiss();
-                                    Log.e("error", retrofitError.toString());
-                                }
-                            });
-                        } else
-                            Helper.showToast(context, String.valueOf(R.string.no_internet_connection));
-
-
-                    }
-                });
-                adb.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        //                  ((MainActivity)context).addFragment(new Fragment_Friends_Request(),false);
-                        //                    adb.setCancelable(true);
-                        dialog.dismiss();
-                    }
-                });
-                adb.show();
-
+                onItemClickListener.removeFriend(position,arrayList.get(position).getId());
 
             }
         });
@@ -231,14 +186,16 @@ public class Adapter_Friends extends RecyclerView.Adapter<Adapter_Friends.ViewHo
         private TextView nameTxt;
         private LinearLayout clickLL;
         private RoundedImageView profileImageRIV;
-        ImageView uunfriendIV;
+        private ImageButton removeFriendImgBtn;
+//        ImageView uunfriendIV;
 
         public ViewHolder(View itemView) {
             super(itemView);
             profileImageRIV = itemView.findViewById(R.id.profileImageRIV);
             clickLL = itemView.findViewById(R.id.clickLL);
             nameTxt = itemView.findViewById(R.id.nameTxt);
-            uunfriendIV = itemView.findViewById(R.id.unfriend);
+            removeFriendImgBtn = itemView.findViewById(R.id.removeFriendImgBtn);
+//            uunfriendIV = itemView.findViewById(R.id.unfriend);
 
 
         }
@@ -247,6 +204,6 @@ public class Adapter_Friends extends RecyclerView.Adapter<Adapter_Friends.ViewHo
     public interface OnItemClickListener {
 
 
-        void onClickThis(int position);
+        void removeFriend(int position,String userId);
     }
 }
