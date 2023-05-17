@@ -154,17 +154,17 @@ public class Fragment_Home extends Fragment {
              * Sets up a SwipeRefreshLayout.OnRefreshListener that is invoked when the user
              * performs a swipe-to-refresh gesture.
              */
-            swiperefresh.setOnRefreshListener(
-                    new SwipeRefreshLayout.OnRefreshListener() {
-                        @Override
-                        public void onRefresh() {
-
-                            // This method performs the actual data-refresh operation.
-                            // The method calls setRefreshing(false) when it's finished.
-                            setsliderData();
-                        }
-                    }
-            );
+//            swiperefresh.setOnRefreshListener(
+//                    new SwipeRefreshLayout.OnRefreshListener() {
+//                        @Override
+//                        public void onRefresh() {
+//
+//                            // This method performs the actual data-refresh operation.
+//                            // The method calls setRefreshing(false) when it's finished.
+//                            setsliderData();
+//                        }
+//                    }
+//            );
 
         }
         return rootView;
@@ -188,7 +188,7 @@ public class Fragment_Home extends Fragment {
     @OnClick(R.id.chatImg)
     public void clickchatImg() {
 
-        ((MainActivity)context).showdialogNoData(context,getString(R.string.chat),getString(R.string.home_screen_chat_messege));
+        ((MainActivity) context).showdialogNoData(context, getString(R.string.chat), getString(R.string.home_screen_chat_messege));
     }
 
     int listposition = 0;
@@ -212,11 +212,11 @@ public class Fragment_Home extends Fragment {
 
             SliderHomeAdapter imageadapter = new SliderHomeAdapter(activity, therapistHomeDMPosition.getUsers().get(listposition).getImage(), slider);
 
-            // below method is used to set auto cycle direction in left to
-            // right direction you can change according to requirement.
-//            Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.left_slide_in);
-//            slider.startAnimation(animation);
-//            slider.setAutoCycleDirection(SliderView.LAYOUT_DIRECTION_LTR);
+//             below method is used to set auto cycle direction in left to
+//             right direction you can change according to requirement.
+            Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.left_slide_in);
+            slider.startAnimation(animation);
+            slider.setAutoCycleDirection(SliderView.LAYOUT_DIRECTION_LTR);
 
 
             imageadapter.setOnItemClickListener(new SliderHomeAdapter.OnItemClickListener() {
@@ -246,20 +246,20 @@ public class Fragment_Home extends Fragment {
             // below method is used to
             // setadapter to sliderview.
             slider.setSliderAdapter(imageadapter);
-            slider.setInfiniteAdapterEnabled(false);
+            slider.setInfiniteAdapterEnabled(true);
             // below method is use to set
             // scroll time in seconds.
 
-            slider.setScrollTimeInSec(3);
+            slider.setScrollTimeInSec(2);
 //
 //                        // to set it scrollable automatically
 //                        // we use below method.
 
-//                            slider.setAutoCycle(true);
+            slider.setAutoCycle(true);
 //
 //                        // to start autocycle below method is used.
 
-//                            slider.startAutoCycle();
+            slider.startAutoCycle();
 
 
         } else {
@@ -470,20 +470,20 @@ public class Fragment_Home extends Fragment {
                             // below method is used to
                             // setadapter to sliderview.
                             slider.setSliderAdapter(imageadapter);
-                            slider.setInfiniteAdapterEnabled(false);
+                            slider.setInfiniteAdapterEnabled(true);
                             // below method is use to set
                             // scroll time in seconds.
 
-                            slider.setScrollTimeInSec(3);
+                            slider.setScrollTimeInSec(2);
 //
 //                        // to set it scrollable automatically
 //                        // we use below method.
 
-//                            slider.setAutoCycle(true);
+                            slider.setAutoCycle(true);
 //
 //                        // to start autocycle below method is used.
 
-//                            slider.startAutoCycle();
+                            slider.startAutoCycle();
 
 
                         } catch (Exception e) {
