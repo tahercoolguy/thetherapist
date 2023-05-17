@@ -12,6 +12,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.master.design.therapist.Adapter.Adapter_Posted_Image;
@@ -27,6 +28,7 @@ import com.master.design.therapist.Utils.ConnectionDetector;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -42,6 +44,9 @@ public class MyPostedImagesActivity extends AppCompatActivity {
 
     @BindView(R.id.recycleView)
     RecyclerView recycleView;
+
+    @BindView(R.id.backImg)
+    ImageView backImg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +66,11 @@ public class MyPostedImagesActivity extends AppCompatActivity {
 
         getallPostedImage();
 
+    }
+
+    @OnClick(R.id.backImg)
+    public void clickBack() {
+        finish();
     }
 
     private void getallPostedImage() {
@@ -117,7 +127,7 @@ public class MyPostedImagesActivity extends AppCompatActivity {
                 .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
-                     }
+                    }
                 });
         final AlertDialog alert = builder.create();
 

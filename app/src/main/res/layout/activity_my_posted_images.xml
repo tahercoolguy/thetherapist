@@ -8,26 +8,12 @@
     android:padding="15dp"
     tools:context=".Activity.MyPostedImagesActivity">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="invisible">
-
-
-        <ImageView
-            android:id="@+id/notificationImg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_gravity="end"
-            android:paddingHorizontal="20dp"
-            android:paddingVertical="10dp"
-
-            android:src="@drawable/ic_notification_come"></ImageView>
-
-    </RelativeLayout>
-
-
+     <ImageView
+        android:layout_width="wrap_content"
+        android:padding="10dp"
+        android:src="@drawable/ic_back_arrow"
+        android:id="@+id/backImg"
+        android:layout_height="wrap_content"></ImageView>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -41,6 +27,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
         android:id="@+id/recycleView"
         android:layout_height="wrap_content"></androidx.recyclerview.widget.RecyclerView>
 
