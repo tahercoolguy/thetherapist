@@ -188,6 +188,7 @@ public class Fragment_Home extends Fragment {
     @OnClick(R.id.chatImg)
     public void clickchatImg() {
 
+        ((MainActivity)context).showdialogNoData(context,getString(R.string.chat),getString(R.string.home_screen_chat_messege));
     }
 
     int listposition = 0;

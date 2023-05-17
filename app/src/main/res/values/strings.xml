@@ -139,5 +139,6 @@
     <string name="no_tips">no tips</string>
     <string name="no_privacy_policy">no privacy policy</string>
     <string name="no_terms_and_condition">no terms and condition</string>
+    <string name="home_screen_chat_messege">You will be able to chat with this user if they accept your request after you\'ve sent it.</string>
 
 </resources>
