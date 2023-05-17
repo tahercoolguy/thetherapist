@@ -50,11 +50,11 @@ public class FriendSearchActivity extends AppCompatActivity {
 
     private void setRcvRcv() {
         ArrayList<SearchDM> searchDMArrayList = new ArrayList<>();
-        searchDMArrayList.add(new SearchDM("Age Range", "20-35"));
-        searchDMArrayList.add(new SearchDM("Gender", "Male"));
-        searchDMArrayList.add(new SearchDM("Interest (Optional)", "List"));
-        searchDMArrayList.add(new SearchDM("Ethic (Optional)", "Arab"));
-        searchDMArrayList.add(new SearchDM("Education (Optional)", "Arab"));
+        searchDMArrayList.add(new SearchDM(getString(R.string.age_range), ""));
+        searchDMArrayList.add(new SearchDM(getString(R.string.gender), " "));
+        searchDMArrayList.add(new SearchDM(getString(R.string.interest_optional), " "));
+        searchDMArrayList.add(new SearchDM(getString(R.string.ethic_optional), " "));
+        searchDMArrayList.add(new SearchDM(getString(R.string.education_optional), " "));
 
         Adapter_Search adapter_search = new Adapter_Search(context, searchDMArrayList);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);

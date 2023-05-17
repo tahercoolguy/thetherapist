@@ -21,6 +21,7 @@ import com.master.design.therapist.Activity.AboutActivity;
 import com.master.design.therapist.Activity.FriendSearchActivity;
 import com.master.design.therapist.Activity.LanguageActivity;
 import com.master.design.therapist.Activity.MainActivity;
+import com.master.design.therapist.Activity.MyPostedImagesActivity;
 import com.master.design.therapist.Activity.My_ProfileActivity;
 import com.master.design.therapist.Activity.Sign_InActivity;
 import com.master.design.therapist.Activity.SplashScreen;
@@ -53,7 +54,8 @@ public class Fragment_Account extends Fragment {
     @BindView(R.id.aboutLL)
     LinearLayout aboutLL;
     @BindView(R.id.logoutLL)
-    LinearLayout logoutLL;
+    LinearLayout logoutLL;@BindView(R.id.myPostedImageLL)
+    LinearLayout myPostedImageLL;
 
     @BindView(R.id.layout_parent)
     LinearLayout layout_parent;
@@ -97,6 +99,14 @@ public class Fragment_Account extends Fragment {
 
     @OnClick(R.id.notificationLL)
     public void clicknotificationLL() {
+
+    }
+
+    @OnClick(R.id.myPostedImageLL)
+    public void clickmyPostedImageLL() {
+
+        startActivity(new Intent(getActivity(), MyPostedImagesActivity.class));
+        activity.overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
 
     }
 

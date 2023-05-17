@@ -114,7 +114,7 @@ public class My_ProfileActivity extends AppCompatActivity {
         ifimg1 = true;
         OpenImage();
     }
-
+    Bitmap bitmap;
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE) {
@@ -122,7 +122,7 @@ public class My_ProfileActivity extends AppCompatActivity {
                 Uri uri = data.getParcelableExtra("path");
                 try {
                     // You can update this bitmap to your server
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(My_ProfileActivity.this.getContentResolver(), uri);
+                      bitmap = MediaStore.Images.Media.getBitmap(My_ProfileActivity.this.getContentResolver(), uri);
 
                     profileImgRIV.setImageBitmap(bitmap);
                     ifimg1 = true;
@@ -299,33 +299,68 @@ public class My_ProfileActivity extends AppCompatActivity {
                 MultipartTypedOutput multipartTypedOutput = new MultipartTypedOutput();
                 multipartTypedOutput.addPart("id", new TypedString(String.valueOf(user.getId())));
 
-                try {
-                    if (ifimg1)
-                    {
-                        File f = new File(context.getCacheDir(), "temp.jpg");
-                        f.createNewFile();
+//                try {
+//                    if (ifimg1)
+//                    {
+//                        File f = new File(context.getCacheDir(), "temp.jpg");
+//                        f.createNewFile();
+//
+//                        Bitmap one = ((BitmapDrawable) profileImgRIV.getDrawable()).getBitmap();
+////Convert bitmap to byte array
+//                        Bitmap bitmap = one;
+//                        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+//                        bitmap.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
+//                        byte[] bitmapdata = bos.toByteArray();
+//
+////write the bytes in file
+//                        FileOutputStream fos = new FileOutputStream(f);
+//                        fos.write(bitmapdata);
+//                        fos.flush();
+//                        fos.close();
+//                        File resizedImage = new Resizer(context)
+//                                .setTargetLength(512)
+//                                .setQuality(80)
+//                                .setOutputFormat("JPEG")
+//                                .setOutputFilename("resized_image1")
+//                                .setSourceImage(f)
+//                                .getResizedFile();
+//                        multipartTypedOutput.addPart("image", new TypedFile("image/jpg", resizedImage));
+//                    }
+//
+//
+//                } catch (Exception e) {
+//                    Log.e("Error", e.toString());
+//                }
 
-                        Bitmap one = ((BitmapDrawable) profileImgRIV.getDrawable()).getBitmap();
+                try {
+                    // You can update this bitmap to your server
+
+//                Bitmap bitmapMainImg = MediaStore.Images.Media.getBitmap(About_You_Activity.this.getContentResolver(), Uri.parse(String.valueOf(profileCircleImg.getDrawable())));
+                    Bitmap bitmapMainImg = bitmap;
+
+                    File f = new File(My_ProfileActivity.this.getCacheDir(), "temp.jpg");
+                    f.createNewFile();
+
+//                    Bitmap one = ((BitmapDrawable) profile_RoundedImgView.getDrawable()).getBitmap();
 //Convert bitmap to byte array
-                        Bitmap bitmap = one;
-                        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                        bitmap.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
-                        byte[] bitmapdata = bos.toByteArray();
+                    Bitmap bitmap = bitmapMainImg;
+                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
+                    byte[] bitmapdata = bos.toByteArray();
 
 //write the bytes in file
-                        FileOutputStream fos = new FileOutputStream(f);
-                        fos.write(bitmapdata);
-                        fos.flush();
-                        fos.close();
-                        File resizedImage = new Resizer(context)
-                                .setTargetLength(512)
-                                .setQuality(80)
-                                .setOutputFormat("JPEG")
-                                .setOutputFilename("resized_image1")
-                                .setSourceImage(f)
-                                .getResizedFile();
-                        multipartTypedOutput.addPart("image", new TypedFile("image/jpg", resizedImage));
-                    }
+                    FileOutputStream fos = new FileOutputStream(f);
+                    fos.write(bitmapdata);
+                    fos.flush();
+                    fos.close();
+                    File resizedImage = new Resizer(My_ProfileActivity.this)
+//                        .setTargetLength(200)
+//                        .setQuality(100)
+                            .setOutputFormat("JPEG")
+                            .setOutputFilename("resized_image1")
+                            .setSourceImage(f)
+                            .getResizedFile();
+                    multipartTypedOutput.addPart("image", new TypedFile("image/jpg", resizedImage));
 
 
                 } catch (Exception e) {

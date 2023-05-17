@@ -118,7 +118,7 @@
     <string name="your_account_will_be_deleted">Your Account will be Deleted </string>
     <string name="take_a_picture">Take a picture</string>
     <string name="record_a_video">Record a Video</string>
-     <string name="Api_data_not_found">Api data not found</string>
+    <string name="Api_data_not_found">Api data not found</string>
     <string name="image_picker_option_is_missing">Image picker option is missing</string>
     <string name="sorry_your_camera_does_not_support">Sorry! Your device doesn\'t support camera</string>
     <string name="kindly_capture_some_media">Kindly Capture some media</string>
@@ -140,5 +140,28 @@
     <string name="no_privacy_policy">no privacy policy</string>
     <string name="no_terms_and_condition">no terms and condition</string>
     <string name="home_screen_chat_messege">You will be able to chat with this user if they accept your request after you\'ve sent it.</string>
+    <string name="interest_optional">Interest (Optional)</string>
+    <string name="ethic_optional">Ethic (Optional)</string>
+    <string name="education_optional">Education (Optional)</string>
+    <string name="kindly_enter_your_name">kindly enter your name</string>
+    <string name="kindly_select_date_of_birth">kindly enter your Date of Birth</string>
+    <string name="kindly_enter_your_Date_of_Month">kindly enter your Date of Month</string>
+    <string name="date_of_year">kindly enter your Date of Year</string>
+    <string name="select_your_country">kindly select your country</string>
+    <string name="kindlyenter_your_ethnicity">kindly enter your Ethnicity</string>
+    <string name="kindly_enter_your_mobile_number">kindly enter your mobile number</string>
+    <string name="kindly_enter_email">kindly enter email</string>
+    <string name="kindly_enter_passwords">kindly enter your Password</string>
+    <string name="kindlt_enterr_confirm_password">kindly enter your Confirm Password</string>
+    <string name="kindly_select_gender">kindly select Gender</string>
+    <string name="kindly_tell_me_about_u">kindly tell us about you</string>
+    <string name="kindly_select_education">kindly select education</string>
+    <string name="select_age">Select Age</string>
+    <string name="no_user_exist">no user exist</string>
+    <string name="my_posted_images">My Posted Images</string>
+    <string name="no_images">no Images</string>
+    <string name="sure_you_want_to_delete_this_image">Are You Sure want to Delete This Image</string>
+    <string name="delete_image_successfully">delete image Successfully</string>
+    <string name="delete_image">delete Image</string>
 
 </resources>

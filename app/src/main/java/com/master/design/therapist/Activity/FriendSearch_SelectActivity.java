@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -64,10 +65,10 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
     String mobilenumber;
     String email;
     String password;
-    String confirmPassword;
+    String confirmPassword,age;
 
 
-    public String InterestIdList="";
+    public String InterestIdList = "";
 
     @BindView(R.id.rcvRcv)
     RecyclerView rcvRcv;
@@ -89,22 +90,23 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
         connectionDetector = new ConnectionDetector(getApplicationContext());
         user = new User(FriendSearch_SelectActivity.this);
 
-        username=getIntent().getStringExtra("userName");
-        date=getIntent().getStringExtra("date");
-        selectCountry=getIntent().getStringExtra("selectCountry");
-        gender=getIntent().getStringExtra("gender");
-        ethenicity=getIntent().getStringExtra("ethnicity");
-        mobilenumber=getIntent().getStringExtra("mobileNumber");
-        email=getIntent().getStringExtra("email");
-        password=getIntent().getStringExtra("password");
-        confirmPassword=getIntent().getStringExtra("confirmPassword");
+        username = getIntent().getStringExtra("userName");
+        date = getIntent().getStringExtra("date");
+        selectCountry = getIntent().getStringExtra("selectCountry");
+        gender = getIntent().getStringExtra("gender");
+        ethenicity = getIntent().getStringExtra("ethnicity");
+        mobilenumber = getIntent().getStringExtra("mobileNumber");
+        email = getIntent().getStringExtra("email");
+        password = getIntent().getStringExtra("password");
+        confirmPassword = getIntent().getStringExtra("confirmPassword");
+        age = getIntent().getStringExtra("age");
 
 
         startSearchingTxt.setText(getString(R.string.selectt));
         getIntentData();
     }
 
-    String position0, position1, position2, position3, position4 ,string33;
+    String position0, position1, position2, position3, position4, string33;
 
     public void getIntentData() {
         Intent intent = getIntent();
@@ -131,17 +133,17 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
             if (position4 != null) {
                 setPositionData(position4);
             }
-            }  if (string33 != null) {
-                setPositionData(string33);
-            }
-
+        }
+        if (string33 != null) {
+            setPositionData(string33);
         }
 
+    }
 
 
     @OnClick(R.id.startSearchingTxt)
-    public void clickstartSearchingTxt(){
-        if(string33!=null){
+    public void clickstartSearchingTxt() {
+        if (string33 != null) {
             if (!InterestIdList.equalsIgnoreCase("")) {
                 Intent intent = new Intent(FriendSearch_SelectActivity.this, About_You_Activity.class);
                 intent.putExtra("userName", username);
@@ -154,13 +156,11 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
                 intent.putExtra("password", password);
                 intent.putExtra("confirmPassword", confirmPassword);
                 intent.putExtra("InterestIdlist", InterestIdList);
+                intent.putExtra("age", age);
                 startActivity(intent);
+            } else {
+                Helper.showToast(FriendSearch_SelectActivity.this, getString(R.string.kindly_select_interest));
             }
-            else
-            {
-              Helper.showToast(FriendSearch_SelectActivity.this, getString(R.string.kindly_select_interest));
-            }
-
 
 
 //            startActivity(new Intent(FriendSearch_SelectActivity.this, About_You_Activity.class));
@@ -169,11 +169,9 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
     }
 
     @SuppressLint({"SetTextI18n", "SuspiciousIndentation"})
-    public void setPositionData(String position)
-    {
+    public void setPositionData(String position) {
 
-        if (position.equalsIgnoreCase("string1"))
-        {
+        if (position.equalsIgnoreCase("string1")) {
 
             tittleTxt.setText(getString(R.string.age_rangee));
 
@@ -184,41 +182,46 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
 //            searchDMArrayList.add(new SearchDM("", "20-35"));
 //            searchDMArrayList.add(new SearchDM("", "20-35"));
 
-            if(connectionDetector.isConnectingToInternet())
-            {
+            if (connectionDetector.isConnectingToInternet()) {
 
                 String refreshedToken = FirebaseInstanceId.getInstance().getToken();
 
                 progress = dialogUtil.showProgressDialog(FriendSearch_SelectActivity.this, getString(R.string.please_wait));
 
-                appController.paServices.TherapistAge( new Callback<TherapistAgeDM>() {
+                appController.paServices.TherapistAge(new Callback<TherapistAgeDM>() {
 
                     @Override
 
-                    public void success ( TherapistAgeDM therapistAgeDM, Response response ) {
+                    public void success(TherapistAgeDM therapistAgeDM, Response response) {
                         progress.dismiss();
                         if (therapistAgeDM.getStatus().equalsIgnoreCase("1")) {
 
 
-            Adapter_Search_Select1 adapter_search = new Adapter_Search_Select1(FriendSearch_SelectActivity.this, therapistAgeDM.getAge_details());
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(FriendSearch_SelectActivity.this);
-            rcvRcv.setLayoutManager(linearLayoutManager);
-            rcvRcv.setAdapter(adapter_search);
-            adapter_search.setOnItemClickListener(new Adapter_Search_Select.OnItemClickListener() {
-                @Override
-                public void onClickThis(int position, String heading, String subheading) {
-                    String value = subheading ;
-                    Intent intent = new Intent();
-                    intent.putExtra("value", value);
-                    setResult(RESULT_OK, intent);
-                 }
-            });
+                            Adapter_Search_Select1 adapter_search = new Adapter_Search_Select1(FriendSearch_SelectActivity.this, therapistAgeDM.getAge_details());
+                            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(FriendSearch_SelectActivity.this);
+                            rcvRcv.setLayoutManager(linearLayoutManager);
+                            rcvRcv.setAdapter(adapter_search);
+                          adapter_search.setOnItemClickListener(new Adapter_Search_Select1.OnItemClickListener() {
+                              @Override
+                              public void onClickThis(int position, String age_id, String ageEng, String ageAR) {
+//                                  String value = subheading;
+                                  Intent intent = new Intent();
+//                                  intent.putExtra("value", value);
+//                                  setResult(RESULT_OK, intent);
+//                                  Intent intent=new Intent();
+                                  intent.putExtra("age_id",age_id);
+                                  intent.putExtra("ageEng",ageEng);
+                                  intent.putExtra("ageAR",ageAR);
+                                  setResult(2,intent);
+                                  finish();//finishing activity
+                              }
+                          });
                         } else
                             Helper.showToast(FriendSearch_SelectActivity.this, getString(R.string.Api_data_not_found));
                     }
 
                     @Override
-                    public void failure ( RetrofitError retrofitError ) {
+                    public void failure(RetrofitError retrofitError) {
                         progress.dismiss();
 
                         Log.e("error", retrofitError.toString());
@@ -226,18 +229,11 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
                     }
                 });
 
-        }else
-            Helper.showToast(FriendSearch_SelectActivity.this,getString(R.string.no_internet_connection));
-
-
+            } else
+                Helper.showToast(FriendSearch_SelectActivity.this, getString(R.string.no_internet_connection));
 
 
         }
-
-
-
-
-
 
 
         if (position.equalsIgnoreCase("string2")) {
@@ -248,43 +244,42 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
 //            searchDMArrayList.add(new SearchDM("", "Female"));
 //            searchDMArrayList.add(new SearchDM("", "Both"));
 
-            if(connectionDetector.isConnectingToInternet())
-            {
+            if (connectionDetector.isConnectingToInternet()) {
 
                 String refreshedToken = FirebaseInstanceId.getInstance().getToken();
 
                 progress = dialogUtil.showProgressDialog(FriendSearch_SelectActivity.this, getString(R.string.please_wait));
 
-                appController.paServices.TherapistGender( new Callback<TherapistGenderDM>() {
+                appController.paServices.TherapistGender(new Callback<TherapistGenderDM>() {
 
                     @Override
 
-                    public void success ( TherapistGenderDM therapistGenderDM, Response response ) {
+                    public void success(TherapistGenderDM therapistGenderDM, Response response) {
                         progress.dismiss();
                         if (therapistGenderDM.getStatus().equalsIgnoreCase("1")) {
 
 
-            Adapter_Search_Select_Gender adapter_search = new Adapter_Search_Select_Gender(FriendSearch_SelectActivity.this, therapistGenderDM.getGender_details());
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(FriendSearch_SelectActivity.this);
-            rcvRcv.setLayoutManager(linearLayoutManager);
-            rcvRcv.setAdapter(adapter_search);
+                            Adapter_Search_Select_Gender adapter_search = new Adapter_Search_Select_Gender(FriendSearch_SelectActivity.this, therapistGenderDM.getGender_details());
+                            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(FriendSearch_SelectActivity.this);
+                            rcvRcv.setLayoutManager(linearLayoutManager);
+                            rcvRcv.setAdapter(adapter_search);
 
-            adapter_search.setOnItemClickListener(new Adapter_Search_Select.OnItemClickListener() {
-                @Override
-                public void onClickThis(int position, String heading, String subheading) {
-                    String value = subheading ;
-                    Intent intent = new Intent();
-                    intent.putExtra("value", value);
-                    setResult(RESULT_OK, intent);
-                 }
-            });
+                            adapter_search.setOnItemClickListener(new Adapter_Search_Select.OnItemClickListener() {
+                                @Override
+                                public void onClickThis(int position, String heading, String subheading) {
+                                    String value = subheading;
+                                    Intent intent = new Intent();
+                                    intent.putExtra("value", value);
+                                    setResult(RESULT_OK, intent);
+                                }
+                            });
 
                         } else
                             Helper.showToast(FriendSearch_SelectActivity.this, getString(R.string.Api_data_not_found));
                     }
 
                     @Override
-                    public void failure ( RetrofitError retrofitError ) {
+                    public void failure(RetrofitError retrofitError) {
                         progress.dismiss();
 
                         Log.e("error", retrofitError.toString());
@@ -292,13 +287,12 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
                     }
                 });
 
-            }else
-                Helper.showToast(FriendSearch_SelectActivity.this,getString(R.string.no_internet_connection));
-
+            } else
+                Helper.showToast(FriendSearch_SelectActivity.this, getString(R.string.no_internet_connection));
 
 
         }
-        if (position.equalsIgnoreCase("string3") ) {
+        if (position.equalsIgnoreCase("string3")) {
             tittleTxt.setText(getString(R.string.interestt));
             startSearchingTxt.setText(R.string.continue_);
 
@@ -328,36 +322,34 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
 //            interestDMArrayList.add(new InterestDM("Books", R.drawable.film));
 //            interestDMArrayList.add(new InterestDM("Sports", R.drawable.film));
 
-            if(connectionDetector.isConnectingToInternet())
-            {
+            if (connectionDetector.isConnectingToInternet()) {
 
                 String refreshedToken = FirebaseInstanceId.getInstance().getToken();
 
                 progress = dialogUtil.showProgressDialog(FriendSearch_SelectActivity.this, getString(R.string.please_wait));
 
-                appController.paServices.TherapistInterest( new Callback<TherapistInterestDM>() {
+                appController.paServices.TherapistInterest(new Callback<TherapistInterestDM>() {
 
                     @Override
 
-                    public void success ( TherapistInterestDM therapistInterestDM, Response response ) {
+                    public void success(TherapistInterestDM therapistInterestDM, Response response) {
                         progress.dismiss();
                         if (therapistInterestDM.getStatus().equalsIgnoreCase("1")) {
 
 
-            Adapter_Interest adapter_interest = new Adapter_Interest(FriendSearch_SelectActivity.this, therapistInterestDM.getInterest_details());
-            GridLayoutManager gridLayoutManager = new GridLayoutManager(FriendSearch_SelectActivity.this, 2);
-            rcvRcv.setLayoutManager(gridLayoutManager);
-            rcvRcv.setAdapter(adapter_interest);
-            adapter_interest.setOnItemClickListener(new Adapter_Interest.OnItemClickListener() {
-                @Override
-                public void onClickThis(int position, String tittle) {
-                    String value =tittle;
-                    Intent intent = new Intent();
-                    intent.putExtra("value", value);
-                    setResult(RESULT_OK, intent);
-                 }
-            });
-
+                            Adapter_Interest adapter_interest = new Adapter_Interest(FriendSearch_SelectActivity.this, therapistInterestDM.getInterest_details());
+                            GridLayoutManager gridLayoutManager = new GridLayoutManager(FriendSearch_SelectActivity.this, 2);
+                            rcvRcv.setLayoutManager(gridLayoutManager);
+                            rcvRcv.setAdapter(adapter_interest);
+                            adapter_interest.setOnItemClickListener(new Adapter_Interest.OnItemClickListener() {
+                                @Override
+                                public void onClickThis(int position, String tittle) {
+                                    String value = tittle;
+                                    Intent intent = new Intent();
+                                    intent.putExtra("value", value);
+                                    setResult(RESULT_OK, intent);
+                                }
+                            });
 
 
                         } else
@@ -365,7 +357,7 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void failure ( RetrofitError retrofitError ) {
+                    public void failure(RetrofitError retrofitError) {
                         progress.dismiss();
 
                         Log.e("error", retrofitError.toString());
@@ -373,10 +365,8 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
                     }
                 });
 
-            }else
-                Helper.showToast(FriendSearch_SelectActivity.this,getString(R.string.no_internet_connection));
-
-
+            } else
+                Helper.showToast(FriendSearch_SelectActivity.this, getString(R.string.no_internet_connection));
 
 
         }
@@ -388,37 +378,35 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
 //            searchDMArrayList.add(new SearchDM("", "Indian"));
 
 
-            if(connectionDetector.isConnectingToInternet())
-            {
+            if (connectionDetector.isConnectingToInternet()) {
 
                 String refreshedToken = FirebaseInstanceId.getInstance().getToken();
 
                 progress = dialogUtil.showProgressDialog(FriendSearch_SelectActivity.this, getString(R.string.please_wait));
 
-                appController.paServices.TherapistEthnic( new Callback<TherapistEthnicDM>() {
+                appController.paServices.TherapistEthnic(new Callback<TherapistEthnicDM>() {
 
                     @Override
 
-                    public void success (TherapistEthnicDM therapistEthnicDM, Response response ) {
+                    public void success(TherapistEthnicDM therapistEthnicDM, Response response) {
                         progress.dismiss();
                         if (therapistEthnicDM.getStatus().equalsIgnoreCase("1")) {
 
 
+                            Adapter_Search_Select_Ethnic adapter_search = new Adapter_Search_Select_Ethnic(FriendSearch_SelectActivity.this, therapistEthnicDM.getEthnic_details());
+                            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(FriendSearch_SelectActivity.this);
+                            rcvRcv.setLayoutManager(linearLayoutManager);
+                            rcvRcv.setAdapter(adapter_search);
 
-            Adapter_Search_Select_Ethnic adapter_search = new Adapter_Search_Select_Ethnic(FriendSearch_SelectActivity.this, therapistEthnicDM.getEthnic_details());
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(FriendSearch_SelectActivity.this);
-            rcvRcv.setLayoutManager(linearLayoutManager);
-            rcvRcv.setAdapter(adapter_search);
-
-            adapter_search.setOnItemClickListener(new Adapter_Search_Select.OnItemClickListener() {
-                @Override
-                public void onClickThis(int position, String heading, String subheading) {
-                    String value = subheading ;
-                    Intent intent = new Intent();
-                    intent.putExtra("value", value);
-                    setResult(RESULT_OK, intent);
-                 }
-            });
+                            adapter_search.setOnItemClickListener(new Adapter_Search_Select.OnItemClickListener() {
+                                @Override
+                                public void onClickThis(int position, String heading, String subheading) {
+                                    String value = subheading;
+                                    Intent intent = new Intent();
+                                    intent.putExtra("value", value);
+                                    setResult(RESULT_OK, intent);
+                                }
+                            });
 
 
                         } else
@@ -426,7 +414,7 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void failure ( RetrofitError retrofitError ) {
+                    public void failure(RetrofitError retrofitError) {
                         progress.dismiss();
 
                         Log.e("error", retrofitError.toString());
@@ -434,10 +422,8 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
                     }
                 });
 
-            }else
-                Helper.showToast(FriendSearch_SelectActivity.this,getString(R.string.no_internet_connection));
-
-
+            } else
+                Helper.showToast(FriendSearch_SelectActivity.this, getString(R.string.no_internet_connection));
 
 
         }
@@ -450,42 +436,41 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
 //            searchDMArrayList.add(new SearchDM("", "Post Graduate"));
 //            searchDMArrayList.add(new SearchDM("", "PHD"));
 
-            if(connectionDetector.isConnectingToInternet())
-            {
+            if (connectionDetector.isConnectingToInternet()) {
 
                 String refreshedToken = FirebaseInstanceId.getInstance().getToken();
 
                 progress = dialogUtil.showProgressDialog(FriendSearch_SelectActivity.this, getString(R.string.please_wait));
 
-                appController.paServices.TherapistEducation( new Callback<TherapistEducationDM>() {
+                appController.paServices.TherapistEducation(new Callback<TherapistEducationDM>() {
 
                     @Override
 
-                    public void success (TherapistEducationDM therapistEducationDM, Response response ) {
+                    public void success(TherapistEducationDM therapistEducationDM, Response response) {
                         progress.dismiss();
                         if (therapistEducationDM.getStatus().equalsIgnoreCase("1")) {
 
 
-            Adapter_Search_Select_Education adapter_search = new Adapter_Search_Select_Education(FriendSearch_SelectActivity.this,therapistEducationDM.getEducation_details());
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(FriendSearch_SelectActivity.this);
-            rcvRcv.setLayoutManager(linearLayoutManager);
-            rcvRcv.setAdapter(adapter_search);
-            adapter_search.setOnItemClickListener(new Adapter_Search_Select.OnItemClickListener() {
-                @Override
-                public void onClickThis(int position, String heading, String subheading) {
-                    String value = subheading ;
-                    Intent intent = new Intent();
-                    intent.putExtra("value", value);
-                    setResult(RESULT_OK, intent);
-                 }
-            });
+                            Adapter_Search_Select_Education adapter_search = new Adapter_Search_Select_Education(FriendSearch_SelectActivity.this, therapistEducationDM.getEducation_details());
+                            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(FriendSearch_SelectActivity.this);
+                            rcvRcv.setLayoutManager(linearLayoutManager);
+                            rcvRcv.setAdapter(adapter_search);
+                            adapter_search.setOnItemClickListener(new Adapter_Search_Select.OnItemClickListener() {
+                                @Override
+                                public void onClickThis(int position, String heading, String subheading) {
+                                    String value = subheading;
+                                    Intent intent = new Intent();
+                                    intent.putExtra("value", value);
+                                    setResult(RESULT_OK, intent);
+                                }
+                            });
 
                         } else
                             Helper.showToast(FriendSearch_SelectActivity.this, getString(R.string.Api_data_not_found));
                     }
 
                     @Override
-                    public void failure ( RetrofitError retrofitError ) {
+                    public void failure(RetrofitError retrofitError) {
                         progress.dismiss();
 
                         Log.e("error", retrofitError.toString());
@@ -493,14 +478,11 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
                     }
                 });
 
-            }else
-                Helper.showToast(FriendSearch_SelectActivity.this,getString(R.string.no_internet_connection));
-
-
+            } else
+                Helper.showToast(FriendSearch_SelectActivity.this, getString(R.string.no_internet_connection));
 
 
         }
-
 
 
         if (position.equalsIgnoreCase("string33")) {
@@ -533,25 +515,24 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
 //            interestDMArrayList.add(new InterestDM("Books", R.drawable.film));
 //            interestDMArrayList.add(new InterestDM("Sports", R.drawable.film));
 
-            if(connectionDetector.isConnectingToInternet())
-            {
+            if (connectionDetector.isConnectingToInternet()) {
 
                 String refreshedToken = FirebaseInstanceId.getInstance().getToken();
 
                 progress = dialogUtil.showProgressDialog(FriendSearch_SelectActivity.this, getString(R.string.please_wait));
 
-                appController.paServices.TherapistInterest( new Callback<TherapistInterestDM>() {
+                appController.paServices.TherapistInterest(new Callback<TherapistInterestDM>() {
 
                     @Override
 
-                    public void success ( TherapistInterestDM therapistInterestDM, Response response ) {
+                    public void success(TherapistInterestDM therapistInterestDM, Response response) {
                         progress.dismiss();
                         if (therapistInterestDM.getStatus().equalsIgnoreCase("1")) {
 
-            Adapter_Interest_new adapter_interest = new Adapter_Interest_new(FriendSearch_SelectActivity.this, therapistInterestDM.getInterest_details());
-            GridLayoutManager gridLayoutManager = new GridLayoutManager(FriendSearch_SelectActivity.this, 2);
-            rcvRcv.setLayoutManager(gridLayoutManager);
-            rcvRcv.setAdapter(adapter_interest);
+                            Adapter_Interest_new adapter_interest = new Adapter_Interest_new(FriendSearch_SelectActivity.this, therapistInterestDM.getInterest_details());
+                            GridLayoutManager gridLayoutManager = new GridLayoutManager(FriendSearch_SelectActivity.this, 2);
+                            rcvRcv.setLayoutManager(gridLayoutManager);
+                            rcvRcv.setAdapter(adapter_interest);
 
 
                         } else
@@ -559,7 +540,7 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void failure ( RetrofitError retrofitError ) {
+                    public void failure(RetrofitError retrofitError) {
                         progress.dismiss();
 
                         Log.e("error", retrofitError.toString());
@@ -567,17 +548,13 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
                     }
                 });
 
-            }else
-                Helper.showToast(FriendSearch_SelectActivity.this,getString(R.string.no_internet_connection));
-
-
+            } else
+                Helper.showToast(FriendSearch_SelectActivity.this, getString(R.string.no_internet_connection));
 
 
         }
 
     }
-
-
 
 
     @OnClick(R.id.notificationImg)
@@ -603,4 +580,6 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
         super.finish();
         overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
     }
+
+
 }

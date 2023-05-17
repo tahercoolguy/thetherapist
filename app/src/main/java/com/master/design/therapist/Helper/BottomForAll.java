@@ -134,6 +134,11 @@ public class BottomForAll extends BottomSheetDialogFragment implements View.OnCl
                 adapter.setSelected(selected);
                 adapter.setPosition(i);
                 adapter.notifyDataSetChanged();
+                if (responseListener != null && adapter != null) {
+                    responseListener.response(arrayList.get(adapter.getPosition()));
+
+                }
+                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
             }
         });
     }

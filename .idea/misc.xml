@@ -12,6 +12,7 @@
         <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/drawable/ic_account.xml" value="0.1825" />
         <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/drawable/ic_account_select.xml" value="0.1825" />
         <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/drawable/ic_add.xml" value="0.1295" />
+        <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/drawable/ic_baseline_delete_24.xml" value="0.1825" />
         <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/drawable/ic_baseline_send_24.xml" value="0.1825" />
         <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/drawable/ic_chat.xml" value="0.1825" />
         <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/drawable/ic_facebook.xml" value="0.1225" />
@@ -49,6 +50,7 @@
         <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/layout/activity_language.xml" value="0.15" />
         <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/layout/activity_login.xml" value="0.16979166666666667" />
         <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/layout/activity_my_posted_images.xml" value="0.25" />
         <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/layout/activity_my_profile.xml" value="0.2" />
         <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/layout/activity_sign_in.xml" value="0.2" />
         <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/layout/activity_sign_up.xml" value="0.15185185185185185" />
@@ -57,6 +59,7 @@
         <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/layout/activity_thank_you.xml" value="0.2" />
         <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/layout/activity_verify.xml" value="0.1393758016246259" />
         <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/layout/app_bar_drawer.xml" value="0.1393758016246259" />
+        <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/layout/bottom_for_all.xml" value="0.17" />
         <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/layout/bottom_sheet_for_list_view.xml" value="0.1393758016246259" />
         <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/layout/chat_fragment_layout.xml" value="0.21" />
         <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/layout/content_main_new.xml" value="0.16979166666666667" />
@@ -66,12 +69,13 @@
         <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/layout/custum_item_chat.xml" value="0.33" />
         <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/layout/custum_item_friends.xml" value="0.25" />
         <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/layout/custum_item_interest.xml" value="0.33" />
+        <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/layout/custum_item_posted_image.xml" value="0.33" />
         <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/layout/custum_item_request.xml" value="0.33" />
         <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/layout/custum_item_search.xml" value="0.25" />
         <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/layout/dialog_layout_for_alert_message.xml" value="0.16979166666666667" />
         <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/layout/dialog_progress.xml" value="0.25" />
         <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/layout/friends_request_fragment_layout.xml" value="0.2" />
-        <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/layout/home_fragment_layout.xml" value="0.12" />
+        <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/layout/home_fragment_layout.xml" value="0.18" />
         <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/layout/layout_drawer_header.xml" value="0.1393758016246259" />
         <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/layout/layout_error.xml" value="0.14" />
         <entry key="..\:/Users/gc9584767352/AndroidStudioProjects/Therapist/app/src/main/res/layout/no_data.xml" value="0.33" />

@@ -100,7 +100,8 @@ public class Fragment_Home extends Fragment {
     @BindView(R.id.frontRoundedImg)
     RoundedImageView frontRoundedImg;
     @BindView(R.id.ll)
-    LinearLayout ll;
+    LinearLayout ll;  @BindView(R.id.mainLLL)
+    LinearLayout mainLLL;
 
     @BindView(R.id.layout_parent)
     LinearLayout layout_parent;
@@ -116,8 +117,8 @@ public class Fragment_Home extends Fragment {
 
     @BindView(R.id.slider)
     SliderView slider;
-    @BindView(R.id.swiperefresh)
-    SwipeRefreshLayout swiperefresh;
+//    @BindView(R.id.swiperefresh)
+//    SwipeRefreshLayout swiperefresh;
 
 
     @Nullable
@@ -415,7 +416,8 @@ public class Fragment_Home extends Fragment {
         if (connectionDetector.isConnectingToInternet()) {
             String refreshedToken = FirebaseInstanceId.getInstance().getToken();
             //           progress = dialogUtil.showProgressDialog(Create_Account_Activity.this, getString(R.string.please_wait));
-            appController.paServices.TherapistHome(String.valueOf(user.getId()), new Callback<TherapistHomeDM>() {
+            String id= String.valueOf(user.getId());
+            appController.paServices.TherapistHome(id, new Callback<TherapistHomeDM>() {
                 @Override
                 public void success(TherapistHomeDM therapistHomeDM, Response response) {
                     //                   progress.dismiss();
@@ -423,7 +425,7 @@ public class Fragment_Home extends Fragment {
                         try {
                             therapistHomeDMPosition = therapistHomeDM;
                             nextUserID = therapistHomeDMPosition.getUsers().get(0).getId();
-                            swiperefresh.setRefreshing(false);
+
 //                        Picasso.with(context).load("http://207.154.215.156:8000" + therapistHomeDM.getUsers().get(0).getImage()).into(frontRoundedImg);
                             userNameTxt.setText(therapistHomeDM.getUsers().get(0).getName());
                             aboutTxt.setText(therapistHomeDM.getUsers().get(0).getAboutyou());
@@ -485,6 +487,7 @@ public class Fragment_Home extends Fragment {
 
                             slider.startAutoCycle();
 
+                            mainLLL.setVisibility(View.VISIBLE);
 
                         } catch (Exception e) {
                             ll.setVisibility(View.GONE);
@@ -493,8 +496,9 @@ public class Fragment_Home extends Fragment {
 
 
                     } else {
-                        swiperefresh.setRefreshing(false);
-                        Helper.showToast(context, getString(R.string.Api_data_not_found));
+//                         Helper.showToast(context, getString(R.string.Api_data_not_found));
+                        mainLLL.setVisibility(View.GONE);
+                        ((MainActivity)context).showdialogNoData(context,getString(R.string.best_matches),getString(R.string.no_user_exist));
                     }
                 }
 

@@ -16,6 +16,7 @@
         android:id="@+id/layout_top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:layout_alignParentTop="true"
         android:background="@drawable/gradient_bg"
         android:minHeight="50dp">
@@ -63,6 +64,7 @@
         android:id="@+id/list_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:layout_below="@+id/layout_top"
         android:clipToPadding="false"
         android:divider="@color/grey"

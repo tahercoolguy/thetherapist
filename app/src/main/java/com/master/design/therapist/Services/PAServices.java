@@ -11,7 +11,9 @@ import com.master.design.therapist.DataModel.ChatlistDM;
 import com.master.design.therapist.DataModel.ChatroomDM;
 import com.master.design.therapist.DataModel.Edit_ProfileDM;
 import com.master.design.therapist.DataModel.Friend_ListDM;
+import com.master.design.therapist.DataModel.GetAll_Image.GetAllImageRoot;
 import com.master.design.therapist.DataModel.ProfileDM;
+import com.master.design.therapist.DataModel.RemoveImageRoot;
 import com.master.design.therapist.DataModel.Request_ListDM;
 import com.master.design.therapist.DataModel.Request_ResponseDM;
 import com.master.design.therapist.DataModel.Send_Friend_RequestDM;
@@ -94,7 +96,7 @@ public interface PAServices {
     @FormUrlEncoded
     @POST("/login")
     public void TherapistLogin(@Field("email") String email,
-                                  @Field("password") String password,
+                               @Field("password") String password,
 
                                Callback<TherapistLoginDM> therapistLoginDMCallback);
 
@@ -127,7 +129,7 @@ public interface PAServices {
     @FormUrlEncoded
     @POST("/home")
     public void TherapistHome(@Field("id") String id,
-                                     Callback<TherapistHomeDM> therapistHomeDMCallback);
+                              Callback<TherapistHomeDM> therapistHomeDMCallback);
 
     // 10
     @GET("/terms_conditions")
@@ -145,14 +147,14 @@ public interface PAServices {
     @FormUrlEncoded
     @POST("/friend_list")
     public void TherapistFriend_List(@Field("id") String id,
-                    Callback<Friend_ListDM> friend_listDMCallback);
+                                     Callback<Friend_ListDM> friend_listDMCallback);
 
 
     // 14
     @FormUrlEncoded
     @POST("/request_list")
     public void TherapistRequest_List(@Field("receiver_id") String receiver_id,
-                                     Callback<Request_ListDM> friend_listDMCallback);
+                                      Callback<Request_ListDM> friend_listDMCallback);
 
     // 15
     @FormUrlEncoded
@@ -160,28 +162,28 @@ public interface PAServices {
     public void TherapistRequest_Response(@Field("sender") String sender,
                                           @Field("receiver") String receiver,
                                           @Field("response") String response,
-                                        Callback<Request_ResponseDM> friend_listDMCallback);
+                                          Callback<Request_ResponseDM> friend_listDMCallback);
 
     // 16
     @FormUrlEncoded
     @POST("/send_friend_request")
     public void TherapistSend_Friend_Request(@Field("sender_id") String sender_id,
                                              @Field("receiver_id") String receiver_id,
-                                            Callback<Send_Friend_RequestDM> send_friend_requestDMCallback);
+                                             Callback<Send_Friend_RequestDM> send_friend_requestDMCallback);
 
 
     // 17
     @FormUrlEncoded
     @POST("/cancel_friend_request")
     public void TherapistCancel_Friend_Request(@Field("sender_id") String sender_id,
-                                             @Field("receiver_id") String receiver_id,
-                                             Callback<Cancel_Friend_RequestDM> cancel_friend_requestDMCallback);
+                                               @Field("receiver_id") String receiver_id,
+                                               Callback<Cancel_Friend_RequestDM> cancel_friend_requestDMCallback);
 
     // 18
     @FormUrlEncoded
     @POST("/profile")
     public void TherapistProfile(@Field("id") String id,
-                                  Callback<ProfileDM> profileDMCallback);
+                                 Callback<ProfileDM> profileDMCallback);
 
     //19
     @POST("/update_pic")
@@ -191,18 +193,18 @@ public interface PAServices {
     @FormUrlEncoded
     @POST("/edit_profile")
     public void TherapistEdit_Profile(@Field("id") String id,
-                                      @Field("name") String  name,
+                                      @Field("name") String name,
                                       @Field("dob") String dob,
                                       @Field("country") String country,
                                       @Field("gender") String gender,
                                       @Field("phone") String phone,
-                                 Callback<Edit_ProfileDM> edit_profileDMCallback);
+                                      Callback<Edit_ProfileDM> edit_profileDMCallback);
 
     // 21
     @FormUrlEncoded
     @POST("/chatlist")
     public void TherapistChatList(@Field("user_id") String user_id,
-                                     Callback<ChatlistDM> chatlistDMCallback);
+                                  Callback<ChatlistDM> chatlistDMCallback);
 
 
     // 22
@@ -210,21 +212,34 @@ public interface PAServices {
     @POST("/chathistory")
     public void TherapistChatHistory(@Field("user_1") String user_1,
                                      @Field("user_2") String user_2,
-                                  Callback<ChatHistoryDM> chatHistoryDMCallback);
+                                     Callback<ChatHistoryDM> chatHistoryDMCallback);
 
     // 23
     @FormUrlEncoded
     @POST("/chatroom")
     public void TherapistChatChatRoom(@Field("sender_user") String sender_user,
-                                     @Field("receiver_user") String receiver_user,
-                                     Callback<ChatroomDM> chatroomDMCallback);
+                                      @Field("receiver_user") String receiver_user,
+                                      Callback<ChatroomDM> chatroomDMCallback);
 
 
-    // 23
+    // 24
     @FormUrlEncoded
     @POST("/unfriend")
     public void TherapistUnfriend(@Field("user_id") String user_id,
-                                      @Field("friend_id") String friend_id,
-                                      Callback<UnfriendDM> unfriendDMCallback);
+                                  @Field("friend_id") String friend_id,
+                                  Callback<UnfriendDM> unfriendDMCallback);
+
+    // 25
+    @FormUrlEncoded
+    @POST("/showimages")
+    void ShowImages(@Field("the_user") String the_user,
+                    Callback<GetAllImageRoot> getAllImageRootCallback);
+
+    // 26
+    @FormUrlEncoded
+    @POST("/removeimage")
+    void RemoveImage(@Field("the_user") String the_user,
+                     @Field("image_id") String image_id,
+                     Callback<RemoveImageRoot> removeImageRootCallback);
 
 }

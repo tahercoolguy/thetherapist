@@ -1,5 +1,6 @@
 package com.master.design.therapist.Activity;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
@@ -95,6 +96,8 @@ public class Create_Account_Activity extends AppCompatActivity {
 
     @BindView(R.id.maleTV)
     TextView maleTV;
+    @BindView(R.id.ageTxt)
+    TextView ageTxt;
 
 //    @BindView(R.id.full_date)
 //    LinearLayout full_date;
@@ -102,11 +105,10 @@ public class Create_Account_Activity extends AppCompatActivity {
 
     String Gender;
     String name;
-    String SelectCountryid,SelectCountryCode;
+    String SelectCountryid, SelectCountryCode;
     String ethnicityyid;
     String Date;
-    String DialCode;
-
+    String DialCode, age;
 
 
     @OnClick(R.id.maleTV)
@@ -116,7 +118,7 @@ public class Create_Account_Activity extends AppCompatActivity {
         maleTV.setTextColor(Color.parseColor("#FFFFFF"));
         femaleTV.setBackgroundResource(R.drawable.rounded_rectangle_white);
         femaleTV.setTextColor(Color.parseColor("#000000"));
-        Gender="1";
+        Gender = "1";
     }
 
     @OnClick(R.id.femaleTV)
@@ -125,13 +127,14 @@ public class Create_Account_Activity extends AppCompatActivity {
         maleTV.setTextColor(Color.parseColor("#000000"));
         femaleTV.setBackgroundResource(R.drawable.rounded_rectagle_blue);
         femaleTV.setTextColor(Color.parseColor("#FFFFFF"));
-        Gender="0";
-     }
+        Gender = "0";
+    }
 
     @OnClick(R.id.dateET)
     public void dateET() {
         datepick();
     }
+
     @OnClick(R.id.monthET)
     public void monthET() {
         datepick();
@@ -143,6 +146,14 @@ public class Create_Account_Activity extends AppCompatActivity {
     }
 
 
+    @OnClick(R.id.ageTxt)
+    public void clickAgeET() {
+//        startActivity(new Intent(Create_Account_Activity.this, FriendSearch_SelectActivity.class).putExtra("string1","string1"));
+        Intent intent = new Intent(Create_Account_Activity.this, FriendSearch_SelectActivity.class);
+        intent.putExtra("string1", "string1");
+        startActivityForResult(intent, 2);// Activity is started with requestCode 2
+
+    }
 
 //    @OnClick(R.id.continueTxt)
 //    public void continueTxt() {
@@ -150,36 +161,35 @@ public class Create_Account_Activity extends AppCompatActivity {
 //    }
 
     ArrayList<DataChangeDM> arrayList = new ArrayList();
-BottomForAll bottomForAll;
-        @OnClick(R.id.ethnicityyET)
-          public void ethnicityyET()
-        {
-                  bottomForAll = new BottomForAll();
-                        bottomForAll.arrayList = arrayList;
+    BottomForAll bottomForAll;
+
+    @OnClick(R.id.ethnicityyET)
+    public void ethnicityyET() {
+        bottomForAll = new BottomForAll();
+        bottomForAll.arrayList = arrayList;
 
 
-                            bottomForAll.setResponseListener(new ResponseListener() {
-                                @Override
-                                public void response(Object object) {
+        bottomForAll.setResponseListener(new ResponseListener() {
+            @Override
+            public void response(Object object) {
 
-                                    name = ((DataChangeDM) object).getName();
-                                    ethnicityyid = ((DataChangeDM) object).getId();
+                name = ((DataChangeDM) object).getName();
+                ethnicityyid = ((DataChangeDM) object).getId();
 //                                    user.setAreaId(AreaID);
-                                    ethnicityyET.setText(name);
+                ethnicityyET.setText(name);
 
 
+            }
+        });
+        bottomForAll.show(Create_Account_Activity.this.getSupportFragmentManager(), "bottomSheetCountry");
 
-                                }
-                            });
-                            bottomForAll.show(Create_Account_Activity.this.getSupportFragmentManager(), "bottomSheetCountry");
 
-
-}
+    }
 
     ArrayList<DataChangeDM> arrayList1 = new ArrayList();
+
     @OnClick(R.id.selectCountryET)
-    public void selectCountryET()
-    {
+    public void selectCountryET() {
 
         bottomForAll = new BottomForAll();
         bottomForAll.arrayList = arrayList1;
@@ -190,6 +200,7 @@ BottomForAll bottomForAll;
 
                 name = ((DataChangeDM) object).getName();
                 SelectCountryid = ((DataChangeDM) object).getId();
+
 //               user.setAreaId(AreaID);
                 selectCountryET.setText(name);
 
@@ -202,9 +213,9 @@ BottomForAll bottomForAll;
 
 
     ArrayList<DataChangeDM> arrayList2 = new ArrayList();
+
     @OnClick(R.id.mobilecodeET)
-    public void mobilecodeET()
-    {
+    public void mobilecodeET() {
 
 
         bottomForAll = new BottomForAll();
@@ -227,8 +238,6 @@ BottomForAll bottomForAll;
     }
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -242,7 +251,6 @@ BottomForAll bottomForAll;
         BindingEthenicity();
         SelectCountry();
         SelectMobileCode();
-
 
 
     }
@@ -262,7 +270,7 @@ BottomForAll bottomForAll;
 
     @Override
     public void onBackPressed() {
-       overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
+        overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
         super.onBackPressed();
     }
 
@@ -278,58 +286,57 @@ BottomForAll bottomForAll;
         boolean correct = true;
         if (userNameET.getText().toString().equalsIgnoreCase("")) {
             correct = false;
-            Helper.showToast(Create_Account_Activity.this, "kindly enter your name");
+            Helper.showToast(Create_Account_Activity.this, getString(R.string.kindly_enter_your_name));
         } else if (dateET.getText().toString().equalsIgnoreCase("")) {
             correct = false;
-            Helper.showToast(Create_Account_Activity.this, "kindly enter your Date of Birth");
+            Helper.showToast(Create_Account_Activity.this, getString(R.string.kindly_select_date_of_birth));
         } else if (monthET.getText().toString().equalsIgnoreCase("")) {
             correct = false;
-            Helper.showToast(Create_Account_Activity.this, "kindly enter your Date of Month");
+            Helper.showToast(Create_Account_Activity.this, getString(R.string.kindly_enter_your_Date_of_Month));
         } else if (yearET.getText().toString().equalsIgnoreCase("")) {
             correct = false;
-            Helper.showToast(Create_Account_Activity.this, "kindly enter your Date of Year");
+            Helper.showToast(Create_Account_Activity.this, getString(R.string.date_of_year));
         } else if (selectCountryET.getText().toString().equalsIgnoreCase("")) {
             correct = false;
-            Helper.showToast(Create_Account_Activity.this, "kindly select your country");
+            Helper.showToast(Create_Account_Activity.this, getString(R.string.select_your_country));
         } else if (ethnicityyET.getText().toString().equalsIgnoreCase("")) {
             correct = false;
-            Helper.showToast(Create_Account_Activity.this, "kindly enter your Ethnicity");
+            Helper.showToast(Create_Account_Activity.this, getString(R.string.kindlyenter_your_ethnicity));
         } else if (mobileET.getText().toString().equalsIgnoreCase("")) {
             correct = false;
-            Helper.showToast(Create_Account_Activity.this, "kindly enter your mobile number");
+            Helper.showToast(Create_Account_Activity.this, getString(R.string.kindly_enter_your_mobile_number));
         } else if (emailEt.getText().toString().equalsIgnoreCase("")) {
             correct = false;
-            Helper.showToast(Create_Account_Activity.this, "kindly enter your mobile Number");
-        }
-
-        else if (PasswordEdT.getText().toString().equalsIgnoreCase("")) {
+            Helper.showToast(Create_Account_Activity.this, getString(R.string.kindly_enter_email));
+        } else if (PasswordEdT.getText().toString().equalsIgnoreCase("")) {
             correct = false;
-            Helper.showToast(Create_Account_Activity.this, "kindly enter your Password");
+            Helper.showToast(Create_Account_Activity.this, getString(R.string.kindly_enter_passwords));
         } else if (confirmPasswordET.getText().toString().equalsIgnoreCase("")) {
             correct = false;
-            Helper.showToast(Create_Account_Activity.this, "kindly enter your Confirm Password");
-        }
-        else if (Gender==null) {
+            Helper.showToast(Create_Account_Activity.this, getString(R.string.kindlt_enterr_confirm_password));
+        } else if (Gender == null) {
             correct = false;
-            Helper.showToast(Create_Account_Activity.this, "kindly select Gender");
+            Helper.showToast(Create_Account_Activity.this, getString(R.string.kindly_select_gender));
         }
 //
 //
 ////            String refreshedToken = FirebaseInstanceId.getInstance().getToken();
         if (correct) {
 
-     //       startActivity(new Intent(Create_Account_Activity.this, FriendSearch_SelectActivity.class).putExtra("string33", "string33"));
-        Intent intent = new Intent(Create_Account_Activity.this, FriendSearch_SelectActivity.class);
-        intent.putExtra("string33", "string33");
-        intent.putExtra("userName", userNameET.getText().toString());
-        intent.putExtra("date", (yearET.getText().toString()+"-"+monthET.getText().toString()+"-"+dateET.getText().toString()));
-        intent.putExtra("selectCountry", SelectCountryid);
-        intent.putExtra("gender", Gender);
-        intent.putExtra("ethnicity", ethnicityyid);
-        intent.putExtra("mobileNumber", mobilecodeET.getText().toString()+mobileET.getText().toString());
-        intent.putExtra("email", emailEt.getText().toString());
-        intent.putExtra("password", PasswordEdT.getText().toString());
-        intent.putExtra("confirmPassword", confirmPasswordET.getText().toString());
+            //       startActivity(new Intent(Create_Account_Activity.this, FriendSearch_SelectActivity.class).putExtra("string33", "string33"));
+            Intent intent = new Intent(Create_Account_Activity.this, FriendSearch_SelectActivity.class);
+            intent.putExtra("string33", "string33");
+            intent.putExtra("userName", userNameET.getText().toString());
+            intent.putExtra("date", (yearET.getText().toString() + "-" + monthET.getText().toString() + "-" + dateET.getText().toString()));
+            intent.putExtra("selectCountry", SelectCountryid);
+//            intent.putExtra("selectCountry", ethnicityyid);
+            intent.putExtra("gender", Gender);
+            intent.putExtra("age", age);
+            intent.putExtra("ethnicity", ethnicityyid);
+            intent.putExtra("mobileNumber", mobilecodeET.getText().toString() + mobileET.getText().toString());
+            intent.putExtra("email", emailEt.getText().toString());
+            intent.putExtra("password", PasswordEdT.getText().toString());
+            intent.putExtra("confirmPassword", confirmPasswordET.getText().toString());
 
             startActivity(intent);
 
@@ -367,15 +374,14 @@ BottomForAll bottomForAll;
     }
 
 
-    public void BindingEthenicity()
-    {
+    public void BindingEthenicity() {
         if (connectionDetector.isConnectingToInternet()) {
             String refreshedToken = FirebaseInstanceId.getInstance().getToken();
- //           progress = dialogUtil.showProgressDialog(Create_Account_Activity.this, getString(R.string.please_wait));
+            //           progress = dialogUtil.showProgressDialog(Create_Account_Activity.this, getString(R.string.please_wait));
             appController.paServices.TherapistEthnic(new Callback<TherapistEthnicDM>() {
                 @Override
                 public void success(TherapistEthnicDM therapistEthnicDM, Response response) {
- //                   progress.dismiss();
+                    //                   progress.dismiss();
                     if (therapistEthnicDM.getStatus().equalsIgnoreCase("1")) {
 
                         for (Ethnic_details obj : therapistEthnicDM.getEthnic_details()) {
@@ -399,22 +405,21 @@ BottomForAll bottomForAll;
 
     }
 
-    public void SelectCountry()
-    {
+    public void SelectCountry() {
         if (connectionDetector.isConnectingToInternet()) {
             String refreshedToken = FirebaseInstanceId.getInstance().getToken();
             //           progress = dialogUtil.showProgressDialog(Create_Account_Activity.this, getString(R.string.please_wait));
             appController.paServices.TherapistCountries(new Callback<TherapistCountriesDM>() {
                 @Override
                 public void success(TherapistCountriesDM therapistCountriesDM, Response response) {
- //                   progress.dismiss();
+                    //                   progress.dismiss();
                     if (therapistCountriesDM.getStatus().equalsIgnoreCase("1")) {
 
                         for (Details obj : therapistCountriesDM.getDetails()) {
                             DataChangeDM s = new DataChangeDM();
                             s.setName(obj.getName_en());
-                            s.setId(obj.getCountry_id());
-
+//                            s.setId(obj.getCountry_id());
+                            s.setId(obj.getIsoCode());
                             arrayList1.add(s);
                         }
                     } else
@@ -423,7 +428,7 @@ BottomForAll bottomForAll;
 
                 @Override
                 public void failure(RetrofitError retrofitError) {
- //                   progress.dismiss();
+                    //                   progress.dismiss();
                     Log.e("error", retrofitError.toString());
                 }
             });
@@ -432,8 +437,7 @@ BottomForAll bottomForAll;
     }
 
 
-    public void SelectMobileCode()
-    {
+    public void SelectMobileCode() {
         if (connectionDetector.isConnectingToInternet()) {
             String refreshedToken = FirebaseInstanceId.getInstance().getToken();
             //           progress = dialogUtil.showProgressDialog(Create_Account_Activity.this, getString(R.string.please_wait));
@@ -465,10 +469,7 @@ BottomForAll bottomForAll;
     }
 
 
-
-
-    public void datepick()
-    {
+    public void datepick() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             new SingleDateAndTimePickerDialog.Builder(this)
                     .bottomSheet()
@@ -488,11 +489,11 @@ BottomForAll bottomForAll;
                             String inputPattern2 = "yyyy-MMM-dd";
                             SimpleDateFormat inputFormat2 = new SimpleDateFormat(inputPattern2);
 
-                          try {
+                            try {
                                 String str = inputFormat.format(date);
                                 String str1 = inputFormat2.format(date);
-    //                            dateTxt.setText(str);
-    //                            Date=str;
+                                //                            dateTxt.setText(str);
+                                //                            Date=str;
 
                                 String Month = "MM";
                                 inputFormat2 = new SimpleDateFormat(Month);
@@ -523,4 +524,18 @@ BottomForAll bottomForAll;
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // check if the request code is same as what is passed  here it is 2
+        if (requestCode == 2) {
+
+//            String message_age=data.getStringExtra("age");
+            String age_id = data.getStringExtra("age_id");
+            String ageEng = data.getStringExtra("ageEng");
+            String ageAR = data.getStringExtra("ageAR");
+            ageTxt.setText(ageEng);
+            age = age_id;
+        }
+    }
 }

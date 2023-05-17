@@ -28,6 +28,9 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".Activity.MyPostedImagesActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activity.ImagePickerActivity"
             android:exported="false" />
         <activity
@@ -108,7 +111,6 @@
         <activity android:name=".Activity.VerifyActivity" />
         <activity android:name=".Activity.IntroActivity" />
 
-
         <service
             android:name=".FirebaseNotification.MyFirebaseMessagingService"
             android:exported="false">
@@ -116,7 +118,6 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
     </application>
 
 </manifest>

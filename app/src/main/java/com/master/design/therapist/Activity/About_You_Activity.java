@@ -83,7 +83,7 @@ public class About_You_Activity extends AppCompatActivity {
     String password;
     String confirmPassword;
     String InterestIdList;
-    String name,id;
+    String name,id,age;
 
     @BindView(R.id.aboutYouET)
     EditText aboutYouET;
@@ -138,6 +138,7 @@ public class About_You_Activity extends AppCompatActivity {
         password=getIntent().getStringExtra("password");
         confirmPassword=getIntent().getStringExtra("confirmPassword");
         InterestIdList=getIntent().getStringExtra("InterestIdlist");
+        age=getIntent().getStringExtra("age");
 
         BindingEducation();
 
@@ -194,10 +195,10 @@ public class About_You_Activity extends AppCompatActivity {
         boolean correct = true;
         if (aboutYouET.getText().toString().equalsIgnoreCase("")) {
             correct = false;
-            Helper.showToast(About_You_Activity.this, "kindly tell us about you");
+            Helper.showToast(About_You_Activity.this, getString(R.string.kindly_tell_me_about_u));
         } else if (educationET.getText().toString().equalsIgnoreCase("")) {
             correct = false;
-            Helper.showToast(About_You_Activity.this, "kindly enter education");
+            Helper.showToast(About_You_Activity.this, getString(R.string.kindly_select_education));
         }
         if (correct) {
 
@@ -219,34 +220,71 @@ public class About_You_Activity extends AppCompatActivity {
             multipartTypedOutput.addPart("password", new TypedString(password));
             multipartTypedOutput.addPart("confirm_password", new TypedString(confirmPassword));
             multipartTypedOutput.addPart("interests", new TypedString(InterestIdList));
+            multipartTypedOutput.addPart("device_type", new TypedString("2"));
+            multipartTypedOutput.addPart("device_token", new TypedString(refreshedToken));
+            multipartTypedOutput.addPart("age", new TypedString(age));
 
-            try
-            {
-                if (ifimg1) {
-                    File f = new File(context.getCacheDir(), "temp.png");
-                    f.createNewFile();
+//            try
+//            {
+//                if (ifimg1) {
+//                    File f = new File(context.getCacheDir(), "temp.png");
+//                    f.createNewFile();
+//
+//                    Bitmap one = ((BitmapDrawable) profileCircleImg.getDrawable()).getBitmap();
+////Convert bitmap to byte array
+//                    Bitmap bitmap = one;
+//                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+//                    bitmap.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
+//                    byte[] bitmapdata = bos.toByteArray();
+//
+////write the bytes in file
+//                    FileOutputStream fos = new FileOutputStream(f);
+//                    fos.write(bitmapdata);
+//                    fos.flush();
+//                    fos.close();
+//                    File resizedImage = new Resizer(context)
+//                            .setTargetLength(512)
+//                            .setQuality(80)
+//                            .setOutputFormat("JPEG")
+//                            .setOutputFilename("resized_image1")
+//                            .setSourceImage(f)
+//                            .getResizedFile();
+//                    multipartTypedOutput.addPart("image", new TypedFile("image/jpg", resizedImage));
+//                }
+//
+//
+//            } catch (Exception e) {
+//                Log.e("Error", e.toString());
+//            }
+            try {
+                // You can update this bitmap to your server
 
-                    Bitmap one = ((BitmapDrawable) profileCircleImg.getDrawable()).getBitmap();
+//                Bitmap bitmapMainImg = MediaStore.Images.Media.getBitmap(About_You_Activity.this.getContentResolver(), Uri.parse(String.valueOf(profileCircleImg.getDrawable())));
+                Bitmap bitmapMainImg = bitmap;
+
+                File f = new File(About_You_Activity.this.getCacheDir(), "temp.jpg");
+                f.createNewFile();
+
+//                    Bitmap one = ((BitmapDrawable) profile_RoundedImgView.getDrawable()).getBitmap();
 //Convert bitmap to byte array
-                    Bitmap bitmap = one;
-                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
-                    byte[] bitmapdata = bos.toByteArray();
+                Bitmap bitmap = bitmapMainImg;
+                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
+                byte[] bitmapdata = bos.toByteArray();
 
 //write the bytes in file
-                    FileOutputStream fos = new FileOutputStream(f);
-                    fos.write(bitmapdata);
-                    fos.flush();
-                    fos.close();
-                    File resizedImage = new Resizer(context)
-                            .setTargetLength(512)
-                            .setQuality(80)
-                            .setOutputFormat("JPEG")
-                            .setOutputFilename("resized_image1")
-                            .setSourceImage(f)
-                            .getResizedFile();
-                    multipartTypedOutput.addPart("image", new TypedFile("image/jpg", resizedImage));
-                }
+                FileOutputStream fos = new FileOutputStream(f);
+                fos.write(bitmapdata);
+                fos.flush();
+                fos.close();
+                File resizedImage = new Resizer(About_You_Activity.this)
+//                        .setTargetLength(200)
+//                        .setQuality(100)
+                        .setOutputFormat("JPEG")
+                        .setOutputFilename("resized_image1")
+                        .setSourceImage(f)
+                        .getResizedFile();
+                multipartTypedOutput.addPart("image", new TypedFile("image/jpg", resizedImage));
 
 
             } catch (Exception e) {
@@ -308,7 +346,7 @@ public class About_You_Activity extends AppCompatActivity {
         ifimg1 = true;
         OpenImage();
     }
-
+    Bitmap bitmap;
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE) {
@@ -316,7 +354,7 @@ public class About_You_Activity extends AppCompatActivity {
                 Uri uri = data.getParcelableExtra("path");
                 try {
                     // You can update this bitmap to your server
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(About_You_Activity.this.getContentResolver(), uri);
+                      bitmap = MediaStore.Images.Media.getBitmap(About_You_Activity.this.getContentResolver(), uri);
 
                     profileCircleImg.setVisibility(View.VISIBLE);
                    profileCircleImg.setImageBitmap(bitmap);

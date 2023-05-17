@@ -28,7 +28,7 @@ public class Adapter_Search_Select1 extends RecyclerView.Adapter<Adapter_Search_
     private ArrayList<Age_details> arrayList;
     private SearchDM selected;
     User user;
-    Adapter_Search_Select.OnItemClickListener onItemClickListener;
+    Adapter_Search_Select1.OnItemClickListener onItemClickListener;
 
 
     int selectedPosition = 0;
@@ -91,11 +91,12 @@ public class Adapter_Search_Select1 extends RecyclerView.Adapter<Adapter_Search_
             public void onClick(View view) {
 //                onItemClickListener.onClickThis(position, arrayList.get(position).getHead(), arrayList.get(position).getDes());
 
+                onItemClickListener.onClickThis(position,arrayList.get(position).getId(),arrayList.get(position).getAge_eg(),arrayList.get(position).getAge_arb());
             }
         });
     }
 
-    public void setOnItemClickListener(Adapter_Search_Select.OnItemClickListener onItemClickListener) {
+    public void setOnItemClickListener(Adapter_Search_Select1.OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
 
@@ -126,7 +127,8 @@ public class Adapter_Search_Select1 extends RecyclerView.Adapter<Adapter_Search_
     public interface OnItemClickListener {
 
 
-        void onClickThis(int position, String heading, String subheading);
+//        void onClickThis(int position, String heading, String subheading);
+        void onClickThis(int position, String age_id, String ageEng,String ageAR);
     }
 
 }
