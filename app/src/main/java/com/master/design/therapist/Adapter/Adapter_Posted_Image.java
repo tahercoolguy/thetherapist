@@ -16,11 +16,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.master.design.therapist.Controller.AppController;
 import com.master.design.therapist.DM.SearchDM;
 import com.master.design.therapist.DataModel.Age_details;
 import com.master.design.therapist.DataModel.GetAll_Image.GetAllImageOutput;
 import com.master.design.therapist.Helper.User;
 import com.master.design.therapist.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -70,12 +72,13 @@ public class Adapter_Posted_Image extends RecyclerView.Adapter<Adapter_Posted_Im
 
     private void setDetails(Adapter_Posted_Image.ViewHolder viewHolder, int position) {
 
+        Picasso.with(context).load(AppController.THERAPIST_IMAGE+arrayList.get(position).getOther_image()).placeholder(R.drawable.black_transparent_gradient).into(viewHolder.frontRoundedImg);
 
         viewHolder.deleteRL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 //                onItemClickListener.onClickThis(position, arrayList.get(position).getHead(), arrayList.get(position).getDes());
-                onItemClickListener.deleteImage(position, "");
+                onItemClickListener.deleteImage(position, arrayList.get(position).getId());
             }
         });
     }
