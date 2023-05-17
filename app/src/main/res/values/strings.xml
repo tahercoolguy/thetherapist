@@ -164,5 +164,9 @@
     <string name="delete_image_successfully">delete image Successfully</string>
     <string name="delete_image">delete Image</string>
     <string name="are_you_sure_want_to_unfriend">Are you sure want to unfriend your friend</string>
+    <string name="main_profile_photo">Main Profile Photo</string>
+    <string name="edit">edit</string>
+    <string name="other_images">Other Images</string>
+    <string name="add_multiple_images">Add Multiple Images</string>
 
 </resources>

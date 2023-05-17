@@ -90,15 +90,18 @@ public class Edit_ProfileActivity extends AppCompatActivity {
         Gender="0";
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @OnClick(R.id.dateET)
     public void dateET() {
         datepick();
     }
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @OnClick(R.id.monthET)
     public void monthET() {
         datepick();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @OnClick(R.id.yearET)
     public void yearET() {
         datepick();

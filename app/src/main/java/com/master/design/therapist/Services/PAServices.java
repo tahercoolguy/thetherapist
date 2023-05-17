@@ -5,6 +5,7 @@ package com.master.design.therapist.Services;
 
 
 import com.master.design.therapist.Adapter.TherapistEducationDM;
+import com.master.design.therapist.DataModel.AddMultipleImageRoot;
 import com.master.design.therapist.DataModel.Cancel_Friend_RequestDM;
 import com.master.design.therapist.DataModel.ChatHistoryDM;
 import com.master.design.therapist.DataModel.ChatlistDM;
@@ -241,5 +242,15 @@ public interface PAServices {
     void RemoveImage(@Field("the_user") String the_user,
                      @Field("image_id") String image_id,
                      Callback<RemoveImageRoot> removeImageRootCallback);
+
+    // 27
+    @FormUrlEncoded
+    @POST("/remove_pic")
+    void Remove_Pic(@Field("id") String id,
+                    Callback<RemoveImageRoot> removeImageRootCallback);
+
+    // 28
+     @POST("/addimages")
+    void Add_Multiple_Images(@Body MultipartTypedOutput multipartTypedOutput,Callback<AddMultipleImageRoot> addMultipleImageRootCallback);
 
 }
