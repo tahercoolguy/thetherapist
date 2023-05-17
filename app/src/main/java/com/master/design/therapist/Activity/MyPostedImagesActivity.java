@@ -117,8 +117,7 @@ public class MyPostedImagesActivity extends AppCompatActivity {
                 .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
-                        MyPostedImagesActivity.this.finish();
-                    }
+                     }
                 });
         final AlertDialog alert = builder.create();
 
@@ -157,7 +156,7 @@ public class MyPostedImagesActivity extends AppCompatActivity {
                 public void success(RemoveImageRoot removeImageRoot, Response response) {
                     if (removeImageRoot.getStatus().equalsIgnoreCase("1")) {
 
-                        showdialogNoData(context,getString(R.string.delete_image),getString(R.string.delete_image_successfully) );
+                        getallPostedImage();
                     }
                 }
 
