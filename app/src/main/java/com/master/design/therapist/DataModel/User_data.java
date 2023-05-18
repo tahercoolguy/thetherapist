@@ -1,15 +1,29 @@
 package com.master.design.therapist.DataModel;
 
+import java.util.ArrayList;
+
 public class User_data {
 
-    private String image;
-    private String gender;
-    private String phone;
-    private String dob;
-    private String name;
-    private String id;
-    private String email;
+    public String image;
+    //    private String gender;
+    public String phone;
+    public String dob;
+    public String name;
+    public String id;
+    public String email;
+    public ArrayList<Gender> gender;
+    public ArrayList<Country> country;
 
+    public User_data(String image, String phone, String dob, String name, String id, String email, ArrayList<Gender> gender, ArrayList<Country> country) {
+        this.image = image;
+        this.phone = phone;
+        this.dob = dob;
+        this.name = name;
+        this.id = id;
+        this.email = email;
+        this.gender = gender;
+        this.country = country;
+    }
 
     public String getImage() {
         return image;
@@ -17,14 +31,6 @@ public class User_data {
 
     public void setImage(String image) {
         this.image = image;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
     }
 
     public String getPhone() {
@@ -65,5 +71,21 @@ public class User_data {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public ArrayList<Gender> getGender() {
+        return gender;
+    }
+
+    public void setGender(ArrayList<Gender> gender) {
+        this.gender = gender;
+    }
+
+    public ArrayList<Country> getCountry() {
+        return country;
+    }
+
+    public void setCountry(ArrayList<Country> country) {
+        this.country = country;
     }
 }

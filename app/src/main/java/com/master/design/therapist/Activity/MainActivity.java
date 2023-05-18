@@ -2,6 +2,7 @@
 package com.master.design.therapist.Activity;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -15,6 +16,7 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Display;
@@ -141,7 +143,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         setOnClickListeners();
     }
 
-    public void showdialogNoData(Context context, String tittle,String msg) {
+    public void showdialogNoData(Context context, String tittle, String msg) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle(tittle)
                 .setMessage(msg)
@@ -154,6 +156,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         final AlertDialog alert = builder.create();
 
         alert.show();
+    }
+
+    public void searchDataHomeFragment(Context context) {
+        Intent intent = new Intent(MainActivity.this, FriendSearchActivity.class);
+        startActivityForResult(intent, 3);// Activity is started with requestCode 2
+        overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
     }
 
     @Override
@@ -422,5 +430,29 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         super.finish();
         overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
 
+    }
+
+    public String age_id, ageEng, ageAR, gender, interest, ethic, education;
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // check if the request code is same as what is passed  here it is 2
+        if (requestCode == 2) {
+
+//            String message_age=data.getStringExtra("age");
+
+            //age
+            age_id = data.getStringExtra("age_id");
+            ageEng = data.getStringExtra("ageEng");
+            ageAR = data.getStringExtra("ageAR");
+
+            //gender
+            gender = data.getStringExtra("gender");
+            interest = data.getStringExtra("interest");
+            ethic = data.getStringExtra("ethic");
+            education = data.getStringExtra("education");
+
+        }
     }
 }

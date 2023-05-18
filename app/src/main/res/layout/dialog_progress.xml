@@ -7,17 +7,17 @@
     android:padding="18dp">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
         android:focusable="true"
         app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="5dp"
+        app:cardCornerRadius="100dp"
         app:cardPreventCornerOverlap="false"
         app:cardUseCompatPadding="true">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/rounded_corner_gradient_bg"
             android:gravity="center_vertical"
@@ -51,6 +51,7 @@
                 android:layout_marginStart="12dp"
                 android:gravity="center_vertical"
                 android:lineSpacingExtra="5dp"
+                android:visibility="gone"
                 android:minLines="2"
                 android:text="Message"
                 android:textColor="@color/white"

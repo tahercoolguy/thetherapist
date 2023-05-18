@@ -250,7 +250,11 @@ public interface PAServices {
                     Callback<RemoveImageRoot> removeImageRootCallback);
 
     // 28
-     @POST("/addimages")
-    void Add_Multiple_Images(@Body MultipartTypedOutput multipartTypedOutput,Callback<AddMultipleImageRoot> addMultipleImageRootCallback);
+    @POST("/addimages")
+    void Add_Multiple_Images(@Body MultipartTypedOutput multipartTypedOutput, Callback<AddMultipleImageRoot> addMultipleImageRootCallback);
+
+    // 29
+    @POST("/search")
+    void Search_User(@Body MultipartTypedOutput multipartTypedOutput, Callback<TherapistHomeDM> therapistHomeDMCallback);
 
 }

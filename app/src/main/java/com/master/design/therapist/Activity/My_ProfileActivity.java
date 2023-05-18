@@ -269,14 +269,16 @@ public class My_ProfileActivity extends AppCompatActivity {
                         userNameET.setText(profileDM.getUser_data().get(0).getName());
                         emailET.setText(profileDM.getUser_data().get(0).getEmail());
                         phoneET.setText(profileDM.getUser_data().get(0).getPhone());
-                        genderET.setText(profileDM.getUser_data().get(0).getGender());
+                        genderET.setText(profileDM.getUser_data().get(0).getGender().get(0).getGender_eg());
                         dobET.setText(profileDM.getUser_data().get(0).getDob());
 
                         Picasso.with(context).load(AppController.THERAPIST_IMAGE + profileDM.getUser_data().get(0).getImage()).into(profileImgRIV);
 
 
-                    } else
-                        Helper.showToast(My_ProfileActivity.this, getString(R.string.Api_data_not_found));
+                    }
+//                    else {
+//                        Helper.showToast(My_ProfileActivity.this, getString(R.string.Api_data_not_found));
+//                    }
                 }
 
                 @Override

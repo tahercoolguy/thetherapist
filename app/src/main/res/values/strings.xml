@@ -17,7 +17,7 @@
     <string name="lastName">Last Name</string>
     <string name="Mobile">Mobile</string>
     <string name="confirm_password">Confirm Password</string>
-    <string name="gender">GENDER</string>
+    <string name="gender">Gender</string>
     <string name="male">Male</string>
     <string name="female">Female</string>
     <string name="dob">Date of Birth</string>
@@ -153,7 +153,7 @@
     <string name="kindly_enter_email">kindly enter email</string>
     <string name="kindly_enter_passwords">kindly enter your Password</string>
     <string name="kindlt_enterr_confirm_password">kindly enter your Confirm Password</string>
-    <string name="kindly_select_gender">kindly select Gender</string>
+<!--    <string name="kindly_select_gender">kindly select Gender</string>-->
     <string name="kindly_tell_me_about_u">kindly tell us about you</string>
     <string name="kindly_select_education">kindly select education</string>
     <string name="select_age">Select Age</string>
@@ -168,5 +168,10 @@
     <string name="edit">edit</string>
     <string name="other_images">Other Images</string>
     <string name="add_multiple_images">Add Multiple Images</string>
+    <string name="kindly_enter_your_date_of_month">kindly enter your Date of Month</string>
+    <string name="kindly_enter_your_date_of_year">kindly enter your date of year</string>
+    <string name="kindly_select_your_country">kindly select your country</string>
+    <string name="kindly_select_gender">kindly select Gender</string>
+    <string name="kindly_select_mobile_country_code">kindly select mobile country code</string>
 
 </resources>

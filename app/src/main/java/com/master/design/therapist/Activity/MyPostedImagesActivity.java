@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -38,6 +39,7 @@ import com.master.design.therapist.DataModel.RemoveImageRoot;
 import com.master.design.therapist.DataModel.UnfriendDM;
 import com.master.design.therapist.DataModel.Update_Pic_ProfileDM;
 import com.master.design.therapist.Fragments.Fragment_Friends_Request;
+import com.master.design.therapist.Helper.DialogUtil;
 import com.master.design.therapist.Helper.Helper;
 import com.master.design.therapist.Helper.User;
 import com.master.design.therapist.R;
@@ -69,7 +71,8 @@ public class MyPostedImagesActivity extends AppCompatActivity {
     ConnectionDetector connectionDetector;
     ProgressDialog progressDialog;
     User user;
-
+    Dialog progress;
+    DialogUtil dialogUtil;
     @BindView(R.id.recycleView)
     RecyclerView recycleView;
 
@@ -105,6 +108,8 @@ public class MyPostedImagesActivity extends AppCompatActivity {
         appController = (AppController) getApplicationContext();
         user = new User(context);
         connectionDetector = new ConnectionDetector(MyPostedImagesActivity.this);
+        dialogUtil = new DialogUtil();
+
         progressDialog = new ProgressDialog(MyPostedImagesActivity.this);
         progressDialog.setMessage(getResources().getString(R.string.please_wait));
         progressDialog.setIndeterminate(true);
@@ -131,7 +136,7 @@ public class MyPostedImagesActivity extends AppCompatActivity {
 
     @OnClick(R.id.deleteMainImgBtn)
     public void clickdeleteMainImgBtn() {
-        deleteImagedialog(context, getString(R.string.sure_you_want_to_delete_this_image), mainImgDeleteId);
+        deletemMainImagedialog(context, getString(R.string.sure_you_want_to_delete_this_image), mainImgDeleteId);
 
     }
 
@@ -211,12 +216,8 @@ public class MyPostedImagesActivity extends AppCompatActivity {
                 .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
 
-                        if (!mainImgDeleteId.equalsIgnoreCase("")) {
-                            deleteMainImageAPI(userid);
-                            mainImgDeleteId="";
-                        } else {
-                            deleteImageAPI(userid);
-                        }
+                        deleteImageAPI(userid);
+
                     }
 
 
@@ -226,21 +227,53 @@ public class MyPostedImagesActivity extends AppCompatActivity {
         alert.show();
     }
 
+
+    public void deletemMainImagedialog(Context context, String tittle, String userid) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle(tittle)
+                .setCancelable(false)
+                .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                })
+                .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+
+                        deleteMainImageAPI(userid);
+                        mainImgDeleteId = "";
+
+                    }
+
+
+                });
+        final AlertDialog alert = builder.create();
+
+        alert.show();
+    }
+
+
     private void deleteImageAPI(String id) {
         if (connectionDetector.isConnectingToInternet()) {
             String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-//            progress = dialogUtil.showProgressDialog(context, context.getString(R.string.please_wait));
+            progress = dialogUtil.showProgressDialog(context, context.getString(R.string.please_wait));
             appController.paServices.RemoveImage(String.valueOf(user.getId()), id, new Callback<RemoveImageRoot>() {
                 @Override
                 public void success(RemoveImageRoot removeImageRoot, Response response) {
                     if (removeImageRoot.getStatus().equalsIgnoreCase("1")) {
+                        progress.dismiss();
 
                         getallPostedImage();
+                    } else {
+                        progress.dismiss();
                     }
                 }
 
                 @Override
                 public void failure(RetrofitError retrofitError) {
+                    progress.dismiss();
                     Log.e("error", retrofitError.toString());
                 }
             });
@@ -253,24 +286,27 @@ public class MyPostedImagesActivity extends AppCompatActivity {
     public void Binding() {
         if (connectionDetector.isConnectingToInternet()) {
             String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-//            progress = dialogUtil.showProgressDialog(My_ProfileActivity.this, getString(R.string.please_wait));
+            progress = dialogUtil.showProgressDialog(MyPostedImagesActivity.this, getString(R.string.please_wait));
             appController.paServices.TherapistProfile(String.valueOf(user.getId()), new Callback<ProfileDM>() {
                 @Override
                 public void success(ProfileDM profileDM, Response response) {
-//                    progress.dismiss();
+                    progress.dismiss();
                     if (profileDM.getStatus().equalsIgnoreCase("1")) {
-                        mainImgDeleteId = profileDM.getUser_data().get(0).getId();
 
                         if (profileDM.getUser_data().get(0).getImage() != null) {
+                            mainImgDeleteId = profileDM.getUser_data().get(0).getId();
 
+                            progress.dismiss();
 
                             Picasso.with(context).load(AppController.THERAPIST_IMAGE + profileDM.getUser_data().get(0).getImage()).placeholder(R.drawable.black_transparent_gradient).into(mainRoundedImg);
                             mainImgLL.setVisibility(View.VISIBLE);
                         } else {
+                            progress.dismiss();
                             mainImgLL.setVisibility(View.GONE);
 
                         }
                     } else {
+                        progress.dismiss();
 //                        Helper.showToast(MyPostedImagesActivity.this, getString(R.string.Api_data_not_found));
                         mainImgLL.setVisibility(View.GONE);
                     }
@@ -279,6 +315,7 @@ public class MyPostedImagesActivity extends AppCompatActivity {
 
                 @Override
                 public void failure(RetrofitError retrofitError) {
+                    progress.dismiss();
                     Log.e("error", retrofitError.toString());
                 }
             });
@@ -291,11 +328,12 @@ public class MyPostedImagesActivity extends AppCompatActivity {
     private void deleteMainImageAPI(String id) {
         if (connectionDetector.isConnectingToInternet()) {
             String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-//            progress = dialogUtil.showProgressDialog(context, context.getString(R.string.please_wait));
+            progress = dialogUtil.showProgressDialog(context, context.getString(R.string.please_wait));
             appController.paServices.Remove_Pic(id, new Callback<RemoveImageRoot>() {
                 @Override
                 public void success(RemoveImageRoot removeImageRoot, Response response) {
                     if (removeImageRoot.getStatus().equalsIgnoreCase("1")) {
+                        progress.dismiss();
                         mainImgDeleteId = "";
                         mainImgLL.setVisibility(View.GONE);
                         Binding();
@@ -304,6 +342,7 @@ public class MyPostedImagesActivity extends AppCompatActivity {
 
                 @Override
                 public void failure(RetrofitError retrofitError) {
+                    progress.dismiss();
                     Log.e("error", retrofitError.toString());
                 }
             });
@@ -320,6 +359,7 @@ public class MyPostedImagesActivity extends AppCompatActivity {
     public void addMultipleImage() {
         openGalley();
     }
+
     private void openGalley() {
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -327,7 +367,9 @@ public class MyPostedImagesActivity extends AppCompatActivity {
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, getString(R.string.add_multiple_images)), ADD_MORE_IMAGE);
     }
+
     Bitmap bitmap;
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -338,9 +380,9 @@ public class MyPostedImagesActivity extends AppCompatActivity {
 
                 for (int i = 0; i < x; i++) {
                     try {
-                        bitmap= MediaStore.Images.Media.getBitmap(MyPostedImagesActivity.this.getContentResolver(),data.getClipData().getItemAt(i).getUri());
+                        bitmap = MediaStore.Images.Media.getBitmap(MyPostedImagesActivity.this.getContentResolver(), data.getClipData().getItemAt(i).getUri());
 //                        list.add(data.getClipData().getItemAt(i).getUri());
-                        addMultipleImageAPI(bitmap,i);
+                        addMultipleImageAPI(bitmap, i);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -356,7 +398,6 @@ public class MyPostedImagesActivity extends AppCompatActivity {
     }
 
 
-
     public void addMultipleImageAPI(Bitmap bitmap, int i) {
         if (connectionDetector.isConnectingToInternet()) {
 
@@ -369,7 +410,7 @@ public class MyPostedImagesActivity extends AppCompatActivity {
 //                Bitmap bitmapMainImg = MediaStore.Images.Media.getBitmap(About_You_Activity.this.getContentResolver(), Uri.parse(String.valueOf(profileCircleImg.getDrawable())));
                 Bitmap bitmapMainImg = bitmap;
 
-                File f = new File(MyPostedImagesActivity.this.getCacheDir(), "temp.jpg"+i);
+                File f = new File(MyPostedImagesActivity.this.getCacheDir(), "temp.jpg" + i);
                 f.createNewFile();
 
 //                    Bitmap one = ((BitmapDrawable) profile_RoundedImgView.getDrawable()).getBitmap();
@@ -388,7 +429,7 @@ public class MyPostedImagesActivity extends AppCompatActivity {
 //                        .setTargetLength(200)
 //                        .setQuality(100)
                         .setOutputFormat("JPEG")
-                        .setOutputFilename("resized_image1"+i)
+                        .setOutputFilename("resized_image1" + i)
                         .setSourceImage(f)
                         .getResizedFile();
                 multipartTypedOutput.addPart("other_image[]", new TypedFile("image/jpg", resizedImage));
@@ -406,7 +447,7 @@ public class MyPostedImagesActivity extends AppCompatActivity {
 
                     if (addMultipleImageRoot.getStatus().equalsIgnoreCase("1")) {
                         getallPostedImage();
-                     } else {
+                    } else {
 
                     }
                 }
