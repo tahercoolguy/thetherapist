@@ -8,6 +8,7 @@ import com.master.design.therapist.Adapter.TherapistEducationDM;
 import com.master.design.therapist.DataModel.AddMultipleImageRoot;
 import com.master.design.therapist.DataModel.Cancel_Friend_RequestDM;
 import com.master.design.therapist.DataModel.ChatHistoryDM;
+import com.master.design.therapist.DataModel.ChatHistoryRoot;
 import com.master.design.therapist.DataModel.ChatlistDM;
 import com.master.design.therapist.DataModel.ChatroomDM;
 import com.master.design.therapist.DataModel.Edit_ProfileDM;
@@ -256,5 +257,9 @@ public interface PAServices {
     // 29
     @POST("/search")
     void Search_User(@Body MultipartTypedOutput multipartTypedOutput, Callback<TherapistHomeDM> therapistHomeDMCallback);
+
+//    // 30
+//    @POST("/chathistory")
+//    void Chat_History(@Body MultipartTypedOutput multipartTypedOutput, Callback<ChatHistoryRoot> chatHistoryRootCallback);
 
 }

@@ -390,8 +390,8 @@ public class MyPostedImagesActivity extends AppCompatActivity {
                 }
 
 
-            } else {
-                showdialogNoData(context, getString(R.string.select_multiiple_images), getString(R.string.select_multiple_images_to_upload));
+            }else{
+                showdialogNoData(context, getString(R.string.select_multiiple_images),getString(R.string.select_multiple_images_to_upload));
             }
 
         }

@@ -1,11 +1,15 @@
 package com.master.design.therapist.Activity;
 
+import static com.master.design.therapist.Activity.MyPostedImagesActivity.ADD_MORE_IMAGE;
+
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
@@ -16,10 +20,15 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.karumi.dexter.Dexter;
@@ -28,9 +37,11 @@ import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.master.design.therapist.Adapter.AddImageAdapter;
 import com.master.design.therapist.Adapter.Education_details;
 import com.master.design.therapist.Adapter.TherapistEducationDM;
 import com.master.design.therapist.Controller.AppController;
+import com.master.design.therapist.DataModel.AddMultipleImageRoot;
 import com.master.design.therapist.DataModel.Ethnic_details;
 import com.master.design.therapist.DataModel.TherapistAgeDM;
 import com.master.design.therapist.DataModel.TherapistEthnicDM;
@@ -71,8 +82,11 @@ public class About_You_Activity extends AppCompatActivity {
     User user;
     DialogUtil dialogUtil;
     Dialog progress;
-    String multipartTypedOutput ;
-
+    String multipartTypedOutput;
+    ArrayList<Uri> list;
+    String colum[] = {
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_EXTERNAL_STORAGE};
     String username;
     String date;
     String selectCountry;
@@ -83,21 +97,27 @@ public class About_You_Activity extends AppCompatActivity {
     String password;
     String confirmPassword;
     String InterestIdList;
-    String name,id,age;
+    String name, id, age;
 
     @BindView(R.id.aboutYouET)
     EditText aboutYouET;
 
-    @BindView(R.id. educationET)
+    @BindView(R.id.educationET)
     TextView educationET;
 
     @BindView(R.id.profileCircleImg)
     RoundedImageView profileCircleImg;
 
+    @BindView(R.id.multipleImageRcv)
+    RecyclerView multipleImageRcv;
+
+    @BindView(R.id.addMultipleImgRL)
+    RelativeLayout addMultipleImgRL;
 
 
     ArrayList<DataChangeDM> arrayList = new ArrayList();
     BottomForAll bottomForAll;
+
     @OnClick(R.id.educationET)
     public void educationET() {
         bottomForAll = new BottomForAll();
@@ -116,32 +136,54 @@ public class About_You_Activity extends AppCompatActivity {
         bottomForAll.show(About_You_Activity.this.getSupportFragmentManager(), "bottomSheetCountry");
     }
 
+
+    @OnClick(R.id.addMultipleImgRL)
+    public void clickaddMultipleImgRL() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, getString(R.string.add_multiple_images)), ADD_MORE_IMAGE);
+    }
+
+    AddImageAdapter adaptor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_you);
         ButterKnife.bind(this);
-        appController = (AppController)  getApplicationContext();
+        appController = (AppController) getApplicationContext();
         connectionDetector = new ConnectionDetector(About_You_Activity.this);
         user = new User(About_You_Activity.this);
         dialogUtil = new DialogUtil();
         context = this.getApplicationContext();
         activity = this;
-
-        username=getIntent().getStringExtra("userName");
-        date=getIntent().getStringExtra("date");
-        selectCountry=getIntent().getStringExtra("selectCountry");
-        gender=getIntent().getStringExtra("gender");
-        ethenicity=getIntent().getStringExtra("ethnicity");
-        mobilenumber=getIntent().getStringExtra("mobileNumber");
-        email=getIntent().getStringExtra("email");
-        password=getIntent().getStringExtra("password");
-        confirmPassword=getIntent().getStringExtra("confirmPassword");
-        InterestIdList=getIntent().getStringExtra("InterestIdlist");
-        age=getIntent().getStringExtra("age");
+        if ((ActivityCompat.checkSelfPermission(
+                this, colum[0]) != PackageManager.PERMISSION_GRANTED) &&
+                (ActivityCompat.checkSelfPermission(
+                        this, colum[1]) != PackageManager.PERMISSION_GRANTED)) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(colum, ADD_MORE_IMAGE);
+            }
+        }
+        username = getIntent().getStringExtra("userName");
+        date = getIntent().getStringExtra("date");
+        selectCountry = getIntent().getStringExtra("selectCountry");
+        gender = getIntent().getStringExtra("gender");
+        ethenicity = getIntent().getStringExtra("ethnicity");
+        mobilenumber = getIntent().getStringExtra("mobileNumber");
+        email = getIntent().getStringExtra("email");
+        password = getIntent().getStringExtra("password");
+        confirmPassword = getIntent().getStringExtra("confirmPassword");
+        InterestIdList = getIntent().getStringExtra("InterestIdlist");
+        age = getIntent().getStringExtra("age");
 
         BindingEducation();
-
+        list = new ArrayList<>();
+        adaptor = new AddImageAdapter(list, "1");
+        multipleImageRcv.setLayoutManager(new LinearLayoutManager(About_You_Activity.this, LinearLayoutManager.HORIZONTAL, false));
+        multipleImageRcv.setAdapter(adaptor);
 
     }
 
@@ -154,8 +196,7 @@ public class About_You_Activity extends AppCompatActivity {
 
     @SuppressLint("SuspiciousIndentation")
     @OnClick(R.id.signUpTxt)
-    public void clicksignUpTxt()
-    {
+    public void clicksignUpTxt() {
 
 //        if(connectionDetector.isConnectingToInternet())
 //        {
@@ -202,27 +243,25 @@ public class About_You_Activity extends AppCompatActivity {
         }
         if (correct) {
 
-            if(connectionDetector.isConnectingToInternet())
-        {
-            String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+            if (connectionDetector.isConnectingToInternet()) {
+                String refreshedToken = FirebaseInstanceId.getInstance().getToken();
 
-            progress = dialogUtil.showProgressDialog(About_You_Activity.this, getString(R.string.please_wait));
-
+                progress = dialogUtil.showProgressDialog(About_You_Activity.this, getString(R.string.please_wait));
 
 
-            MultipartTypedOutput multipartTypedOutput = new MultipartTypedOutput();
-            multipartTypedOutput.addPart("name", new TypedString(username));
-            multipartTypedOutput.addPart("dob", new TypedString(date));
-            multipartTypedOutput.addPart("country", new TypedString(selectCountry));
-            multipartTypedOutput.addPart("gender", new TypedString(gender));
-            multipartTypedOutput.addPart("ethnicity", new TypedString(ethenicity));
-            multipartTypedOutput.addPart("email", new TypedString(email));
-            multipartTypedOutput.addPart("password", new TypedString(password));
-            multipartTypedOutput.addPart("confirm_password", new TypedString(confirmPassword));
-            multipartTypedOutput.addPart("interests", new TypedString(InterestIdList));
-            multipartTypedOutput.addPart("device_type", new TypedString("2"));
-            multipartTypedOutput.addPart("device_token", new TypedString(refreshedToken));
-            multipartTypedOutput.addPart("age", new TypedString(age));
+                MultipartTypedOutput multipartTypedOutput = new MultipartTypedOutput();
+                multipartTypedOutput.addPart("name", new TypedString(username));
+                multipartTypedOutput.addPart("dob", new TypedString(date));
+                multipartTypedOutput.addPart("country", new TypedString(selectCountry));
+                multipartTypedOutput.addPart("gender", new TypedString(gender));
+                multipartTypedOutput.addPart("ethnicity", new TypedString(ethenicity));
+                multipartTypedOutput.addPart("email", new TypedString(email));
+                multipartTypedOutput.addPart("password", new TypedString(password));
+                multipartTypedOutput.addPart("confirm_password", new TypedString(confirmPassword));
+                multipartTypedOutput.addPart("interests", new TypedString(InterestIdList));
+                multipartTypedOutput.addPart("device_type", new TypedString("2"));
+                multipartTypedOutput.addPart("device_token", new TypedString(refreshedToken));
+                multipartTypedOutput.addPart("age", new TypedString(age));
 
 //            try
 //            {
@@ -256,80 +295,80 @@ public class About_You_Activity extends AppCompatActivity {
 //            } catch (Exception e) {
 //                Log.e("Error", e.toString());
 //            }
-            try {
-                // You can update this bitmap to your server
+                try {
+                    // You can update this bitmap to your server
 
 //                Bitmap bitmapMainImg = MediaStore.Images.Media.getBitmap(About_You_Activity.this.getContentResolver(), Uri.parse(String.valueOf(profileCircleImg.getDrawable())));
-                Bitmap bitmapMainImg = bitmap;
+                    Bitmap bitmapMainImg = bitmap;
 
-                File f = new File(About_You_Activity.this.getCacheDir(), "temp.jpg");
-                f.createNewFile();
+                    File f = new File(About_You_Activity.this.getCacheDir(), "temp.jpg");
+                    f.createNewFile();
 
 //                    Bitmap one = ((BitmapDrawable) profile_RoundedImgView.getDrawable()).getBitmap();
 //Convert bitmap to byte array
-                Bitmap bitmap = bitmapMainImg;
-                ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
-                byte[] bitmapdata = bos.toByteArray();
+                    Bitmap bitmap = bitmapMainImg;
+                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
+                    byte[] bitmapdata = bos.toByteArray();
 
 //write the bytes in file
-                FileOutputStream fos = new FileOutputStream(f);
-                fos.write(bitmapdata);
-                fos.flush();
-                fos.close();
-                File resizedImage = new Resizer(About_You_Activity.this)
+                    FileOutputStream fos = new FileOutputStream(f);
+                    fos.write(bitmapdata);
+                    fos.flush();
+                    fos.close();
+                    File resizedImage = new Resizer(About_You_Activity.this)
 //                        .setTargetLength(200)
 //                        .setQuality(100)
-                        .setOutputFormat("JPEG")
-                        .setOutputFilename("resized_image1")
-                        .setSourceImage(f)
-                        .getResizedFile();
-                multipartTypedOutput.addPart("image", new TypedFile("image/jpg", resizedImage));
+                            .setOutputFormat("JPEG")
+                            .setOutputFilename("resized_image1")
+                            .setSourceImage(f)
+                            .getResizedFile();
+                    multipartTypedOutput.addPart("image", new TypedFile("image/jpg", resizedImage));
 
 
-            } catch (Exception e) {
-                Log.e("Error", e.toString());
-            }
+                } catch (Exception e) {
+                    Log.e("Error", e.toString());
+                }
 
-            multipartTypedOutput.addPart("aboutyou", new TypedString(aboutYouET.getText().toString()));
-            multipartTypedOutput.addPart("education", new TypedString(id));
-            multipartTypedOutput.addPart("phone", new TypedString(mobilenumber));
-
-
+                multipartTypedOutput.addPart("aboutyou", new TypedString(aboutYouET.getText().toString()));
+                multipartTypedOutput.addPart("education", new TypedString(id));
+                multipartTypedOutput.addPart("phone", new TypedString(mobilenumber));
 
 
-            appController.paServices.TherapistRegister(multipartTypedOutput,new Callback<TherapistRegisterDM>() {
+                appController.paServices.TherapistRegister(multipartTypedOutput, new Callback<TherapistRegisterDM>() {
 
-                @Override
+                    @Override
 
-                public void success(TherapistRegisterDM therapistRegisterDM, Response response ) {
-                    progress.dismiss();
-                    if (therapistRegisterDM.getStatus().equalsIgnoreCase("1")) {
+                    public void success(TherapistRegisterDM therapistRegisterDM, Response response) {
+                        progress.dismiss();
+                        if (therapistRegisterDM.getStatus().equalsIgnoreCase("1")) {
 
 
-                         user.setId(Integer.valueOf(therapistRegisterDM.getUser_id()));
+                            user.setId(Integer.valueOf(therapistRegisterDM.getUser_id()));
 
-                        startActivity(new Intent(About_You_Activity.this, ThankYouActivity.class));
+                            startActivity(new Intent(About_You_Activity.this, ThankYouActivity.class));
 
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ECLAIR) {
-                            overridePendingTransition(R.anim.fade_in, R.anim.fade_in);
-                        }
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ECLAIR) {
+                                overridePendingTransition(R.anim.fade_in, R.anim.fade_in);
+                            }
+                            String userID = therapistRegisterDM.getUser_id();
+                            addMultipleImageAPI(userID);
 
-                    } else
+
+                        } else
                             Helper.showToast(About_You_Activity.this, therapistRegisterDM.getMsg());
                     }
 
                     @Override
-                    public void failure ( RetrofitError retrofitError ) {
+                    public void failure(RetrofitError retrofitError) {
                         progress.dismiss();
                         Log.e("error", retrofitError.toString());
 
                     }
                 });
 
-        }else
-            Helper.showToast(About_You_Activity.this,getString(R.string.no_internet_connection));
-
+            } else
+                Helper.showToast(About_You_Activity.this, getString(R.string.no_internet_connection));
 
 
         }
@@ -339,6 +378,82 @@ public class About_You_Activity extends AppCompatActivity {
 ////        overridePendingTransition(R.anim.fade_in, R.anim.fade_in);
     }
 
+
+    public void addMultipleImageAPI(String userID) {
+
+        for (int i = 0; i < list.size(); i++) {
+            if (connectionDetector.isConnectingToInternet()) {
+
+                MultipartTypedOutput multipartTypedOutput = new MultipartTypedOutput();
+                multipartTypedOutput.addPart("the_user", new TypedString(userID));
+
+                try {
+                    // You can update this bitmap to your server
+
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(About_You_Activity.this.getContentResolver(),  list.get(i));
+//                    Bitmap bitmapMainImg = bitmap;
+
+                    File f = new File(About_You_Activity.this.getCacheDir(), "temp.jpg" + i);
+                    f.createNewFile();
+
+//                    Bitmap one = ((BitmapDrawable) profile_RoundedImgView.getDrawable()).getBitmap();
+//Convert bitmap to byte array
+//                Bitmap bitmap = bitmapMainImg;
+                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
+                    byte[] bitmapdata = bos.toByteArray();
+
+//write the bytes in file
+                    FileOutputStream fos = new FileOutputStream(f);
+                    fos.write(bitmapdata);
+                    fos.flush();
+                    fos.close();
+                    File resizedImage = new Resizer(About_You_Activity.this)
+//                        .setTargetLength(200)
+//                        .setQuality(100)
+                            .setOutputFormat("JPEG")
+                            .setOutputFilename("resized_image1" + i)
+                            .setSourceImage(f)
+                            .getResizedFile();
+                    multipartTypedOutput.addPart("other_image[]", new TypedFile("image/jpg", resizedImage));
+
+
+                } catch (Exception e) {
+                    Log.e("Error", e.toString());
+                }
+                progress = dialogUtil.showProgressDialog(About_You_Activity.this, getString(R.string.please_wait));
+
+                appController.paServices.Add_Multiple_Images(multipartTypedOutput, new Callback<AddMultipleImageRoot>() {
+                    @Override
+                    public void success(AddMultipleImageRoot addMultipleImageRoot, Response response) {
+                        progress.dismiss();
+
+                        if (addMultipleImageRoot.getStatus().equalsIgnoreCase("1")) {
+                            progress.dismiss();
+
+                        } else {
+
+                            progress.dismiss();
+                        }
+                    }
+
+                    @Override
+                    public void failure(RetrofitError retrofitError) {
+                        progress.dismiss();
+
+                        Log.e("error", retrofitError.toString());
+
+                    }
+                });
+            } else {
+                Helper.showToast(About_You_Activity.this, getString(R.string.no_internet_connection));
+            }
+        }
+
+
+    }
+
+
     boolean ifimg1 = false;
 
     @OnClick(R.id.addImgRL)
@@ -346,7 +461,9 @@ public class About_You_Activity extends AppCompatActivity {
         ifimg1 = true;
         OpenImage();
     }
+
     Bitmap bitmap;
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE) {
@@ -354,10 +471,10 @@ public class About_You_Activity extends AppCompatActivity {
                 Uri uri = data.getParcelableExtra("path");
                 try {
                     // You can update this bitmap to your server
-                      bitmap = MediaStore.Images.Media.getBitmap(About_You_Activity.this.getContentResolver(), uri);
+                    bitmap = MediaStore.Images.Media.getBitmap(About_You_Activity.this.getContentResolver(), uri);
 
                     profileCircleImg.setVisibility(View.VISIBLE);
-                   profileCircleImg.setImageBitmap(bitmap);
+                    profileCircleImg.setImageBitmap(bitmap);
                     ifimg1 = true;
 //                    EditProfileImageAPI();
 
@@ -368,7 +485,50 @@ public class About_You_Activity extends AppCompatActivity {
                 }
             }
         }
+
+
+        if (requestCode == ADD_MORE_IMAGE && resultCode == RESULT_OK) {
+            if (data.getClipData() != null && data.getClipData().getItemCount() > 1) {
+                int x = data.getClipData().getItemCount();
+
+                for (int i = 0; i < x; i++) {
+                    try {
+                        bitmap = MediaStore.Images.Media.getBitmap(About_You_Activity.this.getContentResolver(), data.getClipData().getItemAt(i).getUri());
+                        list.add(data.getClipData().getItemAt(i).getUri());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    if(i>x){
+
+                    }
+                }
+                adaptor.notifyDataSetChanged();
+
+
+            } else {
+                showdialogNoData(context, getString(R.string.select_multiiple_images), getString(R.string.select_multiple_images_to_upload));
+            }
+
+        }
+
+
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    public void showdialogNoData(Context context, String tittle, String msg) {
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(context);
+        builder.setTitle(tittle)
+                .setMessage(msg)
+                .setCancelable(false)
+                .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        final android.app.AlertDialog alert = builder.create();
+
+        alert.show();
     }
 
     public void OpenImage() {
@@ -414,7 +574,7 @@ public class About_You_Activity extends AppCompatActivity {
             public void selectVideoFromGallery() {
 
             }
-        },false);
+        }, false);
     }
 
     private void launchCameraIntent() {
@@ -482,8 +642,7 @@ public class About_You_Activity extends AppCompatActivity {
         }
     }
 
-    public void BindingEducation()
-    {
+    public void BindingEducation() {
         if (connectionDetector.isConnectingToInternet()) {
             String refreshedToken = FirebaseInstanceId.getInstance().getToken();
             progress = dialogUtil.showProgressDialog(About_You_Activity.this, getString(R.string.please_wait));

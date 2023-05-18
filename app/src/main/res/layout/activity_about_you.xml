@@ -35,6 +35,13 @@
             android:textSize="@dimen/text_size_Heading"
             android:textStyle="bold"></TextView>
 
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="@string/add_your_profile_main_image"></TextView>
+
         <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -42,28 +49,28 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="10dp"
                 android:orientation="horizontal">
 
                 <com.makeramen.roundedimageview.RoundedImageView
                     android:id="@+id/profileCircleImg"
                     android:layout_width="140dp"
                     android:layout_height="190dp"
-                    android:visibility="gone"
                     android:layout_margin="10dp"
                     android:elevation="@dimen/elevation"
-                    app:riv_corner_radius="20dp"
-                    android:scaleType="centerCrop"></com.makeramen.roundedimageview.RoundedImageView>
+                    android:scaleType="centerCrop"
+                    android:visibility="gone"
+                    app:riv_corner_radius="20dp"></com.makeramen.roundedimageview.RoundedImageView>
 
-<!--                <ImageView-->
-<!--                    android:id="@+id/profileCircleImg"-->
-<!--                    android:layout_width="140dp"-->
-<!--                    android:layout_height="190dp"-->
-<!--                    android:visibility="gone"-->
-<!--                    android:layout_margin="10dp"-->
-<!--                    android:elevation="@dimen/elevation"-->
-<!--                    app:riv_corner_radius="20dp"-->
-<!--                    android:scaleType="centerCrop"></ImageView>-->
+                <!--                <ImageView-->
+                <!--                    android:id="@+id/profileCircleImg"-->
+                <!--                    android:layout_width="140dp"-->
+                <!--                    android:layout_height="190dp"-->
+                <!--                    android:visibility="gone"-->
+                <!--                    android:layout_margin="10dp"-->
+                <!--                    android:elevation="@dimen/elevation"-->
+                <!--                    app:riv_corner_radius="20dp"-->
+                <!--                    android:scaleType="centerCrop"></ImageView>-->
 
 
                 <RelativeLayout
@@ -85,7 +92,46 @@
             </LinearLayout>
 
         </HorizontalScrollView>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="@string/add_more_images_of_you"></TextView>
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <RelativeLayout
+                android:id="@+id/addMultipleImgRL"
+                android:layout_width="134dp"
+                android:layout_height="190dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/rectangle_white_grey_border"
+                android:elevation="@dimen/elevation"
+                android:padding="10dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/ic_add_image"></ImageView>
+            </RelativeLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:id="@+id/multipleImageRcv"
+                android:orientation="horizontal"
+                android:layout_margin="10dp"
+
+                android:layout_height="wrap_content"></androidx.recyclerview.widget.RecyclerView>
+        </LinearLayout>
+
+        </HorizontalScrollView>
 
         <TextView
             android:layout_width="match_parent"

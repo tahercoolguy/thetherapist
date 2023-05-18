@@ -133,16 +133,28 @@ public class Adapter_Friends extends RecyclerView.Adapter<Adapter_Friends.ViewHo
                         public void success(ChatroomDM chatroomDM, Response response) {
                             progress.dismiss();
                             if (chatroomDM.getStatus().equalsIgnoreCase("1")) {
+                                Intent intent = null;
+                                if (chatroomDM.getRoom_id() != null) {
+                                    intent = new Intent(context, Conversation_Activity.class);
+                                    intent.putExtra("FriendId", arrayList.get(position).getId());
+                                    intent.putExtra("image", AppController.THERAPIST_IMAGE + arrayList.get(position).getImage());
+                                    intent.putExtra("Name", arrayList.get(position).getName());
+                                    intent.putExtra("chatRoomID", chatroomDM.getRoom_id());
+                                }else{
+                                    intent = new Intent(context, Conversation_Activity.class);
+                                    intent.putExtra("FriendId", arrayList.get(position).getId());
+                                    intent.putExtra("image", AppController.THERAPIST_IMAGE + arrayList.get(position).getImage());
+                                    intent.putExtra("Name", arrayList.get(position).getName());
+                                    intent.putExtra("chatRoomID", chatroomDM.getRoom_id());
+                                }
 
 
-                                Intent intent = new Intent(context, Conversation_Activity.class);
-                                intent.putExtra("FriendId", arrayList.get(position).getId());
-                                intent.putExtra("image", AppController.THERAPIST_IMAGE + arrayList.get(position).getImage());
-                                intent.putExtra("Name", arrayList.get(position).getName());
                                 context.startActivity(intent);
-                                Helper.showToast(context, chatroomDM.getMsg());
-                            } else
-                                Helper.showToast(context, chatroomDM.getMsg());
+//                                Helper.showToast(context, chatroomDM.getMsg());
+                            } else {
+                                //                                Helper.showToast(context, chatroomDM.getMsg());
+
+                            }
                         }
 
                         @Override
@@ -161,7 +173,7 @@ public class Adapter_Friends extends RecyclerView.Adapter<Adapter_Friends.ViewHo
         viewHolder.removeFriendImgBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onItemClickListener.removeFriend(position,arrayList.get(position).getId());
+                onItemClickListener.removeFriend(position, arrayList.get(position).getId());
 
             }
         });
@@ -204,6 +216,6 @@ public class Adapter_Friends extends RecyclerView.Adapter<Adapter_Friends.ViewHo
     public interface OnItemClickListener {
 
 
-        void removeFriend(int position,String userId);
+        void removeFriend(int position, String userId);
     }
 }

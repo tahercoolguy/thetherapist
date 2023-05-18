@@ -37,8 +37,10 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.master.design.therapist.Adapter.MessageChatAdapter;
 import com.master.design.therapist.Controller.AppController;
 import com.master.design.therapist.DM.MessageChatModel;
+import com.master.design.therapist.DataModel.AddMultipleImageRoot;
 import com.master.design.therapist.DataModel.All_messages;
 import com.master.design.therapist.DataModel.ChatHistoryDM;
+import com.master.design.therapist.DataModel.ChatHistoryRoot;
 import com.master.design.therapist.DataModel.TherapistInterestDM;
 import com.master.design.therapist.Helper.DialogUtil;
 import com.master.design.therapist.Helper.User;
@@ -50,6 +52,9 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -61,6 +66,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 import dev.gustavoavila.websocketclient.WebSocketClient;
+import me.echodev.resizer.Resizer;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.WebSocket;
@@ -68,6 +74,9 @@ import okhttp3.WebSocketListener;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import retrofit.mime.MultipartTypedOutput;
+import retrofit.mime.TypedFile;
+import retrofit.mime.TypedString;
 
 public class Conversation_Activity extends AppCompatActivity {
 
@@ -88,7 +97,7 @@ public class Conversation_Activity extends AppCompatActivity {
     ImageView notificationImg;
     @BindView(R.id.messageET)
     EditText messageET;
-   public MessageChatAdapter adapter;
+    public MessageChatAdapter adapter;
     String name, image;
     LinearLayoutManager lm;
 
@@ -98,10 +107,10 @@ public class Conversation_Activity extends AppCompatActivity {
     ConnectionDetector connectionDetector;
     User user;
     DialogUtil dialogUtil;
-    String FriendsId;
+    String FriendsId, chatRoomID;
     String user_id;
-    String message,Id,status,messageId,type;
-   String statusCheck="send";
+    String message, Id, status, messageId, type;
+    String statusCheck = "send";
     @BindView(R.id.sendImg)
     ImageView sendImg;
     @BindView(R.id.addImg)
@@ -124,6 +133,7 @@ public class Conversation_Activity extends AppCompatActivity {
         name = getIntent().getStringExtra("Name");
         image = getIntent().getStringExtra("image");
         FriendsId = getIntent().getStringExtra("FriendId");
+        chatRoomID = getIntent().getStringExtra("chatRoomID");
         userNameTxt.setText(name);
         Picasso.with(context).load(image).into(profileCircleImg);
 
@@ -191,8 +201,8 @@ public class Conversation_Activity extends AppCompatActivity {
 
                         messageChatModelList = chatHistoryDM.getAll_messages();
 
-                        adapter = new MessageChatAdapter(messageChatModelList, context, FriendsId,status);
-                        lm = new LinearLayoutManager(Conversation_Activity.this,LinearLayoutManager.VERTICAL,false);
+                        adapter = new MessageChatAdapter(messageChatModelList, context, FriendsId, status);
+                        lm = new LinearLayoutManager(Conversation_Activity.this, LinearLayoutManager.VERTICAL, false);
 
                         rcvRcv.setAdapter(adapter);
                         rcvRcv.setLayoutManager(lm);
@@ -200,8 +210,9 @@ public class Conversation_Activity extends AppCompatActivity {
                         lm.setReverseLayout(false);
 
 
-                    } else
+                    } else {
                         Helper.showToast(Conversation_Activity.this, chatHistoryDM.getMsg());
+                    }
                 }
 
                 @Override
@@ -241,7 +252,7 @@ public class Conversation_Activity extends AppCompatActivity {
 //            jsonObject.addProperty("sender_id", user_id);
 
 
-            String ne = "{\"type\":\"chat_message\",\"message\":\""+msg+"\",\"status\":\"send\",\"sender_id\":"+user_id+"}";
+            String ne = "{\"type\":\"chat_message\",\"message\":\"" + msg + "\",\"status\":\"send\",\"sender_id\":" + user_id + "}";
             webSocketClient.send(ne);
             messageET.setText("");
         }
@@ -409,14 +420,13 @@ public class Conversation_Activity extends AppCompatActivity {
     }
 
 
-        private WebSocketClient webSocketClient;
+    private WebSocketClient webSocketClient;
 
-        public void createWebSocketClient() {
+    public void createWebSocketClient() {
         URI uri;
         try {
-            uri = new URI("ws://207.154.215.156:8000/ws/chat/1/");
-        }
-        catch (URISyntaxException e) {
+            uri = new URI("ws://207.154.215.156:8000/ws/chat/" + chatRoomID + "/");
+        } catch (URISyntaxException e) {
             e.printStackTrace();
             return;
         }
@@ -438,62 +448,61 @@ public class Conversation_Activity extends AppCompatActivity {
                     Log.d("My App", obj.toString());
 //                    Log.d("phonetype value ", obj.getString("phonetype"));
                     status = obj.getString("status");
-                        if(status.equalsIgnoreCase("send")) {
-                            message = obj.getString("message");
-                            Id = obj.getString("sender_id");
-                            status = obj.getString("status");
+                    if (status.equalsIgnoreCase("send")) {
+                        message = obj.getString("message");
+                        Id = obj.getString("sender_id");
+                        status = obj.getString("status");
+                        messageId = obj.getString("message_id");
+
+                        if (Id == user_id) {
+
                             messageId = obj.getString("message_id");
-
-                            if (Id == user_id) {
-
-                                messageId = obj.getString("message_id");
 //                            All_messages model = new All_messages();
 //                            model.setStatus(status);
 //                            messageChatModelList.add(model);
 
-                                JsonObject jsonObject = new JsonObject();
+                            JsonObject jsonObject = new JsonObject();
 
 // Add properties to the JsonObject
-                                jsonObject.addProperty("type", "delivered_message");
-                                jsonObject.addProperty("message_id", messageId);
-                                jsonObject.addProperty("status", "delivered");
-                                jsonObject.addProperty("sender_id", user_id);
+                            jsonObject.addProperty("type", "delivered_message");
+                            jsonObject.addProperty("message_id", messageId);
+                            jsonObject.addProperty("status", "delivered");
+                            jsonObject.addProperty("sender_id", user_id);
 //            jsonObject.addProperty("sender_id", user_id);
 
 
-                                String ne = "{\"type\":\"delivered_message\",\"message_id\":\"+messageId+\",\"status\":\"delivered\",\"sender_id\":"+user_id+"}";
-                                webSocketClient.send(ne);
+                            String ne = "{\"type\":\"delivered_message\",\"message_id\":\"+messageId+\",\"status\":\"delivered\",\"sender_id\":" + user_id + "}";
+                            webSocketClient.send(ne);
 
-                                All_messages model = new All_messages();
-                                model.setMessage(message);
-                                model.setReceiver_user(FriendsId);
-                                model.setSender_user(user_id);
-                                model.setStatus(status);
-                                messageChatModelList.add(model);
+                            All_messages model = new All_messages();
+                            model.setMessage(message);
+                            model.setReceiver_user(FriendsId);
+                            model.setSender_user(user_id);
+                            model.setStatus(status);
+                            messageChatModelList.add(model);
 
-                                rcvRcv.smoothScrollToPosition(messageChatModelList.size());
+                            rcvRcv.smoothScrollToPosition(messageChatModelList.size());
 //                              messageET.setText("");
-                                adapter.notifyDataSetChanged();
-                                rcvRcv.scrollToPosition(messageChatModelList.size());
-                            } else {
+                            adapter.notifyDataSetChanged();
+                            rcvRcv.scrollToPosition(messageChatModelList.size());
+                        } else {
 
-                                All_messages model = new All_messages();
-                                model.setMessage(message);
-                                model.setReceiver_user(user_id);
-                                model.setSender_user(Id);
-                                model.setStatus(status);
-                                messageChatModelList.add(model);
+                            All_messages model = new All_messages();
+                            model.setMessage(message);
+                            model.setReceiver_user(user_id);
+                            model.setSender_user(Id);
+                            model.setStatus(status);
+                            messageChatModelList.add(model);
 
-                                rcvRcv.smoothScrollToPosition(messageChatModelList.size());
-                                rcvRcv.scrollToPosition(messageChatModelList.size());
+                            rcvRcv.smoothScrollToPosition(messageChatModelList.size());
+                            rcvRcv.scrollToPosition(messageChatModelList.size());
 //                                adapter.notifyItemInserted(messageChatModelList.size());
 
 //                        messageET.setText("");
 
-                            }
-                        }else
-                        {
-                            status = obj.getString("status");
+                        }
+                    } else {
+                        status = obj.getString("status");
 //                            messageId = obj.getString("message_id");
 //                            All_messages model = new All_messages();
 //                            model.setStatus(status);
@@ -512,11 +521,11 @@ public class Conversation_Activity extends AppCompatActivity {
 //                            String ne = "{\"type\":\"delivered_message\",\"message_id\":\""+messageId+"\",\"status\":\"delivered\",\"sender_id\":"+user_id+"}";
 //                            webSocketClient.send(ne);
 
-                            rcvRcv.smoothScrollToPosition(messageChatModelList.size());
-                            adapter.notifyDataSetChanged();
-                            rcvRcv.scrollToPosition(messageChatModelList.size());
+                        rcvRcv.smoothScrollToPosition(messageChatModelList.size());
+                        adapter.notifyDataSetChanged();
+                        rcvRcv.scrollToPosition(messageChatModelList.size());
 
-                        }
+                    }
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -539,7 +548,7 @@ public class Conversation_Activity extends AppCompatActivity {
 
             @Override
             public void onPingReceived(byte[] data) {
-                System.out.println("onPingReceived" );
+                System.out.println("onPingReceived");
             }
 
             @Override
@@ -550,16 +559,16 @@ public class Conversation_Activity extends AppCompatActivity {
             @Override
             public void onException(Exception e) {
                 System.out.println(e.getMessage());
-                rcvRcv.smoothScrollToPosition(messageChatModelList.size());
-                adapter.notifyDataSetChanged();
-                rcvRcv.scrollToPosition(messageChatModelList.size());
+//                rcvRcv.smoothScrollToPosition(messageChatModelList.size());
+//                adapter.notifyDataSetChanged();
+//                rcvRcv.scrollToPosition(messageChatModelList.size());
                 createWebSocketClient();
             }
 
             @Override
             public void onCloseReceived(int reason, String description) {
-                System.out.println("onCloseReceived"+description);
-                Helper.showToast(Conversation_Activity.this,description);
+                System.out.println("onCloseReceived" + description);
+                Helper.showToast(Conversation_Activity.this, description);
             }
 
             @Override
@@ -575,6 +584,42 @@ public class Conversation_Activity extends AppCompatActivity {
         webSocketClient.connect();
     }
 
-
+//    public void chatHistoryAPI(String user_1, String user_2) {
+//        if (connectionDetector.isConnectingToInternet()) {
+//
+//            MultipartTypedOutput multipartTypedOutput = new MultipartTypedOutput();
+//            multipartTypedOutput.addPart("the_user1", new TypedString(String.valueOf(user.getId())));
+//            multipartTypedOutput.addPart("the_user2", new TypedString(String.valueOf(user.getId())));
+//
+//
+//            progress = dialogUtil.showProgressDialog(Conversation_Activity.this, getString(R.string.please_wait));
+//
+//            appController.paServices.Chat_History(multipartTypedOutput, new Callback<ChatHistoryRoot>() {
+//                @Override
+//                public void success(ChatHistoryRoot chatHistoryRoot, Response response) {
+//
+//                    if (chatHistoryRoot.getStatus().equalsIgnoreCase("1")) {
+//                        progress.dismiss();
+//
+//                        if(chatHistoryRoot.getAll_messages().size()>0) {
+//                            messageChatModelList = chatHistoryRoot.getAll_messages();
+//                        }
+//                    } else {
+//                        progress.dismiss();
+//                    }
+//                }
+//
+//                @Override
+//                public void failure(RetrofitError retrofitError) {
+//                    progress.dismiss();
+//
+//                    Log.e("error", retrofitError.toString());
+//
+//                }
+//            });
+//        } else {
+//            com.master.design.therapist.Helper.Helper.showToast(Conversation_Activity.this, getString(R.string.no_internet_connection));
+//        }
+//    }
 }
 
