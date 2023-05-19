@@ -8,7 +8,6 @@ import com.master.design.therapist.Adapter.TherapistEducationDM;
 import com.master.design.therapist.DataModel.AddMultipleImageRoot;
 import com.master.design.therapist.DataModel.Cancel_Friend_RequestDM;
 import com.master.design.therapist.DataModel.ChatHistoryDM;
-import com.master.design.therapist.DataModel.ChatHistoryRoot;
 import com.master.design.therapist.DataModel.ChatlistDM;
 import com.master.design.therapist.DataModel.ChatroomDM;
 import com.master.design.therapist.DataModel.Edit_ProfileDM;
@@ -19,6 +18,7 @@ import com.master.design.therapist.DataModel.RemoveImageRoot;
 import com.master.design.therapist.DataModel.Request_ListDM;
 import com.master.design.therapist.DataModel.Request_ResponseDM;
 import com.master.design.therapist.DataModel.Send_Friend_RequestDM;
+import com.master.design.therapist.DataModel.SendingImageDM;
 import com.master.design.therapist.DataModel.Terms_ConditionsDM;
 import com.master.design.therapist.DataModel.TherapistAgeDM;
 import com.master.design.therapist.DataModel.TherapistCountriesDM;
@@ -41,39 +41,8 @@ import retrofit.mime.MultipartTypedOutput;
 
 
 public interface PAServices {
-//    @Headers("Cache-Control: no-cache;")
-//    @POST("/auth/signin")
-//    void SignUp(@Body MultipartTypedOutput multipartTypedOutput, Callback<SignUpDM> signUpDMCallback);
-//
-//    @Headers("Cache-Control: no-cache;")
-//    @POST("/auth/record_video")
-//    void RecordedVideo(@Body MultipartTypedOutput multipartTypedOutput, Callback<VideoDM> videoDMCallback);
-//
-//    @Headers("Cache-Control: no-cache;")
-//    @POST("/auth/user_login")
-//    void LoginIn(@Body MultipartTypedOutput multipartTypedOutput, Callback<SignUpDM> signUpDMCallback);
-//
-//    @Headers("Cache-Control: no-cache;")
-//    @GET("/user/view_home_banner")
-//    void Banner(Callback<BannerDM> bannerDMCallback);
-//
-//    @Headers("Cache-Control: no-cache;")
-//    @GET("/user/view_news")
-//    void News(Callback<NewsDM> newsDMCallback);
-//
-//    @Headers("Cache-Control: no-cache;")
-//    @GET("/user/view_events")
-//    void Events(Callback<EventsDM> eventsDMCallback);
-//
-//    @Headers("Cache-Control: no-cache;")
-//    @GET("/user/view_restaurants")
-//    void Restaurent(Callback<RestaurentDM> restaurentDMCallback);
-//
-//
-//    @Headers("Cache-Control: no-cache;")
-//    @GET("/user/view_shops")
-//    void Shops(Callback<ShopsDM> shopsDMCallback);
 
+    //1
     @POST("/register")
     void TherapistRegister(@Body MultipartTypedOutput multipartTypedOutput, Callback<TherapistRegisterDM> therapistRegisterDMCallback);
 
@@ -94,12 +63,11 @@ public interface PAServices {
 //                                  @Field("education") String education,
 //                                 Callback<TherapistRegisterDM> therapistRegisterDMCallback);
 
-    // 2
+    // 2      need device token device type
     @FormUrlEncoded
     @POST("/login")
     public void TherapistLogin(@Field("email") String email,
                                @Field("password") String password,
-
                                Callback<TherapistLoginDM> therapistLoginDMCallback);
 
     // 3
@@ -258,8 +226,9 @@ public interface PAServices {
     @POST("/search")
     void Search_User(@Body MultipartTypedOutput multipartTypedOutput, Callback<TherapistHomeDM> therapistHomeDMCallback);
 
-//    // 30
-//    @POST("/chathistory")
-//    void Chat_History(@Body MultipartTypedOutput multipartTypedOutput, Callback<ChatHistoryRoot> chatHistoryRootCallback);
+    // 30
+    @POST("/sendingimage")
+    void SendingImageChat(@Body MultipartTypedOutput multipartTypedOutput, Callback<SendingImageDM> sendingImageDMCallback);
+
 
 }

@@ -43,6 +43,7 @@ import com.master.design.therapist.DataModel.AddMultipleImageRoot;
 import com.master.design.therapist.DataModel.All_messages;
 import com.master.design.therapist.DataModel.ChatHistoryDM;
 import com.master.design.therapist.DataModel.ChatHistoryRoot;
+import com.master.design.therapist.DataModel.SendingImageDM;
 import com.master.design.therapist.DataModel.TherapistInterestDM;
 import com.master.design.therapist.Helper.DialogUtil;
 import com.master.design.therapist.Helper.User;
@@ -672,42 +673,78 @@ public class Conversation_Activity extends AppCompatActivity {
     }
 
 
-//    public void chatHistoryAPI(String user_1, String user_2) {
-//        if (connectionDetector.isConnectingToInternet()) {
-//
-//            MultipartTypedOutput multipartTypedOutput = new MultipartTypedOutput();
-//            multipartTypedOutput.addPart("the_user1", new TypedString(String.valueOf(user.getId())));
-//            multipartTypedOutput.addPart("the_user2", new TypedString(String.valueOf(user.getId())));
-//
-//
-//            progress = dialogUtil.showProgressDialog(Conversation_Activity.this, getString(R.string.please_wait));
-//
-//            appController.paServices.Chat_History(multipartTypedOutput, new Callback<ChatHistoryRoot>() {
-//                @Override
-//                public void success(ChatHistoryRoot chatHistoryRoot, Response response) {
-//
-//                    if (chatHistoryRoot.getStatus().equalsIgnoreCase("1")) {
-//                        progress.dismiss();
-//
-//                        if(chatHistoryRoot.getAll_messages().size()>0) {
-//                            messageChatModelList = chatHistoryRoot.getAll_messages();
-//                        }
-//                    } else {
-//                        progress.dismiss();
-//                    }
-//                }
-//
-//                @Override
-//                public void failure(RetrofitError retrofitError) {
-//                    progress.dismiss();
-//
-//                    Log.e("error", retrofitError.toString());
-//
-//                }
-//            });
-//        } else {
-//            com.master.design.therapist.Helper.Helper.showToast(Conversation_Activity.this, getString(R.string.no_internet_connection));
-//        }
-//    }
+    public void sendingImageChat(String image_sender,String image_receiver,String image) {
+        if (connectionDetector.isConnectingToInternet()) {
+
+            MultipartTypedOutput multipartTypedOutput = new MultipartTypedOutput();
+            multipartTypedOutput.addPart("image_sender", new TypedString(String.valueOf(user.getId())));
+            multipartTypedOutput.addPart("image_receiver", new TypedString(image_receiver));
+
+
+            try {
+                // You can update this bitmap to your server
+
+//                Bitmap bitmapMainImg = MediaStore.Images.Media.getBitmap(About_You_Activity.this.getContentResolver(), Uri.parse(String.valueOf(profileCircleImg.getDrawable())));
+                Bitmap bitmapMainImg = bitmap;
+
+                File f = new File(Conversation_Activity.this.getCacheDir(), "temp.jpg");
+                f.createNewFile();
+
+//                    Bitmap one = ((BitmapDrawable) profile_RoundedImgView.getDrawable()).getBitmap();
+//Convert bitmap to byte array
+                Bitmap bitmap = bitmapMainImg;
+                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
+                byte[] bitmapdata = bos.toByteArray();
+
+//write the bytes in file
+                FileOutputStream fos = new FileOutputStream(f);
+                fos.write(bitmapdata);
+                fos.flush();
+                fos.close();
+                File resizedImage = new Resizer(Conversation_Activity.this)
+//                        .setTargetLength(200)
+//                        .setQuality(100)
+                        .setOutputFormat("JPEG")
+                        .setOutputFilename("resized_image1")
+                        .setSourceImage(f)
+                        .getResizedFile();
+                multipartTypedOutput.addPart("image", new TypedFile("image/jpg", resizedImage));
+
+
+            } catch (Exception e) {
+                Log.e("Error", e.toString());
+            }
+
+
+            progress = dialogUtil.showProgressDialog(Conversation_Activity.this, getString(R.string.please_wait));
+
+            appController.paServices.SendingImageChat(multipartTypedOutput, new Callback<SendingImageDM>() {
+                @Override
+                public void success(SendingImageDM sendingImageDM, Response response) {
+
+                    if (sendingImageDM.getStatus().equalsIgnoreCase("1")) {
+                        progress.dismiss();
+
+
+                    } else {
+                        progress.dismiss();
+                    }
+                }
+
+                @Override
+                public void failure(RetrofitError retrofitError) {
+                    progress.dismiss();
+
+                    Log.e("error", retrofitError.toString());
+
+                }
+            });
+        } else {
+            com.master.design.therapist.Helper.Helper.showToast(Conversation_Activity.this, getString(R.string.no_internet_connection));
+        }
+    }
+
+
 }
 
