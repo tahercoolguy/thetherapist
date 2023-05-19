@@ -352,8 +352,10 @@ public class About_You_Activity extends AppCompatActivity {
                                 overridePendingTransition(R.anim.fade_in, R.anim.fade_in);
                             }
                             String userID = therapistRegisterDM.getUser_id();
-                            addMultipleImageAPI(userID);
 
+                            if (list.size() > 0) {
+                                addMultipleImageAPI(userID);
+                            }
 
                         } else
                             Helper.showToast(About_You_Activity.this, therapistRegisterDM.getMsg());
@@ -390,7 +392,7 @@ public class About_You_Activity extends AppCompatActivity {
                 try {
                     // You can update this bitmap to your server
 
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(About_You_Activity.this.getContentResolver(),  list.get(i));
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(About_You_Activity.this.getContentResolver(), list.get(i));
 //                    Bitmap bitmapMainImg = bitmap;
 
                     File f = new File(About_You_Activity.this.getCacheDir(), "temp.jpg" + i);
@@ -499,7 +501,7 @@ public class About_You_Activity extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
-                    if(i>x){
+                    if (i > x) {
 
                     }
                 }
