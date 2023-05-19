@@ -2,27 +2,28 @@ package com.master.design.therapist.DataModel;
 
 public class All_messages {
 
-    private String sender_user;
+    private String receiver_user_id;
     private String id;
     private String message;
-    private String receiver_user;
+    private String sender_user_id;
     private String timestamp;
     private String status;
 
-    public String getStatus() {
-        return status;
+//    public All_messages(String receiver_user_id, String id, String message, String sender_user_id, String timestamp, String status) {
+//        this.receiver_user_id = receiver_user_id;
+//        this.id = id;
+//        this.message = message;
+//        this.sender_user_id = sender_user_id;
+//        this.timestamp = timestamp;
+//        this.status = status;
+//    }
+
+    public String getReceiver_user_id() {
+        return receiver_user_id;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getSender_user() {
-        return sender_user;
-    }
-
-    public void setSender_user(String sender_user) {
-        this.sender_user = sender_user;
+    public void setReceiver_user_id(String receiver_user_id) {
+        this.receiver_user_id = receiver_user_id;
     }
 
     public String getId() {
@@ -41,12 +42,12 @@ public class All_messages {
         this.message = message;
     }
 
-    public String getReceiver_user() {
-        return receiver_user;
+    public String getSender_user_id() {
+        return sender_user_id;
     }
 
-    public void setReceiver_user(String receiver_user) {
-        this.receiver_user = receiver_user;
+    public void setSender_user_id(String sender_user_id) {
+        this.sender_user_id = sender_user_id;
     }
 
     public String getTimestamp() {
@@ -57,5 +58,11 @@ public class All_messages {
         this.timestamp = timestamp;
     }
 
+    public String getStatus() {
+        return status;
+    }
 
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }

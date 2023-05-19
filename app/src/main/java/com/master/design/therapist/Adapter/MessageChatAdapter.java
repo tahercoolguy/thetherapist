@@ -51,7 +51,7 @@ public class MessageChatAdapter extends RecyclerView.Adapter {
     @Override
     public int getItemViewType(int position) {
         All_messages message = (All_messages) messageChatModelList.get(position);
-        String senderID=message.getSender_user();
+        String senderID=message.getSender_user_id();
         String userID= String.valueOf(user.getId());
         if (userID.equalsIgnoreCase(senderID)) {
             // If the current user is the sender of the message
@@ -79,32 +79,32 @@ public class MessageChatAdapter extends RecyclerView.Adapter {
         if (viewType == VIEW_TYPE_MESSAGE_SENT) {
             view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.send_layout, parent, false);
-            Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-
-                    // on the below line we are finishing
-                    // our current activity.
-                    view.startAnimation(animation);
-
-                }
-            }, 100);
+//            Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
+//            new Handler().postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//
+//                    // on the below line we are finishing
+//                    // our current activity.
+//                    view.startAnimation(animation);
+//
+//                }
+//            }, 100);
             return new SentMessageHolder(view);
         } else if (viewType == VIEW_TYPE_MESSAGE_RECEIVED) {
             view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.receive_layout, parent, false);
-            Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-
-                    // on the below line we are finishing
-                    // our current activity.
-                    view.startAnimation(animation);
-
-                }
-            }, 100);
+//            Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
+//            new Handler().postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//
+//                    // on the below line we are finishing
+//                    // our current activity.
+//                    view.startAnimation(animation);
+//
+//                }
+//            }, 100);
             return new ReceivedMessageHolder(view);
         }
 

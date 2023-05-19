@@ -19,9 +19,11 @@ import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -96,7 +98,8 @@ public class Conversation_Activity extends AppCompatActivity {
     @BindView(R.id.notificationImg)
     ImageView notificationImg;
     @BindView(R.id.messageET)
-    EditText messageET;
+    EditText messageET;  @BindView(R.id.messageRL)
+    RelativeLayout messageRL;
     public MessageChatAdapter adapter;
     String name, image;
     LinearLayoutManager lm;
@@ -133,18 +136,27 @@ public class Conversation_Activity extends AppCompatActivity {
         name = getIntent().getStringExtra("Name");
         image = getIntent().getStringExtra("image");
         FriendsId = getIntent().getStringExtra("FriendId");
-        chatRoomID = getIntent().getStringExtra("chatRoomID");
+        chatRoomID = getIntent().getStringExtra("roomID");
         userNameTxt.setText(name);
         Picasso.with(context).load(image).into(profileCircleImg);
 
         setChatData();
         createWebSocketClient();
 
+        messageRL.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                rcvRcv.scrollToPosition(adapter.getItemCount());
+
+                return false;
+            }
+        });
 
     }
 
 
     List<All_messages> messageChatModelList = new ArrayList<>();
+    List<All_messages> refreshmessageChatModelList = new ArrayList<>();
 
     private void setChatData() {
 //        MessageChatModel model1 = new MessageChatModel(
@@ -208,6 +220,10 @@ public class Conversation_Activity extends AppCompatActivity {
                         rcvRcv.setLayoutManager(lm);
                         rcvRcv.smoothScrollToPosition(messageChatModelList.size());
                         lm.setReverseLayout(false);
+                        lm.setStackFromEnd(true);
+                        rcvRcv.scrollToPosition(messageChatModelList.size()-1);
+                        rcvRcv.scrollToPosition(adapter.getItemCount());
+
 
 
                     } else {
@@ -476,26 +492,36 @@ public class Conversation_Activity extends AppCompatActivity {
 
                             All_messages model = new All_messages();
                             model.setMessage(message);
-                            model.setReceiver_user(FriendsId);
-                            model.setSender_user(user_id);
+                            model.setReceiver_user_id(FriendsId);
+                            model.setSender_user_id(user_id);
                             model.setStatus(status);
                             messageChatModelList.add(model);
 
                             rcvRcv.smoothScrollToPosition(messageChatModelList.size());
 //                              messageET.setText("");
                             adapter.notifyDataSetChanged();
-                            rcvRcv.scrollToPosition(messageChatModelList.size());
+                            rcvRcv.scrollToPosition(messageChatModelList.size()-1);
+                            rcvRcv.scrollToPosition(adapter.getItemCount());
                         } else {
 
                             All_messages model = new All_messages();
                             model.setMessage(message);
-                            model.setReceiver_user(user_id);
-                            model.setSender_user(Id);
+                            model.setReceiver_user_id(user_id);
+                            model.setSender_user_id(Id);
                             model.setStatus(status);
                             messageChatModelList.add(model);
 
+//                            rcvRcv.smoothScrollToPosition(messageChatModelList.size());
+//                            rcvRcv.scrollToPosition(messageChatModelList.size()-1);
+//                            adapter.notifyDataSetChanged();
+//                            rcvRcv.scrollToPosition(adapter.getItemCount());
+
                             rcvRcv.smoothScrollToPosition(messageChatModelList.size());
-                            rcvRcv.scrollToPosition(messageChatModelList.size());
+                            lm.setReverseLayout(false);
+                            lm.setStackFromEnd(true);
+                            rcvRcv.scrollToPosition(messageChatModelList.size()-1);
+                            rcvRcv.scrollToPosition(adapter.getItemCount());
+                            adapter.notifyDataSetChanged();
 //                                adapter.notifyItemInserted(messageChatModelList.size());
 
 //                        messageET.setText("");
@@ -521,9 +547,24 @@ public class Conversation_Activity extends AppCompatActivity {
 //                            String ne = "{\"type\":\"delivered_message\",\"message_id\":\""+messageId+"\",\"status\":\"delivered\",\"sender_id\":"+user_id+"}";
 //                            webSocketClient.send(ne);
 
+//                        rcvRcv.smoothScrollToPosition(messageChatModelList.size());
+//                        adapter.notifyDataSetChanged();
+//                        rcvRcv.scrollToPosition(messageChatModelList.size());
+//                        rcvRcv.scrollToPosition(adapter.getItemCount());
+
+//                        rcvRcv.smoothScrollToPosition(messageChatModelList.size());
+//                        rcvRcv.scrollToPosition(messageChatModelList.size()-1);
+//                        adapter.notifyDataSetChanged();
+//                        rcvRcv.scrollToPosition(adapter.getItemCount());
+
+
                         rcvRcv.smoothScrollToPosition(messageChatModelList.size());
+                        lm.setReverseLayout(false);
+                        lm.setStackFromEnd(true);
+                        rcvRcv.scrollToPosition(messageChatModelList.size()-1);
+                        rcvRcv.scrollToPosition(adapter.getItemCount());
                         adapter.notifyDataSetChanged();
-                        rcvRcv.scrollToPosition(messageChatModelList.size());
+
 
                     }
 

@@ -10,8 +10,9 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_alignParentTop="true"
+        android:layout_marginBottom="55dp"
         android:orientation="vertical">
 
 
@@ -78,12 +79,11 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcvRcv"
+            android:paddingTop="20dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-             </androidx.recyclerview.widget.RecyclerView>
+            android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
 
     </LinearLayout>
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -141,8 +141,8 @@
 
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="10dp"
-                android:visibility="gone"
-                android:src="@drawable/ic_emoji"></ImageView>
+                android:src="@drawable/ic_emoji"
+                android:visibility="gone"></ImageView>
 
             <ImageView
                 android:id="@+id/sendImg"
@@ -157,4 +157,5 @@
 
 
     </LinearLayout>
+
 </RelativeLayout>
