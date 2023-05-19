@@ -92,21 +92,19 @@
             </LinearLayout>
 
         </HorizontalScrollView>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:text="@string/add_more_images_of_you"></TextView>
-        <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <RelativeLayout
                 android:id="@+id/addMultipleImgRL"
                 android:layout_width="134dp"
@@ -122,16 +120,16 @@
                     android:layout_centerInParent="true"
                     android:src="@drawable/ic_add_image"></ImageView>
             </RelativeLayout>
+
             <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
                 android:id="@+id/multipleImageRcv"
-                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_margin="10dp"
 
-                android:layout_height="wrap_content"></androidx.recyclerview.widget.RecyclerView>
+                android:orientation="horizontal"></androidx.recyclerview.widget.RecyclerView>
         </LinearLayout>
 
-        </HorizontalScrollView>
 
         <TextView
             android:layout_width="match_parent"

@@ -98,7 +98,8 @@ public class Conversation_Activity extends AppCompatActivity {
     @BindView(R.id.notificationImg)
     ImageView notificationImg;
     @BindView(R.id.messageET)
-    EditText messageET;  @BindView(R.id.messageRL)
+    EditText messageET;
+    @BindView(R.id.messageRL)
     RelativeLayout messageRL;
     public MessageChatAdapter adapter;
     String name, image;
@@ -152,6 +153,8 @@ public class Conversation_Activity extends AppCompatActivity {
             }
         });
 
+
+        setListeners();
     }
 
 
@@ -221,9 +224,9 @@ public class Conversation_Activity extends AppCompatActivity {
                         rcvRcv.smoothScrollToPosition(messageChatModelList.size());
                         lm.setReverseLayout(false);
                         lm.setStackFromEnd(true);
-                        rcvRcv.scrollToPosition(messageChatModelList.size()-1);
+                        rcvRcv.scrollToPosition(messageChatModelList.size() - 1);
                         rcvRcv.scrollToPosition(adapter.getItemCount());
-
+                        setListeners();
 
 
                     } else {
@@ -271,6 +274,7 @@ public class Conversation_Activity extends AppCompatActivity {
             String ne = "{\"type\":\"chat_message\",\"message\":\"" + msg + "\",\"status\":\"send\",\"sender_id\":" + user_id + "}";
             webSocketClient.send(ne);
             messageET.setText("");
+            setListeners();
         }
 
 
@@ -500,8 +504,9 @@ public class Conversation_Activity extends AppCompatActivity {
                             rcvRcv.smoothScrollToPosition(messageChatModelList.size());
 //                              messageET.setText("");
                             adapter.notifyDataSetChanged();
-                            rcvRcv.scrollToPosition(messageChatModelList.size()-1);
+                            rcvRcv.scrollToPosition(messageChatModelList.size() - 1);
                             rcvRcv.scrollToPosition(adapter.getItemCount());
+                            setListeners();
                         } else {
 
                             All_messages model = new All_messages();
@@ -519,13 +524,13 @@ public class Conversation_Activity extends AppCompatActivity {
                             rcvRcv.smoothScrollToPosition(messageChatModelList.size());
                             lm.setReverseLayout(false);
                             lm.setStackFromEnd(true);
-                            rcvRcv.scrollToPosition(messageChatModelList.size()-1);
+                            rcvRcv.scrollToPosition(messageChatModelList.size() - 1);
                             rcvRcv.scrollToPosition(adapter.getItemCount());
                             adapter.notifyDataSetChanged();
 //                                adapter.notifyItemInserted(messageChatModelList.size());
 
 //                        messageET.setText("");
-
+                            setListeners();
                         }
                     } else {
                         status = obj.getString("status");
@@ -561,10 +566,10 @@ public class Conversation_Activity extends AppCompatActivity {
                         rcvRcv.smoothScrollToPosition(messageChatModelList.size());
                         lm.setReverseLayout(false);
                         lm.setStackFromEnd(true);
-                        rcvRcv.scrollToPosition(messageChatModelList.size()-1);
+                        rcvRcv.scrollToPosition(messageChatModelList.size() - 1);
                         rcvRcv.scrollToPosition(adapter.getItemCount());
                         adapter.notifyDataSetChanged();
-
+                        setListeners();
 
                     }
 
@@ -624,6 +629,48 @@ public class Conversation_Activity extends AppCompatActivity {
         webSocketClient.enableAutomaticReconnection(5000);
         webSocketClient.connect();
     }
+
+    public void setListeners() {
+
+         rcvRcv.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View v, int left, int top, int right, int bottom,
+                                       int oldLeft, int oldTop, int oldRight, int oldBottom) {
+
+                if (messageChatModelList.size() == 0) {
+                    rcvRcv.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            rcvRcv.smoothScrollToPosition(messageChatModelList.size());
+                        }
+                    }, 100);
+                } else {
+                    rcvRcv.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            rcvRcv.smoothScrollToPosition(messageChatModelList.size() + 1);
+                        }
+                    }, 100);
+                }
+            }
+        });
+        if (messageChatModelList.size() == 0) {
+            rcvRcv.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    rcvRcv.smoothScrollToPosition(messageChatModelList.size());
+                }
+            }, 100);
+        } else {
+            rcvRcv.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    rcvRcv.smoothScrollToPosition(messageChatModelList.size() + 1);
+                }
+            }, 100);
+        }
+    }
+
 
 //    public void chatHistoryAPI(String user_1, String user_2) {
 //        if (connectionDetector.isConnectingToInternet()) {
