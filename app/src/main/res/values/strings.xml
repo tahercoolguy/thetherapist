@@ -153,7 +153,7 @@
     <string name="kindly_enter_email">kindly enter email</string>
     <string name="kindly_enter_passwords">kindly enter your Password</string>
     <string name="kindlt_enterr_confirm_password">kindly enter your Confirm Password</string>
-<!--    <string name="kindly_select_gender">kindly select Gender</string>-->
+    <!--    <string name="kindly_select_gender">kindly select Gender</string>-->
     <string name="kindly_tell_me_about_u">kindly tell us about you</string>
     <string name="kindly_select_education">kindly select education</string>
     <string name="select_age">Select Age</string>
@@ -177,5 +177,8 @@
     <string name="select_multiple_images_to_upload">you have to select multiple images to upload</string>
     <string name="add_your_profile_main_image">Add Your Profile Main Image</string>
     <string name="add_more_images_of_you">Add More Images of You</string>
+    <string name="need_permision_download_img">Need Permission to access storage for Downloading Image</string>
+    <string name="downloading_image">Downloading Image...</string>
+    <string name="image_saved">Image Saved!</string>
 
 </resources>

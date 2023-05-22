@@ -28,6 +28,9 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".Activity.ViewImageActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activity.MyPostedImagesActivity"
             android:exported="false" />
         <activity

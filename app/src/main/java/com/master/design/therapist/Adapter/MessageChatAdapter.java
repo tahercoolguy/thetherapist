@@ -126,8 +126,18 @@ public class MessageChatAdapter extends RecyclerView.Adapter {
             case VIEW_TYPE_MESSAGE_RECEIVED:
                 ((ReceivedMessageHolder) holder).bind(message,holder);
         }
+        setDetails(holder, position);
 
+    }
 
+    private void setDetails(RecyclerView.ViewHolder holder, int position) {
+
+         holder.itemView.findViewById(R.id.sendimageRIV).setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+                 onitemClickListener.openImage(messageChatModelList.get(position).getMessage());
+             }
+         });
     }
 
 
@@ -140,7 +150,7 @@ public class MessageChatAdapter extends RecyclerView.Adapter {
         this.onitemClickListener = onitemClickListener;
     }
 
-    private class SentMessageHolder extends RecyclerView.ViewHolder {
+    public class SentMessageHolder extends RecyclerView.ViewHolder {
 
         TextView message;
         TextView time;
@@ -167,6 +177,7 @@ public class MessageChatAdapter extends RecyclerView.Adapter {
                 sendimageRIV.setVisibility(View.VISIBLE);
                 Picasso.with(context).load(messageModel.getMessage()).into(sendimageRIV);
                 senderRL.setVisibility(View.GONE);
+
             } else {
                 senderRL.setVisibility(View.VISIBLE);
                 sendimageRIV.setVisibility(View.GONE);
@@ -199,10 +210,10 @@ public class MessageChatAdapter extends RecyclerView.Adapter {
 
     }
 
-    private class ReceivedMessageHolder extends RecyclerView.ViewHolder {
+    public class ReceivedMessageHolder extends RecyclerView.ViewHolder {
         TextView message;
         TextView time;
-        RoundedImageView sendimageRIV;
+      public   RoundedImageView sendimageRIV;
         LinearLayout recieverLL;
 
         public ReceivedMessageHolder(@NonNull View itemView) {
@@ -220,7 +231,8 @@ public class MessageChatAdapter extends RecyclerView.Adapter {
                 sendimageRIV.setVisibility(View.VISIBLE);
                 recieverLL.setVisibility(View.GONE);
                 Picasso.with(context).load(messageModel.getMessage()).into(sendimageRIV);
-            } else {
+
+             } else {
                 message.setText(messageModel.getMessage());
                 time.setText(messageModel.getTimestamp());
                 recieverLL.setVisibility(View.VISIBLE);
@@ -232,7 +244,7 @@ public class MessageChatAdapter extends RecyclerView.Adapter {
     }
 
     public interface Onitemclicklistener {
-        void fun(String message);
+        void openImage(String message);
     }
 }
 

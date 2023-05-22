@@ -229,6 +229,15 @@ public class Conversation_Activity extends AppCompatActivity {
                         rcvRcv.scrollToPosition(adapter.getItemCount());
                         setListeners();
 
+                        adapter.setOnitemClickListener(new MessageChatAdapter.Onitemclicklistener() {
+                            @Override
+                            public void openImage(String message) {
+
+                                startActivity(new Intent(Conversation_Activity.this,ViewImageActivity.class).putExtra("img",message));
+
+                            }
+                        });
+
 
                     } else {
                         Helper.showToast(Conversation_Activity.this, chatHistoryDM.getMsg());
@@ -509,6 +518,14 @@ public class Conversation_Activity extends AppCompatActivity {
                             rcvRcv.scrollToPosition(messageChatModelList.size() - 1);
                             rcvRcv.scrollToPosition(adapter.getItemCount());
                             setListeners();
+                            adapter.setOnitemClickListener(new MessageChatAdapter.Onitemclicklistener() {
+                                @Override
+                                public void openImage(String message) {
+
+                                    startActivity(new Intent(Conversation_Activity.this,ViewImageActivity.class).putExtra("img",message));
+
+                                }
+                            });
                         } else {
 
                             All_messages model = new All_messages();
@@ -529,6 +546,14 @@ public class Conversation_Activity extends AppCompatActivity {
                             rcvRcv.scrollToPosition(messageChatModelList.size() - 1);
                             rcvRcv.scrollToPosition(adapter.getItemCount());
                             adapter.notifyDataSetChanged();
+                            adapter.setOnitemClickListener(new MessageChatAdapter.Onitemclicklistener() {
+                                @Override
+                                public void openImage(String message) {
+
+                                    startActivity(new Intent(Conversation_Activity.this,ViewImageActivity.class).putExtra("img",message));
+
+                                }
+                            });
 //                                adapter.notifyItemInserted(messageChatModelList.size());
 
 //                        messageET.setText("");
@@ -572,6 +597,14 @@ public class Conversation_Activity extends AppCompatActivity {
                         rcvRcv.scrollToPosition(adapter.getItemCount());
                         adapter.notifyDataSetChanged();
                         setListeners();
+                        adapter.setOnitemClickListener(new MessageChatAdapter.Onitemclicklistener() {
+                            @Override
+                            public void openImage(String message) {
+
+                                startActivity(new Intent(Conversation_Activity.this,ViewImageActivity.class).putExtra("img",message));
+
+                            }
+                        });
 
                     }
 
