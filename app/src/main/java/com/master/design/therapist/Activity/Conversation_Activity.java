@@ -320,6 +320,7 @@ public class Conversation_Activity extends AppCompatActivity {
 
                     imageFromgallery = new BitmapDrawable(getResources(), bitmap);
 
+                    sendingImageChat(bitmap);
 //                    ifimg1 = true;
 //                    EditProfileImageAPI();
 
@@ -673,19 +674,19 @@ public class Conversation_Activity extends AppCompatActivity {
     }
 
 
-    public void sendingImageChat(String image_sender,String image_receiver,String image) {
+    public void sendingImageChat(Bitmap bitmapImg ) {
         if (connectionDetector.isConnectingToInternet()) {
 
             MultipartTypedOutput multipartTypedOutput = new MultipartTypedOutput();
             multipartTypedOutput.addPart("image_sender", new TypedString(String.valueOf(user.getId())));
-            multipartTypedOutput.addPart("image_receiver", new TypedString(image_receiver));
+            multipartTypedOutput.addPart("image_receiver", new TypedString(FriendsId));
 
 
             try {
                 // You can update this bitmap to your server
 
 //                Bitmap bitmapMainImg = MediaStore.Images.Media.getBitmap(About_You_Activity.this.getContentResolver(), Uri.parse(String.valueOf(profileCircleImg.getDrawable())));
-                Bitmap bitmapMainImg = bitmap;
+                Bitmap bitmapMainImg = bitmapImg;
 
                 File f = new File(Conversation_Activity.this.getCacheDir(), "temp.jpg");
                 f.createNewFile();
@@ -725,7 +726,31 @@ public class Conversation_Activity extends AppCompatActivity {
 
                     if (sendingImageDM.getStatus().equalsIgnoreCase("1")) {
                         progress.dismiss();
+                        String imgLink = sendingImageDM.getImage();
+                        if (!imgLink.equalsIgnoreCase("")) {
+//            MessageChatModel model = new MessageChatModel(
+//                    msg,
+//                    "10:00 PM",
+//                    0, R.drawable.marshall_img
+//
+//            );
+//            setChatData();
+                            // First, create a new JsonObject
+                            JsonObject jsonObject = new JsonObject();
 
+// Add properties to the JsonObject
+                            jsonObject.addProperty("type", "chat_message");
+                            jsonObject.addProperty("message", imgLink);
+                            jsonObject.addProperty("status", "send");
+                            jsonObject.addProperty("sender_id", user_id);
+//            jsonObject.addProperty("sender_id", user_id);
+
+
+                            String ne = "{\"type\":\"chat_message\",\"message\":\"" + imgLink + "\",\"status\":\"send\",\"sender_id\":" + user_id + "}";
+                            webSocketClient.send(ne);
+                            messageET.setText("");
+                            setListeners();
+                        }
 
                     } else {
                         progress.dismiss();

@@ -121,10 +121,10 @@ public class MessageChatAdapter extends RecyclerView.Adapter {
         All_messages message = messageChatModelList.get(position);
         switch (holder.getItemViewType()) {
             case VIEW_TYPE_MESSAGE_SENT:
-                ((SentMessageHolder) holder).bind(message);
+                ((SentMessageHolder) holder).bind(message,holder,holder);
                 break;
             case VIEW_TYPE_MESSAGE_RECEIVED:
-                ((ReceivedMessageHolder) holder).bind(message);
+                ((ReceivedMessageHolder) holder).bind(message,holder);
         }
 
 
@@ -161,11 +161,11 @@ public class MessageChatAdapter extends RecyclerView.Adapter {
 
         }
 
-        void bind(All_messages messageModel) {
+        void bind(All_messages messageModel, RecyclerView.ViewHolder holder, RecyclerView.ViewHolder viewHolder) {
 
             if (messageModel.getMessage().contains(".jpg") || messageModel.getMessage().contains(".png")) {
                 sendimageRIV.setVisibility(View.VISIBLE);
-                Picasso.with(context).load(AppController.THERAPIST_IMAGE + messageModel.getMessage());
+                Picasso.with(context).load(messageModel.getMessage()).into(sendimageRIV);
                 senderRL.setVisibility(View.GONE);
             } else {
                 senderRL.setVisibility(View.VISIBLE);
@@ -214,12 +214,12 @@ public class MessageChatAdapter extends RecyclerView.Adapter {
 
         }
 
-        void bind(All_messages messageModel) {
+        void bind(All_messages messageModel, RecyclerView.ViewHolder holder) {
 
             if (messageModel.getMessage().contains(".jpg") || messageModel.getMessage().contains(".png")) {
                 sendimageRIV.setVisibility(View.VISIBLE);
                 recieverLL.setVisibility(View.GONE);
-                Picasso.with(context).load(AppController.THERAPIST_IMAGE + messageModel.getMessage());
+                Picasso.with(context).load(messageModel.getMessage()).into(sendimageRIV);
             } else {
                 message.setText(messageModel.getMessage());
                 time.setText(messageModel.getTimestamp());

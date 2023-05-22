@@ -71,8 +71,7 @@
                     android:id="@+id/userNameTxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:ems="5"
-                    android:fontFamily="@font/poppins_bold"
+                     android:fontFamily="@font/poppins_bold"
                     android:singleLine="true"
                     android:text="Rachelsdsdsdsdssdafffdsfsdfsdf"
                     android:textColor="@color/black"
@@ -88,8 +87,7 @@
                     android:layout_weight="1"
                     android:gravity="end"
                     android:singleLine="true"
-                    android:text="13:25 PM"
-                    android:textSize="@dimen/text_size_date"></TextView>
+                     android:textSize="@dimen/text_size_date"></TextView>
 
             </LinearLayout>
 
@@ -110,8 +108,7 @@
                     android:fontFamily="@font/poppins_bold"
                     android:maxLines="2"
                     android:minLines="2"
-                    android:text="Rachelsdsdsdsdsddsdsdsdsdsdsdsdsdsdsdsdsdssdsdssdafffdsfsdfsdf"
-                    android:textSize="@dimen/text_size_date"></TextView>
+                     android:textSize="@dimen/text_size_date"></TextView>
 
 
                 <TextView
@@ -124,6 +121,7 @@
                     android:backgroundTint="@color/colorPrimary"
                     android:gravity="center"
                     android:minWidth="25dp"
+                    android:visibility="gone"
                     android:minHeight="25dp"
                     android:singleLine="true"
                     android:text="10"
