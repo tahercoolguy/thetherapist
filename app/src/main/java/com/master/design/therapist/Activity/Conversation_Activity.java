@@ -138,7 +138,7 @@ public class Conversation_Activity extends AppCompatActivity {
         name = getIntent().getStringExtra("Name");
         image = getIntent().getStringExtra("image");
         FriendsId = getIntent().getStringExtra("FriendId");
-        chatRoomID = getIntent().getStringExtra("roomID");
+        chatRoomID = getIntent().getStringExtra("chatRoomID");
         userNameTxt.setText(name);
         Picasso.with(context).load(image).into(profileCircleImg);
 

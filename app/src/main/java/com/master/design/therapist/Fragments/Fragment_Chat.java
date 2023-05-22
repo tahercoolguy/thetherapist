@@ -166,7 +166,7 @@ public class Fragment_Chat extends Fragment {
                                 intent.putExtra("Name", name);
                                 intent.putExtra("image", img);
                                 intent.putExtra("FriendId", FriendIddd);
-                                intent.putExtra("roomID", roomID);
+                                intent.putExtra("chatRoomID", roomID);
 
                                 startActivity(intent);
 //                startActivity(new Intent(getActivity(), Conversation_Activity.class));
