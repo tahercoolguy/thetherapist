@@ -340,13 +340,12 @@ public class About_You_Activity extends AppCompatActivity {
                     @Override
 
                     public void success(TherapistRegisterDM therapistRegisterDM, Response response) {
-                        progress.dismiss();
+
                         if (therapistRegisterDM.getStatus().equalsIgnoreCase("1")) {
 
-
+                            progress.dismiss();
                             user.setId(Integer.valueOf(therapistRegisterDM.getUser_id()));
 
-                            startActivity(new Intent(About_You_Activity.this, ThankYouActivity.class));
 
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ECLAIR) {
                                 overridePendingTransition(R.anim.fade_in, R.anim.fade_in);
@@ -355,6 +354,9 @@ public class About_You_Activity extends AppCompatActivity {
 
                             if (list.size() > 0) {
                                 addMultipleImageAPI(userID);
+                            }else{
+                                startActivity(new Intent(About_You_Activity.this, ThankYouActivity.class));
+
                             }
 
                         } else
@@ -423,19 +425,22 @@ public class About_You_Activity extends AppCompatActivity {
                 } catch (Exception e) {
                     Log.e("Error", e.toString());
                 }
-                progress = dialogUtil.showProgressDialog(About_You_Activity.this, getString(R.string.please_wait));
+//                progress = dialogUtil.showProgressDialog(About_You_Activity.this, getString(R.string.please_wait));
 
                 appController.paServices.Add_Multiple_Images(multipartTypedOutput, new Callback<AddMultipleImageRoot>() {
                     @Override
                     public void success(AddMultipleImageRoot addMultipleImageRoot, Response response) {
-                        progress.dismiss();
+//                        progress.dismiss();
 
                         if (addMultipleImageRoot.getStatus().equalsIgnoreCase("1")) {
-                            progress.dismiss();
+//                            progress.dismiss();
 
+                            if(list.size()==greaterImg_i+1){
+                                startActivity(new Intent(About_You_Activity.this, ThankYouActivity.class));
+                            }
                         } else {
 
-                            progress.dismiss();
+//                            progress.dismiss();
                         }
                     }
 
@@ -465,7 +470,7 @@ public class About_You_Activity extends AppCompatActivity {
     }
 
     Bitmap bitmap;
-
+int greaterImg_i=0;
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE) {
@@ -497,12 +502,13 @@ public class About_You_Activity extends AppCompatActivity {
                     try {
                         bitmap = MediaStore.Images.Media.getBitmap(About_You_Activity.this.getContentResolver(), data.getClipData().getItemAt(i).getUri());
                         list.add(data.getClipData().getItemAt(i).getUri());
+                        greaterImg_i=i;
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
 
                     if (i > x) {
-
+//                        greaterImg_i=i;
                     }
                 }
                 adaptor.notifyDataSetChanged();

@@ -18,7 +18,7 @@ public class ThankYouActivity extends AppCompatActivity {
         setContentView(R.layout.activity_thank_you);
         ButterKnife.bind(this);
 
-        int secondsDelayed = 2;
+        int secondsDelayed = 3;
         new Handler().postDelayed(new Runnable() {
             public void run() {
 //                String Id=user.getCountryId();
@@ -30,7 +30,10 @@ public class ThankYouActivity extends AppCompatActivity {
 //                    startActivity(new Intent(SplashScreen.this, AdvertiseSelector.class));
 //                    finish();
 //                }
-                startActivity(new Intent(ThankYouActivity.this, MainActivity.class));
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+//                startActivity(new Intent(ThankYouActivity.this, MainActivity.class));
                 finish();
                 overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
 
