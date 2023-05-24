@@ -555,29 +555,29 @@ public class Fragment_Home extends Fragment {
 
     }
 
-    public void searchAPI() {
+    public void searchAPI(String selected_ageId, String selected_genderId, String selected_ethicID, String selected_educationID, String interestIdList) {
         if (connectionDetector.isConnectingToInternet()) {
-            String age_id,  gender, interest = null, ethic = null, education = null;
+//            String age_id,  gender, interest = null, ethic = null, education = null;
 
-            age_id=((MainActivity)context).age_id;
-            gender=((MainActivity)context).gender;
-            interest=((MainActivity)context).interest;
-            ethic=((MainActivity)context).ethic;
-            education=((MainActivity)context).education;
+//            age_id=((MainActivity)context).age_id;
+//            gender=((MainActivity)context).gender;
+//            interest=((MainActivity)context).interest;
+//            ethic=((MainActivity)context).ethic;
+//            education=((MainActivity)context).education;
 
             MultipartTypedOutput multipartTypedOutput = new MultipartTypedOutput();
             multipartTypedOutput.addPart("id", new TypedString(String.valueOf(user.getId())));
-            multipartTypedOutput.addPart("age_range", new TypedString(age_id));
-            multipartTypedOutput.addPart("gender", new TypedString(gender));
-            if (interest != null || !interest.equalsIgnoreCase("")){
-                multipartTypedOutput.addPart("interest", new TypedString(interest));
+            multipartTypedOutput.addPart("age_range", new TypedString(selected_ageId));
+            multipartTypedOutput.addPart("gender", new TypedString(selected_genderId));
+            if (interestIdList.equalsIgnoreCase("")){
+                multipartTypedOutput.addPart("interest", new TypedString(interestIdList));
             }
-            if (ethic != null || !ethic.equalsIgnoreCase("")){
-                multipartTypedOutput.addPart("ethnic", new TypedString(ethic));
+            if (selected_ethicID != null || !selected_ethicID.equalsIgnoreCase("")){
+                multipartTypedOutput.addPart("ethnic", new TypedString(selected_ethicID));
             }
 
-            if (education != null || !education.equalsIgnoreCase("")) {
-                multipartTypedOutput.addPart("education", new TypedString(education));
+            if (selected_educationID != null || !selected_educationID.equalsIgnoreCase("")) {
+                multipartTypedOutput.addPart("education", new TypedString(selected_educationID));
             }
 
 //            progress = dialogUtil.showProgressDialog(My_ProfileActivity.this, getString(R.string.please_wait));
@@ -678,5 +678,23 @@ public class Fragment_Home extends Fragment {
             });
         } else
             Helper.showToast(getActivity(), getString(R.string.no_internet_connection));
+    }
+    String selected_ageId, selected_genderId, selected_ethicID, selected_educationID, InterestIdList = "";
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode==3){
+            if(data!=null){
+                selected_ageId = data.getStringExtra("selected_ageId");
+                selected_genderId = data.getStringExtra("selected_genderId");
+                selected_ethicID = data.getStringExtra("selected_ethicID");
+                selected_educationID = data.getStringExtra("selected_educationID");
+                InterestIdList = data.getStringExtra("InterestIdList");
+                searchAPI(selected_ageId,selected_genderId,selected_ethicID,selected_educationID,InterestIdList);
+
+            }
+        }
     }
 }

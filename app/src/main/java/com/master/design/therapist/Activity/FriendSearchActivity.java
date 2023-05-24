@@ -6,7 +6,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -26,6 +28,10 @@ public class FriendSearchActivity extends AppCompatActivity {
     private Context context;
     @BindView(R.id.rcvRcv)
     RecyclerView rcvRcv;
+
+    @BindView(R.id.startSearchingTxt)
+    TextView startSearchingTxt;
+
     private final static int MY_REQUEST_CODE0 = 0;
     private final static int MY_REQUEST_CODE1 = 1;
     private final static int MY_REQUEST_CODE2 = 2;
@@ -120,12 +126,44 @@ public class FriendSearchActivity extends AppCompatActivity {
     }
 
     String value;
-    String selected_ageId, selected_ageEng, selected_ageAR;
-    String selected_genderId, selected_genderEng, selected_genderAR;
-    String selected_ethicID, selected_ethicNameEng, selected_ethicNameAR;
-    String selected_educationID, selected_educationEng;
-    String InterestIdList, InterestNameEngList, InterestNameArList;
+    String selected_ageId="", selected_ageEng="", selected_ageAR = "";
+    String selected_genderId="", selected_genderEng="", selected_genderAR = "";
+    String selected_ethicID="", selected_ethicNameEng="", selected_ethicNameAR = "";
+    String selected_educationID="", selected_educationEng = "";
+    String InterestIdList="", InterestNameEngList="", InterestNameArList = "";
 
+
+    @OnClick(R.id.startSearchingTxt)
+    public void clickstartSearchingTxt() {
+        if (!selected_ageId.equalsIgnoreCase("") && !selected_genderId.equalsIgnoreCase("")) {
+            Intent intent = new Intent();
+            intent.putExtra("selected_ageId", selected_ageId);
+            intent.putExtra("selected_genderId", selected_genderId);
+            intent.putExtra("selected_ethicID", selected_ethicID);
+            intent.putExtra("selected_educationID", selected_educationID);
+            intent.putExtra("InterestIdList", InterestIdList);
+            setResult(3, intent);
+            finish();
+        } else {
+            showdialogNoData(getString(R.string.friends_search), getString(R.string.age_and_gender_manadatory));
+        }
+
+    }
+
+    public void showdialogNoData(  String tittle, String msg) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle(tittle)
+                .setMessage(msg)
+                .setCancelable(false)
+                .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        final AlertDialog alert = builder.create();
+
+        alert.show();
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

@@ -433,6 +433,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     public String age_id, ageEng, ageAR, gender, interest, ethic, education;
+      String selected_ageId, selected_genderId, selected_ethicID, selected_educationID, InterestIdList = "";
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -453,6 +454,19 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             ethic = data.getStringExtra("ethic");
             education = data.getStringExtra("education");
 
+        }
+
+        if (requestCode == 3) {
+            if (data != null) {
+                Intent intent = new Intent();
+
+                selected_ageId = data.getStringExtra("selected_ageId");
+                selected_genderId = data.getStringExtra("selected_genderId");
+                selected_ethicID = data.getStringExtra("selected_ethicID");
+                selected_educationID = data.getStringExtra("selected_educationID");
+                InterestIdList = data.getStringExtra("InterestIdList");
+
+            }
         }
     }
 }

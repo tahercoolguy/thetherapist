@@ -181,5 +181,7 @@
     <string name="downloading_image">Downloading Image...</string>
     <string name="image_saved">Image Saved!</string>
     <string name="sent_a_image">sent a image</string>
+    <string name="friends_search">Friend Search</string>
+    <string name="age_and_gender_manadatory">kindly age and gender mandatory</string>
 
 </resources>
