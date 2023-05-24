@@ -150,8 +150,8 @@ public class FriendSearchActivity extends AppCompatActivity {
 
     }
 
-    public void showdialogNoData(  String tittle, String msg) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+    public void showdialogNoData( String tittle, String msg) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(FriendSearchActivity.this);
         builder.setTitle(tittle)
                 .setMessage(msg)
                 .setCancelable(false)

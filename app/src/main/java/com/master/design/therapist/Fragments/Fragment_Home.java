@@ -130,7 +130,7 @@ public class Fragment_Home extends Fragment {
 //    @BindView(R.id.swiperefresh)
 //    SwipeRefreshLayout swiperefresh;
 
-
+    String selected_ageId="", selected_genderId="", selected_ethicID="", selected_educationID="", InterestIdList = "";
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -159,7 +159,22 @@ public class Fragment_Home extends Fragment {
 //            setInterestData();
 
             setDetails();
-            setsliderData();
+
+            if (getArguments() != null) {
+
+                selected_ageId = getArguments().getString("selected_ageId");
+                selected_genderId = getArguments().getString("selected_genderId");
+                selected_ethicID = getArguments().getString("selected_ethicID");
+                selected_educationID = getArguments().getString("selected_educationID");
+                InterestIdList = getArguments().getString("InterestIdList");
+                searchAPI(selected_ageId, selected_genderId, selected_ethicID, selected_educationID, InterestIdList);
+
+            } else {
+                setsliderData();
+            }
+
+
+
 
             /*
              * Sets up a SwipeRefreshLayout.OnRefreshListener that is invoked when the user
@@ -569,10 +584,10 @@ public class Fragment_Home extends Fragment {
             multipartTypedOutput.addPart("id", new TypedString(String.valueOf(user.getId())));
             multipartTypedOutput.addPart("age_range", new TypedString(selected_ageId));
             multipartTypedOutput.addPart("gender", new TypedString(selected_genderId));
-            if (interestIdList.equalsIgnoreCase("")){
+            if (interestIdList.equalsIgnoreCase("")) {
                 multipartTypedOutput.addPart("interest", new TypedString(interestIdList));
             }
-            if (selected_ethicID != null || !selected_ethicID.equalsIgnoreCase("")){
+            if (selected_ethicID != null || !selected_ethicID.equalsIgnoreCase("")) {
                 multipartTypedOutput.addPart("ethnic", new TypedString(selected_ethicID));
             }
 
@@ -679,22 +694,26 @@ public class Fragment_Home extends Fragment {
         } else
             Helper.showToast(getActivity(), getString(R.string.no_internet_connection));
     }
-    String selected_ageId, selected_genderId, selected_ethicID, selected_educationID, InterestIdList = "";
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(resultCode==3){
-            if(data!=null){
-                selected_ageId = data.getStringExtra("selected_ageId");
-                selected_genderId = data.getStringExtra("selected_genderId");
-                selected_ethicID = data.getStringExtra("selected_ethicID");
-                selected_educationID = data.getStringExtra("selected_educationID");
-                InterestIdList = data.getStringExtra("InterestIdList");
-                searchAPI(selected_ageId,selected_genderId,selected_ethicID,selected_educationID,InterestIdList);
+//        if (resultCode == 3) {
+//            if (data != null) {
+//                selected_ageId = data.getStringExtra("selected_ageId");
+//                selected_genderId = data.getStringExtra("selected_genderId");
+//                selected_ethicID = data.getStringExtra("selected_ethicID");
+//                selected_educationID = data.getStringExtra("selected_educationID");
+//                InterestIdList = data.getStringExtra("InterestIdList");
+//
+//            }
+//        }
+    }
 
-            }
-        }
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
     }
 }
