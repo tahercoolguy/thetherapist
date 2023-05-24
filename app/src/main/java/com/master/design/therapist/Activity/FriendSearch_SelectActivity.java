@@ -69,6 +69,8 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
 
 
     public String InterestIdList = "";
+    public String InterestNameEngList = "";
+    public String InterestNameArList = "";
 
     @BindView(R.id.rcvRcv)
     RecyclerView rcvRcv;
@@ -209,6 +211,16 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
 //            startActivity(new Intent(FriendSearch_SelectActivity.this, About_You_Activity.class));
             overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
         }
+
+
+        if(!InterestIdList.equalsIgnoreCase("") &&!InterestNameEngList.equalsIgnoreCase("")){
+            Intent intent = new Intent();
+            intent.putExtra("InterestIdList", InterestIdList);
+            intent.putExtra("InterestNameEngList", InterestNameEngList);
+            intent.putExtra("InterestNameArList", InterestNameArList);
+            setResult(5, intent);
+            finish();//finishing activity
+        }
     }
 
     @SuppressLint({"SetTextI18n", "SuspiciousIndentation"})
@@ -323,7 +335,7 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
                                     intent.putExtra("selected_genderId", selected_genderId);
                                     intent.putExtra("selected_genderEng", selected_genderEng);
                                     intent.putExtra("selected_genderAR", selected_genderAR);
-                                    setResult(3, intent);
+                                    setResult(1, intent);
                                     finish();//finishing activity
                                 }
                             });
@@ -376,6 +388,53 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
 //            interestDMArrayList.add(new InterestDM("Books", R.drawable.film));
 //            interestDMArrayList.add(new InterestDM("Sports", R.drawable.film));
 
+//            if (connectionDetector.isConnectingToInternet()) {
+//
+//                String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+//
+//                progress = dialogUtil.showProgressDialog(FriendSearch_SelectActivity.this, getString(R.string.please_wait));
+//
+//                appController.paServices.TherapistInterest(new Callback<TherapistInterestDM>() {
+//
+//                    @Override
+//
+//                    public void success(TherapistInterestDM therapistInterestDM, Response response) {
+//                        progress.dismiss();
+//                        if (therapistInterestDM.getStatus().equalsIgnoreCase("1")) {
+//
+//
+//                            Adapter_Interest adapter_interest = new Adapter_Interest(FriendSearch_SelectActivity.this, therapistInterestDM.getInterest_details());
+//                            GridLayoutManager gridLayoutManager = new GridLayoutManager(FriendSearch_SelectActivity.this, 2);
+//                            rcvRcv.setLayoutManager(gridLayoutManager);
+//                            rcvRcv.setAdapter(adapter_interest);
+//                            adapter_interest.setOnItemClickListener(new Adapter_Interest.OnItemClickListener() {
+//                                @Override
+//                                public void onClickThis(int position, String tittle) {
+//                                    String value = tittle;
+//                                    Intent intent = new Intent();
+//                                    intent.putExtra("value", value);
+//                                    setResult(RESULT_OK, intent);
+//                                }
+//                            });
+//
+//
+//                        } else
+//                            Helper.showToast(FriendSearch_SelectActivity.this, getString(R.string.Api_data_not_found));
+//                    }
+//
+//                    @Override
+//                    public void failure(RetrofitError retrofitError) {
+//                        progress.dismiss();
+//
+//                        Log.e("error", retrofitError.toString());
+//
+//                    }
+//                });
+//
+//            } else
+//                Helper.showToast(FriendSearch_SelectActivity.this, getString(R.string.no_internet_connection));
+
+
             if (connectionDetector.isConnectingToInternet()) {
 
                 String refreshedToken = FirebaseInstanceId.getInstance().getToken();
@@ -390,20 +449,10 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
                         progress.dismiss();
                         if (therapistInterestDM.getStatus().equalsIgnoreCase("1")) {
 
-
-                            Adapter_Interest adapter_interest = new Adapter_Interest(FriendSearch_SelectActivity.this, therapistInterestDM.getInterest_details());
+                            Adapter_Interest_new adapter_interest = new Adapter_Interest_new(FriendSearch_SelectActivity.this, therapistInterestDM.getInterest_details());
                             GridLayoutManager gridLayoutManager = new GridLayoutManager(FriendSearch_SelectActivity.this, 2);
                             rcvRcv.setLayoutManager(gridLayoutManager);
                             rcvRcv.setAdapter(adapter_interest);
-                            adapter_interest.setOnItemClickListener(new Adapter_Interest.OnItemClickListener() {
-                                @Override
-                                public void onClickThis(int position, String tittle) {
-                                    String value = tittle;
-                                    Intent intent = new Intent();
-                                    intent.putExtra("value", value);
-                                    setResult(RESULT_OK, intent);
-                                }
-                            });
 
 
                         } else
@@ -465,6 +514,14 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
                                     selected_ethicNameEng = ethicNameEng;
                                     selected_ethicNameAR = ethicNameAR;
 
+
+                                    Intent intent = new Intent();
+                                    intent.putExtra("selected_ethicID", selected_ethicID);
+                                    intent.putExtra("selected_ethicNameEng", selected_ethicNameEng);
+                                    intent.putExtra("selected_ethicNameAR", selected_ethicNameAR);
+                                    setResult(3, intent);
+                                    finish();//finishing activity
+
                                 }
                             });
 
@@ -522,7 +579,11 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
 
                                     selected_educationID=educationid;
                                     selected_educationEng=educationEng;
-
+                                    Intent intent = new Intent();
+                                    intent.putExtra("selected_educationID", selected_educationID);
+                                    intent.putExtra("selected_educationEng", selected_educationEng);
+                                     setResult(4, intent);
+                                    finish();//finishing activity
                                 }
                             });
 

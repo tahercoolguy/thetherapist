@@ -32,6 +32,7 @@ public class FriendSearchActivity extends AppCompatActivity {
     private final static int MY_REQUEST_CODE3 = 3;
     private final static int MY_REQUEST_CODE4 = 4;
     private final static int MY_REQUEST_CODE5 = 5;
+    Adapter_Search adapter_search;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +60,7 @@ public class FriendSearchActivity extends AppCompatActivity {
         searchDMArrayList.add(new SearchDM(getString(R.string.ethic_optional), " "));
         searchDMArrayList.add(new SearchDM(getString(R.string.education_optional), " "));
 
-        Adapter_Search adapter_search = new Adapter_Search(context, searchDMArrayList);
+        adapter_search = new Adapter_Search(context, searchDMArrayList);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
         rcvRcv.setLayoutManager(linearLayoutManager);
         rcvRcv.setAdapter(adapter_search);
@@ -71,14 +72,14 @@ public class FriendSearchActivity extends AppCompatActivity {
                 if (position == 0) {
                     Intent intent = new Intent(FriendSearchActivity.this, FriendSearch_SelectActivity.class);
                     intent.putExtra("string1", "string1");
-                    startActivityForResult(intent, MY_REQUEST_CODE0);
+                    startActivityForResult(intent, 2);
                     overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
 
                 }
                 if (position == 1) {
                     Intent intent = new Intent(FriendSearchActivity.this, FriendSearch_SelectActivity.class);
                     intent.putExtra("string2", "string2");
-                    startActivityForResult(intent, MY_REQUEST_CODE1);
+                    startActivityForResult(intent, 1);
                     overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
 
 
@@ -86,7 +87,7 @@ public class FriendSearchActivity extends AppCompatActivity {
                 if (position == 2) {
                     Intent intent = new Intent(FriendSearchActivity.this, FriendSearch_SelectActivity.class);
                     intent.putExtra("string3", "string3");
-                    startActivityForResult(intent, MY_REQUEST_CODE2);
+                    startActivityForResult(intent, 5);
                     overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
 
 
@@ -95,7 +96,7 @@ public class FriendSearchActivity extends AppCompatActivity {
 
                     Intent intent = new Intent(FriendSearchActivity.this, FriendSearch_SelectActivity.class);
                     intent.putExtra("string4", "string4");
-                    startActivityForResult(intent, MY_REQUEST_CODE3);
+                    startActivityForResult(intent, 3);
                     overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
 
 
@@ -104,7 +105,7 @@ public class FriendSearchActivity extends AppCompatActivity {
 
                     Intent intent = new Intent(FriendSearchActivity.this, FriendSearch_SelectActivity.class);
                     intent.putExtra("string5", "string5");
-                    startActivityForResult(intent, MY_REQUEST_CODE4);
+                    startActivityForResult(intent, 4);
                     overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
 
                 }
@@ -123,22 +124,24 @@ public class FriendSearchActivity extends AppCompatActivity {
     String selected_genderId, selected_genderEng, selected_genderAR;
     String selected_ethicID, selected_ethicNameEng, selected_ethicNameAR;
     String selected_educationID, selected_educationEng;
+    String InterestIdList, InterestNameEngList, InterestNameArList;
 
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK) {
 
-            if (requestCode == MY_REQUEST_CODE0) {
-                if (data != null) {
+
+        if (requestCode == 2) {
+            if (data != null) {
 //                    value = data.getStringExtra("value");
 
-                    selected_ageId = data.getStringExtra("age_id");
-                    selected_ageEng = data.getStringExtra("ageEng");
-                    selected_ageAR = data.getStringExtra("ageAR");
+                selected_ageId = data.getStringExtra("age_id");
+                selected_ageEng = data.getStringExtra("ageEng");
+                selected_ageAR = data.getStringExtra("ageAR");
 
-                    searchDMArrayList.set(0, new SearchDM(getString(R.string.age_range), selected_ageEng));
+                searchDMArrayList.set(0, new SearchDM(getString(R.string.age_range), selected_ageEng));
+                adapter_search.notifyDataSetChanged();
 //                    ArrayList<SearchDM> searchDMArrayList = new ArrayList<>();
 //                    searchDMArrayList.add(new SearchDM("Age Range", "20-35"));
 //                    searchDMArrayList.add(new SearchDM("Gender", "Male"));
@@ -151,19 +154,20 @@ public class FriendSearchActivity extends AppCompatActivity {
 //                    rcvRcv.setLayoutManager(linearLayoutManager);
 //                    rcvRcv.setAdapter(adapter_search);
 
-                }
-
             }
 
-            if (requestCode == MY_REQUEST_CODE1) {
-                if (data != null) {
+        }
+
+        if (requestCode == 1) {
+            if (data != null) {
 //                    value = data.getStringExtra("value");
 
-                    selected_genderId = data.getStringExtra("selected_genderId");
-                    selected_genderEng = data.getStringExtra("selected_genderEng");
-                    selected_genderAR = data.getStringExtra("selected_genderAR");
+                selected_genderId = data.getStringExtra("selected_genderId");
+                selected_genderEng = data.getStringExtra("selected_genderEng");
+                selected_genderAR = data.getStringExtra("selected_genderAR");
 
-                    searchDMArrayList.set(1, new SearchDM(getString(R.string.gender), selected_genderEng));
+                searchDMArrayList.set(1, new SearchDM(getString(R.string.gender), selected_genderEng));
+                adapter_search.notifyDataSetChanged();
 //                    ArrayList<SearchDM> searchDMArrayList = new ArrayList<>();
 //                    searchDMArrayList.add(new SearchDM("Age Range", "20-35"));
 //                    searchDMArrayList.add(new SearchDM("Gender", value));
@@ -175,12 +179,18 @@ public class FriendSearchActivity extends AppCompatActivity {
 //                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
 //                    rcvRcv.setLayoutManager(linearLayoutManager);
 //                    rcvRcv.setAdapter(adapter_search);
-                }
             }
+        }
 
-            if (requestCode == MY_REQUEST_CODE2) {
-                if (data != null) {
+        if (requestCode == 5) {
+            if (data != null) {
 
+                InterestIdList = data.getStringExtra("InterestIdList");
+                InterestNameEngList = data.getStringExtra("InterestNameEngList");
+                InterestNameArList = data.getStringExtra("InterestNameArList");
+
+                searchDMArrayList.set(2, new SearchDM(getString(R.string.ethic_optional), InterestNameEngList));
+                adapter_search.notifyDataSetChanged();
 
 //                    ArrayList<SearchDM> searchDMArrayList = new ArrayList<>();
 //                    searchDMArrayList.add(new SearchDM("Age Range", "20-35"));
@@ -194,16 +204,17 @@ public class FriendSearchActivity extends AppCompatActivity {
 //                    rcvRcv.setLayoutManager(linearLayoutManager);
 //                    rcvRcv.setAdapter(adapter_search);
 
-                }
             }
+        }
 
-            if (requestCode == MY_REQUEST_CODE3) {
-                if (data != null) {
-                    selected_ethicID = data.getStringExtra("selected_ethicID");
-                    selected_ethicNameEng = data.getStringExtra("selected_ethicNameEng");
-                    selected_ethicNameAR = data.getStringExtra("selected_ethicNameAR");
+        if (requestCode == 3) {
+            if (data != null) {
+                selected_ethicID = data.getStringExtra("selected_ethicID");
+                selected_ethicNameEng = data.getStringExtra("selected_ethicNameEng");
+                selected_ethicNameAR = data.getStringExtra("selected_ethicNameAR");
 
-                    searchDMArrayList.set(3, new SearchDM(getString(R.string.ethic_optional), selected_ethicNameEng));
+                searchDMArrayList.set(3, new SearchDM(getString(R.string.ethic_optional), selected_ethicNameEng));
+                adapter_search.notifyDataSetChanged();
 //                    ArrayList<SearchDM> searchDMArrayList = new ArrayList<>();
 //                    searchDMArrayList.add(new SearchDM("Age Range", "20-35"));
 //                    searchDMArrayList.add(new SearchDM("Gender", "male"));
@@ -216,15 +227,17 @@ public class FriendSearchActivity extends AppCompatActivity {
 //                    rcvRcv.setLayoutManager(linearLayoutManager);
 //                    rcvRcv.setAdapter(adapter_search);
 
-                }
             }
+        }
 
-            if (requestCode == MY_REQUEST_CODE4) {
-                if (data != null) {
+        if (requestCode == 4) {
+            if (data != null) {
 
-                    selected_educationID = data.getStringExtra("selected_educationID");
-                    selected_educationEng = data.getStringExtra("selected_educationEng");
-                    searchDMArrayList.set(4, new SearchDM(getString(R.string.ethic_optional), selected_educationEng));
+                selected_educationID = data.getStringExtra("selected_educationID");
+                selected_educationEng = data.getStringExtra("selected_educationEng");
+
+                searchDMArrayList.set(4, new SearchDM(getString(R.string.ethic_optional), selected_educationEng));
+                adapter_search.notifyDataSetChanged();
 
 
 //                    ArrayList<SearchDM> searchDMArrayList = new ArrayList<>();
@@ -239,28 +252,8 @@ public class FriendSearchActivity extends AppCompatActivity {
 //                    rcvRcv.setLayoutManager(linearLayoutManager);
 //                    rcvRcv.setAdapter(adapter_search);
 
-                }
-
             }
-            if (requestCode == MY_REQUEST_CODE5) {
-                if (data != null) {
 
-
-//                    ArrayList<SearchDM> searchDMArrayList = new ArrayList<>();
-//                    searchDMArrayList.add(new SearchDM("Age Range", "20-35"));
-//                    searchDMArrayList.add(new SearchDM("Gender", "male"));
-//                    searchDMArrayList.add(new SearchDM("Interest (Optional)", "cooking"));
-//                    searchDMArrayList.add(new SearchDM("Ethic (Optional)", "arab"));
-//                    searchDMArrayList.add(new SearchDM("Education (Optional)", value));
-//
-//                    Adapter_Search adapter_search = new Adapter_Search(context, searchDMArrayList);
-//                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
-//                    rcvRcv.setLayoutManager(linearLayoutManager);
-//                    rcvRcv.setAdapter(adapter_search);
-
-                }
-
-            }
         }
     }
 

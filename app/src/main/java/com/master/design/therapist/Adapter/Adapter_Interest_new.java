@@ -32,7 +32,7 @@ public class Adapter_Interest_new extends RecyclerView.Adapter<Adapter_Interest_
     private ArrayList<Interest_details> arrayList;
     private InterestDM selected;
     User user;
-    Adapter_Interest.OnItemClickListener onItemClickListener;
+    Adapter_Interest_new.OnItemClickListener onItemClickListener;
     int row_index;
  FriendSearch_SelectActivity friendSearch_selectActivity;
 
@@ -104,6 +104,8 @@ public class Adapter_Interest_new extends RecyclerView.Adapter<Adapter_Interest_
             {
                 viewHolder.selected_cardView.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.red));
                 ((FriendSearch_SelectActivity)context).InterestIdList=((FriendSearch_SelectActivity)context).InterestIdList+arrayList.get(position).getId() +"," ;
+                ((FriendSearch_SelectActivity)context).InterestNameEngList=((FriendSearch_SelectActivity)context).InterestNameEngList+arrayList.get(position).getInterest_eg() +"," ;
+                ((FriendSearch_SelectActivity)context).InterestNameArList=((FriendSearch_SelectActivity)context).InterestNameArList+arrayList.get(position).getInterest_arb() +"," ;
                 Log.e("Checking", "Checking");
 
             }
@@ -111,6 +113,8 @@ public class Adapter_Interest_new extends RecyclerView.Adapter<Adapter_Interest_
            {
                viewHolder.selected_cardView.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.white));
                ((FriendSearch_SelectActivity)context).InterestIdList=((FriendSearch_SelectActivity)context).InterestIdList.replace(arrayList.get(position).getId()+",","");
+               ((FriendSearch_SelectActivity)context).InterestNameEngList=((FriendSearch_SelectActivity)context).InterestNameEngList.replace(arrayList.get(position).getInterest_eg()+",","");
+               ((FriendSearch_SelectActivity)context).InterestNameArList=((FriendSearch_SelectActivity)context).InterestNameArList.replace(arrayList.get(position).getInterest_arb()+",","");
                Log.e("Checking", "Checking");
 
            }
@@ -126,7 +130,7 @@ public class Adapter_Interest_new extends RecyclerView.Adapter<Adapter_Interest_
 //        }
     }
 
-    public void setOnItemClickListener(Adapter_Interest.OnItemClickListener onItemClickListener) {
+    public void setOnItemClickListener(Adapter_Interest_new.OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
 
@@ -158,6 +162,6 @@ public class Adapter_Interest_new extends RecyclerView.Adapter<Adapter_Interest_
     public interface OnItemClickListener {
 
 
-        void onClickThis(int position, String tittle);
+        void onClickThis(int position, String interstID,String intArname,String intEngName);
     }
 }

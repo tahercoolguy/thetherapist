@@ -151,7 +151,7 @@ public class Fragment_Home extends Fragment {
             ButterKnife.bind(this, rootView);
             user = new User(getActivity());
             dialogUtil = new DialogUtil();
-
+            mainLLL.setVisibility(View.GONE);
 //            Bitmap resultBmp = BlurBuilder.blur(getActivity(), BitmapFactory.decodeResource(getResources(), R.drawable.marshall_img));
 //            Drawable dr = new BitmapDrawable(resultBmp);
 //            bgRoundedImg.setImageDrawable(dr);
