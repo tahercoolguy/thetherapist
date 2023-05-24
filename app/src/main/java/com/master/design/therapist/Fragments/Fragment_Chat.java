@@ -6,6 +6,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -33,6 +35,7 @@ import com.master.design.therapist.Adapter.Adapter_Chat;
 import com.master.design.therapist.Controller.AppController;
 import com.master.design.therapist.DM.ChatDM;
 import com.master.design.therapist.DataModel.ChatlistDM;
+import com.master.design.therapist.DataModel.Details;
 import com.master.design.therapist.DataModel.Friend_ListDM;
 import com.master.design.therapist.Helper.DialogUtil;
 import com.master.design.therapist.Helper.Helper;
@@ -115,9 +118,31 @@ public class Fragment_Chat extends Fragment {
                     }
             );
 
+
+            searchET.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                    if (s != null) {
+                        filter(String.valueOf(s));
+                    }
+                }
+            });
         }
         return rootView;
     }
+
+    ArrayList<Details> detailsArrayList = new ArrayList<>();
+    Adapter_Chat adapter_chat;
 
     private void setChatData() {
 
@@ -151,28 +176,34 @@ public class Fragment_Chat extends Fragment {
 //                    progress.dismiss();
                     if (chatlistDM.getStatus().equalsIgnoreCase("1")) {
 
-                        rcvRcv.setVisibility(View.VISIBLE);
-                        swiperefresh.setRefreshing(false);
-                        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
-                        Adapter_Chat adapter_chat = new Adapter_Chat(context, chatlistDM.getDetails());
-                        rcvRcv.setLayoutManager(linearLayoutManager);
-                        rcvRcv.setAdapter(adapter_chat);
+                        try {
+                            detailsArrayList = chatlistDM.getDetails();
+                            rcvRcv.setVisibility(View.VISIBLE);
+                            swiperefresh.setRefreshing(false);
+                            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
+                            adapter_chat = new Adapter_Chat(context, chatlistDM.getDetails());
+                            rcvRcv.setLayoutManager(linearLayoutManager);
+                            rcvRcv.setAdapter(adapter_chat);
 
 
-                        adapter_chat.setOnItemClickListener(new Adapter_Chat.OnItemClickListener() {
-                            @Override
-                            public void onClickThis(int position, String img, String name, String FriendIddd,String roomID) {
-                                Intent intent = new Intent(getActivity(), Conversation_Activity.class);
-                                intent.putExtra("Name", name);
-                                intent.putExtra("image", img);
-                                intent.putExtra("FriendId", FriendIddd);
-                                intent.putExtra("chatRoomID", roomID);
+                            adapter_chat.setOnItemClickListener(new Adapter_Chat.OnItemClickListener() {
+                                @Override
+                                public void onClickThis(int position, String img, String name, String FriendIddd, String roomID) {
+                                    Intent intent = new Intent(getActivity(), Conversation_Activity.class);
+                                    intent.putExtra("Name", name);
+                                    intent.putExtra("image", img);
+                                    intent.putExtra("FriendId", FriendIddd);
+                                    intent.putExtra("chatRoomID", roomID);
 
-                                startActivity(intent);
+                                    startActivity(intent);
 //                startActivity(new Intent(getActivity(), Conversation_Activity.class));
-                                activity.overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
-                            }
-                        });
+                                    activity.overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
+                                }
+                            });
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
 
                     } else {
                         rcvRcv.setVisibility(View.GONE);
@@ -194,6 +225,51 @@ public class Fragment_Chat extends Fragment {
 
     }
 
+    public void filter(String text) {
+        // creating a new array list to filter our data.
+        ArrayList<Details> filteredlist = new ArrayList<>();
+
+        // running a for loop to compare elements.
+        for (Details item : detailsArrayList) {
+
+            // checking if the entered string matched with any item of our recycler view.
+
+
+//            if (SharedPreferencesUtils.getInstance(getActivity()).getValue(Constants.Language, "").equalsIgnoreCase("ar")) {
+//                if (item.getArabicName().contains(text.toLowerCase())) {
+//                    // if the item is matched we are
+//                    // adding it to our filtered list.
+//                    filteredlist.add(item);
+//                }
+//            }
+//
+//            if (SharedPreferencesUtils.getInstance(getActivity()).getValue(Constants.Language, "").equalsIgnoreCase("en")) {
+//                if (item.getName().toLowerCase().contains(text.toLowerCase())) {
+//                    // if the item is matched we are
+//                    // adding it to our filtered list.
+//                    filteredlist.add(item);
+//                }
+//            }
+
+            if (item.getFront_user().getName().toLowerCase().contains(text.toLowerCase())) {
+//                    // if the item is matched we are
+//                    // adding it to our filtered list.
+                filteredlist.add(item);
+//                }
+
+
+            }
+            if (filteredlist.isEmpty()) {
+                // if no item is added in filtered list we are
+                // displaying a toast message as no data found.
+//            Toast.makeText(getContext(), getString(R.string.not_found), Toast.LENGTH_SHORT).show();
+            } else {
+                // at last we are passing that filtered
+                // list to our adapter class.
+                adapter_chat.filterList(filteredlist);
+            }
+        }
+    }
 
     @Override
     public void onResume() {

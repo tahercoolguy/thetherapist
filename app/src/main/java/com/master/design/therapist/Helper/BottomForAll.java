@@ -113,7 +113,7 @@ public class BottomForAll extends BottomSheetDialogFragment implements View.OnCl
         btn_cancel = view.findViewById(R.id.btn_cancel);
 
         listview = view.findViewById(R.id.list_view);
-        search = view.findViewById(R.id.searchET);
+//        search = view.findViewById(R.id.searchET);
         if(isSort)
             search.setVisibility(View.GONE);
         listview.setVisibility(View.VISIBLE);

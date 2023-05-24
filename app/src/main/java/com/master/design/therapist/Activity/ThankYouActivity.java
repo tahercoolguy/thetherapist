@@ -31,7 +31,8 @@ public class ThankYouActivity extends AppCompatActivity {
 //                    finish();
 //                }
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
 //                startActivity(new Intent(ThankYouActivity.this, MainActivity.class));
                 finish();

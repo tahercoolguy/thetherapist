@@ -2,6 +2,8 @@ package com.master.design.therapist.Activity;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -10,12 +12,17 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -114,7 +121,7 @@ public class Conversation_Activity extends AppCompatActivity {
     DialogUtil dialogUtil;
     String FriendsId, chatRoomID;
     String user_id;
-    String message, Id, status, messageId, type;
+    String message, Id, status, messageId, timestamp, type, image_url = "";
     String statusCheck = "send";
     @BindView(R.id.sendImg)
     ImageView sendImg;
@@ -154,8 +161,11 @@ public class Conversation_Activity extends AppCompatActivity {
             }
         });
 
-
         setListeners();
+
+        ActivityCompat.requestPermissions(Conversation_Activity.this,
+                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                1);
     }
 
 
@@ -233,7 +243,7 @@ public class Conversation_Activity extends AppCompatActivity {
                             @Override
                             public void openImage(String message) {
 
-                                startActivity(new Intent(Conversation_Activity.this,ViewImageActivity.class).putExtra("img",message));
+                                startActivity(new Intent(Conversation_Activity.this, ViewImageActivity.class).putExtra("img", message));
 
                             }
                         });
@@ -480,12 +490,19 @@ public class Conversation_Activity extends AppCompatActivity {
 //                    Log.d("phonetype value ", obj.getString("phonetype"));
                     status = obj.getString("status");
                     if (status.equalsIgnoreCase("send")) {
-                        message = obj.getString("message");
                         Id = obj.getString("sender_id");
                         status = obj.getString("status");
                         messageId = obj.getString("message_id");
+                        timestamp = obj.getString("timestamp");
+                        type = obj.getString("type");
 
-                        if (Id == user_id) {
+                        if (type.equalsIgnoreCase("chat_message"))
+                            message = obj.getString("message");
+                        else {
+                            message = "";
+                            image_url = obj.getString("image_url");
+                        }
+                        if (Id.equalsIgnoreCase(user_id)) {
 
                             messageId = obj.getString("message_id");
 //                            All_messages model = new All_messages();
@@ -502,14 +519,19 @@ public class Conversation_Activity extends AppCompatActivity {
 //            jsonObject.addProperty("sender_id", user_id);
 
 
-                            String ne = "{\"type\":\"delivered_message\",\"message_id\":\"+messageId+\",\"status\":\"delivered\",\"sender_id\":" + user_id + "}";
-                            webSocketClient.send(ne);
-
                             All_messages model = new All_messages();
                             model.setMessage(message);
                             model.setReceiver_user_id(FriendsId);
                             model.setSender_user_id(user_id);
                             model.setStatus(status);
+                            model.setTimestamp(timestamp);
+                            model.setType(type);
+                            model.setId(messageId);
+                            if (type.equalsIgnoreCase("chat_image")) {
+                                model.setImage_url(image_url);
+                            } else {
+
+                            }
                             messageChatModelList.add(model);
 
                             rcvRcv.smoothScrollToPosition(messageChatModelList.size());
@@ -522,10 +544,11 @@ public class Conversation_Activity extends AppCompatActivity {
                                 @Override
                                 public void openImage(String message) {
 
-                                    startActivity(new Intent(Conversation_Activity.this,ViewImageActivity.class).putExtra("img",message));
+                                    startActivity(new Intent(Conversation_Activity.this, ViewImageActivity.class).putExtra("img", message));
 
                                 }
                             });
+                            sendPlayRingtone();
                         } else {
 
                             All_messages model = new All_messages();
@@ -533,62 +556,52 @@ public class Conversation_Activity extends AppCompatActivity {
                             model.setReceiver_user_id(user_id);
                             model.setSender_user_id(Id);
                             model.setStatus(status);
+                            model.setTimestamp(timestamp);
+                            model.setType(type);
+
+                            if (type.equalsIgnoreCase("chat_image")) {
+                                model.setImage_url(image_url);
+
+                            } else {
+
+                            }
                             messageChatModelList.add(model);
 
-//                            rcvRcv.smoothScrollToPosition(messageChatModelList.size());
-//                            rcvRcv.scrollToPosition(messageChatModelList.size()-1);
-//                            adapter.notifyDataSetChanged();
-//                            rcvRcv.scrollToPosition(adapter.getItemCount());
+                            if (type.equalsIgnoreCase("chat_message")) {
+                                String ne = "{\"type\":\"chat_message\",\"message_id\":\"" + messageId + "\",\"status\":\"delivered\",\"sender_id\":" + user_id + "}";
+                                webSocketClient.send(ne);
+                            } else {
+                                String ne = "{\"type\":\"chat_image\",\"message_id\":\"" + messageId + "\",\"status\":\"delivered\",\"sender_id\":" + user_id + "}";
+                                webSocketClient.send(ne);
+                            }
 
                             rcvRcv.smoothScrollToPosition(messageChatModelList.size());
-                            lm.setReverseLayout(false);
-                            lm.setStackFromEnd(true);
+//                              messageET.setText("");
+                            adapter.notifyDataSetChanged();
                             rcvRcv.scrollToPosition(messageChatModelList.size() - 1);
                             rcvRcv.scrollToPosition(adapter.getItemCount());
-                            adapter.notifyDataSetChanged();
+                            setListeners();
                             adapter.setOnitemClickListener(new MessageChatAdapter.Onitemclicklistener() {
                                 @Override
                                 public void openImage(String message) {
 
-                                    startActivity(new Intent(Conversation_Activity.this,ViewImageActivity.class).putExtra("img",message));
+                                    startActivity(new Intent(Conversation_Activity.this, ViewImageActivity.class).putExtra("img", message));
 
                                 }
                             });
-//                                adapter.notifyItemInserted(messageChatModelList.size());
-
-//                        messageET.setText("");
-                            setListeners();
+                            readPlayRingtone();
                         }
                     } else {
                         status = obj.getString("status");
-//                            messageId = obj.getString("message_id");
-//                            All_messages model = new All_messages();
-//                            model.setStatus(status);
-//                            messageChatModelList.add(model);
-//
-//                            JsonObject jsonObject = new JsonObject();
-//
-//// Add properties to the JsonObject
-//                            jsonObject.addProperty("type", "delivered_message");
-//                            jsonObject.addProperty("message_id", messageId);
-//                            jsonObject.addProperty("status", "delivered");
-//                            jsonObject.addProperty("sender_id", user_id);
-////            jsonObject.addProperty("sender_id", user_id);
-//
-//
-//                            String ne = "{\"type\":\"delivered_message\",\"message_id\":\""+messageId+"\",\"status\":\"delivered\",\"sender_id\":"+user_id+"}";
-//                            webSocketClient.send(ne);
-
-//                        rcvRcv.smoothScrollToPosition(messageChatModelList.size());
-//                        adapter.notifyDataSetChanged();
-//                        rcvRcv.scrollToPosition(messageChatModelList.size());
-//                        rcvRcv.scrollToPosition(adapter.getItemCount());
-
-//                        rcvRcv.smoothScrollToPosition(messageChatModelList.size());
-//                        rcvRcv.scrollToPosition(messageChatModelList.size()-1);
-//                        adapter.notifyDataSetChanged();
-//                        rcvRcv.scrollToPosition(adapter.getItemCount());
-
+                        messageId = obj.getString("message_id");
+                        int i = 0;
+                        for (All_messages message : messageChatModelList
+                        ) {
+                            if (Integer.parseInt(message.getId()) == Integer.parseInt(messageId)) {
+                                messageChatModelList.get(i).setStatus("delivered");
+                            }
+                            i++;
+                        }
 
                         rcvRcv.smoothScrollToPosition(messageChatModelList.size());
                         lm.setReverseLayout(false);
@@ -596,19 +609,13 @@ public class Conversation_Activity extends AppCompatActivity {
                         rcvRcv.scrollToPosition(messageChatModelList.size() - 1);
                         rcvRcv.scrollToPosition(adapter.getItemCount());
                         adapter.notifyDataSetChanged();
+                        readPlayRingtone();
                         setListeners();
-                        adapter.setOnitemClickListener(new MessageChatAdapter.Onitemclicklistener() {
-                            @Override
-                            public void openImage(String message) {
-
-                                startActivity(new Intent(Conversation_Activity.this,ViewImageActivity.class).putExtra("img",message));
-
-                            }
-                        });
 
                     }
 
                 } catch (JSONException e) {
+
                     e.printStackTrace();
                 }
 
@@ -667,7 +674,7 @@ public class Conversation_Activity extends AppCompatActivity {
 
     public void setListeners() {
 
-         rcvRcv.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+        rcvRcv.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
             @Override
             public void onLayoutChange(View v, int left, int top, int right, int bottom,
                                        int oldLeft, int oldTop, int oldRight, int oldBottom) {
@@ -707,7 +714,7 @@ public class Conversation_Activity extends AppCompatActivity {
     }
 
 
-    public void sendingImageChat(Bitmap bitmapImg ) {
+    public void sendingImageChat(Bitmap bitmapImg) {
         if (connectionDetector.isConnectingToInternet()) {
 
             MultipartTypedOutput multipartTypedOutput = new MultipartTypedOutput();
@@ -779,9 +786,23 @@ public class Conversation_Activity extends AppCompatActivity {
 //            jsonObject.addProperty("sender_id", user_id);
 
 
-                            String ne = "{\"type\":\"chat_message\",\"message\":\"" + imgLink + "\",\"status\":\"send\",\"sender_id\":" + user_id + "}";
+                            String ne = "{\"type\":\"chat_image\",\"image_url\":\"" + imgLink + "\",\"status\":\"send\",\"sender_id\":" + user_id + "}";
                             webSocketClient.send(ne);
                             messageET.setText("");
+                            rcvRcv.smoothScrollToPosition(messageChatModelList.size());
+//                              messageET.setText("");
+                            adapter.notifyDataSetChanged();
+                            rcvRcv.scrollToPosition(messageChatModelList.size() - 1);
+                            rcvRcv.scrollToPosition(adapter.getItemCount());
+                            setListeners();
+                            adapter.setOnitemClickListener(new MessageChatAdapter.Onitemclicklistener() {
+                                @Override
+                                public void openImage(String message) {
+
+                                    startActivity(new Intent(Conversation_Activity.this, ViewImageActivity.class).putExtra("img", message));
+
+                                }
+                            });
                             setListeners();
                         }
 
@@ -803,6 +824,62 @@ public class Conversation_Activity extends AppCompatActivity {
         }
     }
 
+    public void sendPlayRingtone() {
+        try {
+//            Uri path = Uri.parse("android.resource://" + getPackageName() + "/raw/read_messege_sound.mp3");
+            Uri path = Uri.parse("android.resource://"
+                    + context.getPackageName() + "/"
+                    + R.raw.read_messege_sound);
+//            RingtoneManager.setActualDefaultRingtoneUri(
+//                    getApplicationContext(), RingtoneManager.TYPE_RINGTONE, path
+//            );
+            Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), path);
+            r.play();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
+    public void readPlayRingtone() {
+        try {
+//            Uri path = Uri.parse("android.resource://" + getPackageName() + "/raw/recieve_message_sound.mp3");
+            Uri path = Uri.parse("android.resource://"
+                    + context.getPackageName() + "/"
+                    + R.raw.recieve_message_sound);
+//            RingtoneManager.setActualDefaultRingtoneUri(
+//                    getApplicationContext(), RingtoneManager.TYPE_RINGTONE, path
+//            );
+            Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), path);
+            r.play();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 1: {
+
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+                } else {
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                    Toast.makeText(Conversation_Activity.this, "Permission denied to read your External storage", Toast.LENGTH_SHORT).show();
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
+    }
 }
 
