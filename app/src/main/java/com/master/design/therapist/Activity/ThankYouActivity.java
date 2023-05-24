@@ -31,9 +31,9 @@ public class ThankYouActivity extends AppCompatActivity {
 //                    finish();
 //                }
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
+                // set the new task and clear flags
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                 startActivity(intent);
 //                startActivity(new Intent(ThankYouActivity.this, MainActivity.class));
                 finish();
                 overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);

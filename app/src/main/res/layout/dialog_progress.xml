@@ -6,9 +6,16 @@
     android:gravity="center"
     android:padding="18dp">
 
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp"
+         android:elevation="3dp" />
+
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:clickable="true"
         android:focusable="true"
         app:cardBackgroundColor="@color/white"
@@ -28,12 +35,7 @@
                 android:layout_width="60dp"
                 android:layout_height="60dp">
 
-                <ProgressBar
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="3dp"
-                    android:background="@drawable/circle_white"
-                    android:elevation="3dp" />
+
 
                 <ImageView
                     android:layout_width="match_parent"

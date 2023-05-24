@@ -160,7 +160,7 @@ public class DialogUtil {
         WindowManager.LayoutParams layoutParams = dialog.getWindow().getAttributes();
         layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
         dialog.setCancelable(false);
-        dialog.setCanceledOnTouchOutside(false);
+        dialog.setCanceledOnTouchOutside(true);
         dialog.getWindow().setAttributes(layoutParams);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;

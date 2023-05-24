@@ -2,6 +2,7 @@
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="10dp"
     android:animateLayoutChanges="true"
     android:background="@color/white"
@@ -73,7 +74,7 @@
         <EditText
             android:id="@+id/userNameET"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="?actionBarSize"
             android:layout_gravity="center"
             android:layout_margin="10dp"
             android:background="@drawable/rectangle_white_grey_border"
@@ -92,14 +93,38 @@
             android:layout_marginTop="10dp"
             android:hint="@string/password"
             android:paddingHorizontal="10dp"></TextView>
-
-
-        <EditText
-            android:id="@+id/passETET"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:layout_margin="10dp"
+            android:background="@drawable/rectangle_white_grey_border"
+            android:backgroundTint="@color/white"
+            android:elevation="10dp"
+            android:textColor="@color/black"
+            app:passwordToggleEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+
+                android:id="@+id/passETET"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                 android:background="@null"
+                android:drawableRight="@drawable/ic_baseline_remove_red_eye_24"
+                android:inputType="textPassword"
+                android:paddingLeft="10dp"
+                android:textSize="@dimen/text_size_normal">
+
+            </com.google.android.material.textfield.TextInputEditText>
+
+        </com.google.android.material.textfield.TextInputLayout>
+        <EditText
+             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="10dp"
+            android:visibility="gone"
             android:background="@drawable/rectangle_white_grey_border"
             android:backgroundTint="@color/white"
             android:elevation="10dp"

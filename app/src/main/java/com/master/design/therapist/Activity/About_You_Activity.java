@@ -84,6 +84,7 @@ public class About_You_Activity extends AppCompatActivity {
     Dialog progress;
     String multipartTypedOutput;
     ArrayList<Uri> list;
+    ArrayList<Uri> listForSize;
     String colum[] = {
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.READ_EXTERNAL_STORAGE};
@@ -181,6 +182,7 @@ public class About_You_Activity extends AppCompatActivity {
 
         BindingEducation();
         list = new ArrayList<>();
+        listForSize = new ArrayList<>();
         adaptor = new AddImageAdapter(list, "1");
         multipleImageRcv.setLayoutManager(new LinearLayoutManager(About_You_Activity.this, LinearLayoutManager.HORIZONTAL, false));
         multipleImageRcv.setAdapter(adaptor);
@@ -343,24 +345,32 @@ public class About_You_Activity extends AppCompatActivity {
 
                         if (therapistRegisterDM.getStatus().equalsIgnoreCase("1")) {
 
-                            progress.dismiss();
+
                             user.setId(Integer.valueOf(therapistRegisterDM.getUser_id()));
 
 
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ECLAIR) {
-                                overridePendingTransition(R.anim.fade_in, R.anim.fade_in);
-                            }
                             String userID = therapistRegisterDM.getUser_id();
 
-                            if (list.size() > 0) {
+                            if (!list.isEmpty()) {
                                 addMultipleImageAPI(userID);
-                            }else{
-                                startActivity(new Intent(About_You_Activity.this, ThankYouActivity.class));
+                            } else {
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ECLAIR) {
+                                    progress.dismiss();
+                                    startActivity(new Intent(About_You_Activity.this, ThankYouActivity.class));
+                                    overridePendingTransition(R.anim.fade_in, R.anim.fade_in);
+                                } else {
+                                    progress.dismiss();
+                                    startActivity(new Intent(About_You_Activity.this, ThankYouActivity.class));
+                                    overridePendingTransition(R.anim.fade_in, R.anim.fade_in);
+                                }
+
 
                             }
 
-                        } else
+                        } else {
+                            progress.dismiss();
                             Helper.showToast(About_You_Activity.this, therapistRegisterDM.getMsg());
+                        }
                     }
 
                     @Override
@@ -425,7 +435,7 @@ public class About_You_Activity extends AppCompatActivity {
                 } catch (Exception e) {
                     Log.e("Error", e.toString());
                 }
-//                progress = dialogUtil.showProgressDialog(About_You_Activity.this, getString(R.string.please_wait));
+                progress = dialogUtil.showProgressDialog(About_You_Activity.this, getString(R.string.please_wait));
 
                 appController.paServices.Add_Multiple_Images(multipartTypedOutput, new Callback<AddMultipleImageRoot>() {
                     @Override
@@ -433,14 +443,23 @@ public class About_You_Activity extends AppCompatActivity {
 //                        progress.dismiss();
 
                         if (addMultipleImageRoot.getStatus().equalsIgnoreCase("1")) {
-//                            progress.dismiss();
 
-                            if(list.size()==greaterImg_i+1){
-                                startActivity(new Intent(About_You_Activity.this, ThankYouActivity.class));
+                            int sizeList = list.size();
+
+                            if (sizeList == greaterImg_i) {
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ECLAIR) {
+                                    progress.dismiss();
+                                    startActivity(new Intent(About_You_Activity.this, ThankYouActivity.class));
+                                    overridePendingTransition(R.anim.fade_in, R.anim.fade_in);
+                                } else {
+                                    progress.dismiss();
+                                    startActivity(new Intent(About_You_Activity.this, ThankYouActivity.class));
+                                    overridePendingTransition(R.anim.fade_in, R.anim.fade_in);
+                                }
                             }
                         } else {
 
-//                            progress.dismiss();
+                            progress.dismiss();
                         }
                     }
 
@@ -470,7 +489,8 @@ public class About_You_Activity extends AppCompatActivity {
     }
 
     Bitmap bitmap;
-int greaterImg_i=0;
+    int greaterImg_i = 0;
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE) {
@@ -502,7 +522,7 @@ int greaterImg_i=0;
                     try {
                         bitmap = MediaStore.Images.Media.getBitmap(About_You_Activity.this.getContentResolver(), data.getClipData().getItemAt(i).getUri());
                         list.add(data.getClipData().getItemAt(i).getUri());
-                        greaterImg_i=i;
+                        greaterImg_i = i + 1;
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

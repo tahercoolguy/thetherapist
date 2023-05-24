@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.EditText;
 
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.master.design.therapist.Controller.AppController;
 import com.master.design.therapist.DataModel.TherapistLoginDM;
@@ -42,7 +43,7 @@ public class Sign_InActivity extends AppCompatActivity {
 
     @NotEmpty
     @BindView(R.id.passETET)
-    EditText passETET;
+    TextInputEditText passETET;
 
     @OnClick(R.id.logINTxt)
     public void logINTxt()
@@ -55,13 +56,13 @@ public class Sign_InActivity extends AppCompatActivity {
             if(userNameET.getText().toString().equalsIgnoreCase(""))
             {
                 correct=false;
-                Helper.showToast(Sign_InActivity.this,"kindly enter your email");
+                Helper.showToast(Sign_InActivity.this,getString(R.string.kindly_enter_email));
             }
 
             else if(passETET.getText().toString().equalsIgnoreCase(""))
             {
                 correct=false;
-                Helper.showToast(Sign_InActivity.this,"kindly enter your password");
+                Helper.showToast(Sign_InActivity.this,getString(R.string.kindly_enter_password));
             }
 
             else if (correct)
