@@ -32,7 +32,8 @@ public class Adapter_Chat extends RecyclerView.Adapter<Adapter_Chat.ViewHolder> 
     private ChatDM selected;
     User user;
     Adapter_Chat.OnItemClickListener onItemClickListener;
-
+    String onlineStatus, latestmessage = "";
+    int  messagecount=0;
 
     int selectedPosition = 0;
 
@@ -88,24 +89,63 @@ public class Adapter_Chat extends RecyclerView.Adapter<Adapter_Chat.ViewHolder> 
 //        viewHolder.messegeCountTxt.setText(arrayList.get(position).getMesseageCount());
 //        viewHolder.timeTxt.setText(arrayList.get(position).getTime());
         viewHolder.userNameTxt.setText(arrayList.get(position).getFront_user().getName());
+        viewHolder.timeTxt.setText(arrayList.get(position).getTimestamp());
+        viewHolder.messageTxt.setText(arrayList.get(position).getLatest_message());
         //       viewHolder.profileRIV.setImageResource(arrayList.get(position).getImage());
         Picasso.with(context).load(AppController.THERAPIST_IMAGE + arrayList.get(position).getFront_user().getImage()).into(viewHolder.profileRIV);
 //        if (arrayList.get(position).getMesseageCount().equalsIgnoreCase("0")) {
 //            viewHolder.messegeCountTxt.setVisibility(View.GONE);
 //        }
 
-        if (position == 0 || position == 2 || position == 4 || position == 10 || position == 7) {
+        messagecount = Integer.parseInt(arrayList.get(position).getMessage_count());
+        if (messagecount>0) {
+            viewHolder.messegeCountTxt.setVisibility(View.VISIBLE);
+            viewHolder.messegeCountTxt.setText(arrayList.get(position).getMessage_count());
+
+        } else {
             viewHolder.messegeCountTxt.setVisibility(View.GONE);
+        }
+
+        latestmessage = arrayList.get(position).getLatest_message();
+        if (!latestmessage.equalsIgnoreCase("")) {
+            if (latestmessage.contains(".jpg") || latestmessage.contains(".png")) {
+                viewHolder.messageTxt.setText(R.string.sent_a_image);
+            } else {
+                viewHolder.messageTxt.setText(latestmessage);
+            }
+        } else {
+            viewHolder.messageTxt.setText("");
+        }
+
+
+        onlineStatus = arrayList.get(position).getOnline_status();
+        if (onlineStatus.equalsIgnoreCase("true")) {
+            viewHolder.activeStatusRL.setVisibility(View.VISIBLE);
+        } else {
             viewHolder.activeStatusRL.setVisibility(View.GONE);
         }
+
+
+
+
 
         viewHolder.clickLL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onItemClickListener.onClickThis(position, AppController.THERAPIST_IMAGE + arrayList.get(position).getFront_user().getImage(), arrayList.get(position).getFront_user().getName(), arrayList.get(position).getFront_user().getId(),arrayList.get(position).getRoom_id());
+                onItemClickListener.onClickThis(position, AppController.THERAPIST_IMAGE + arrayList.get(position).getFront_user().getImage(), arrayList.get(position).getFront_user().getName(), arrayList.get(position).getFront_user().getId(), arrayList.get(position).getRoom_id());
 
             }
         });
+    }
+
+    // method for filtering our recyclerview items.
+    public void filterList(ArrayList<Details> filterlist) {
+        // below line is to add our filtered
+        // list in our course array list.
+        arrayList = filterlist;
+        // below line is to notify our adapter
+        // as change in recycler view data.
+        notifyDataSetChanged();
     }
 
     public void setOnItemClickListener(Adapter_Chat.OnItemClickListener onItemClickListener) {
@@ -142,6 +182,6 @@ public class Adapter_Chat extends RecyclerView.Adapter<Adapter_Chat.ViewHolder> 
 
     public interface OnItemClickListener {
 
-        void onClickThis(int position, String img, String name, String FriendId,String RoomID);
+        void onClickThis(int position, String img, String name, String FriendId, String RoomID);
     }
 }

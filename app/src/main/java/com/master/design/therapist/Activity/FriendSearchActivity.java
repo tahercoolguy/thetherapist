@@ -31,6 +31,7 @@ public class FriendSearchActivity extends AppCompatActivity {
     private final static int MY_REQUEST_CODE2 = 2;
     private final static int MY_REQUEST_CODE3 = 3;
     private final static int MY_REQUEST_CODE4 = 4;
+    private final static int MY_REQUEST_CODE5 = 5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,14 +43,16 @@ public class FriendSearchActivity extends AppCompatActivity {
         setRcvRcv();
     }
 
+
     private void getBundleData() {
 
 
     }
 
+    ArrayList<SearchDM> searchDMArrayList = new ArrayList<>();
 
     private void setRcvRcv() {
-        ArrayList<SearchDM> searchDMArrayList = new ArrayList<>();
+
         searchDMArrayList.add(new SearchDM(getString(R.string.age_range), ""));
         searchDMArrayList.add(new SearchDM(getString(R.string.gender), " "));
         searchDMArrayList.add(new SearchDM(getString(R.string.interest_optional), " "));
@@ -116,6 +119,12 @@ public class FriendSearchActivity extends AppCompatActivity {
     }
 
     String value;
+    String selected_ageId, selected_ageEng, selected_ageAR;
+    String selected_genderId, selected_genderEng, selected_genderAR;
+    String selected_ethicID, selected_ethicNameEng, selected_ethicNameAR;
+    String selected_educationID, selected_educationEng;
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -123,7 +132,13 @@ public class FriendSearchActivity extends AppCompatActivity {
 
             if (requestCode == MY_REQUEST_CODE0) {
                 if (data != null) {
-                    value=data.getStringExtra("value");
+//                    value = data.getStringExtra("value");
+
+                    selected_ageId = data.getStringExtra("age_id");
+                    selected_ageEng = data.getStringExtra("ageEng");
+                    selected_ageAR = data.getStringExtra("ageAR");
+
+                    searchDMArrayList.set(0, new SearchDM(getString(R.string.age_range), selected_ageEng));
 //                    ArrayList<SearchDM> searchDMArrayList = new ArrayList<>();
 //                    searchDMArrayList.add(new SearchDM("Age Range", "20-35"));
 //                    searchDMArrayList.add(new SearchDM("Gender", "Male"));
@@ -142,7 +157,13 @@ public class FriendSearchActivity extends AppCompatActivity {
 
             if (requestCode == MY_REQUEST_CODE1) {
                 if (data != null) {
-                    value=data.getStringExtra("value");
+//                    value = data.getStringExtra("value");
+
+                    selected_genderId = data.getStringExtra("selected_genderId");
+                    selected_genderEng = data.getStringExtra("selected_genderEng");
+                    selected_genderAR = data.getStringExtra("selected_genderAR");
+
+                    searchDMArrayList.set(1, new SearchDM(getString(R.string.gender), selected_genderEng));
 //                    ArrayList<SearchDM> searchDMArrayList = new ArrayList<>();
 //                    searchDMArrayList.add(new SearchDM("Age Range", "20-35"));
 //                    searchDMArrayList.add(new SearchDM("Gender", value));
@@ -159,7 +180,8 @@ public class FriendSearchActivity extends AppCompatActivity {
 
             if (requestCode == MY_REQUEST_CODE2) {
                 if (data != null) {
-                    value=data.getStringExtra("value");
+
+
 //                    ArrayList<SearchDM> searchDMArrayList = new ArrayList<>();
 //                    searchDMArrayList.add(new SearchDM("Age Range", "20-35"));
 //                    searchDMArrayList.add(new SearchDM("Gender", "male"));
@@ -177,8 +199,11 @@ public class FriendSearchActivity extends AppCompatActivity {
 
             if (requestCode == MY_REQUEST_CODE3) {
                 if (data != null) {
-                    value=data.getStringExtra("value");
+                    selected_ethicID = data.getStringExtra("selected_ethicID");
+                    selected_ethicNameEng = data.getStringExtra("selected_ethicNameEng");
+                    selected_ethicNameAR = data.getStringExtra("selected_ethicNameAR");
 
+                    searchDMArrayList.set(3, new SearchDM(getString(R.string.ethic_optional), selected_ethicNameEng));
 //                    ArrayList<SearchDM> searchDMArrayList = new ArrayList<>();
 //                    searchDMArrayList.add(new SearchDM("Age Range", "20-35"));
 //                    searchDMArrayList.add(new SearchDM("Gender", "male"));
@@ -196,7 +221,30 @@ public class FriendSearchActivity extends AppCompatActivity {
 
             if (requestCode == MY_REQUEST_CODE4) {
                 if (data != null) {
-                    value=data.getStringExtra("value");
+
+                    selected_educationID = data.getStringExtra("selected_educationID");
+                    selected_educationEng = data.getStringExtra("selected_educationEng");
+                    searchDMArrayList.set(4, new SearchDM(getString(R.string.ethic_optional), selected_educationEng));
+
+
+//                    ArrayList<SearchDM> searchDMArrayList = new ArrayList<>();
+//                    searchDMArrayList.add(new SearchDM("Age Range", "20-35"));
+//                    searchDMArrayList.add(new SearchDM("Gender", "male"));
+//                    searchDMArrayList.add(new SearchDM("Interest (Optional)", "cooking"));
+//                    searchDMArrayList.add(new SearchDM("Ethic (Optional)", "arab"));
+//                    searchDMArrayList.add(new SearchDM("Education (Optional)", value));
+//
+//                    Adapter_Search adapter_search = new Adapter_Search(context, searchDMArrayList);
+//                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
+//                    rcvRcv.setLayoutManager(linearLayoutManager);
+//                    rcvRcv.setAdapter(adapter_search);
+
+                }
+
+            }
+            if (requestCode == MY_REQUEST_CODE5) {
+                if (data != null) {
+
 
 //                    ArrayList<SearchDM> searchDMArrayList = new ArrayList<>();
 //                    searchDMArrayList.add(new SearchDM("Age Range", "20-35"));

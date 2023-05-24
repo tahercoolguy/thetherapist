@@ -5,8 +5,9 @@ import java.util.ArrayList;
 public class TherapistLoginDM {
 
     private String msg;
-    private ArrayList<LoginUser> user;
+//    private ArrayList<LoginUser> user;
     private String status;
+    public UserDM user ;
 
     public String getMsg() {
         return msg;
@@ -16,19 +17,19 @@ public class TherapistLoginDM {
         this.msg = msg;
     }
 
-    public ArrayList<LoginUser> getUser() {
-        return user;
-    }
-
-    public void setUser(ArrayList<LoginUser> user) {
-        this.user = user;
-    }
-
     public String getStatus() {
         return status;
     }
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public UserDM getUser() {
+        return user;
+    }
+
+    public void setUser(UserDM user) {
+        this.user = user;
     }
 }

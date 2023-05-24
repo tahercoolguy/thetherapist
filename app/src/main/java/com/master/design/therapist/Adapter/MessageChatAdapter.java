@@ -30,7 +30,7 @@ import java.util.List;
 
 public class MessageChatAdapter extends RecyclerView.Adapter {
 
-    List<All_messages> messageChatModelList;
+    public List<All_messages> messageChatModelList;
     Context context;
     User user;
     String friendId;
@@ -121,10 +121,10 @@ public class MessageChatAdapter extends RecyclerView.Adapter {
         All_messages message = messageChatModelList.get(position);
         switch (holder.getItemViewType()) {
             case VIEW_TYPE_MESSAGE_SENT:
-                ((SentMessageHolder) holder).bind(message,holder,holder);
+                ((SentMessageHolder) holder).bind(message, holder, holder);
                 break;
             case VIEW_TYPE_MESSAGE_RECEIVED:
-                ((ReceivedMessageHolder) holder).bind(message,holder);
+                ((ReceivedMessageHolder) holder).bind(message, holder);
         }
         setDetails(holder, position);
 
@@ -132,12 +132,12 @@ public class MessageChatAdapter extends RecyclerView.Adapter {
 
     private void setDetails(RecyclerView.ViewHolder holder, int position) {
 
-         holder.itemView.findViewById(R.id.sendimageRIV).setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View v) {
-                 onitemClickListener.openImage(messageChatModelList.get(position).getMessage());
-             }
-         });
+        holder.itemView.findViewById(R.id.sendimageRIV).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onitemClickListener.openImage(messageChatModelList.get(position).getImage_url());
+            }
+        });
     }
 
 
@@ -173,14 +173,57 @@ public class MessageChatAdapter extends RecyclerView.Adapter {
 
         void bind(All_messages messageModel, RecyclerView.ViewHolder holder, RecyclerView.ViewHolder viewHolder) {
 
-            if (messageModel.getMessage().contains(".jpg") || messageModel.getMessage().contains(".png")) {
-                sendimageRIV.setVisibility(View.VISIBLE);
-                Picasso.with(context).load(messageModel.getMessage()).into(sendimageRIV);
-                senderRL.setVisibility(View.GONE);
+            if (messageModel.getImage_url() != null) {
+                if (!messageModel.getImage_url().equalsIgnoreCase("")) {
+                    if (messageModel.getImage_url().contains(".jpg") || messageModel.getImage_url().contains(".png")) {
+                        sendimageRIV.setVisibility(View.VISIBLE);
+                        message.setVisibility(View.GONE);
+                        Picasso.with(context).load(messageModel.getImage_url()).into(sendimageRIV);
+//                    senderRL.setVisibility(View.GONE);
+                        time.setText(messageModel.getTimestamp());
+                        if (messageModel.getStatus().equalsIgnoreCase("send")) {
+                            image1.setVisibility(View.VISIBLE);
+                            image2.setVisibility(View.GONE);
+                        } else {
+                            image2.setVisibility(View.VISIBLE);
+                            image1.setVisibility(View.GONE);
+                        }
+                    } else {
+                        senderRL.setVisibility(View.VISIBLE);
+                        sendimageRIV.setVisibility(View.GONE);
+                        message.setVisibility(View.VISIBLE);
 
+                        message.setText(messageModel.getMessage());
+
+                        time.setText(messageModel.getTimestamp());
+                        if (messageModel.getStatus().equalsIgnoreCase("send")) {
+                            image1.setVisibility(View.VISIBLE);
+                            image2.setVisibility(View.GONE);
+                        } else {
+                            image2.setVisibility(View.VISIBLE);
+                            image1.setVisibility(View.GONE);
+                        }
+                    }
+                } else {
+                    senderRL.setVisibility(View.VISIBLE);
+                    sendimageRIV.setVisibility(View.GONE);
+                    message.setVisibility(View.VISIBLE);
+
+                    message.setText(messageModel.getMessage());
+
+                    time.setText(messageModel.getTimestamp());
+                    if (messageModel.getStatus().equalsIgnoreCase("send")) {
+                        image1.setVisibility(View.VISIBLE);
+                        image2.setVisibility(View.GONE);
+                    } else {
+                        image2.setVisibility(View.VISIBLE);
+                        image1.setVisibility(View.GONE);
+                    }
+                }
             } else {
                 senderRL.setVisibility(View.VISIBLE);
                 sendimageRIV.setVisibility(View.GONE);
+                message.setVisibility(View.VISIBLE);
 
                 message.setText(messageModel.getMessage());
 
@@ -188,15 +231,20 @@ public class MessageChatAdapter extends RecyclerView.Adapter {
                 if (messageModel.getStatus().equalsIgnoreCase("send")) {
                     image1.setVisibility(View.VISIBLE);
                     image2.setVisibility(View.GONE);
-                } else if (messageModel.getStatus().equalsIgnoreCase("delivered")) {
+                } else {
                     image2.setVisibility(View.VISIBLE);
                     image1.setVisibility(View.GONE);
-
-                } else if (status.equalsIgnoreCase("delivered")) {
-                    image2.setVisibility(View.VISIBLE);
-                    image1.setVisibility(View.GONE);
-
                 }
+
+//                if (messageModel.getStatus().equalsIgnoreCase("delivered")) {
+//                    image2.setVisibility(View.VISIBLE);
+//                    image1.setVisibility(View.GONE);
+//
+//                } else if (status.equalsIgnoreCase("delivered")) {
+//                    image2.setVisibility(View.VISIBLE);
+//                    image1.setVisibility(View.GONE);
+//
+//                }
 
             }
 
@@ -213,7 +261,7 @@ public class MessageChatAdapter extends RecyclerView.Adapter {
     public class ReceivedMessageHolder extends RecyclerView.ViewHolder {
         TextView message;
         TextView time;
-      public   RoundedImageView sendimageRIV;
+        RoundedImageView sendimageRIV;
         LinearLayout recieverLL;
 
         public ReceivedMessageHolder(@NonNull View itemView) {
@@ -227,15 +275,34 @@ public class MessageChatAdapter extends RecyclerView.Adapter {
 
         void bind(All_messages messageModel, RecyclerView.ViewHolder holder) {
 
-            if (messageModel.getMessage().contains(".jpg") || messageModel.getMessage().contains(".png")) {
-                sendimageRIV.setVisibility(View.VISIBLE);
-                recieverLL.setVisibility(View.GONE);
-                Picasso.with(context).load(messageModel.getMessage()).into(sendimageRIV);
+            if (messageModel.getImage_url() != null) {
+                if (!messageModel.getImage_url().equalsIgnoreCase("")) {
+                    if (messageModel.getImage_url().contains(".jpg") || messageModel.getImage_url().contains(".png")) {
+                        sendimageRIV.setVisibility(View.VISIBLE);
+//                        recieverLL.setVisibility(View.GONE);
+                        message.setVisibility(View.GONE);
+                        time.setText(messageModel.getTimestamp());
+                        Picasso.with(context).load(messageModel.getImage_url()).into(sendimageRIV);
 
-             } else {
+                    } else {
+                        message.setText(messageModel.getMessage());
+                        time.setText(messageModel.getTimestamp());
+//                        recieverLL.setVisibility(View.VISIBLE);
+                        message.setVisibility(View.VISIBLE);
+                        sendimageRIV.setVisibility(View.GONE);
+                    }
+                } else {
+                    message.setText(messageModel.getMessage());
+                    time.setText(messageModel.getTimestamp());
+//                    recieverLL.setVisibility(View.VISIBLE);
+                    message.setVisibility(View.VISIBLE);
+                    sendimageRIV.setVisibility(View.GONE);
+                }
+            } else {
                 message.setText(messageModel.getMessage());
                 time.setText(messageModel.getTimestamp());
-                recieverLL.setVisibility(View.VISIBLE);
+//                recieverLL.setVisibility(View.VISIBLE);
+                message.setVisibility(View.VISIBLE);
                 sendimageRIV.setVisibility(View.GONE);
             }
 

@@ -180,5 +180,6 @@
     <string name="need_permision_download_img">Need Permission to access storage for Downloading Image</string>
     <string name="downloading_image">Downloading Image...</string>
     <string name="image_saved">Image Saved!</string>
+    <string name="sent_a_image">sent a image</string>
 
 </resources>

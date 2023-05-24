@@ -65,7 +65,7 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
     String mobilenumber;
     String email;
     String password;
-    String confirmPassword,age;
+    String confirmPassword, age;
 
 
     public String InterestIdList = "";
@@ -106,7 +106,7 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
         getIntentData();
     }
 
-    String position0, position1, position2, position3, position4, string33;
+    String position, position0, position1, position2, position3, position4, string33;
 
     public void getIntentData() {
         Intent intent = getIntent();
@@ -119,18 +119,23 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
             string33 = intent.getStringExtra("string33");
 
             if (position0 != null) {
+                position = position0;
                 setPositionData(position0);
             }
             if (position1 != null) {
+                position = position1;
                 setPositionData(position1);
             }
             if (position2 != null) {
+                position = position2;
                 setPositionData(position2);
             }
             if (position3 != null) {
+                position = position3;
                 setPositionData(position3);
             }
             if (position4 != null) {
+                position = position4;
                 setPositionData(position4);
             }
         }
@@ -140,9 +145,47 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
 
     }
 
+    String selected_ageId, selected_ageEng, selected_ageAR;
+    String selected_genderId, selected_genderEng, selected_genderAR;
+    String selected_ethicID, selected_ethicNameEng, selected_ethicNameAR;
+    String selected_educationID, selected_educationEng;
 
     @OnClick(R.id.startSearchingTxt)
     public void clickstartSearchingTxt() {
+
+//        if (position.equalsIgnoreCase("string1")) {
+//            Intent intent = new Intent();
+//            intent.putExtra("age_id", selected_ageId);
+//            intent.putExtra("ageEng", selected_ageEng);
+//            intent.putExtra("ageAR", selected_ageAR);
+//            setResult(2, intent);
+//            finish();//finishing activity
+//        } else if (position.equalsIgnoreCase("string2")) {
+//            Intent intent = new Intent();
+//            intent.putExtra("selected_genderId", selected_genderId);
+//            intent.putExtra("selected_genderEng", selected_genderEng);
+//            intent.putExtra("selected_genderAR", selected_genderAR);
+//            setResult(3, intent);
+//            finish();//finishing activity
+//        } else if (position.equalsIgnoreCase("string3")) {
+//
+//
+//        } else if (position.equalsIgnoreCase("string4")) {
+//            Intent intent = new Intent();
+//            intent.putExtra("selected_ethicID", selected_ethicID);
+//            intent.putExtra("selected_ethicNameEng", selected_ethicNameEng);
+//            intent.putExtra("selected_ethicNameAR", selected_ethicNameAR);
+//            setResult(5, intent);
+//            finish();//finishing activity
+//        } else if (position.equalsIgnoreCase("string5")) {
+//            Intent intent = new Intent();
+//            intent.putExtra("selected_educationID", selected_educationID);
+//            intent.putExtra("selected_educationEng", selected_educationEng);
+//            setResult(5, intent);
+//            finish();//finishing activity
+//        }
+
+
         if (string33 != null) {
             if (!InterestIdList.equalsIgnoreCase("")) {
                 Intent intent = new Intent(FriendSearch_SelectActivity.this, About_You_Activity.class);
@@ -201,21 +244,25 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
                             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(FriendSearch_SelectActivity.this);
                             rcvRcv.setLayoutManager(linearLayoutManager);
                             rcvRcv.setAdapter(adapter_search);
-                          adapter_search.setOnItemClickListener(new Adapter_Search_Select1.OnItemClickListener() {
-                              @Override
-                              public void onClickThis(int position, String age_id, String ageEng, String ageAR) {
+                            adapter_search.setOnItemClickListener(new Adapter_Search_Select1.OnItemClickListener() {
+                                @Override
+                                public void onClickThis(int position, String age_id, String ageEng, String ageAR) {
 //                                  String value = subheading;
-                                  Intent intent = new Intent();
 //                                  intent.putExtra("value", value);
 //                                  setResult(RESULT_OK, intent);
 //                                  Intent intent=new Intent();
-                                  intent.putExtra("age_id",age_id);
-                                  intent.putExtra("ageEng",ageEng);
-                                  intent.putExtra("ageAR",ageAR);
-                                  setResult(2,intent);
-                                  finish();//finishing activity
-                              }
-                          });
+                                    selected_ageId = age_id;
+                                    selected_ageEng = ageEng;
+                                    selected_ageAR = ageAR;
+                                    Intent intent = new Intent();
+                                    intent.putExtra("age_id", selected_ageId);
+                                    intent.putExtra("ageEng", selected_ageEng);
+                                    intent.putExtra("ageAR", selected_ageAR);
+                                    setResult(2, intent);
+                                    finish();//finishing activity
+
+                                }
+                            });
                         } else
                             Helper.showToast(FriendSearch_SelectActivity.this, getString(R.string.Api_data_not_found));
                     }
@@ -264,13 +311,20 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
                             rcvRcv.setLayoutManager(linearLayoutManager);
                             rcvRcv.setAdapter(adapter_search);
 
-                            adapter_search.setOnItemClickListener(new Adapter_Search_Select.OnItemClickListener() {
+                            adapter_search.setOnItemClickListener(new Adapter_Search_Select_Gender.OnItemClickListener() {
                                 @Override
-                                public void onClickThis(int position, String heading, String subheading) {
-                                    String value = subheading;
+                                public void onClickThis(int position, String genderEng, String genderAR, String genderId) {
+
+                                    selected_genderId = genderId;
+                                    selected_genderEng = genderEng;
+                                    selected_genderAR = genderAR;
+
                                     Intent intent = new Intent();
-                                    intent.putExtra("value", value);
-                                    setResult(RESULT_OK, intent);
+                                    intent.putExtra("selected_genderId", selected_genderId);
+                                    intent.putExtra("selected_genderEng", selected_genderEng);
+                                    intent.putExtra("selected_genderAR", selected_genderAR);
+                                    setResult(3, intent);
+                                    finish();//finishing activity
                                 }
                             });
 
@@ -398,13 +452,19 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
                             rcvRcv.setLayoutManager(linearLayoutManager);
                             rcvRcv.setAdapter(adapter_search);
 
-                            adapter_search.setOnItemClickListener(new Adapter_Search_Select.OnItemClickListener() {
+                            adapter_search.setOnItemClickListener(new Adapter_Search_Select_Ethnic.OnItemClickListener() {
                                 @Override
-                                public void onClickThis(int position, String heading, String subheading) {
-                                    String value = subheading;
-                                    Intent intent = new Intent();
-                                    intent.putExtra("value", value);
-                                    setResult(RESULT_OK, intent);
+                                public void onClickThis(int position, String ethicID, String ethicNameEng, String ethicNameAR) {
+//                                    String value = subheading;
+//                                    Intent intent = new Intent();
+//                                    intent.putExtra("value", value);
+//                                    setResult(RESULT_OK, intent);
+
+
+                                    selected_ethicID = ethicID;
+                                    selected_ethicNameEng = ethicNameEng;
+                                    selected_ethicNameAR = ethicNameAR;
+
                                 }
                             });
 
@@ -455,15 +515,17 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
                             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(FriendSearch_SelectActivity.this);
                             rcvRcv.setLayoutManager(linearLayoutManager);
                             rcvRcv.setAdapter(adapter_search);
-                            adapter_search.setOnItemClickListener(new Adapter_Search_Select.OnItemClickListener() {
+
+                            adapter_search.setOnItemClickListener(new Adapter_Search_Select_Education.OnItemClickListener() {
                                 @Override
-                                public void onClickThis(int position, String heading, String subheading) {
-                                    String value = subheading;
-                                    Intent intent = new Intent();
-                                    intent.putExtra("value", value);
-                                    setResult(RESULT_OK, intent);
+                                public void onClickThis(int position, String educationid, String educationEng) {
+
+                                    selected_educationID=educationid;
+                                    selected_educationEng=educationEng;
+
                                 }
                             });
+
 
                         } else
                             Helper.showToast(FriendSearch_SelectActivity.this, getString(R.string.Api_data_not_found));

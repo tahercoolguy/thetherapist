@@ -27,7 +27,7 @@ public class Adapter_Search_Select_Education extends RecyclerView.Adapter<Adapte
     private ArrayList<Education_details> arrayList;
     private SearchDM selected;
     User user;
-    Adapter_Search_Select.OnItemClickListener onItemClickListener;
+    Adapter_Search_Select_Education.OnItemClickListener onItemClickListener;
 
 
     int selectedPosition = 0;
@@ -90,11 +90,12 @@ public class Adapter_Search_Select_Education extends RecyclerView.Adapter<Adapte
             public void onClick(View view) {
 //                onItemClickListener.onClickThis(position, arrayList.get(position).getHead(), arrayList.get(position).getDes());
 
+                onItemClickListener.onClickThis(position,arrayList.get(position).getId(),arrayList.get(position).getEducation());
             }
         });
     }
 
-    public void setOnItemClickListener(Adapter_Search_Select.OnItemClickListener onItemClickListener) {
+    public void setOnItemClickListener(Adapter_Search_Select_Education.OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
 
@@ -125,7 +126,7 @@ public class Adapter_Search_Select_Education extends RecyclerView.Adapter<Adapte
     public interface OnItemClickListener {
 
 
-        void onClickThis(int position, String heading, String subheading);
+        void onClickThis(int position, String educationid, String educationEng);
     }
 
 }

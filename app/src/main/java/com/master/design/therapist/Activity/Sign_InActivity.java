@@ -78,7 +78,7 @@ public class Sign_InActivity extends AppCompatActivity {
                                 progress.dismiss();
                                 if (therapistLoginDM.getStatus().equalsIgnoreCase("1")) {
 //                        Helper.shwToast(LoginActivity.this,customerRegisterDM.getMessage());
-                                    user.setId(Integer.valueOf(therapistLoginDM.getUser().get(0).getId()));
+                                    user.setId(Integer.valueOf(therapistLoginDM.getUser().getId()));
 
                                     startActivity(new Intent(Sign_InActivity.this, MainActivity.class));
                                     overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
