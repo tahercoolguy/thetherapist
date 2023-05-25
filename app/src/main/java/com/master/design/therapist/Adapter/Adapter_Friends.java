@@ -134,19 +134,27 @@ public class Adapter_Friends extends RecyclerView.Adapter<Adapter_Friends.ViewHo
                             progress.dismiss();
                             if (chatroomDM.getStatus().equalsIgnoreCase("1")) {
                                 Intent intent = null;
-                                if (chatroomDM.getRoom_id() != null) {
-                                    intent = new Intent(context, Conversation_Activity.class);
-                                    intent.putExtra("FriendId", arrayList.get(position).getId());
-                                    intent.putExtra("image", AppController.THERAPIST_IMAGE + arrayList.get(position).getImage());
-                                    intent.putExtra("Name", arrayList.get(position).getName());
-                                    intent.putExtra("chatRoomID", chatroomDM.getRoom_id());
-                                }else{
-                                    intent = new Intent(context, Conversation_Activity.class);
-                                    intent.putExtra("FriendId", arrayList.get(position).getId());
-                                    intent.putExtra("image", AppController.THERAPIST_IMAGE + arrayList.get(position).getImage());
-                                    intent.putExtra("Name", arrayList.get(position).getName());
-                                    intent.putExtra("chatRoomID", chatroomDM.getRoom_id());
-                                }
+
+                                intent = new Intent(context, Conversation_Activity.class);
+                                intent.putExtra("FriendId", arrayList.get(position).getId());
+                                intent.putExtra("image", AppController.THERAPIST_IMAGE + arrayList.get(position).getImage());
+                                intent.putExtra("Name", arrayList.get(position).getName());
+                                intent.putExtra("chatRoomID", chatroomDM.getRoom_id());
+
+
+//                                if (chatroomDM.getRoom_id() != null) {
+//                                    intent = new Intent(context, Conversation_Activity.class);
+//                                    intent.putExtra("FriendId", arrayList.get(position).getId());
+//                                    intent.putExtra("image", AppController.THERAPIST_IMAGE + arrayList.get(position).getImage());
+//                                    intent.putExtra("Name", arrayList.get(position).getName());
+//                                    intent.putExtra("chatRoomID", chatroomDM.getRoom_id());
+//                                }else{
+//                                    intent = new Intent(context, Conversation_Activity.class);
+//                                    intent.putExtra("FriendId", arrayList.get(position).getId());
+//                                    intent.putExtra("image", AppController.THERAPIST_IMAGE + arrayList.get(position).getImage());
+//                                    intent.putExtra("Name", arrayList.get(position).getName());
+//                                    intent.putExtra("chatRoomID", chatroomDM.getRoom_id());
+//                                }
 
 
                                 context.startActivity(intent);
