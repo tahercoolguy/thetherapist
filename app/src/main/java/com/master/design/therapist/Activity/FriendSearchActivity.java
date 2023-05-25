@@ -135,7 +135,7 @@ public class FriendSearchActivity extends AppCompatActivity {
 
     @OnClick(R.id.startSearchingTxt)
     public void clickstartSearchingTxt() {
-        if (!selected_ageId.equalsIgnoreCase("") && !selected_genderId.equalsIgnoreCase("")) {
+
             Intent intent = new Intent();
             intent.putExtra("selected_ageId", selected_ageId);
             intent.putExtra("selected_genderId", selected_genderId);
@@ -144,9 +144,9 @@ public class FriendSearchActivity extends AppCompatActivity {
             intent.putExtra("InterestIdList", InterestIdList);
             setResult(3, intent);
             finish();
-        } else {
-            showdialogNoData(getString(R.string.friends_search), getString(R.string.age_and_gender_manadatory));
-        }
+//        } else {
+//            showdialogNoData(getString(R.string.friends_search), getString(R.string.age_and_gender_manadatory));
+//        }
 
     }
 
@@ -227,7 +227,7 @@ public class FriendSearchActivity extends AppCompatActivity {
                 InterestNameEngList = data.getStringExtra("InterestNameEngList");
                 InterestNameArList = data.getStringExtra("InterestNameArList");
 
-                searchDMArrayList.set(2, new SearchDM(getString(R.string.ethic_optional), InterestNameEngList));
+                searchDMArrayList.set(2, new SearchDM(getString(R.string.interest_optional), InterestNameEngList));
                 adapter_search.notifyDataSetChanged();
 
 //                    ArrayList<SearchDM> searchDMArrayList = new ArrayList<>();
@@ -274,7 +274,7 @@ public class FriendSearchActivity extends AppCompatActivity {
                 selected_educationID = data.getStringExtra("selected_educationID");
                 selected_educationEng = data.getStringExtra("selected_educationEng");
 
-                searchDMArrayList.set(4, new SearchDM(getString(R.string.ethic_optional), selected_educationEng));
+                searchDMArrayList.set(4, new SearchDM(getString(R.string.education_optional), selected_educationEng));
                 adapter_search.notifyDataSetChanged();
 
 

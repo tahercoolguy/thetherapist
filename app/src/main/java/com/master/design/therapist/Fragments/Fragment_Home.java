@@ -130,7 +130,8 @@ public class Fragment_Home extends Fragment {
 //    @BindView(R.id.swiperefresh)
 //    SwipeRefreshLayout swiperefresh;
 
-    String selected_ageId="", selected_genderId="", selected_ethicID="", selected_educationID="", InterestIdList = "";
+    public  String selected_ageId = "0", selected_genderId = "0", selected_ethicID = "0", selected_educationID = "0", InterestIdList = "0";
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -162,12 +163,12 @@ public class Fragment_Home extends Fragment {
 
             if (getArguments() != null) {
 
-                selected_ageId = getArguments().getString("selected_ageId");
-                selected_genderId = getArguments().getString("selected_genderId");
-                selected_ethicID = getArguments().getString("selected_ethicID");
-                selected_educationID = getArguments().getString("selected_educationID");
-                InterestIdList = getArguments().getString("InterestIdList");
-                searchAPI(selected_ageId, selected_genderId, selected_ethicID, selected_educationID, InterestIdList);
+                selected_ageId = getArguments().getString("selected_ageId","0");
+                selected_genderId = getArguments().getString("selected_genderId","0");
+                selected_ethicID = getArguments().getString("selected_ethicID","0");
+                selected_educationID = getArguments().getString("selected_educationID","0");
+                InterestIdList = getArguments().getString("InterestIdList","0");
+                searchAPI();
 
             } else {
                 setsliderData();
@@ -290,7 +291,12 @@ public class Fragment_Home extends Fragment {
 
         } else {
             listposition = 0;
-            setsliderData();
+            if(getArguments()!=null){
+                searchAPI();
+            }else{
+                setsliderData();
+
+            }
         }
 
     }
@@ -570,7 +576,7 @@ public class Fragment_Home extends Fragment {
 
     }
 
-    public void searchAPI(String selected_ageId, String selected_genderId, String selected_ethicID, String selected_educationID, String interestIdList) {
+    public void searchAPI() {
         if (connectionDetector.isConnectingToInternet()) {
 //            String age_id,  gender, interest = null, ethic = null, education = null;
 
@@ -582,17 +588,35 @@ public class Fragment_Home extends Fragment {
 
             MultipartTypedOutput multipartTypedOutput = new MultipartTypedOutput();
             multipartTypedOutput.addPart("id", new TypedString(String.valueOf(user.getId())));
-            multipartTypedOutput.addPart("age_range", new TypedString(selected_ageId));
-            multipartTypedOutput.addPart("gender", new TypedString(selected_genderId));
-            if (interestIdList.equalsIgnoreCase("")) {
-                multipartTypedOutput.addPart("interest", new TypedString(interestIdList));
+            if (!selected_genderId.equalsIgnoreCase("10")) {
+
+                multipartTypedOutput.addPart("gender", new TypedString( selected_genderId));
             }
-            if (selected_ethicID != null || !selected_ethicID.equalsIgnoreCase("")) {
-                multipartTypedOutput.addPart("ethnic", new TypedString(selected_ethicID));
+            if (!selected_ageId.equalsIgnoreCase("0")) {  //creating a constructor of StringBuffer class
+                StringBuffer sb = new StringBuffer(selected_ageId);
+                //invoking the method
+                sb.deleteCharAt(sb.length() - 1);
+
+                multipartTypedOutput.addPart("age_range", new TypedString(String.valueOf(sb)));
+            }
+            if (!InterestIdList.equalsIgnoreCase("0")) {
+                StringBuffer sb = new StringBuffer(InterestIdList);
+                //invoking the method
+                sb.deleteCharAt(sb.length() - 1);
+                multipartTypedOutput.addPart("interest", new TypedString(String.valueOf(sb)));
+            }
+            if (!selected_ethicID.equalsIgnoreCase("0")) {
+                StringBuffer sb = new StringBuffer(selected_ethicID);
+                //invoking the method
+                sb.deleteCharAt(sb.length() - 1);
+                multipartTypedOutput.addPart("ethnic", new TypedString(String.valueOf(sb)));
             }
 
-            if (selected_educationID != null || !selected_educationID.equalsIgnoreCase("")) {
-                multipartTypedOutput.addPart("education", new TypedString(selected_educationID));
+            if (!selected_educationID.equalsIgnoreCase("0")) {
+                StringBuffer sb = new StringBuffer(selected_educationID);
+                //invoking the method
+                sb.deleteCharAt(sb.length() - 1);
+                multipartTypedOutput.addPart("education", new TypedString(String.valueOf(sb)));
             }
 
 //            progress = dialogUtil.showProgressDialog(My_ProfileActivity.this, getString(R.string.please_wait));
@@ -604,74 +628,79 @@ public class Fragment_Home extends Fragment {
 
                     if (therapistHomeDM.getStatus().equalsIgnoreCase("1")) {
                         try {
-                            therapistHomeDMPosition = therapistHomeDM;
-                            nextUserID = therapistHomeDMPosition.getUsers().get(0).getId();
+                            if (therapistHomeDM.getUsers().size() > 0) {
+                                therapistHomeDMPosition = therapistHomeDM;
+                                nextUserID = therapistHomeDMPosition.getUsers().get(0).getId();
 
 //                        Picasso.with(context).load("http://207.154.215.156:8000" + therapistHomeDM.getUsers().get(0).getImage()).into(frontRoundedImg);
-                            userNameTxt.setText(therapistHomeDM.getUsers().get(0).getName());
-                            aboutTxt.setText(therapistHomeDM.getUsers().get(0).getAboutyou());
+                                userNameTxt.setText(therapistHomeDM.getUsers().get(0).getName());
+                                aboutTxt.setText(therapistHomeDM.getUsers().get(0).getAboutyou());
 
 
-                            Adapter_Category_Interest adapter_category_interest = new Adapter_Category_Interest(context, therapistHomeDM.getUsers().get(0).getInterests());
-                            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
-                            categoryRcv.setLayoutManager(linearLayoutManager);
-                            categoryRcv.setAdapter(adapter_category_interest);
+                                Adapter_Category_Interest adapter_category_interest = new Adapter_Category_Interest(context, therapistHomeDM.getUsers().get(0).getInterests());
+                                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+                                categoryRcv.setLayoutManager(linearLayoutManager);
+                                categoryRcv.setAdapter(adapter_category_interest);
 
-                            SliderHomeAdapter imageadapter = new SliderHomeAdapter(activity, therapistHomeDM.getUsers().get(0).getImage(), slider);
+                                SliderHomeAdapter imageadapter = new SliderHomeAdapter(activity, therapistHomeDM.getUsers().get(0).getImage(), slider);
 
-                            // below method is used to set auto cycle direction in left to
-                            // right direction you can change according to requirement.
-                            Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.left_slide_in);
-                            slider.startAnimation(animation);
-                            slider.setAutoCycleDirection(SliderView.LAYOUT_DIRECTION_LTR);
+                                // below method is used to set auto cycle direction in left to
+                                // right direction you can change according to requirement.
+                                Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.left_slide_in);
+                                slider.startAnimation(animation);
+                                slider.setAutoCycleDirection(SliderView.LAYOUT_DIRECTION_LTR);
 
 
-                            imageadapter.setOnItemClickListener(new SliderHomeAdapter.OnItemClickListener() {
-                                @Override
-                                public void onNextClick(int position) {
+                                imageadapter.setOnItemClickListener(new SliderHomeAdapter.OnItemClickListener() {
+                                    @Override
+                                    public void onNextClick(int position) {
 
-                                    //               slider.slideToNextPosition();
+                                        //               slider.slideToNextPosition();
 
-                                }
+                                    }
 
-                                @Override
-                                public void onSendRequest(String id) {
+                                    @Override
+                                    public void onSendRequest(String id) {
 
 //               SendRequestBinding(id);
 
-                                }
+                                    }
 
-                                @Override
-                                public void onCancelRequest(String id) {
+                                    @Override
+                                    public void onCancelRequest(String id) {
 
-                                    //               cancelRequestBinding(id);
+                                        //               cancelRequestBinding(id);
 
-                                }
-                            });
+                                    }
+                                });
 
 
-                            // below method is used to
-                            // setadapter to sliderview.
-                            slider.setSliderAdapter(imageadapter);
-                            slider.setInfiniteAdapterEnabled(true);
-                            // below method is use to set
-                            // scroll time in seconds.
+                                // below method is used to
+                                // setadapter to sliderview.
+                                slider.setSliderAdapter(imageadapter);
+                                slider.setInfiniteAdapterEnabled(true);
+                                // below method is use to set
+                                // scroll time in seconds.
 
-                            slider.setScrollTimeInSec(2);
+                                slider.setScrollTimeInSec(2);
 //
 //                        // to set it scrollable automatically
 //                        // we use below method.
 
-                            slider.setAutoCycle(true);
+                                slider.setAutoCycle(true);
 //
 //                        // to start autocycle below method is used.
 
-                            slider.startAutoCycle();
+                                slider.startAutoCycle();
 
-                            mainLLL.setVisibility(View.VISIBLE);
+                                mainLLL.setVisibility(View.VISIBLE);
+                            } else {
+                                ((MainActivity) context).showdialogNoData(context, getString(R.string.friends_search), getString(R.string.no_searched_user_found));
+                            }
+
 
                         } catch (Exception e) {
-                            ll.setVisibility(View.GONE);
+//                            ll.setVisibility(View.GONE);
                             e.printStackTrace();
                         }
 
@@ -679,13 +708,14 @@ public class Fragment_Home extends Fragment {
                     } else {
 //                         Helper.showToast(context, getString(R.string.Api_data_not_found));
                         mainLLL.setVisibility(View.GONE);
-                        ((MainActivity) context).showdialogNoData(context, getString(R.string.best_matches), getString(R.string.no_user_exist));
+                        ((MainActivity) context).showdialogNoData(context, getString(R.string.best_matches), getString(R.string.no_searched_user_found));
                     }
                 }
 
                 @Override
                 public void failure(RetrofitError retrofitError) {
 //                    progress.dismiss();
+                    ((MainActivity) context).showdialogNoData(context, getString(R.string.friends_search), getString(R.string.no_searched_user_found));
 
                     Log.e("error", retrofitError.toString());
 

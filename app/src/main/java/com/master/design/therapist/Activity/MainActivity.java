@@ -433,7 +433,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     public String age_id, ageEng, ageAR, gender, interest, ethic, education;
-      String selected_ageId="", selected_genderId="", selected_ethicID="", selected_educationID="", InterestIdList = "";
+     public String selected_ageId="", selected_genderId="", selected_ethicID="", selected_educationID="", InterestIdList = "";
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

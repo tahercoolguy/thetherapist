@@ -72,6 +72,15 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
     public String InterestNameEngList = "";
     public String InterestNameArList = "";
 
+   public String selected_ageId="", selected_ageEng="", selected_ageAR = "";
+
+    public  String selected_genderId="", selected_genderEng="", selected_genderAR = "";
+
+    public String selected_ethicID="", selected_ethicNameEng="", selected_ethicNameAR = "";
+
+    public String selected_educationID="", selected_educationEng = "";
+
+
     @BindView(R.id.rcvRcv)
     RecyclerView rcvRcv;
 
@@ -147,10 +156,10 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
 
     }
 
-    String selected_ageId, selected_ageEng, selected_ageAR;
-    String selected_genderId, selected_genderEng, selected_genderAR;
-    String selected_ethicID, selected_ethicNameEng, selected_ethicNameAR;
-    String selected_educationID, selected_educationEng;
+//    public String selected_ageId = "", selected_ageEng = "", selected_ageAR = "";
+//    public String selected_genderId = "", selected_genderEng = "", selected_genderAR = "";
+//    public String selected_ethicID = "", selected_ethicNameEng = "", selected_ethicNameAR = "";
+//    public String selected_educationID = "", selected_educationEng = "";
 
     @OnClick(R.id.startSearchingTxt)
     public void clickstartSearchingTxt() {
@@ -213,7 +222,7 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
         }
 
 
-        if(!InterestIdList.equalsIgnoreCase("") &&!InterestNameEngList.equalsIgnoreCase("")){
+        if (!InterestIdList.equalsIgnoreCase("") && !InterestNameEngList.equalsIgnoreCase("")) {
             Intent intent = new Intent();
             intent.putExtra("InterestIdList", InterestIdList);
             intent.putExtra("InterestNameEngList", InterestNameEngList);
@@ -221,6 +230,40 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
             setResult(5, intent);
             finish();//finishing activity
         }
+
+        if (!selected_ageId.equalsIgnoreCase("")) {
+            Intent intent = new Intent();
+            intent.putExtra("age_id", selected_ageId);
+            intent.putExtra("ageEng", selected_ageEng);
+            intent.putExtra("ageAR", selected_ageAR);
+            setResult(2, intent);
+            finish();//finishing activity
+        }
+        if (!selected_genderId.equalsIgnoreCase("")) {
+            Intent intent = new Intent();
+            intent.putExtra("selected_ethicID", selected_ethicID);
+            intent.putExtra("selected_genderEng", selected_genderEng);
+            intent.putExtra("selected_genderAR", selected_genderAR);
+            setResult(1, intent);
+            finish();//finishing activity
+        }
+        if (!selected_ethicID.equalsIgnoreCase("")) {
+            Intent intent = new Intent();
+            intent.putExtra("selected_ethicID", selected_ethicID);
+            intent.putExtra("selected_ethicNameEng", selected_ethicNameEng);
+            intent.putExtra("selected_ethicNameAR", selected_ethicNameAR);
+            setResult(3, intent);
+            finish();//finishing activity
+        }
+        if (!selected_educationID.equalsIgnoreCase("")) {
+            Intent intent = new Intent();
+            intent.putExtra("selected_educationID", selected_educationID);
+            intent.putExtra("selected_educationEng", selected_educationEng);
+            setResult(4, intent);
+            finish();//finishing activity
+        }
+
+
     }
 
     @SuppressLint({"SetTextI18n", "SuspiciousIndentation"})
@@ -266,12 +309,12 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
                                     selected_ageId = age_id;
                                     selected_ageEng = ageEng;
                                     selected_ageAR = ageAR;
-                                    Intent intent = new Intent();
-                                    intent.putExtra("age_id", selected_ageId);
-                                    intent.putExtra("ageEng", selected_ageEng);
-                                    intent.putExtra("ageAR", selected_ageAR);
-                                    setResult(2, intent);
-                                    finish();//finishing activity
+//                                    Intent intent = new Intent();
+//                                    intent.putExtra("age_id", selected_ageId);
+//                                    intent.putExtra("ageEng", selected_ageEng);
+//                                    intent.putExtra("ageAR", selected_ageAR);
+//                                    setResult(2, intent);
+//                                    finish();//finishing activity
 
                                 }
                             });
@@ -331,12 +374,12 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
                                     selected_genderEng = genderEng;
                                     selected_genderAR = genderAR;
 
-                                    Intent intent = new Intent();
-                                    intent.putExtra("selected_genderId", selected_genderId);
-                                    intent.putExtra("selected_genderEng", selected_genderEng);
-                                    intent.putExtra("selected_genderAR", selected_genderAR);
-                                    setResult(1, intent);
-                                    finish();//finishing activity
+//                                    Intent intent = new Intent();
+//                                    intent.putExtra("selected_genderId", selected_genderId);
+//                                    intent.putExtra("selected_genderEng", selected_genderEng);
+//                                    intent.putExtra("selected_genderAR", selected_genderAR);
+//                                    setResult(1, intent);
+//                                    finish();//finishing activity
                                 }
                             });
 
@@ -515,12 +558,12 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
                                     selected_ethicNameAR = ethicNameAR;
 
 
-                                    Intent intent = new Intent();
-                                    intent.putExtra("selected_ethicID", selected_ethicID);
-                                    intent.putExtra("selected_ethicNameEng", selected_ethicNameEng);
-                                    intent.putExtra("selected_ethicNameAR", selected_ethicNameAR);
-                                    setResult(3, intent);
-                                    finish();//finishing activity
+//                                    Intent intent = new Intent();
+//                                    intent.putExtra("selected_ethicID", selected_ethicID);
+//                                    intent.putExtra("selected_ethicNameEng", selected_ethicNameEng);
+//                                    intent.putExtra("selected_ethicNameAR", selected_ethicNameAR);
+//                                    setResult(3, intent);
+//                                    finish();//finishing activity
 
                                 }
                             });
@@ -577,13 +620,13 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
                                 @Override
                                 public void onClickThis(int position, String educationid, String educationEng) {
 
-                                    selected_educationID=educationid;
-                                    selected_educationEng=educationEng;
-                                    Intent intent = new Intent();
-                                    intent.putExtra("selected_educationID", selected_educationID);
-                                    intent.putExtra("selected_educationEng", selected_educationEng);
-                                     setResult(4, intent);
-                                    finish();//finishing activity
+                                    selected_educationID = educationid;
+                                    selected_educationEng = educationEng;
+//                                    Intent intent = new Intent();
+//                                    intent.putExtra("selected_educationID", selected_educationID);
+//                                    intent.putExtra("selected_educationEng", selected_educationEng);
+//                                    setResult(4, intent);
+//                                    finish();//finishing activity
                                 }
                             });
 

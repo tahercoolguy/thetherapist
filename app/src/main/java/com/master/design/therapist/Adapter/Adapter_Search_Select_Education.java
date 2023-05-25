@@ -1,7 +1,9 @@
 package com.master.design.therapist.Adapter;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,8 +14,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.master.design.therapist.Activity.FriendSearch_SelectActivity;
 import com.master.design.therapist.DM.SearchDM;
 import com.master.design.therapist.DataModel.Gender_details;
 import com.master.design.therapist.Helper.User;
@@ -86,11 +92,30 @@ public class Adapter_Search_Select_Education extends RecyclerView.Adapter<Adapte
         viewHolder.mainTxt.setVisibility(View.GONE);
         viewHolder.smallTxt.setGravity(Gravity.CENTER);
         viewHolder.clickLL.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View view) {
 //                onItemClickListener.onClickThis(position, arrayList.get(position).getHead(), arrayList.get(position).getDes());
 
-                onItemClickListener.onClickThis(position,arrayList.get(position).getId(),arrayList.get(position).getEducation());
+//                onItemClickListener.onClickThis(position,arrayList.get(position).getId(),arrayList.get(position).getEducation());
+
+
+                if(viewHolder.selected_cardView.getBackgroundTintList()==context.getColorStateList(R.color.white))
+                {
+                    viewHolder.selected_cardView.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.red));
+                    ((FriendSearch_SelectActivity)context).selected_educationID=((FriendSearch_SelectActivity)context).selected_educationID+arrayList.get(position).getId() +"," ;
+                    ((FriendSearch_SelectActivity)context).selected_educationEng=((FriendSearch_SelectActivity)context).selected_educationEng+arrayList.get(position).getEducation() +"," ;
+                     Log.e("Checking", "Checking");
+
+                }
+                else
+                {
+                    viewHolder.selected_cardView.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.white));
+                    ((FriendSearch_SelectActivity)context).selected_educationID=((FriendSearch_SelectActivity)context).selected_educationID.replace(arrayList.get(position).getId()+",","");
+                    ((FriendSearch_SelectActivity)context).selected_educationEng=((FriendSearch_SelectActivity)context).selected_educationEng.replace(arrayList.get(position).getEducation()+",","");
+                     Log.e("Checking", "Checking");
+
+                }
             }
         });
     }
@@ -111,12 +136,14 @@ public class Adapter_Search_Select_Education extends RecyclerView.Adapter<Adapte
 
         private TextView mainTxt, smallTxt;
         private LinearLayout clickLL;
+        private CardView selected_cardView;
 
         public ViewHolder(View itemView) {
             super(itemView);
             mainTxt = itemView.findViewById(R.id.mainTxt);
             smallTxt = itemView.findViewById(R.id.smallTxt);
             clickLL = itemView.findViewById(R.id.clickLL);
+            selected_cardView = itemView.findViewById(R.id.selected_cardView1);
             mainTxt.setVisibility(View.GONE);
             smallTxt.setGravity(Gravity.CENTER);
 
