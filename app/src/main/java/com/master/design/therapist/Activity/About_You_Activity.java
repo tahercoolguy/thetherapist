@@ -263,7 +263,22 @@ public class About_You_Activity extends AppCompatActivity {
                 multipartTypedOutput.addPart("interests", new TypedString(InterestIdList));
                 multipartTypedOutput.addPart("device_type", new TypedString("2"));
                 multipartTypedOutput.addPart("device_token", new TypedString(refreshedToken));
-                multipartTypedOutput.addPart("age", new TypedString(age));
+
+                if (!age.isEmpty()) {  //creating a constructor of StringBuffer class
+                    StringBuffer sb = new StringBuffer(age);
+                    //invoking the method
+                    if (!sb.equals("")) {
+
+                        try {
+                            sb.deleteCharAt(sb.length() - 1);
+
+                            multipartTypedOutput.addPart("age", new TypedString(String.valueOf(sb)));
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }
 
 //            try
 //            {
