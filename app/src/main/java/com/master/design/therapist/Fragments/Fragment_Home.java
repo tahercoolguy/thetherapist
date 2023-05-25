@@ -130,7 +130,7 @@ public class Fragment_Home extends Fragment {
 //    @BindView(R.id.swiperefresh)
 //    SwipeRefreshLayout swiperefresh;
 
-    public  String selected_ageId = "0", selected_genderId = "0", selected_ethicID = "0", selected_educationID = "0", InterestIdList = "0";
+    public String selected_ageId = "0", selected_genderId = "0", selected_ethicID = "0", selected_educationID = "0", InterestIdList = "0";
 
     @Nullable
     @Override
@@ -163,11 +163,11 @@ public class Fragment_Home extends Fragment {
 
             if (getArguments() != null) {
 
-                selected_ageId = getArguments().getString("selected_ageId","0");
-                selected_genderId = getArguments().getString("selected_genderId","0");
-                selected_ethicID = getArguments().getString("selected_ethicID","0");
-                selected_educationID = getArguments().getString("selected_educationID","0");
-                InterestIdList = getArguments().getString("InterestIdList","0");
+                selected_ageId = getArguments().getString("selected_ageId", "0");
+                selected_genderId = getArguments().getString("selected_genderId", "0");
+                selected_ethicID = getArguments().getString("selected_ethicID", "0");
+                selected_educationID = getArguments().getString("selected_educationID", "0");
+                InterestIdList = getArguments().getString("InterestIdList", "0");
                 searchAPI();
 
             } else {
@@ -291,9 +291,9 @@ public class Fragment_Home extends Fragment {
 
         } else {
             listposition = 0;
-            if(getArguments()!=null){
+            if (getArguments() != null) {
                 searchAPI();
-            }else{
+            } else {
                 setsliderData();
 
             }
@@ -590,33 +590,63 @@ public class Fragment_Home extends Fragment {
             multipartTypedOutput.addPart("id", new TypedString(String.valueOf(user.getId())));
             if (!selected_genderId.equalsIgnoreCase("10")) {
 
-                multipartTypedOutput.addPart("gender", new TypedString( selected_genderId));
+                multipartTypedOutput.addPart("gender", new TypedString(selected_genderId));
             }
             if (!selected_ageId.equalsIgnoreCase("0")) {  //creating a constructor of StringBuffer class
                 StringBuffer sb = new StringBuffer(selected_ageId);
                 //invoking the method
-                sb.deleteCharAt(sb.length() - 1);
+                if (!sb.equals("")) {
 
-                multipartTypedOutput.addPart("age_range", new TypedString(String.valueOf(sb)));
+                    try {
+                        sb.deleteCharAt(sb.length() - 1);
+
+                        multipartTypedOutput.addPart("age_range", new TypedString(String.valueOf(sb)));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                }
             }
-            if (!InterestIdList.equalsIgnoreCase("0")) {
+            if (InterestIdList != null || !InterestIdList.equalsIgnoreCase("0")) {
                 StringBuffer sb = new StringBuffer(InterestIdList);
                 //invoking the method
-                sb.deleteCharAt(sb.length() - 1);
-                multipartTypedOutput.addPart("interest", new TypedString(String.valueOf(sb)));
+                if (!sb.equals("")) {
+                    try {
+                        sb.deleteCharAt(sb.length() - 1);
+                        multipartTypedOutput.addPart("interest", new TypedString(String.valueOf(sb)));
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                }
             }
             if (!selected_ethicID.equalsIgnoreCase("0")) {
                 StringBuffer sb = new StringBuffer(selected_ethicID);
                 //invoking the method
-                sb.deleteCharAt(sb.length() - 1);
-                multipartTypedOutput.addPart("ethnic", new TypedString(String.valueOf(sb)));
+                if (!sb.equals("")) {
+                    try {
+                        sb.deleteCharAt(sb.length() - 1);
+                        multipartTypedOutput.addPart("ethnic", new TypedString(String.valueOf(sb)));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                }
             }
 
             if (!selected_educationID.equalsIgnoreCase("0")) {
                 StringBuffer sb = new StringBuffer(selected_educationID);
                 //invoking the method
-                sb.deleteCharAt(sb.length() - 1);
-                multipartTypedOutput.addPart("education", new TypedString(String.valueOf(sb)));
+                if (!sb.equals("")) {
+                    try {
+                        sb.deleteCharAt(sb.length() - 1);
+                        multipartTypedOutput.addPart("education", new TypedString(String.valueOf(sb)));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                }
             }
 
 //            progress = dialogUtil.showProgressDialog(My_ProfileActivity.this, getString(R.string.please_wait));
