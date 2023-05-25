@@ -130,7 +130,7 @@ public class Fragment_Home extends Fragment {
 //    @BindView(R.id.swiperefresh)
 //    SwipeRefreshLayout swiperefresh;
 
-    public String selected_ageId = "0", selected_genderId = "0", selected_ethicID = "0", selected_educationID = "0", InterestIdList = "0";
+    public String selected_ageId = "", selected_genderId = "", selected_ethicID = "", selected_educationID = "", InterestIdList = "";
 
     @Nullable
     @Override
@@ -163,11 +163,23 @@ public class Fragment_Home extends Fragment {
 
             if (getArguments() != null) {
 
-                selected_ageId = getArguments().getString("selected_ageId", "0");
-                selected_genderId = getArguments().getString("selected_genderId", "0");
-                selected_ethicID = getArguments().getString("selected_ethicID", "0");
-                selected_educationID = getArguments().getString("selected_educationID", "0");
-                InterestIdList = getArguments().getString("InterestIdList", "0");
+
+                if (!getArguments().getString("selected_ageId").equalsIgnoreCase("")) {
+                    selected_ageId = getArguments().getString("selected_ageId");
+                }
+                if (!getArguments().getString("selected_genderId").equalsIgnoreCase("")) {
+                    selected_genderId = getArguments().getString("selected_genderId");
+                }
+                if (!getArguments().getString("selected_ethicID").equalsIgnoreCase("")) {
+                    selected_ethicID = getArguments().getString("selected_ethicID");
+                }
+                if (!getArguments().getString("selected_educationID").equalsIgnoreCase("")) {
+                    selected_educationID = getArguments().getString("selected_educationID");
+                }
+                if (!getArguments().getString("InterestIdList").equalsIgnoreCase("")) {
+                    InterestIdList = getArguments().getString("InterestIdList");
+                }
+
                 searchAPI();
 
             } else {
@@ -588,11 +600,21 @@ public class Fragment_Home extends Fragment {
 
             MultipartTypedOutput multipartTypedOutput = new MultipartTypedOutput();
             multipartTypedOutput.addPart("id", new TypedString(String.valueOf(user.getId())));
-            if (!selected_genderId.equalsIgnoreCase("10")) {
+            if (!selected_genderId.isEmpty()) {
+                StringBuffer sb = new StringBuffer(selected_genderId);
+                //invoking the method
+                if (!sb.equals("")) {
+                    try {
+                        sb.deleteCharAt(sb.length() - 1);
+                         multipartTypedOutput.addPart("gender", new TypedString(String.valueOf(sb)));
 
-                multipartTypedOutput.addPart("gender", new TypedString(selected_genderId));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                }
             }
-            if (!selected_ageId.equalsIgnoreCase("0")) {  //creating a constructor of StringBuffer class
+            if (!selected_ageId.isEmpty()) {  //creating a constructor of StringBuffer class
                 StringBuffer sb = new StringBuffer(selected_ageId);
                 //invoking the method
                 if (!sb.equals("")) {
@@ -607,7 +629,7 @@ public class Fragment_Home extends Fragment {
 
                 }
             }
-            if (InterestIdList != null || !InterestIdList.equalsIgnoreCase("0")) {
+            if (!InterestIdList.isEmpty()) {
                 StringBuffer sb = new StringBuffer(InterestIdList);
                 //invoking the method
                 if (!sb.equals("")) {
@@ -621,7 +643,7 @@ public class Fragment_Home extends Fragment {
 
                 }
             }
-            if (!selected_ethicID.equalsIgnoreCase("0")) {
+            if (!selected_ethicID.isEmpty()) {
                 StringBuffer sb = new StringBuffer(selected_ethicID);
                 //invoking the method
                 if (!sb.equals("")) {
@@ -635,7 +657,7 @@ public class Fragment_Home extends Fragment {
                 }
             }
 
-            if (!selected_educationID.equalsIgnoreCase("0")) {
+            if (!selected_educationID.isEmpty()) {
                 StringBuffer sb = new StringBuffer(selected_educationID);
                 //invoking the method
                 if (!sb.equals("")) {

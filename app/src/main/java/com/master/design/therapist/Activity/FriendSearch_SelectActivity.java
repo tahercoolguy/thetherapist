@@ -241,7 +241,7 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
         }
         if (!selected_genderId.equalsIgnoreCase("")) {
             Intent intent = new Intent();
-            intent.putExtra("selected_ethicID", selected_ethicID);
+            intent.putExtra("selected_genderId", selected_genderId);
             intent.putExtra("selected_genderEng", selected_genderEng);
             intent.putExtra("selected_genderAR", selected_genderAR);
             setResult(1, intent);
