@@ -643,13 +643,15 @@ public class Edit_ProfileActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (requestCode == 5) {
-            if (data != null) {
-                InterestIdList = data.getStringExtra("InterestIdList");
-                InterestNameEngList = data.getStringExtra("InterestNameEngList");
-                InterestNameArList = data.getStringExtra("InterestNameArList");
+        if (resultCode != RESULT_CANCELED) {
+            if (requestCode == 5) {
+                if (data != null) {
+                    InterestIdList = data.getStringExtra("InterestIdList");
+                    InterestNameEngList = data.getStringExtra("InterestNameEngList");
+                    InterestNameArList = data.getStringExtra("InterestNameArList");
 
-                selectInterestTxt.setText(InterestNameEngList);
+                    selectInterestTxt.setText(InterestNameEngList);
+                }
             }
         }
 

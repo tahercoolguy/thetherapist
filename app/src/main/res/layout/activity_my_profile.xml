@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:animateLayoutChanges="true"
     android:background="@color/white">
 
@@ -13,10 +13,10 @@
         <LinearLayout
             android:id="@+id/layout_parent"
             android:layout_width="match_parent"
-            android:paddingBottom="30dp"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:padding="10dp">
+            android:padding="10dp"
+            android:paddingBottom="30dp">
 
             <ImageView
                 android:id="@+id/backImg"
@@ -40,8 +40,8 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="180dp"
-                android:layout_marginBottom="25dp"
                 android:layout_gravity="center"
+                android:layout_marginBottom="25dp"
                 android:background="@drawable/rounded_img_bg">
 
                 <com.makeramen.roundedimageview.RoundedImageView
@@ -49,21 +49,20 @@
                     android:layout_width="140dp"
                     android:layout_height="180dp"
                     android:layout_centerInParent="true"
-                    android:layout_gravity="center"
+                     android:layout_gravity="center"
+                    android:src="@drawable/button_rectangle_primary_color_selector"
                     android:scaleType="centerCrop"
                     app:riv_corner_radius="70dp"></com.makeramen.roundedimageview.RoundedImageView>
 
 
-<!--                                <ImageView-->
-<!--                                    android:id="@+id/profileImgRIV"-->
-<!--                                    android:layout_width="140dp"-->
-<!--                                    android:layout_height="180dp"-->
-<!--                                    android:layout_centerInParent="true"-->
-<!--                                    android:layout_gravity="center"-->
-<!--                                    android:scaleType="centerCrop"-->
-<!--                                    app:riv_corner_radius="70dp"></ImageView>-->
-
-
+                <!--                                <ImageView-->
+                <!--                                    android:id="@+id/profileImgRIV"-->
+                <!--                                    android:layout_width="140dp"-->
+                <!--                                    android:layout_height="180dp"-->
+                <!--                                    android:layout_centerInParent="true"-->
+                <!--                                    android:layout_gravity="center"-->
+                <!--                                    android:scaleType="centerCrop"-->
+                <!--                                    app:riv_corner_radius="70dp"></ImageView>-->
 
 
                 <ImageView
@@ -101,11 +100,11 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:background="@color/white"
+                    android:editable="false"
                     android:gravity="end"
                     android:padding="10dp"
                     android:paddingHorizontal="10dp"
                     android:singleLine="true"
-                    android:hint=" Monica Geller"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_normal"></EditText>
 
@@ -133,11 +132,11 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:background="@color/white"
+                    android:editable="false"
                     android:gravity="end"
                     android:padding="10dp"
                     android:paddingHorizontal="10dp"
                     android:singleLine="true"
-                    android:hint="monica_geller@gmail.com"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_normal"></EditText>
 
@@ -165,12 +164,12 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:background="@color/white"
+                    android:editable="false"
                     android:gravity="end"
                     android:inputType="number"
                     android:padding="10dp"
                     android:paddingHorizontal="10dp"
                     android:singleLine="true"
-                    android:hint="+095 1232 4545 0206"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_normal"></EditText>
 
@@ -199,11 +198,11 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:background="@color/white"
+                    android:editable="false"
                     android:gravity="end"
                     android:padding="10dp"
                     android:paddingHorizontal="10dp"
                     android:singleLine="true"
-                    android:hint="@string/female"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_normal"></EditText>
 
@@ -231,11 +230,11 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:background="@color/white"
+                    android:editable="false"
                     android:gravity="end"
                     android:padding="10dp"
                     android:paddingHorizontal="10dp"
                     android:singleLine="true"
-                    android:hint="16.06.1955"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_normal"></EditText>
 
@@ -251,14 +250,14 @@
                 android:background="@drawable/rectangle_white_grey_border"
                 android:backgroundTint="@color/colorPrimary"
                 android:elevation="10dp"
-                android:singleLine="true"
                 android:fontFamily="@font/poppins_bold"
                 android:gravity="center"
+                android:singleLine="true"
                 android:text="Edit Profile"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_normal"
-                android:textStyle="bold">
-            </TextView>
+                android:textStyle="bold"></TextView>
+
             <TextView
                 android:id="@+id/deleteAccountTxt"
                 android:layout_width="match_parent"
@@ -268,13 +267,11 @@
                 android:layout_marginVertical="10dp"
                 android:background="@drawable/rectangle_white_grey_border"
                 android:backgroundTint="@color/red_light"
-                 android:fontFamily="@font/poppins_bold"
+                android:fontFamily="@font/poppins_bold"
                 android:gravity="center"
                 android:text="@string/delete_my_account"
                 android:textColor="@color/white"
-                android:textSize="@dimen/text_size_date"
-                 >
-            </TextView>
+                android:textSize="@dimen/text_size_date"></TextView>
 
         </LinearLayout>
 

@@ -527,15 +527,17 @@ public class Create_Account_Activity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        // check if the request code is same as what is passed  here it is 2
-        if (requestCode == 2) {
+        if (resultCode != RESULT_CANCELED) {
+            // check if the request code is same as what is passed  here it is 2
+            if (requestCode == 2) {
 
 //            String message_age=data.getStringExtra("age");
-            String age_id = data.getStringExtra("age_id");
-            String ageEng = data.getStringExtra("ageEng");
-            String ageAR = data.getStringExtra("ageAR");
-            ageTxt.setText(ageEng);
-            age = age_id;
+                String age_id = data.getStringExtra("age_id");
+                String ageEng = data.getStringExtra("ageEng");
+                String ageAR = data.getStringExtra("ageAR");
+                ageTxt.setText(ageEng);
+                age = age_id;
+            }
         }
     }
 }
