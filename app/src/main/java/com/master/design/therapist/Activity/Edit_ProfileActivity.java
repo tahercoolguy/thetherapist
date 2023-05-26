@@ -248,6 +248,7 @@ public class Edit_ProfileActivity extends AppCompatActivity {
 
             }
         });
+        bottomForAll.show(Edit_ProfileActivity.this.getSupportFragmentManager(), "bottomSheetCountry");
 
     }
 
