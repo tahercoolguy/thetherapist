@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.master.design.therapist.Adapter.Adapter_Age_Select;
 import com.master.design.therapist.Adapter.Adapter_Interest;
 import com.master.design.therapist.Adapter.Adapter_Interest_new;
 import com.master.design.therapist.Adapter.Adapter_Search;
@@ -72,13 +73,13 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
     public String InterestNameEngList = "";
     public String InterestNameArList = "";
 
-   public String selected_ageId="", selected_ageEng="", selected_ageAR = "";
+    public String selected_ageId = "", selected_ageEng = "", selected_ageAR = "";
 
-    public  String selected_genderId="", selected_genderEng="", selected_genderAR = "";
+    public String selected_genderId = "", selected_genderEng = "", selected_genderAR = "";
 
-    public String selected_ethicID="", selected_ethicNameEng="", selected_ethicNameAR = "";
+    public String selected_ethicID = "", selected_ethicNameEng = "", selected_ethicNameAR = "";
 
-    public String selected_educationID="", selected_educationEng = "";
+    public String selected_educationID = "", selected_educationEng = "";
 
 
     @BindView(R.id.rcvRcv)
@@ -117,7 +118,7 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
         getIntentData();
     }
 
-    String position, position0, position1, position2, position3, position4, string33;
+    String position, position0, position1, position2, position3, position4, string33, age_single;
 
     public void getIntentData() {
         Intent intent = getIntent();
@@ -128,6 +129,7 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
             position3 = intent.getStringExtra("string4");
             position4 = intent.getStringExtra("string5");
             string33 = intent.getStringExtra("string33");
+            age_single = intent.getStringExtra("age_single");
 
             if (position0 != null) {
                 position = position0;
@@ -152,6 +154,10 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
         }
         if (string33 != null) {
             setPositionData(string33);
+        }
+
+        if (age_single != null) {
+            setPositionData(age_single);
         }
 
     }
@@ -268,7 +274,73 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
 
     @SuppressLint({"SetTextI18n", "SuspiciousIndentation"})
     public void setPositionData(String position) {
+        if (age_single.equalsIgnoreCase("age_single")) {
 
+            tittleTxt.setText(getString(R.string.age_rangee));
+
+//            ArrayList<SearchDM> searchDMArrayList = new ArrayList<>();
+//            searchDMArrayList.add(new SearchDM("", "20-35"));
+//            searchDMArrayList.add(new SearchDM("", "20-35"));
+//            searchDMArrayList.add(new SearchDM("", "20-35"));
+//            searchDMArrayList.add(new SearchDM("", "20-35"));
+//            searchDMArrayList.add(new SearchDM("", "20-35"));
+
+            if (connectionDetector.isConnectingToInternet()) {
+
+                String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+
+                progress = dialogUtil.showProgressDialog(FriendSearch_SelectActivity.this, getString(R.string.please_wait));
+
+                appController.paServices.TherapistAge(new Callback<TherapistAgeDM>() {
+
+                    @Override
+
+                    public void success(TherapistAgeDM therapistAgeDM, Response response) {
+                        progress.dismiss();
+                        if (therapistAgeDM.getStatus().equalsIgnoreCase("1")) {
+
+
+                            Adapter_Age_Select adapter_search = new Adapter_Age_Select(FriendSearch_SelectActivity.this, therapistAgeDM.getAge_details());
+                            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(FriendSearch_SelectActivity.this);
+                            rcvRcv.setLayoutManager(linearLayoutManager);
+                            rcvRcv.setAdapter(adapter_search);
+                            adapter_search.setOnItemClickListener(new Adapter_Age_Select.OnItemClickListener() {
+                                @Override
+                                public void onClickThis(int position, String age_id, String ageEng, String ageAR) {
+//                                  String value = subheading;
+//                                  intent.putExtra("value", value);
+//                                  setResult(RESULT_OK, intent);
+//                                  Intent intent=new Intent();
+                                    selected_ageId = age_id;
+                                    selected_ageEng = ageEng;
+                                    selected_ageAR = ageAR;
+                                    Intent intent = new Intent();
+                                    intent.putExtra("age_id", selected_ageId);
+                                    intent.putExtra("ageEng", selected_ageEng);
+                                    intent.putExtra("ageAR", selected_ageAR);
+                                    setResult(2, intent);
+                                    finish();//finishing activity
+
+                                }
+                            });
+                        } else
+                            Helper.showToast(FriendSearch_SelectActivity.this, getString(R.string.Api_data_not_found));
+                    }
+
+                    @Override
+                    public void failure(RetrofitError retrofitError) {
+                        progress.dismiss();
+
+                        Log.e("error", retrofitError.toString());
+
+                    }
+                });
+
+            } else
+                Helper.showToast(FriendSearch_SelectActivity.this, getString(R.string.no_internet_connection));
+
+
+        }
         if (position.equalsIgnoreCase("string1")) {
 
             tittleTxt.setText(getString(R.string.age_rangee));

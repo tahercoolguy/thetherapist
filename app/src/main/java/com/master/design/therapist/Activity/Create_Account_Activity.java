@@ -150,7 +150,7 @@ public class Create_Account_Activity extends AppCompatActivity {
     public void clickAgeET() {
 //        startActivity(new Intent(Create_Account_Activity.this, FriendSearch_SelectActivity.class).putExtra("string1","string1"));
         Intent intent = new Intent(Create_Account_Activity.this, FriendSearch_SelectActivity.class);
-        intent.putExtra("string1", "string1");
+        intent.putExtra("age_single", "age_single");
         startActivityForResult(intent, 2);// Activity is started with requestCode 2
 
     }
