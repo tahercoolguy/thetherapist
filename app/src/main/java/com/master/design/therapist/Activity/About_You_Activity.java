@@ -366,18 +366,21 @@ public class About_You_Activity extends AppCompatActivity {
 
                             String userID = therapistRegisterDM.getUser_id();
 
-                            if (!list.isEmpty()) {
+                            if (!list.isEmpty() || list.size() > 0) {
                                 addMultipleImageAPI(userID);
                             } else {
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ECLAIR) {
-                                    progress.dismiss();
-                                    startActivity(new Intent(About_You_Activity.this, ThankYouActivity.class));
-                                    overridePendingTransition(R.anim.fade_in, R.anim.fade_in);
-                                } else {
-                                    progress.dismiss();
-                                    startActivity(new Intent(About_You_Activity.this, ThankYouActivity.class));
-                                    overridePendingTransition(R.anim.fade_in, R.anim.fade_in);
-                                }
+//                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ECLAIR) {
+//                                    progress.dismiss();
+//                                    startActivity(new Intent(About_You_Activity.this, ThankYouActivity.class));
+//                                    overridePendingTransition(R.anim.fade_in, R.anim.fade_in);
+//                                } else {
+//                                    progress.dismiss();
+//                                    startActivity(new Intent(About_You_Activity.this, ThankYouActivity.class));
+//                                    overridePendingTransition(R.anim.fade_in, R.anim.fade_in);
+//                                }
+                                progress.dismiss();
+                                startActivity(new Intent(About_You_Activity.this, ThankYouActivity.class));
+                                overridePendingTransition(R.anim.fade_in, R.anim.fade_in);
 
 
                             }
@@ -462,15 +465,18 @@ public class About_You_Activity extends AppCompatActivity {
                             int sizeList = list.size();
 
                             if (sizeList == greaterImg_i) {
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ECLAIR) {
-                                    progress.dismiss();
-                                    startActivity(new Intent(About_You_Activity.this, ThankYouActivity.class));
-                                    overridePendingTransition(R.anim.fade_in, R.anim.fade_in);
-                                } else {
-                                    progress.dismiss();
-                                    startActivity(new Intent(About_You_Activity.this, ThankYouActivity.class));
-                                    overridePendingTransition(R.anim.fade_in, R.anim.fade_in);
-                                }
+//                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ECLAIR) {
+//                                    progress.dismiss();
+//                                    startActivity(new Intent(About_You_Activity.this, ThankYouActivity.class));
+//                                    overridePendingTransition(R.anim.fade_in, R.anim.fade_in);
+//                                } else {
+//                                    progress.dismiss();
+//                                    startActivity(new Intent(About_You_Activity.this, ThankYouActivity.class));
+//                                    overridePendingTransition(R.anim.fade_in, R.anim.fade_in);
+//                                }
+                                progress.dismiss();
+                                startActivity(new Intent(About_You_Activity.this, ThankYouActivity.class));
+                                overridePendingTransition(R.anim.fade_in, R.anim.fade_in);
                             }
                         } else {
 
@@ -508,59 +514,60 @@ public class About_You_Activity extends AppCompatActivity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_IMAGE) {
-            if (resultCode == Activity.RESULT_OK) {
-                Uri uri = data.getParcelableExtra("path");
-                try {
-                    // You can update this bitmap to your server
-                    bitmap = MediaStore.Images.Media.getBitmap(About_You_Activity.this.getContentResolver(), uri);
+        if (resultCode != RESULT_CANCELED) {
+            if (requestCode == REQUEST_IMAGE) {
+                if (resultCode == Activity.RESULT_OK) {
+                    Uri uri = data.getParcelableExtra("path");
+                    try {
+                        // You can update this bitmap to your server
+                        bitmap = MediaStore.Images.Media.getBitmap(About_You_Activity.this.getContentResolver(), uri);
 
-                    profileCircleImg.setVisibility(View.VISIBLE);
-                    profileCircleImg.setImageBitmap(bitmap);
-                    ifimg1 = true;
+                        profileCircleImg.setVisibility(View.VISIBLE);
+                        profileCircleImg.setImageBitmap(bitmap);
+                        ifimg1 = true;
 //                    EditProfileImageAPI();
 
-                    // loading profile image from local cache
+                        // loading profile image from local cache
 
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-
-        if (requestCode == ADD_MORE_IMAGE && resultCode == RESULT_OK) {
-            if (data.getClipData() != null && data.getClipData().getItemCount() > 1) {
-                int x = data.getClipData().getItemCount();
-
-                for (int i = 0; i < x; i++) {
-                    try {
-                        bitmap = MediaStore.Images.Media.getBitmap(About_You_Activity.this.getContentResolver(), data.getClipData().getItemAt(i).getUri());
-                        list.add(data.getClipData().getItemAt(i).getUri());
-                        greaterImg_i = i + 1;
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-
-                    if (i > x) {
-//                        greaterImg_i=i;
-                    }
                 }
-                adaptor.notifyDataSetChanged();
+            }
 
 
-            } else {
-                showdialogNoData(context, getString(R.string.select_multiiple_images), getString(R.string.select_multiple_images_to_upload));
+            if (requestCode == ADD_MORE_IMAGE && resultCode == RESULT_OK) {
+                if (data.getClipData() != null && data.getClipData().getItemCount() > 1) {
+                    int x = data.getClipData().getItemCount();
+
+                    for (int i = 0; i < x; i++) {
+                        try {
+                            bitmap = MediaStore.Images.Media.getBitmap(About_You_Activity.this.getContentResolver(), data.getClipData().getItemAt(i).getUri());
+                            list.add(data.getClipData().getItemAt(i).getUri());
+                            greaterImg_i = i + 1;
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                        if (i > x) {
+//                        greaterImg_i=i;
+                        }
+                    }
+                    adaptor.notifyDataSetChanged();
+
+
+                } else {
+                    showdialogNoData(context, getString(R.string.select_multiiple_images), getString(R.string.select_multiple_images_to_upload));
+                }
+
             }
 
         }
-
-
         super.onActivityResult(requestCode, resultCode, data);
     }
 
     public void showdialogNoData(Context context, String tittle, String msg) {
-        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(context);
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(About_You_Activity.this);
         builder.setTitle(tittle)
                 .setMessage(msg)
                 .setCancelable(false)
