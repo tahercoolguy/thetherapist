@@ -375,6 +375,18 @@ public class Edit_ProfileActivity extends AppCompatActivity {
         } else if (mobilecodeET.getText().toString().equalsIgnoreCase("")) {
             correct = false;
             Helper.showToast(Edit_ProfileActivity.this, getString(R.string.kindly_select_mobile_country_code));
+        } else if (selectEthnicityTxt.getText().toString().equalsIgnoreCase("")) {
+            correct = false;
+            Helper.showToast(Edit_ProfileActivity.this, getString(R.string.kindlyenter_your_ethnicity));
+        } else if (selectInterestTxt.getText().toString().equalsIgnoreCase("")) {
+            correct = false;
+            Helper.showToast(Edit_ProfileActivity.this, getString(R.string.kindly_select_interest));
+        } else if (aboutYouET.getText().toString().equalsIgnoreCase("")) {
+            correct = false;
+            Helper.showToast(Edit_ProfileActivity.this, getString(R.string.kindly_tell_me_about_u));
+        } else if (educationET.getText().toString().equalsIgnoreCase("")) {
+            correct = false;
+            Helper.showToast(Edit_ProfileActivity.this, getString(R.string.kindly_select_education));
         }
 
         String aboutyou = aboutYouET.getText().toString();
@@ -393,8 +405,6 @@ public class Edit_ProfileActivity extends AppCompatActivity {
 
             }
         }
-
-
 
 
         if (correct) {
