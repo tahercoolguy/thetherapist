@@ -1,5 +1,6 @@
 package com.master.design.therapist.Activity;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,11 +18,16 @@ import android.widget.TextView;
 
 import com.github.florent37.singledateandtimepicker.dialog.SingleDateAndTimePickerDialog;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.master.design.therapist.Adapter.Education_details;
+import com.master.design.therapist.Adapter.TherapistEducationDM;
 import com.master.design.therapist.Controller.AppController;
+import com.master.design.therapist.DM.SearchDM;
 import com.master.design.therapist.DataModel.Details;
 import com.master.design.therapist.DataModel.Edit_ProfileDM;
+import com.master.design.therapist.DataModel.Ethnic_details;
 import com.master.design.therapist.DataModel.ProfileDM;
 import com.master.design.therapist.DataModel.TherapistCountriesDM;
+import com.master.design.therapist.DataModel.TherapistEthnicDM;
 import com.master.design.therapist.Helper.BottomForAll;
 import com.master.design.therapist.Helper.DataChangeDM;
 import com.master.design.therapist.Helper.DialogUtil;
@@ -42,6 +48,7 @@ import butterknife.OnClick;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import retrofit.mime.TypedString;
 
 public class Edit_ProfileActivity extends AppCompatActivity {
 
@@ -82,9 +89,81 @@ public class Edit_ProfileActivity extends AppCompatActivity {
     @BindView(R.id.mobilecodeET)
     TextView mobilecodeET;
 
+
+    @BindView(R.id.selectEthnicityTxt)
+    TextView selectEthnicityTxt;
+
+    @BindView(R.id.selectInterestTxt)
+    TextView selectInterestTxt;
+    @BindView(R.id.aboutYouET)
+    EditText aboutYouET;
+    @BindView(R.id.educationET)
+    TextView educationET;
+
     String Gender;
     String name;
     String SelectCountryid;
+
+
+    String educationID;
+    String educationName;
+
+    @OnClick(R.id.educationET)
+    public void educationET() {
+        bottomForAll = new BottomForAll();
+        bottomForAll.arrayList = arrayList;
+
+        bottomForAll.setResponseListener(new ResponseListener() {
+            @Override
+            public void response(Object object) {
+
+                educationName = ((DataChangeDM) object).getName();
+                educationID = ((DataChangeDM) object).getId();
+//                                    user.setAreaId(AreaID);
+                educationET.setText(educationName);
+            }
+        });
+        bottomForAll.show(Edit_ProfileActivity.this.getSupportFragmentManager(), "bottomSheetCountry");
+    }
+
+
+    ArrayList<DataChangeDM> arrayList = new ArrayList();
+    BottomForAll bottomForAll;
+
+    String ethnicityyid;
+
+    @OnClick(R.id.selectEthnicityTxt)
+    public void clickselectEthnicityTxt() {
+
+        bottomForAll = new BottomForAll();
+        bottomForAll.arrayList = arrayList;
+
+
+        bottomForAll.setResponseListener(new ResponseListener() {
+            @Override
+            public void response(Object object) {
+
+                name = ((DataChangeDM) object).getName();
+                ethnicityyid = ((DataChangeDM) object).getId();
+//                                    user.setAreaId(AreaID);
+                selectEthnicityTxt.setText(name);
+
+
+            }
+        });
+        bottomForAll.show(Edit_ProfileActivity.this.getSupportFragmentManager(), "bottomSheetCountry");
+
+
+    }
+
+    @OnClick(R.id.selectInterestTxt)
+    public void clickselectInterestTxt() {
+        Intent intent = new Intent(Edit_ProfileActivity.this, FriendSearch_SelectActivity.class);
+        intent.putExtra("string3", "string3");
+        startActivityForResult(intent, 5);
+        overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
+
+    }
 
     @OnClick(R.id.maleTV)
     public void maleTV() {
@@ -298,13 +377,33 @@ public class Edit_ProfileActivity extends AppCompatActivity {
             Helper.showToast(Edit_ProfileActivity.this, getString(R.string.kindly_select_mobile_country_code));
         }
 
+        String aboutyou = aboutYouET.getText().toString();
+        if (!InterestIdList.isEmpty()) {  //creating a constructor of StringBuffer class
+            StringBuffer sb = new StringBuffer(InterestIdList);
+            //invoking the method
+            if (!sb.equals("")) {
+
+                try {
+                    sb.deleteCharAt(sb.length() - 1);
+
+                    InterestIdList = String.valueOf(sb);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }
+
+
+
+
         if (correct) {
             if (connectionDetector.isConnectingToInternet()) {
                 progress = dialogUtil.showProgressDialog(Edit_ProfileActivity.this, getString(R.string.please_wait));
                 String date = (yearET.getText().toString() + "-" + monthET.getText().toString() + "-" + dateET.getText().toString());
 
                 newMobile = mobilecodeET.getText().toString() + mobileET.getText().toString();
-                appController.paServices.TherapistEdit_Profile(String.valueOf(user.getId()), userNameET.getText().toString(), date, SelectCountryid, Gender, newMobile, new Callback<Edit_ProfileDM>() {
+                appController.paServices.TherapistEdit_Profile(String.valueOf(user.getId()), userNameET.getText().toString(), date, SelectCountryid, Gender, newMobile, educationID, ethnicityyid, InterestIdList, aboutyou, new Callback<Edit_ProfileDM>() {
                     @Override
 
                     public void success(Edit_ProfileDM edit_profileDM, Response response) {
@@ -510,6 +609,8 @@ public class Edit_ProfileActivity extends AppCompatActivity {
                         String year = items1[0];
                         yearET.setText(year);
 
+                        BindingEthenicity();
+
                     } else {
                         Helper.showToast(Edit_ProfileActivity.this, getString(R.string.Api_data_not_found));
                     }
@@ -527,6 +628,87 @@ public class Edit_ProfileActivity extends AppCompatActivity {
     }
 
 
+    String selected_educationID = "", selected_educationEng = "";
+    String InterestIdList = "", InterestNameEngList = "", InterestNameArList = "";
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == 5) {
+            if (data != null) {
+                InterestIdList = data.getStringExtra("InterestIdList");
+                InterestNameEngList = data.getStringExtra("InterestNameEngList");
+                InterestNameArList = data.getStringExtra("InterestNameArList");
+
+                selectInterestTxt.setText(InterestNameEngList);
+            }
+        }
+
+
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    public void BindingEthenicity() {
+        if (connectionDetector.isConnectingToInternet()) {
+            String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+            //           progress = dialogUtil.showProgressDialog(Create_Account_Activity.this, getString(R.string.please_wait));
+            appController.paServices.TherapistEthnic(new Callback<TherapistEthnicDM>() {
+                @Override
+                public void success(TherapistEthnicDM therapistEthnicDM, Response response) {
+                    //                   progress.dismiss();
+                    if (therapistEthnicDM.getStatus().equalsIgnoreCase("1")) {
+
+                        for (Ethnic_details obj : therapistEthnicDM.getEthnic_details()) {
+                            DataChangeDM s = new DataChangeDM();
+                            s.setName(obj.getEthnic_name());
+                            s.setId(obj.getId());
+                            arrayList.add(s);
+                        }
+
+                        BindingEducation();
+                    } else
+                        Helper.showToast(Edit_ProfileActivity.this, getString(R.string.Api_data_not_found));
+                }
+
+                @Override
+                public void failure(RetrofitError retrofitError) {
+                    Log.e("error", retrofitError.toString());
+                }
+            });
+        } else
+            Helper.showToast(Edit_ProfileActivity.this, getString(R.string.no_internet_connection));
+
+
+    }
+
+    public void BindingEducation() {
+        if (connectionDetector.isConnectingToInternet()) {
+            String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+            progress = dialogUtil.showProgressDialog(Edit_ProfileActivity.this, getString(R.string.please_wait));
+            appController.paServices.TherapistEducation(new Callback<TherapistEducationDM>() {
+                @Override
+                public void success(TherapistEducationDM therapistEducationDM, Response response) {
+                    progress.dismiss();
+                    if (therapistEducationDM.getStatus().equalsIgnoreCase("1")) {
+
+                        for (Education_details obj : therapistEducationDM.getEducation_details()) {
+                            DataChangeDM s = new DataChangeDM();
+                            s.setName(obj.getEducation());
+                            s.setId(obj.getId());
+                            arrayList.add(s);
+                        }
+                    } else
+                        Helper.showToast(Edit_ProfileActivity.this, getString(R.string.Api_data_not_found));
+                }
+
+                @Override
+                public void failure(RetrofitError retrofitError) {
+                    Log.e("error", retrofitError.toString());
+                }
+            });
+        } else
+            Helper.showToast(Edit_ProfileActivity.this, getString(R.string.no_internet_connection));
+
+    }
 }
 
 

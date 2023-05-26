@@ -168,6 +168,10 @@ public interface PAServices {
                                       @Field("country") String country,
                                       @Field("gender") String gender,
                                       @Field("phone") String phone,
+                                      @Field("education") String education,
+                                      @Field("ethnicity") String ethnicity,
+                                      @Field("interests") String interests,
+                                      @Field("aboutyou") String aboutyou,
                                       Callback<Edit_ProfileDM> edit_profileDMCallback);
 
     // 21

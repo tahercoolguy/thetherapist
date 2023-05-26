@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
@@ -7,7 +8,7 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-         android:layout_height="wrap_content">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:id="@+id/layout_parent"
@@ -91,6 +92,7 @@
                     android:layout_gravity="center"
                     android:layout_margin="10dp"
                     android:layout_weight="1"
+                    android:textColor="@color/black"
                     android:background="@drawable/rounded_rectangle_white"
                     android:elevation="10dp"
                     android:gravity="center"
@@ -107,6 +109,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_margin="10dp"
+                    android:textColor="@color/black"
                     android:layout_weight="1"
                     android:background="@drawable/rounded_rectangle_white"
 
@@ -127,6 +130,7 @@
                     android:layout_gravity="center"
                     android:layout_margin="10dp"
                     android:layout_weight="1"
+                    android:textColor="@color/black"
                     android:background="@drawable/rounded_rectangle_white"
                     android:elevation="10dp"
                     android:gravity="center"
@@ -173,6 +177,7 @@
                 android:layout_marginTop="10dp"
                 android:hint="@string/mobile_number"
                 android:paddingHorizontal="10dp"></TextView>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="90dp"
@@ -219,7 +224,6 @@
                     android:textSize="@dimen/text_size_normal"></EditText>
 
             </LinearLayout>
-
 
 
             <TextView
@@ -287,38 +291,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
-                android:layout_marginTop="-10dp"
-                android:visibility="gone"
-                android:hint="Select Education"
-                android:paddingHorizontal="10dp"></TextView>
-
-
-            <TextView
-                android:id="@+id/selectEducationTxt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:layout_gravity="center"
-                android:layout_margin="10dp"
-                android:background="@drawable/rectangle_white_grey_border"
-                android:backgroundTint="@color/white"
-                android:drawableEnd="@drawable/ic_down"
-                android:elevation="10dp"
-                android:hint="@string/doctor_of_philosophy_phd"
-                android:padding="10dp"
-                android:paddingHorizontal="10dp"
-                android:paddingEnd="20dp"
-                android:singleLine="true"
-                android:textColor="@color/black"
-                android:textSize="@dimen/text_size_normal"></TextView>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:visibility="gone"
-                android:layout_marginTop="10dp"
-                 android:hint="@string/select_ethnicity"
+                android:hint="@string/select_ethnicity"
                 android:paddingHorizontal="10dp"></TextView>
 
 
@@ -328,12 +301,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="10dp"
-                android:visibility="gone"
                 android:background="@drawable/rectangle_white_grey_border"
                 android:backgroundTint="@color/white"
                 android:drawableEnd="@drawable/ic_down"
                 android:elevation="10dp"
-                android:hint="@string/arab"
                 android:padding="10dp"
                 android:paddingHorizontal="10dp"
                 android:paddingEnd="20dp"
@@ -344,7 +315,6 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 android:layout_gravity="start"
                 android:layout_marginTop="10dp"
                 android:hint="@string/select_interest"
@@ -356,29 +326,92 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:visibility="gone"
                 android:layout_margin="10dp"
                 android:background="@drawable/rectangle_white_grey_border"
                 android:backgroundTint="@color/white"
-                android:drawableEnd="@drawable/ic_down"
                 android:elevation="10dp"
-                android:hint="@string/cycling"
                 android:padding="10dp"
                 android:paddingHorizontal="10dp"
                 android:paddingEnd="20dp"
-                android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size_normal"></TextView>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/tell_us_about_you"></TextView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:elevation="@dimen/elevation"
+                android:orientation="vertical"
+                app:cardCornerRadius="20dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:id="@+id/aboutYouET"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:background="@color/white"
+                        android:gravity="start"
+                        android:hint="Co Founder of ZZ App"
+                        android:minLines="5"
+                        android:padding="20dp"
+                        android:textSize="@dimen/text_size_normal"></EditText>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_marginTop="-25dp"
+                        android:gravity="center"
+                        android:text="@string/min_150"></TextView>
+
+                </LinearLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="-10dp"
+                android:text="@string/education"
+                android:textSize="@dimen/text_size_normal"></TextView>
+
+            <TextView
+                android:id="@+id/educationET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:textColor="@color/black"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/rounded_rectangle_white"
+                android:elevation="@dimen/elevation"
+                android:padding="15dp"></TextView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="start"
                 android:layout_marginTop="-15dp"
-                android:visibility="gone"
                 android:layout_marginBottom="-5dp"
                 android:hint="@string/location"
-                android:paddingHorizontal="10dp"></TextView>
+                android:paddingHorizontal="10dp"
+                android:visibility="gone"></TextView>
 
 
             <EditText
@@ -386,7 +419,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:visibility="gone"
                 android:layout_margin="10dp"
                 android:background="@drawable/rectangle_white_grey_border"
                 android:backgroundTint="@color/white"
@@ -396,15 +428,16 @@
                 android:paddingHorizontal="10dp"
                 android:singleLine="true"
                 android:textColor="@color/black"
-                android:textSize="@dimen/text_size_normal"></EditText>
+                android:textSize="@dimen/text_size_normal"
+                android:visibility="gone"></EditText>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 android:layout_marginTop="15dp"
+                android:orientation="horizontal"
 
-                android:orientation="horizontal">
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -429,19 +462,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
-                android:visibility="gone"
                 android:layout_marginVertical="10dp"
                 android:backgroundTint="@color/red_light"
-                android:theme="@style/SeekBarColor"></SeekBar>
+                android:theme="@style/SeekBarColor"
+                android:visibility="gone"></SeekBar>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 android:layout_marginHorizontal="10dp"
                 android:layout_marginTop="20dp"
+                android:orientation="horizontal"
 
-                android:orientation="horizontal">
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -460,15 +493,15 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 android:layout_gravity="start"
-                android:layout_marginTop="6dp"
                 android:layout_marginHorizontal="7dp"
+                android:layout_marginTop="6dp"
                 android:layout_marginBottom="90dp"
-
                 android:gravity="center"
+
                 android:hint="@string/the_global_mode_turns_on_as_soon_as_the_profiles_in_this_location_run_out"
-                 android:textSize="@dimen/text_size_normal"></TextView>
+                android:textSize="@dimen/text_size_normal"
+                android:visibility="gone"></TextView>
 
             <TextView
                 android:id="@+id/editProfileTxt"
@@ -480,7 +513,7 @@
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/rectangle_white_grey_border"
                 android:backgroundTint="@color/colorPrimary"
-                 android:fontFamily="@font/poppins_bold"
+                android:fontFamily="@font/poppins_bold"
 
                 android:gravity="center"
                 android:singleLine="true"
