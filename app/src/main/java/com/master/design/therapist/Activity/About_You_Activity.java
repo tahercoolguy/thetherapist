@@ -316,7 +316,7 @@ public class About_You_Activity extends AppCompatActivity {
                     // You can update this bitmap to your server
 
 //                Bitmap bitmapMainImg = MediaStore.Images.Media.getBitmap(About_You_Activity.this.getContentResolver(), Uri.parse(String.valueOf(profileCircleImg.getDrawable())));
-                    Bitmap bitmapMainImg = bitmap;
+                    Bitmap bitmapMainImg = bitmapSingleImg;
 
                     File f = new File(About_You_Activity.this.getCacheDir(), "temp.jpg");
                     f.createNewFile();
@@ -509,6 +509,7 @@ public class About_You_Activity extends AppCompatActivity {
         OpenImage();
     }
 
+    Bitmap bitmapSingleImg;
     Bitmap bitmap;
     int greaterImg_i = 0;
 
@@ -520,10 +521,10 @@ public class About_You_Activity extends AppCompatActivity {
                     Uri uri = data.getParcelableExtra("path");
                     try {
                         // You can update this bitmap to your server
-                        bitmap = MediaStore.Images.Media.getBitmap(About_You_Activity.this.getContentResolver(), uri);
+                        bitmapSingleImg = MediaStore.Images.Media.getBitmap(About_You_Activity.this.getContentResolver(), uri);
 
                         profileCircleImg.setVisibility(View.VISIBLE);
-                        profileCircleImg.setImageBitmap(bitmap);
+                        profileCircleImg.setImageBitmap(bitmapSingleImg);
                         ifimg1 = true;
 //                    EditProfileImageAPI();
 
