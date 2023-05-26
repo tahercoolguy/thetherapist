@@ -184,5 +184,10 @@
     <string name="friends_search">Friend Search</string>
     <string name="age_and_gender_manadatory">kindly age and gender mandatory</string>
     <string name="no_searched_user_found">no searched user found</string>
+    <string name="select_ethnicity">Select Ethnicity</string>
+    <string name="arab">arab</string>
+    <string name="select_interest">Select Interest</string>
+    <string name="cycling">cycling</string>
+    <string name="doctor_of_philosophy_phd">Doctor of philosophy(PHD)</string>
 
 </resources>

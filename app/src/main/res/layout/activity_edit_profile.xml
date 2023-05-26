@@ -282,6 +282,94 @@
 
             </LinearLayout>
 
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginTop="-10dp"
+                android:visibility="gone"
+                android:hint="Select Education"
+                android:paddingHorizontal="10dp"></TextView>
+
+
+            <TextView
+                android:id="@+id/selectEducationTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:background="@drawable/rectangle_white_grey_border"
+                android:backgroundTint="@color/white"
+                android:drawableEnd="@drawable/ic_down"
+                android:elevation="10dp"
+                android:hint="@string/doctor_of_philosophy_phd"
+                android:padding="10dp"
+                android:paddingHorizontal="10dp"
+                android:paddingEnd="20dp"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_normal"></TextView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:visibility="gone"
+                android:layout_marginTop="10dp"
+                 android:hint="@string/select_ethnicity"
+                android:paddingHorizontal="10dp"></TextView>
+
+
+            <TextView
+                android:id="@+id/selectEthnicityTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:visibility="gone"
+                android:background="@drawable/rectangle_white_grey_border"
+                android:backgroundTint="@color/white"
+                android:drawableEnd="@drawable/ic_down"
+                android:elevation="10dp"
+                android:hint="@string/arab"
+                android:padding="10dp"
+                android:paddingHorizontal="10dp"
+                android:paddingEnd="20dp"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_normal"></TextView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_gravity="start"
+                android:layout_marginTop="10dp"
+                android:hint="@string/select_interest"
+                android:paddingHorizontal="10dp"></TextView>
+
+
+            <TextView
+                android:id="@+id/selectInterestTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                android:layout_margin="10dp"
+                android:background="@drawable/rectangle_white_grey_border"
+                android:backgroundTint="@color/white"
+                android:drawableEnd="@drawable/ic_down"
+                android:elevation="10dp"
+                android:hint="@string/cycling"
+                android:padding="10dp"
+                android:paddingHorizontal="10dp"
+                android:paddingEnd="20dp"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_normal"></TextView>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
