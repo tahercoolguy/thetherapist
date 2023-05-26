@@ -366,7 +366,7 @@ public class About_You_Activity extends AppCompatActivity {
 
                             String userID = therapistRegisterDM.getUser_id();
 
-                            if (!list.isEmpty() || list.size() > 0) {
+                            if (!list.isEmpty()) {
                                 addMultipleImageAPI(userID);
                             } else {
 //                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ECLAIR) {
