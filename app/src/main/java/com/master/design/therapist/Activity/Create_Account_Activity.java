@@ -103,12 +103,12 @@ public class Create_Account_Activity extends AppCompatActivity {
 //    LinearLayout full_date;
 
 
-    String Gender;
-    String name;
-    String SelectCountryid, SelectCountryCode;
-    String ethnicityyid;
+    String Gender="0";
+    String name="";
+    String SelectCountryid="", SelectCountryCode="";
+    String ethnicityyid="";
     String Date;
-    String DialCode, age;
+    String DialCode="", age="";
 
 
     @OnClick(R.id.maleTV)
@@ -314,7 +314,7 @@ public class Create_Account_Activity extends AppCompatActivity {
         } else if (confirmPasswordET.getText().toString().equalsIgnoreCase("")) {
             correct = false;
             Helper.showToast(Create_Account_Activity.this, getString(R.string.kindlt_enterr_confirm_password));
-        } else if (Gender == null) {
+        } else if (Gender.equalsIgnoreCase("")) {
             correct = false;
             Helper.showToast(Create_Account_Activity.this, getString(R.string.kindly_select_gender));
         }

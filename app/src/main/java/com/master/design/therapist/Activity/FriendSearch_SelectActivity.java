@@ -118,7 +118,7 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
         getIntentData();
     }
 
-    String position, position0, position1, position2, position3, position4, string33, age_single;
+    String position="", position0="", position1="", position2="", position3="", position4="", string33="", age_single="";
 
     public void getIntentData() {
         Intent intent = getIntent();
@@ -274,73 +274,7 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
 
     @SuppressLint({"SetTextI18n", "SuspiciousIndentation"})
     public void setPositionData(String position) {
-        if (age_single.equalsIgnoreCase("age_single")) {
 
-            tittleTxt.setText(getString(R.string.age_rangee));
-
-//            ArrayList<SearchDM> searchDMArrayList = new ArrayList<>();
-//            searchDMArrayList.add(new SearchDM("", "20-35"));
-//            searchDMArrayList.add(new SearchDM("", "20-35"));
-//            searchDMArrayList.add(new SearchDM("", "20-35"));
-//            searchDMArrayList.add(new SearchDM("", "20-35"));
-//            searchDMArrayList.add(new SearchDM("", "20-35"));
-
-            if (connectionDetector.isConnectingToInternet()) {
-
-                String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-
-                progress = dialogUtil.showProgressDialog(FriendSearch_SelectActivity.this, getString(R.string.please_wait));
-
-                appController.paServices.TherapistAge(new Callback<TherapistAgeDM>() {
-
-                    @Override
-
-                    public void success(TherapistAgeDM therapistAgeDM, Response response) {
-                        progress.dismiss();
-                        if (therapistAgeDM.getStatus().equalsIgnoreCase("1")) {
-
-
-                            Adapter_Age_Select adapter_search = new Adapter_Age_Select(FriendSearch_SelectActivity.this, therapistAgeDM.getAge_details());
-                            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(FriendSearch_SelectActivity.this);
-                            rcvRcv.setLayoutManager(linearLayoutManager);
-                            rcvRcv.setAdapter(adapter_search);
-                            adapter_search.setOnItemClickListener(new Adapter_Age_Select.OnItemClickListener() {
-                                @Override
-                                public void onClickThis(int position, String age_id, String ageEng, String ageAR) {
-//                                  String value = subheading;
-//                                  intent.putExtra("value", value);
-//                                  setResult(RESULT_OK, intent);
-//                                  Intent intent=new Intent();
-                                    selected_ageId = age_id;
-                                    selected_ageEng = ageEng;
-                                    selected_ageAR = ageAR;
-                                    Intent intent = new Intent();
-                                    intent.putExtra("age_id", selected_ageId);
-                                    intent.putExtra("ageEng", selected_ageEng);
-                                    intent.putExtra("ageAR", selected_ageAR);
-                                    setResult(2, intent);
-                                    finish();//finishing activity
-
-                                }
-                            });
-                        } else
-                            Helper.showToast(FriendSearch_SelectActivity.this, getString(R.string.Api_data_not_found));
-                    }
-
-                    @Override
-                    public void failure(RetrofitError retrofitError) {
-                        progress.dismiss();
-
-                        Log.e("error", retrofitError.toString());
-
-                    }
-                });
-
-            } else
-                Helper.showToast(FriendSearch_SelectActivity.this, getString(R.string.no_internet_connection));
-
-
-        }
         if (position.equalsIgnoreCase("string1")) {
 
             tittleTxt.setText(getString(R.string.age_rangee));
@@ -791,7 +725,73 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
 
 
         }
+        if (position.equalsIgnoreCase("age_single")) {
 
+            tittleTxt.setText(getString(R.string.age_rangee));
+
+//            ArrayList<SearchDM> searchDMArrayList = new ArrayList<>();
+//            searchDMArrayList.add(new SearchDM("", "20-35"));
+//            searchDMArrayList.add(new SearchDM("", "20-35"));
+//            searchDMArrayList.add(new SearchDM("", "20-35"));
+//            searchDMArrayList.add(new SearchDM("", "20-35"));
+//            searchDMArrayList.add(new SearchDM("", "20-35"));
+
+            if (connectionDetector.isConnectingToInternet()) {
+
+                String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+
+                progress = dialogUtil.showProgressDialog(FriendSearch_SelectActivity.this, getString(R.string.please_wait));
+
+                appController.paServices.TherapistAge(new Callback<TherapistAgeDM>() {
+
+                    @Override
+
+                    public void success(TherapistAgeDM therapistAgeDM, Response response) {
+                        progress.dismiss();
+                        if (therapistAgeDM.getStatus().equalsIgnoreCase("1")) {
+
+
+                            Adapter_Age_Select adapter_search = new Adapter_Age_Select(FriendSearch_SelectActivity.this, therapistAgeDM.getAge_details());
+                            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(FriendSearch_SelectActivity.this);
+                            rcvRcv.setLayoutManager(linearLayoutManager);
+                            rcvRcv.setAdapter(adapter_search);
+                            adapter_search.setOnItemClickListener(new Adapter_Age_Select.OnItemClickListener() {
+                                @Override
+                                public void onClickThis(int position, String age_id, String ageEng, String ageAR) {
+//                                  String value = subheading;
+//                                  intent.putExtra("value", value);
+//                                  setResult(RESULT_OK, intent);
+//                                  Intent intent=new Intent();
+                                    selected_ageId = age_id;
+                                    selected_ageEng = ageEng;
+                                    selected_ageAR = ageAR;
+                                    Intent intent = new Intent();
+                                    intent.putExtra("age_id", selected_ageId);
+                                    intent.putExtra("ageEng", selected_ageEng);
+                                    intent.putExtra("ageAR", selected_ageAR);
+                                    setResult(2, intent);
+                                    finish();//finishing activity
+
+                                }
+                            });
+                        } else
+                            Helper.showToast(FriendSearch_SelectActivity.this, getString(R.string.Api_data_not_found));
+                    }
+
+                    @Override
+                    public void failure(RetrofitError retrofitError) {
+                        progress.dismiss();
+
+                        Log.e("error", retrofitError.toString());
+
+                    }
+                });
+
+            } else
+                Helper.showToast(FriendSearch_SelectActivity.this, getString(R.string.no_internet_connection));
+
+
+        }
     }
 
 
