@@ -269,6 +269,8 @@ public class Conversation_Activity extends AppCompatActivity {
 
     }
 
+    boolean sendBoolean = false;
+
     @OnClick(R.id.sendImg)
     public void setsendImg() {
         String msg = messageET.getText().toString();
@@ -295,6 +297,7 @@ public class Conversation_Activity extends AppCompatActivity {
             webSocketClient.send(ne);
             messageET.setText("");
             setListeners();
+            sendBoolean = true;
         }
 
 
@@ -548,7 +551,12 @@ public class Conversation_Activity extends AppCompatActivity {
 
                                 }
                             });
-                            sendPlayRingtone();
+                            if (sendBoolean) {
+                                sendPlayRingtone();
+                            } else {
+                                sendBoolean = false;
+                            }
+
                         } else {
 
                             All_messages model = new All_messages();
@@ -610,7 +618,7 @@ public class Conversation_Activity extends AppCompatActivity {
 //                        rcvRcv.scrollToPosition(messageChatModelList.size() - 1);
 //                        rcvRcv.scrollToPosition(adapter.getItemCount());
 //                        adapter.notifyDataSetChanged();
-                        readPlayRingtone();
+                        sendPlayRingtone();
                         setListeners();
 
                     }
