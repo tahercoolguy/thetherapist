@@ -602,13 +602,14 @@ public class Conversation_Activity extends AppCompatActivity {
                             }
                             i++;
                         }
-
-                        rcvRcv.smoothScrollToPosition(messageChatModelList.size());
-                        lm.setReverseLayout(false);
-                        lm.setStackFromEnd(true);
-                        rcvRcv.scrollToPosition(messageChatModelList.size() - 1);
-                        rcvRcv.scrollToPosition(adapter.getItemCount());
                         adapter.notifyDataSetChanged();
+
+//                        rcvRcv.smoothScrollToPosition(messageChatModelList.size());
+//                        lm.setReverseLayout(false);
+//                        lm.setStackFromEnd(true);
+//                        rcvRcv.scrollToPosition(messageChatModelList.size() - 1);
+//                        rcvRcv.scrollToPosition(adapter.getItemCount());
+//                        adapter.notifyDataSetChanged();
                         readPlayRingtone();
                         setListeners();
 
