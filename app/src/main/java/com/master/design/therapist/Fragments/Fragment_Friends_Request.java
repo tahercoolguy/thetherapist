@@ -192,7 +192,7 @@ public class Fragment_Friends_Request extends Fragment {
                         rcvRcv.setVisibility(View.VISIBLE);
                         myfriend_request = "my_friends";
                         swiperefresh.setRefreshing(false);
-                        Adapter_Friends adapter_friends = new Adapter_Friends(getActivity(), friend_listDM.getAll_friends());
+                        Adapter_Friends adapter_friends = new Adapter_Friends(context, friend_listDM.getAll_friends());
                         GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 3);
                         rcvRcv.setLayoutManager(gridLayoutManager);
                         rcvRcv.setAdapter(adapter_friends);
