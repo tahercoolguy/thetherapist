@@ -1,9 +1,11 @@
 package com.master.design.therapist.Fragments;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -44,6 +46,8 @@ import com.master.design.therapist.R;
 import com.master.design.therapist.Utils.ConnectionDetector;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -118,6 +122,7 @@ public class Fragment_Chat extends Fragment {
                     }
             );
 
+            updateDisplay();
 
             searchET.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -139,6 +144,22 @@ public class Fragment_Chat extends Fragment {
             });
         }
         return rootView;
+    }
+
+    private void updateDisplay() {
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            //@Override
+            public void run() {
+                try {
+                    setChatData();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, 1000, 5000);//Update text every second
+
     }
 
     ArrayList<Details> detailsArrayList = new ArrayList<>();
@@ -208,7 +229,7 @@ public class Fragment_Chat extends Fragment {
                     } else {
                         rcvRcv.setVisibility(View.GONE);
                         swiperefresh.setRefreshing(false);
-                        ((MainActivity) context).showdialogNoData(context, getString(R.string.chat), getString(R.string.no_chats));
+                        showdialogNoData(context, getString(R.string.chat), getString(R.string.no_chats));
                     }
 //                        Helper.showToast(getActivity(), getString(R.string.Api_data_not_found));
                 }
@@ -219,10 +240,28 @@ public class Fragment_Chat extends Fragment {
                     Log.e("error", retrofitError.toString());
                 }
             });
-        } else
-            Helper.showToast(getActivity(), getString(R.string.no_internet_connection));
+        } else {
+            swiperefresh.setRefreshing(false);
+            showdialogNoData(context, getString(R.string.chat), getString(R.string.no_internet_connection));
 
+//             Helper.showToast(context,getString(R.string.no_internet_connection));
+        }
 
+    }
+
+    public void showdialogNoData(Context context, String tittle, String msg) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle(tittle)
+                .setMessage(msg)
+                .setCancelable(false)
+                .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        final AlertDialog alert = builder.create();
+
+        alert.show();
     }
 
     public void filter(String text) {

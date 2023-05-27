@@ -47,6 +47,8 @@ import com.master.design.therapist.Utils.ConnectionDetector;
 import org.jdom2.Text;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -105,6 +107,7 @@ public class Fragment_Friends_Request extends Fragment {
 
             setDetails();
             setMyFriendsAdapter();
+            myfriend_request="my_friends";
             /*
              * Sets up a SwipeRefreshLayout.OnRefreshListener that is invoked when the user
              * performs a swipe-to-refresh gesture.
@@ -125,6 +128,7 @@ public class Fragment_Friends_Request extends Fragment {
                         }
                     }
             );
+            updateDisplay();
 
         }
         return rootView;
@@ -203,8 +207,9 @@ public class Fragment_Friends_Request extends Fragment {
 
                     } else {
                         rcvRcv.setVisibility(View.GONE);
-                        ((MainActivity) context).showdialogNoData(context, getString(R.string.my_friends), getString(R.string.no_friends));
                         swiperefresh.setRefreshing(false);
+                        showdialogNoData(context, getString(R.string.my_friends), getString(R.string.no_friends));
+//                        ((MainActivity) context).showdialogNoData(context, getString(R.string.my_friends), getString(R.string.no_friends));
                         DismissProgress();
                     }
 //                    progress.dismiss();
@@ -217,10 +222,29 @@ public class Fragment_Friends_Request extends Fragment {
                     Log.e("error", retrofitError.toString());
                 }
             });
-        } else
-            Helper.showToast(getActivity(), getString(R.string.no_internet_connection));
+        } else {
+            swiperefresh.setRefreshing(false);
+            showdialogNoData(context, getString(R.string.my_friends), getString(R.string.no_internet_connection));
+
+        }
+//            Helper.showToast(getActivity(), getString(R.string.no_internet_connection));
 
 
+    }
+
+    public void showdialogNoData(Context context, String tittle, String msg) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle(tittle)
+                .setMessage(msg)
+                .setCancelable(false)
+                .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        final AlertDialog alert = builder.create();
+
+        alert.show();
     }
 
     private void setRequestAdapter() {
@@ -265,8 +289,9 @@ public class Fragment_Friends_Request extends Fragment {
                         DismissProgress();
 //                        progress.dismiss();
 //                        Helper.showToast(getActivity(), getString(R.string.Api_data_not_found));
+                        showdialogNoData(context, getString(R.string.friend_request), getString(R.string.no_friend_request));
 
-                        ((MainActivity) context).showdialogNoData(context, getString(R.string.friend_request), getString(R.string.no_friend_request));
+//                        ((MainActivity) context).showdialogNoData(context, getString(R.string.friend_request), getString(R.string.no_friend_request));
                     }
                 }
 
@@ -276,11 +301,17 @@ public class Fragment_Friends_Request extends Fragment {
                     Log.e("error", retrofitError.toString());
                 }
             });
-        } else
-            Helper.showToast(getActivity(), getString(R.string.no_internet_connection));
+        } else {
+            swiperefresh.setRefreshing(false);
+            rcvRcv.setVisibility(View.GONE);
+            swiperefresh.setRefreshing(false);
+            DismissProgress();
+            showdialogNoData(context, getString(R.string.friend_request), getString(R.string.no_internet_connection));
 
-
+        }
     }
+//            Helper.showToast(getActivity(), getString(R.string.no_internet_connection));
+
 
     private void acceptRequestAPI(String id, String response) {
         if (connectionDetector.isConnectingToInternet()) {
@@ -433,5 +464,25 @@ public class Fragment_Friends_Request extends Fragment {
     public void onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
         menu.findItem(R.id.action_back).setVisible(false);
+    }
+
+    private void updateDisplay() {
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            //@Override
+            public void run() {
+                try {
+                    if(myfriend_request.equalsIgnoreCase("my_friends")){
+                        setMyFriendsAdapter();
+                    }else{
+                        setRequestAdapter();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, 1000, 5000);//Update text every second
+
     }
 }
