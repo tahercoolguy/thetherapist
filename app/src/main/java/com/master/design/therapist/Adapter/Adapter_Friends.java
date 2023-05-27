@@ -1,5 +1,6 @@
 package com.master.design.therapist.Adapter;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -50,7 +51,7 @@ import retrofit.client.Response;
 
 
 public class Adapter_Friends extends RecyclerView.Adapter<Adapter_Friends.ViewHolder> {
-    private Context context;
+    private Activity context;
     private ArrayList<All_friends> arrayList;
     private InterestDM selected;
     User user;
@@ -65,7 +66,7 @@ public class Adapter_Friends extends RecyclerView.Adapter<Adapter_Friends.ViewHo
 
     int selectedPosition = 0;
 
-    public Adapter_Friends(Context context, ArrayList<All_friends> arrayList) {
+    public Adapter_Friends(Activity context, ArrayList<All_friends> arrayList) {
         this.context = context;
         this.arrayList = arrayList;
         user = new User(context);
@@ -158,6 +159,8 @@ public class Adapter_Friends extends RecyclerView.Adapter<Adapter_Friends.ViewHo
 
 
                                 context.startActivity(intent);
+                                context.overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
+
 //                                Helper.showToast(context, chatroomDM.getMsg());
                             } else {
                                 //                                Helper.showToast(context, chatroomDM.getMsg());
