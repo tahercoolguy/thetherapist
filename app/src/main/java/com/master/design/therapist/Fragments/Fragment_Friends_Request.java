@@ -474,8 +474,9 @@ public class Fragment_Friends_Request extends Fragment {
                 try {
                     if(myfriend_request.equalsIgnoreCase("my_friends")){
                         setMyFriendsAdapter();
+
                     }else{
-                        setRequestAdapter();
+
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
