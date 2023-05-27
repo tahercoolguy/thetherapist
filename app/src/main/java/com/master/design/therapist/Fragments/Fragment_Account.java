@@ -93,7 +93,6 @@ public class Fragment_Account extends Fragment {
 
     @OnClick(R.id.languageLL)
     public void clicklanguageLL() {
-        ((MainActivity)context).finish();
         startActivity(new Intent(getActivity(), LanguageActivity.class));
         activity.overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
     }
