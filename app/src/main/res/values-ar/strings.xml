@@ -12,7 +12,7 @@
     <string name="are_you_sure_you_want_to_exit_the_app" >Are you sure you want to exit the app?</string>
     <string name="gues" >Continue as a guest</string>
     <string name="terms" >Terms and condition</string>
-
+    <string name="characters_should_be_less_than" >characters should be less than 50</string>
     <string name="Name" >Full Name</string>
     <string name="lastName" >Last Name</string>
     <string name="Mobile" >Mobile</string>
@@ -191,5 +191,6 @@
     <string name="doctor_of_philosophy_phd" >Doctor of philosophy(PHD)</string>
     <string name="select_education" >Select Education</string>
     <string name="update_profile" >Update Profile</string>
+    <string name="logout_from_this_app">Do you want to logout from this app</string>
 
 </resources>

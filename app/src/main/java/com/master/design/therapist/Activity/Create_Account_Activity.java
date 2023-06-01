@@ -103,7 +103,7 @@ public class Create_Account_Activity extends AppCompatActivity {
 //    LinearLayout full_date;
 
 
-    String Gender="0";
+    String Gender="";
     String name="";
     String SelectCountryid="", SelectCountryCode="";
     String ethnicityyid="";

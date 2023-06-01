@@ -101,7 +101,7 @@ public class Edit_ProfileActivity extends AppCompatActivity {
     @BindView(R.id.educationET)
     TextView educationET;
 
-    String Gender;
+    String Gender="";
     String name;
     String nameAr;
     String SelectCountryid;
@@ -374,7 +374,7 @@ public class Edit_ProfileActivity extends AppCompatActivity {
         } else if (selectCountryET.getText().toString().equalsIgnoreCase("")) {
             correct = false;
             Helper.showToast(Edit_ProfileActivity.this, getString(R.string.kindly_select_your_country));
-        } else if (Gender == null) {
+        } else if (Gender.equalsIgnoreCase("")) {
             correct = false;
             Helper.showToast(Edit_ProfileActivity.this, getString(R.string.kindly_select_gender));
 
@@ -393,7 +393,11 @@ public class Edit_ProfileActivity extends AppCompatActivity {
         } else if (aboutYouET.getText().toString().equalsIgnoreCase("")) {
             correct = false;
             Helper.showToast(Edit_ProfileActivity.this, getString(R.string.kindly_tell_me_about_u));
-        } else if (educationET.getText().toString().equalsIgnoreCase("")) {
+        }else if (aboutYouET.getText().toString().length()>50) {
+            correct = false;
+            Helper.showToast(Edit_ProfileActivity.this, getString(R.string.characters_should_be_less_than));
+        }
+        else if (educationET.getText().toString().equalsIgnoreCase("")) {
             correct = false;
             Helper.showToast(Edit_ProfileActivity.this, getString(R.string.kindly_select_education));
         }

@@ -239,6 +239,9 @@ public class About_You_Activity extends AppCompatActivity {
         if (aboutYouET.getText().toString().equalsIgnoreCase("")) {
             correct = false;
             Helper.showToast(About_You_Activity.this, getString(R.string.kindly_tell_me_about_u));
+        } else if (aboutYouET.getText().toString().length()>50) {
+            correct = false;
+            Helper.showToast(About_You_Activity.this, getString(R.string.characters_should_be_less_than));
         } else if (educationET.getText().toString().equalsIgnoreCase("")) {
             correct = false;
             Helper.showToast(About_You_Activity.this, getString(R.string.kindly_select_education));

@@ -272,7 +272,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_margin="10dp"
-                    android:background="@drawable/rounded_rectagle_blue"
+                    android:background="@drawable/rounded_rectangle_white"
                     android:elevation="10dp"
                     android:gravity="center"
                     android:inputType="number"
@@ -280,7 +280,7 @@
                     android:padding="10dp"
                     android:singleLine="true"
                     android:text="@string/female"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/text_size_normal"></TextView>
 
 
