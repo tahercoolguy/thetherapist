@@ -25,6 +25,7 @@ import com.master.design.therapist.DM.SearchDM;
 import com.master.design.therapist.DataModel.Details;
 import com.master.design.therapist.DataModel.Edit_ProfileDM;
 import com.master.design.therapist.DataModel.Ethnic_details;
+import com.master.design.therapist.DataModel.MyProfile.Root;
 import com.master.design.therapist.DataModel.ProfileDM;
 import com.master.design.therapist.DataModel.TherapistCountriesDM;
 import com.master.design.therapist.DataModel.TherapistEthnicDM;
@@ -434,6 +435,7 @@ public class Edit_ProfileActivity extends AppCompatActivity {
                         if (edit_profileDM.getStatus().equalsIgnoreCase("1")) {
 
                             Helper.showToast(Edit_ProfileActivity.this, edit_profileDM.getMsg());
+                            getMyProfielDataAPI();
 
                         } else {
 //                            Helper.showToast(Edit_ProfileActivity.this,"profile already updated");
@@ -562,20 +564,27 @@ public class Edit_ProfileActivity extends AppCompatActivity {
             progress = dialogUtil.showProgressDialog(Edit_ProfileActivity.this, getString(R.string.please_wait));
             MultipartTypedOutput multipartTypedOutput = new MultipartTypedOutput();
             multipartTypedOutput.addPart("id", new TypedString(String.valueOf(user.getId())));
-            appController.paServices.TherapistProfile(multipartTypedOutput, new Callback<ProfileDM>() {
+            appController.paServices.TherapistProfileNew(multipartTypedOutput, new Callback<Root>() {
                 @Override
-                public void success(ProfileDM profileDM, Response response) {
+                public void success(Root profileDM, Response response) {
                     progress.dismiss();
                     if (profileDM.getStatus().equalsIgnoreCase("1")) {
 
                         userNameET.setText(profileDM.getUser_data().get(0).getName());
+                        selectEthnicityTxt.setText(profileDM.getUser_data().get(0).getEthnicity().getName_en());
+                        ethnicityyid=profileDM.getUser_data().get(0).getEthnicity().getId();
+
+                        aboutYouET.setText(profileDM.getUser_data().get(0).getAboutyou());
+
+                        educationET.setText(profileDM.getUser_data().get(0).getEducation().getName_en());
+                        educationID=profileDM.getUser_data().get(0).getEducation().getId();
 
                         mydob = profileDM.getUser_data().get(0).getDob();
 //                        mygenderId = profileDM.getUser_data().get(0).getGender().get(0).getId();
                         newMobile = profileDM.getUser_data().get(0).getPhone();
-                        Gender = profileDM.getUser_data().get(0).getGender().get(0).getId();
-                        SelectCountryid = profileDM.getUser_data().get(0).getCountry().get(0).getIsoCode();
-                        selectCountryET.setText(profileDM.getUser_data().get(0).getCountry().get(0).getName_en());
+                        Gender = profileDM.getUser_data().get(0).getGender().getId();
+                        SelectCountryid = profileDM.getUser_data().get(0).getCountry() .getIsoCode();
+                        selectCountryET.setText(profileDM.getUser_data().get(0).getCountry().getName_en());
                         date = profileDM.getUser_data().get(0).getDob();
 
                         if (Gender.equalsIgnoreCase("0")) {

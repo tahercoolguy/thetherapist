@@ -34,6 +34,7 @@ import com.master.design.therapist.Adapter.Adapter_Posted_Image;
 import com.master.design.therapist.Controller.AppController;
 import com.master.design.therapist.DataModel.AddMultipleImageRoot;
 import com.master.design.therapist.DataModel.GetAll_Image.GetAllImageRoot;
+import com.master.design.therapist.DataModel.MyProfile.Root;
 import com.master.design.therapist.DataModel.ProfileDM;
 import com.master.design.therapist.DataModel.RemoveImageRoot;
 import com.master.design.therapist.DataModel.UnfriendDM;
@@ -289,14 +290,14 @@ public class MyPostedImagesActivity extends AppCompatActivity {
             progress = dialogUtil.showProgressDialog(MyPostedImagesActivity.this, getString(R.string.please_wait));
             MultipartTypedOutput multipartTypedOutput = new MultipartTypedOutput();
             multipartTypedOutput.addPart("id", new TypedString(String.valueOf(user.getId())));
-            appController.paServices.TherapistProfile(multipartTypedOutput, new Callback<ProfileDM>() {
+            appController.paServices.TherapistProfileNew(multipartTypedOutput, new Callback<Root>() {
                 @Override
-                public void success(ProfileDM profileDM, Response response) {
+                public void success(Root profileDM, Response response) {
                     progress.dismiss();
                     if (profileDM.getStatus().equalsIgnoreCase("1")) {
 
                         if (profileDM.getUser_data().get(0).getImage() != null) {
-                            mainImgDeleteId = profileDM.getUser_data().get(0).getId();
+                            mainImgDeleteId = String.valueOf(profileDM.getUser_data().get(0).getId());
 
                             progress.dismiss();
 

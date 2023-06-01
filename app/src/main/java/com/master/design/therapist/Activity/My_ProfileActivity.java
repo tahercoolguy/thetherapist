@@ -26,6 +26,7 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.master.design.therapist.Adapter.TherapistEducationDM;
 import com.master.design.therapist.Controller.AppController;
+import com.master.design.therapist.DataModel.MyProfile.Root;
 import com.master.design.therapist.DataModel.ProfileDM;
 import com.master.design.therapist.DataModel.Update_Pic_ProfileDM;
 import com.master.design.therapist.Helper.DialogUtil;
@@ -262,16 +263,16 @@ public class My_ProfileActivity extends AppCompatActivity {
             progress = dialogUtil.showProgressDialog(My_ProfileActivity.this, getString(R.string.please_wait));
             MultipartTypedOutput multipartTypedOutput = new MultipartTypedOutput();
             multipartTypedOutput.addPart("id", new TypedString(String.valueOf(user.getId())));
-            appController.paServices.TherapistProfile(multipartTypedOutput, new Callback<ProfileDM>() {
+            appController.paServices.TherapistProfileNew(multipartTypedOutput, new Callback<Root>() {
                 @Override
-                public void success(ProfileDM profileDM, Response response) {
+                public void success(Root profileDM, Response response) {
                     progress.dismiss();
                     if (profileDM.getStatus().equalsIgnoreCase("1")) {
 
                         userNameET.setText(profileDM.getUser_data().get(0).getName());
                         emailET.setText(profileDM.getUser_data().get(0).getEmail());
                         phoneET.setText(profileDM.getUser_data().get(0).getPhone());
-                        genderET.setText(profileDM.getUser_data().get(0).getGender().get(0).getGender_eg());
+                        genderET.setText(profileDM.getUser_data().get(0).getGender().getGender_eg());
                         dobET.setText(profileDM.getUser_data().get(0).getDob());
 
                         Picasso.with(context).load(AppController.THERAPIST_IMAGE + profileDM.getUser_data().get(0).getImage()).into(profileImgRIV);

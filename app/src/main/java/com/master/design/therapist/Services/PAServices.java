@@ -13,6 +13,7 @@ import com.master.design.therapist.DataModel.ChatroomDM;
 import com.master.design.therapist.DataModel.Edit_ProfileDM;
 import com.master.design.therapist.DataModel.Friend_ListDM;
 import com.master.design.therapist.DataModel.GetAll_Image.GetAllImageRoot;
+import com.master.design.therapist.DataModel.MyProfile.Root;
 import com.master.design.therapist.DataModel.ProfileDM;
 import com.master.design.therapist.DataModel.RemoveImageRoot;
 import com.master.design.therapist.DataModel.Request_ListDM;
@@ -156,9 +157,13 @@ public interface PAServices {
 //    public void TherapistProfile(@Field("id") String id,
 //                                 Callback<ProfileDM> profileDMCallback);
 
+//    // 18
+//    @POST("/profile")
+//    void TherapistProfile(@Body MultipartTypedOutput multipartTypedOutput, Callback<ProfileDM> profileDMCallback);
+
     // 18
     @POST("/profile")
-    void TherapistProfile(@Body MultipartTypedOutput multipartTypedOutput, Callback<ProfileDM> profileDMCallback);
+    void TherapistProfileNew(@Body MultipartTypedOutput multipartTypedOutput, Callback<Root> rootCallback);
 
 
     //19
