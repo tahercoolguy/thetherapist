@@ -260,7 +260,9 @@ public class My_ProfileActivity extends AppCompatActivity {
         if (connectionDetector.isConnectingToInternet()) {
             String refreshedToken = FirebaseInstanceId.getInstance().getToken();
             progress = dialogUtil.showProgressDialog(My_ProfileActivity.this, getString(R.string.please_wait));
-            appController.paServices.TherapistProfile(String.valueOf(user.getId()), new Callback<ProfileDM>() {
+            MultipartTypedOutput multipartTypedOutput = new MultipartTypedOutput();
+            multipartTypedOutput.addPart("id", new TypedString(String.valueOf(user.getId())));
+            appController.paServices.TherapistProfile(multipartTypedOutput, new Callback<ProfileDM>() {
                 @Override
                 public void success(ProfileDM profileDM, Response response) {
                     progress.dismiss();
@@ -275,6 +277,8 @@ public class My_ProfileActivity extends AppCompatActivity {
                         Picasso.with(context).load(AppController.THERAPIST_IMAGE + profileDM.getUser_data().get(0).getImage()).into(profileImgRIV);
 
 
+                    }else{
+                        progress.dismiss();
                     }
 //                    else {
 //                        Helper.showToast(My_ProfileActivity.this, getString(R.string.Api_data_not_found));

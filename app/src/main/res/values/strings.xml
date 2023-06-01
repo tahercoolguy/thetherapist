@@ -191,5 +191,6 @@
     <string name="doctor_of_philosophy_phd" >Doctor of philosophy(PHD)</string>
     <string name="select_education" >Select Education</string>
     <string name="update_profile" >Update Profile</string>
+    <string name="logout_from_this_app">Do you want to logout from this app</string>
 
 </resources>

@@ -48,6 +48,7 @@ import butterknife.OnClick;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import retrofit.mime.MultipartTypedOutput;
 import retrofit.mime.TypedString;
 
 public class Edit_ProfileActivity extends AppCompatActivity {
@@ -145,13 +146,13 @@ public class Edit_ProfileActivity extends AppCompatActivity {
             public void response(Object object) {
 
                 name = ((DataChangeDM) object).getName();
-               nameAr= ((DataChangeDM) object).getNameAr();
+                nameAr = ((DataChangeDM) object).getNameAr();
                 ethnicityyid = ((DataChangeDM) object).getId();
 //                                    user.setAreaId(AreaID);
 
                 if (user.getLanguageCode().equalsIgnoreCase("en")) {
                     selectEthnicityTxt.setText(name);
-                }else{
+                } else {
                     selectEthnicityTxt.setText(nameAr);
                 }
 //                selectEthnicityTxt.setText(name);
@@ -555,7 +556,9 @@ public class Edit_ProfileActivity extends AppCompatActivity {
         if (connectionDetector.isConnectingToInternet()) {
             String refreshedToken = FirebaseInstanceId.getInstance().getToken();
             progress = dialogUtil.showProgressDialog(Edit_ProfileActivity.this, getString(R.string.please_wait));
-            appController.paServices.TherapistProfile(String.valueOf(user.getId()), new Callback<ProfileDM>() {
+            MultipartTypedOutput multipartTypedOutput = new MultipartTypedOutput();
+            multipartTypedOutput.addPart("id", new TypedString(String.valueOf(user.getId())));
+            appController.paServices.TherapistProfile(multipartTypedOutput, new Callback<ProfileDM>() {
                 @Override
                 public void success(ProfileDM profileDM, Response response) {
                     progress.dismiss();

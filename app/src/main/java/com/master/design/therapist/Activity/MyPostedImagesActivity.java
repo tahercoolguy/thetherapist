@@ -287,7 +287,9 @@ public class MyPostedImagesActivity extends AppCompatActivity {
         if (connectionDetector.isConnectingToInternet()) {
             String refreshedToken = FirebaseInstanceId.getInstance().getToken();
             progress = dialogUtil.showProgressDialog(MyPostedImagesActivity.this, getString(R.string.please_wait));
-            appController.paServices.TherapistProfile(String.valueOf(user.getId()), new Callback<ProfileDM>() {
+            MultipartTypedOutput multipartTypedOutput = new MultipartTypedOutput();
+            multipartTypedOutput.addPart("id", new TypedString(String.valueOf(user.getId())));
+            appController.paServices.TherapistProfile(multipartTypedOutput, new Callback<ProfileDM>() {
                 @Override
                 public void success(ProfileDM profileDM, Response response) {
                     progress.dismiss();

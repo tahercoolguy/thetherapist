@@ -1,8 +1,10 @@
 package com.master.design.therapist.Fragments;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -54,7 +56,8 @@ public class Fragment_Account extends Fragment {
     @BindView(R.id.aboutLL)
     LinearLayout aboutLL;
     @BindView(R.id.logoutLL)
-    LinearLayout logoutLL;@BindView(R.id.myPostedImageLL)
+    LinearLayout logoutLL;
+    @BindView(R.id.myPostedImageLL)
     LinearLayout myPostedImageLL;
 
     @BindView(R.id.layout_parent)
@@ -63,12 +66,13 @@ public class Fragment_Account extends Fragment {
     ConnectionDetector connectionDetector;
     ProgressDialog progressDialog;
     User user;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         context = getActivity();
-        activity=this.getActivity();
+        activity = this.getActivity();
         appController = (AppController) getActivity().getApplicationContext();
         user = new User(context);
         connectionDetector = new ConnectionDetector(getActivity());
@@ -81,7 +85,7 @@ public class Fragment_Account extends Fragment {
             rootView = inflater.inflate(R.layout.account_fragment_layout, container, false);
             ButterKnife.bind(this, rootView);
 
-         }
+        }
         return rootView;
     }
 
@@ -119,11 +123,31 @@ public class Fragment_Account extends Fragment {
 
     @OnClick(R.id.logoutLL)
     public void clicklogoutLL() {
-        ((MainActivity)context).finish();
-        startActivity(new Intent(getActivity(), Sign_InActivity.class));
+        showdialogNoData(getString(R.string.logout_from_this_app));
+    }
+
+    public void showdialogNoData(String tittle) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle(tittle)
+                .setCancelable(false)
+                .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                })
+                .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        ((MainActivity) context).finish();
+                        startActivity(new Intent(getActivity(), Sign_InActivity.class));
 //        ((MainActivity)context).finish();
-        user.setId(0);
-         activity.overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
+                        user.setId(0);
+                        activity.overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
+                    }
+                });
+        final AlertDialog alert = builder.create();
+
+        alert.show();
     }
 
     @Override

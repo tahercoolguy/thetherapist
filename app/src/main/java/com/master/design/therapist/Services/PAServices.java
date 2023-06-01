@@ -151,10 +151,15 @@ public interface PAServices {
                                                Callback<Cancel_Friend_RequestDM> cancel_friend_requestDMCallback);
 
     // 18
-    @FormUrlEncoded
+//    @FormUrlEncoded
+//    @POST("/profile")
+//    public void TherapistProfile(@Field("id") String id,
+//                                 Callback<ProfileDM> profileDMCallback);
+
+    // 18
     @POST("/profile")
-    public void TherapistProfile(@Field("id") String id,
-                                 Callback<ProfileDM> profileDMCallback);
+    void TherapistProfile(@Body MultipartTypedOutput multipartTypedOutput, Callback<ProfileDM> profileDMCallback);
+
 
     //19
     @POST("/update_pic")
