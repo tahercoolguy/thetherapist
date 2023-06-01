@@ -14,11 +14,14 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Display;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,8 +34,12 @@ import android.widget.TextView;
 
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.master.design.therapist.Adapter.Adapter_Menu;
+import com.master.design.therapist.Controller.AppController;
+import com.master.design.therapist.DataModel.RemoveImageRoot;
+import com.master.design.therapist.DataModel.TokenRoot;
 import com.master.design.therapist.Fragments.Fragment_Account;
 import com.master.design.therapist.Fragments.Fragment_Chat;
 import com.master.design.therapist.Fragments.Fragment_Default;
@@ -44,6 +51,7 @@ import com.master.design.therapist.Helper.Helper;
 import com.master.design.therapist.Helper.User;
 import com.master.design.therapist.Models.DrawerMenu;
 import com.master.design.therapist.R;
+import com.master.design.therapist.Utils.ConnectionDetector;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -51,6 +59,11 @@ import java.util.Locale;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+import retrofit.mime.MultipartTypedOutput;
+import retrofit.mime.TypedString;
 
 import static com.master.design.therapist.Models.DrawerMenu.RECORD;
 
@@ -80,11 +93,15 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private RoundedImageView imageProfile;
 
     private User user;
-
+    AppController appController;
+    ConnectionDetector connectionDetector;
+    ProgressDialog progressDialog;
+    Dialog progress;
+    DialogUtil dialogUtil;
     @BindView(R.id.bottomNavigationView)
     BottomNavigationView bottomNavigationView;
 
-//    @BindView(R.id.settingLL)
+    //    @BindView(R.id.settingLL)
 //    LinearLayout settingLL;
 //
 //    @BindView(R.id.chatLL)
@@ -127,6 +144,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 //    public void clickSettingLL() {
 //
 //    }
+    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,6 +152,15 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         setContentView(R.layout.activity_main);
         user = new User(this);
         ButterKnife.bind(this);
+        context = MainActivity.this;
+//        activity = getActivity();
+        appController = (AppController) MainActivity.this.getApplicationContext();
+
+        connectionDetector = new ConnectionDetector(MainActivity.this);
+        progressDialog = new ProgressDialog(MainActivity.this);
+        progressDialog.setMessage(getResources().getString(R.string.please_wait));
+        progressDialog.setIndeterminate(true);
+        progressDialog.setCancelable(false);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
         addFragment(new Fragment_Home(), false);
 
@@ -428,12 +455,13 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     @Override
     public void finish() {
         super.finish();
+        updateOffline();
         overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
 
     }
 
     public String age_id, ageEng, ageAR, gender, interest, ethic, education;
-     public String selected_ageId="", selected_genderId="", selected_ethicID="", selected_educationID="", InterestIdList = "";
+    public String selected_ageId = "", selected_genderId = "", selected_ethicID = "", selected_educationID = "", InterestIdList = "";
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -474,10 +502,45 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 args.putString("selected_educationID", selected_educationID);
                 args.putString("InterestIdList", InterestIdList);
                 fragment.setArguments(args);
-                addFragment(fragment,false);
+                addFragment(fragment, false);
 
             }
         }
     }
 
+    private void updateOffline() {
+        if (connectionDetector.isConnectingToInternet()) {
+            String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+            MultipartTypedOutput multipartTypedOutput = new MultipartTypedOutput();
+            multipartTypedOutput.addPart("id", new TypedString(String.valueOf(user.getId())));
+
+//            progress = dialogUtil.showProgressDialog(MainActivity.this, getString(R.string.please_wait));
+            appController.paServices.Offline(multipartTypedOutput, new Callback<TokenRoot>() {
+                @Override
+                public void success(TokenRoot tokenRoot, Response response) {
+                    if (tokenRoot.getStatus().equalsIgnoreCase("1")) {
+//                        progress.dismiss();
+
+                    } else {
+//                        progress.dismiss();
+                    }
+                }
+
+                @Override
+                public void failure(RetrofitError retrofitError) {
+//                    progress.dismiss();
+                    Log.e("error", retrofitError.toString());
+                }
+            });
+        } else {
+            Helper.showToast(MainActivity.this, String.valueOf(R.string.no_internet_connection));
+        }
+    }
+
+
+    @Override
+    protected void onPause() {
+        updateOffline();
+        super.onPause();
+    }
 }

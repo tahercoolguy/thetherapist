@@ -46,10 +46,12 @@ import com.master.design.therapist.DM.InterestDM;
 import com.master.design.therapist.DM.IntroSliderDM;
 import com.master.design.therapist.DataModel.AddMultipleImageRoot;
 import com.master.design.therapist.DataModel.Cancel_Friend_RequestDM;
+import com.master.design.therapist.DataModel.RemoveImageRoot;
 import com.master.design.therapist.DataModel.Request_ResponseDM;
 import com.master.design.therapist.DataModel.Send_Friend_RequestDM;
 import com.master.design.therapist.DataModel.TherapistEthnicDM;
 import com.master.design.therapist.DataModel.TherapistHomeDM;
+import com.master.design.therapist.DataModel.TokenRoot;
 import com.master.design.therapist.DataModel.Users;
 import com.master.design.therapist.Helper.BlurBuilder;
 import com.master.design.therapist.Helper.DialogUtil;
@@ -160,6 +162,8 @@ public class Fragment_Home extends Fragment {
 //            setInterestData();
 
             setDetails();
+            updateToken();
+            updateOnline();
 
             if (getArguments() != null) {
 
@@ -798,4 +802,65 @@ public class Fragment_Home extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
     }
+
+    private void updateToken() {
+        if (connectionDetector.isConnectingToInternet()) {
+            String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+            MultipartTypedOutput multipartTypedOutput = new MultipartTypedOutput();
+            multipartTypedOutput.addPart("user_id", new TypedString(String.valueOf(user.getId())));
+            multipartTypedOutput.addPart("device_type", new TypedString("2"));
+            multipartTypedOutput.addPart("device_token", new TypedString(refreshedToken));
+//            progress = dialogUtil.showProgressDialog(context, context.getString(R.string.please_wait));
+            appController.paServices.Update_Token(multipartTypedOutput, new Callback<TokenRoot>() {
+                @Override
+                public void success(TokenRoot tokenRoot, Response response) {
+                    if (tokenRoot.getStatus().equalsIgnoreCase("1")) {
+//                        progress.dismiss();
+
+                    }else{
+//                        progress.dismiss();
+                    }
+                }
+
+                @Override
+                public void failure(RetrofitError retrofitError) {
+//                    progress.dismiss();
+                    Log.e("error", retrofitError.toString());
+                }
+            });
+        } else {
+            Helper.showToast(context, String.valueOf(R.string.no_internet_connection));
+        }
+    }
+
+    private void updateOnline() {
+        if (connectionDetector.isConnectingToInternet()) {
+            String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+            MultipartTypedOutput multipartTypedOutput = new MultipartTypedOutput();
+            multipartTypedOutput.addPart("id", new TypedString(String.valueOf(user.getId())));
+
+//            progress = dialogUtil.showProgressDialog(context, context.getString(R.string.please_wait));
+            appController.paServices.Online(multipartTypedOutput, new Callback<TokenRoot>() {
+                @Override
+                public void success(TokenRoot tokenRoot, Response response) {
+                    if (tokenRoot.getStatus().equalsIgnoreCase("1")) {
+//                        progress.dismiss();
+
+                    }else{
+//                        progress.dismiss();
+                    }
+                }
+
+                @Override
+                public void failure(RetrofitError retrofitError) {
+//                    progress.dismiss();
+                    Log.e("error", retrofitError.toString());
+                }
+            });
+        } else {
+            Helper.showToast(context, String.valueOf(R.string.no_internet_connection));
+        }
+    }
+
+
 }

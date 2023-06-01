@@ -128,7 +128,7 @@ public class Fragment_Friends_Request extends Fragment {
                         }
                     }
             );
-            updateDisplay();
+//            updateDisplay();
 
         }
         return rootView;

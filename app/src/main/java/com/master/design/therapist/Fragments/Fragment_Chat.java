@@ -122,7 +122,7 @@ public class Fragment_Chat extends Fragment {
                     }
             );
 
-            updateDisplay();
+//            updateDisplay();
 
             searchET.addTextChangedListener(new TextWatcher() {
                 @Override

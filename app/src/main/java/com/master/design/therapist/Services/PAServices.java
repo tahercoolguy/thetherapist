@@ -28,6 +28,7 @@ import com.master.design.therapist.DataModel.TherapistHomeDM;
 import com.master.design.therapist.DataModel.TherapistInterestDM;
 import com.master.design.therapist.DataModel.TherapistLoginDM;
 import com.master.design.therapist.DataModel.TherapistRegisterDM;
+import com.master.design.therapist.DataModel.TokenRoot;
 import com.master.design.therapist.DataModel.UnfriendDM;
 import com.master.design.therapist.DataModel.Update_Pic_ProfileDM;
 
@@ -233,6 +234,18 @@ public interface PAServices {
     // 30
     @POST("/sendingimage")
     void SendingImageChat(@Body MultipartTypedOutput multipartTypedOutput, Callback<SendingImageDM> sendingImageDMCallback);
+
+    // 31
+    @POST("/update_token")
+    void Update_Token(@Body MultipartTypedOutput multipartTypedOutput, Callback<TokenRoot> tokenRootCallback);
+
+    // 32
+    @POST("/online")
+    void Online(@Body MultipartTypedOutput multipartTypedOutput, Callback<TokenRoot> tokenRootCallback);
+
+    // 33
+    @POST("/offline")
+    void Offline(@Body MultipartTypedOutput multipartTypedOutput, Callback<TokenRoot> tokenRootCallback);
 
 
 }
