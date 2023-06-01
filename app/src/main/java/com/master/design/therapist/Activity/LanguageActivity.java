@@ -49,12 +49,12 @@ public class LanguageActivity extends AppCompatActivity {
         Util.setConfigChange(LanguageActivity.this,"en");
 
         restartActivity(LanguageActivity.this);
-        startActivity(new Intent(LanguageActivity.this,LoginActivity.class));
+        startActivity(new Intent(LanguageActivity.this,IntroActivity.class));
         finish();
 
         englishRL.setBackground(getDrawable(R.drawable.language_select_bg));
         arabicRL.setBackground(getDrawable(R.drawable.language_unselect_bg));
-        startActivity(new Intent(LanguageActivity.this, IntroActivity.class));
+//        startActivity(new Intent(LanguageActivity.this, IntroActivity.class));
         overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
         finish();
     }
@@ -66,12 +66,12 @@ public class LanguageActivity extends AppCompatActivity {
         Util.setConfigChange(LanguageActivity.this,"ar");
 //        getActivity().getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
         restartActivity(LanguageActivity.this);
-        startActivity(new Intent(LanguageActivity.this,LoginActivity.class));
+        startActivity(new Intent(LanguageActivity.this,IntroActivity.class));
         finish();
 
         englishRL.setBackground(getDrawable(R.drawable.language_unselect_bg));
         arabicRL.setBackground(getDrawable(R.drawable.language_select_bg));
-        startActivity(new Intent(LanguageActivity.this, IntroActivity.class));
+//        startActivity(new Intent(LanguageActivity.this, IntroActivity.class));
         finish();
         overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
 

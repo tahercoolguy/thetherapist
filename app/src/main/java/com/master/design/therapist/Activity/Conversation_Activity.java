@@ -457,7 +457,7 @@ public class Conversation_Activity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         activity.overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
-        this.finish();
+        webSocketClient.close(1,1,"");
         super.onBackPressed();
     }
 
