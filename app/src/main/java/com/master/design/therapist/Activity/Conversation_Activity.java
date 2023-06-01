@@ -216,11 +216,14 @@ public class Conversation_Activity extends AppCompatActivity {
             progress = dialogUtil.showProgressDialog(Conversation_Activity.this, getString(R.string.please_wait));
 
             user_id = String.valueOf(user.getId());
+            MultipartTypedOutput multipartTypedOutput = new MultipartTypedOutput();
+            multipartTypedOutput.addPart("user_1", new TypedString(String.valueOf(user.getId())));
+            multipartTypedOutput.addPart("user_2", new TypedString(FriendsId));
+            multipartTypedOutput.addPart("room_id", new TypedString(chatRoomID));
+            multipartTypedOutput.addPart("user_id", new TypedString(String.valueOf(user.getId())));
 
-            appController.paServices.TherapistChatHistory(user_id, FriendsId, new Callback<ChatHistoryDM>() {
-
+            appController.paServices.TherapistChatHistory(multipartTypedOutput, new Callback<ChatHistoryDM>() {
                 @Override
-
                 public void success(ChatHistoryDM chatHistoryDM, Response response) {
                     progress.dismiss();
                     if (chatHistoryDM.getStatus().equalsIgnoreCase("1")) {

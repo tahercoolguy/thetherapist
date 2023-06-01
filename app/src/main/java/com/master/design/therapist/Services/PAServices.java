@@ -183,11 +183,19 @@ public interface PAServices {
 
 
     // 22
-    @FormUrlEncoded
+//    @FormUrlEncoded
+//    @POST("/chathistory")
+//    public void TherapistChatHistory(@Field("user_1") String user_1,
+//                                     @Field("user_2") String user_2,
+//                                     @Field("room_id") String room_id,
+//                                     @Field("user_id ") String user_id ,
+//                                     Callback<ChatHistoryDM> chatHistoryDMCallback);
+
+    // 23
     @POST("/chathistory")
-    public void TherapistChatHistory(@Field("user_1") String user_1,
-                                     @Field("user_2") String user_2,
-                                     Callback<ChatHistoryDM> chatHistoryDMCallback);
+    void TherapistChatHistory(@Body MultipartTypedOutput multipartTypedOutput, Callback<ChatHistoryDM> chatHistoryDMCallback);
+
+
 
     // 23
     @FormUrlEncoded

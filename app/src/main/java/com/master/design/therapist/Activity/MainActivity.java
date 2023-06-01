@@ -543,4 +543,40 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         updateOffline();
         super.onPause();
     }
+
+    @Override
+    protected void onRestart() {
+        updateOnline();
+        super.onRestart();
+    }
+
+    private void updateOnline() {
+        if (connectionDetector.isConnectingToInternet()) {
+            String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+            MultipartTypedOutput multipartTypedOutput = new MultipartTypedOutput();
+            multipartTypedOutput.addPart("id", new TypedString(String.valueOf(user.getId())));
+
+//            progress = dialogUtil.showProgressDialog(MainActivity.this, getString(R.string.please_wait));
+            appController.paServices.Online(multipartTypedOutput, new Callback<TokenRoot>() {
+                @Override
+                public void success(TokenRoot tokenRoot, Response response) {
+                    if (tokenRoot.getStatus().equalsIgnoreCase("1")) {
+//                        progress.dismiss();
+
+                    } else {
+//                        progress.dismiss();
+                    }
+                }
+
+                @Override
+                public void failure(RetrofitError retrofitError) {
+//                    progress.dismiss();
+                    Log.e("error", retrofitError.toString());
+                }
+            });
+        } else {
+            Helper.showToast(MainActivity.this, String.valueOf(R.string.no_internet_connection));
+        }
+    }
+
 }

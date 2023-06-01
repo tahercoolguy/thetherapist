@@ -27,6 +27,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -249,7 +250,7 @@ public class Fragment_Home extends Fragment {
             recieveRequestImg.setVisibility(View.GONE);
 
             Adapter_Category_Interest adapter_category_interest = new Adapter_Category_Interest(context, therapistHomeDMPosition.getUsers().get(listposition).getInterests());
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+            GridLayoutManager linearLayoutManager = new GridLayoutManager(context,3);
             categoryRcv.setLayoutManager(linearLayoutManager);
             categoryRcv.setAdapter(adapter_category_interest);
 
@@ -298,11 +299,11 @@ public class Fragment_Home extends Fragment {
 //                        // to set it scrollable automatically
 //                        // we use below method.
 
-            slider.setAutoCycle(true);
+            slider.setAutoCycle(false);
 //
 //                        // to start autocycle below method is used.
 
-            slider.startAutoCycle();
+//            slider.startAutoCycle();
 
 
         } else {
@@ -481,7 +482,8 @@ public class Fragment_Home extends Fragment {
 
 
                             Adapter_Category_Interest adapter_category_interest = new Adapter_Category_Interest(context, therapistHomeDM.getUsers().get(0).getInterests());
-                            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+//                            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+                            GridLayoutManager linearLayoutManager = new GridLayoutManager(context,3);
                             categoryRcv.setLayoutManager(linearLayoutManager);
                             categoryRcv.setAdapter(adapter_category_interest);
 
@@ -530,11 +532,11 @@ public class Fragment_Home extends Fragment {
 //                        // to set it scrollable automatically
 //                        // we use below method.
 
-                            slider.setAutoCycle(true);
+                            slider.setAutoCycle(false);
 //
 //                        // to start autocycle below method is used.
 
-                            slider.startAutoCycle();
+//                            slider.startAutoCycle();
 
                             mainLLL.setVisibility(View.VISIBLE);
 
@@ -694,7 +696,8 @@ public class Fragment_Home extends Fragment {
 
 
                                 Adapter_Category_Interest adapter_category_interest = new Adapter_Category_Interest(context, therapistHomeDM.getUsers().get(0).getInterests());
-                                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+//                                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+                                GridLayoutManager linearLayoutManager = new GridLayoutManager(context,3);
                                 categoryRcv.setLayoutManager(linearLayoutManager);
                                 categoryRcv.setAdapter(adapter_category_interest);
 
@@ -743,11 +746,11 @@ public class Fragment_Home extends Fragment {
 //                        // to set it scrollable automatically
 //                        // we use below method.
 
-                                slider.setAutoCycle(true);
+                                slider.setAutoCycle(false);
 //
 //                        // to start autocycle below method is used.
 
-                                slider.startAutoCycle();
+//                                slider.startAutoCycle();
 
                                 mainLLL.setVisibility(View.VISIBLE);
                             } else {
