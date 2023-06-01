@@ -87,7 +87,14 @@ public class Adapter_Search_Select_Ethnic extends RecyclerView.Adapter<Adapter_S
 
 //        viewHolder.mainTxt.setText(arrayList.get(position).getHead());
 
-        viewHolder.smallTxt.setText(arrayList.get(position).getEthnic_name());
+//        viewHolder.smallTxt.setText(arrayList.get(position).getEthnic_name());
+
+        if (user.getLanguageCode().equalsIgnoreCase("en")) {
+            viewHolder.smallTxt.setText(arrayList.get(position).getEthnic_name());
+        }else {
+            viewHolder.smallTxt.setText(arrayList.get(position).getEthnic_name_as());
+        }
+
 
         viewHolder.mainTxt.setVisibility(View.GONE);
         viewHolder.smallTxt.setGravity(Gravity.CENTER);

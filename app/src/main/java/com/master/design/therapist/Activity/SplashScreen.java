@@ -16,7 +16,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.master.design.therapist.Helper.Language;
 import com.master.design.therapist.Helper.User;
+import com.master.design.therapist.Helper.Util;
 import com.master.design.therapist.R;
 
 import java.security.MessageDigest;
@@ -72,6 +74,20 @@ public class SplashScreen extends AppCompatActivity {
                     finish();
                     overridePendingTransition(R.anim.fade_in, R.anim.fade_in);
                 } else {
+
+
+                    if (user.getLanguageCode().equalsIgnoreCase("en"))
+                    {
+                        Language language = new Language(1, "English", "en");
+                        user.setLanguage(language);
+                        Util.setConfigChange(SplashScreen.this, "en");
+                    } else {
+
+                        Language language = new Language(2, "Arabic", "ar");
+                        user.setLanguage(language);
+                        Util.setConfigChange(SplashScreen.this, "ar");
+                    }
+
                     startActivity(new Intent(SplashScreen.this, MainActivity.class));
                     finish();
 //                    overridePendingTransition(R.anim.fade_in, R.anim.fade_in);

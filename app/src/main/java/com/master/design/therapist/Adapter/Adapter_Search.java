@@ -79,8 +79,16 @@ public class Adapter_Search extends RecyclerView.Adapter<Adapter_Search.ViewHold
 
             }
         }, 100);
-        viewHolder.mainTxt.setText(arrayList.get(position).getHead());
-        viewHolder.smallTxt.setText(arrayList.get(position).getDes());
+
+        if (user.getLanguageCode().equalsIgnoreCase("en")) {
+            viewHolder.mainTxt.setText(arrayList.get(position).getHead());
+            viewHolder.smallTxt.setText(arrayList.get(position).getDes());
+        }else {
+            viewHolder.mainTxt.setText(arrayList.get(position).getHead());
+            viewHolder.smallTxt.setText(arrayList.get(position).getDes());
+        }
+//        viewHolder.mainTxt.setText(arrayList.get(position).getHead());
+//        viewHolder.smallTxt.setText(arrayList.get(position).getDes());
 
 
         viewHolder.clickLL.setOnClickListener(new View.OnClickListener() {

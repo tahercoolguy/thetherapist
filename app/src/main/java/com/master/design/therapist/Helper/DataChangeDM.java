@@ -6,6 +6,15 @@ public class DataChangeDM {
     String name;
     String dialCode;
     Boolean isSelected;
+    String nameAr;
+
+    public String getNameAr() {
+        return nameAr;
+    }
+
+    public void setNameAr(String nameAr) {
+        this.nameAr = nameAr;
+    }
 
     public Boolean getSelected() {
         return isSelected;

@@ -102,6 +102,7 @@ public class Edit_ProfileActivity extends AppCompatActivity {
 
     String Gender;
     String name;
+    String nameAr;
     String SelectCountryid;
 
 
@@ -144,9 +145,16 @@ public class Edit_ProfileActivity extends AppCompatActivity {
             public void response(Object object) {
 
                 name = ((DataChangeDM) object).getName();
+               nameAr= ((DataChangeDM) object).getNameAr();
                 ethnicityyid = ((DataChangeDM) object).getId();
 //                                    user.setAreaId(AreaID);
-                selectEthnicityTxt.setText(name);
+
+                if (user.getLanguageCode().equalsIgnoreCase("en")) {
+                    selectEthnicityTxt.setText(name);
+                }else{
+                    selectEthnicityTxt.setText(nameAr);
+                }
+//                selectEthnicityTxt.setText(name);
 
 
             }
@@ -489,6 +497,7 @@ public class Edit_ProfileActivity extends AppCompatActivity {
                         for (Details obj : therapistCountriesDM.getDetails()) {
                             DataChangeDM s = new DataChangeDM();
                             s.setName(obj.getName_en());
+                            s.setNameAr(obj.getName_ar());
 //                            s.setId(obj.getCountry_id());
                             s.setId(obj.getIsoCode());
                             arrayList1.add(s);

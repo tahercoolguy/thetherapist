@@ -88,7 +88,14 @@ public class Adapter_Search_Select_Gender extends RecyclerView.Adapter<Adapter_S
 
 //        viewHolder.mainTxt.setText(arrayList.get(position).getHead());
 
-        viewHolder.smallTxt.setText(arrayList.get(position).getGender());
+//        viewHolder.smallTxt.setText(arrayList.get(position).getGender());
+
+        if (user.getLanguageCode().equalsIgnoreCase("en")) {
+            viewHolder.smallTxt.setText(arrayList.get(position).getGender());
+        }else {
+            viewHolder.smallTxt.setText(arrayList.get(position).getGender_arb());
+        }
+
 
         viewHolder.mainTxt.setVisibility(View.GONE);
         viewHolder.smallTxt.setGravity(Gravity.CENTER);

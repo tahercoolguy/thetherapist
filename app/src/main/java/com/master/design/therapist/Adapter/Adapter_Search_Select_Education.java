@@ -87,7 +87,14 @@ public class Adapter_Search_Select_Education extends RecyclerView.Adapter<Adapte
 
 //        viewHolder.mainTxt.setText(arrayList.get(position).getHead());
 
-        viewHolder.smallTxt.setText(arrayList.get(position).getEducation());
+//        viewHolder.smallTxt.setText(arrayList.get(position).getEducation());
+
+        if (user.getLanguageCode().equalsIgnoreCase("en")) {
+            viewHolder.smallTxt.setText(arrayList.get(position).getEducation());
+        }else {
+            viewHolder.smallTxt.setText(arrayList.get(position).getEducation());
+        }
+
 
         viewHolder.mainTxt.setVisibility(View.GONE);
         viewHolder.smallTxt.setGravity(Gravity.CENTER);

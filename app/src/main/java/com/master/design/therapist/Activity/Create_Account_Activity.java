@@ -109,6 +109,7 @@ public class Create_Account_Activity extends AppCompatActivity {
     String ethnicityyid="";
     String Date;
     String DialCode="", age="";
+    String nameAr;
 
 
     @OnClick(R.id.maleTV)
@@ -174,9 +175,15 @@ public class Create_Account_Activity extends AppCompatActivity {
             public void response(Object object) {
 
                 name = ((DataChangeDM) object).getName();
+                nameAr=((DataChangeDM) object).getNameAr();
                 ethnicityyid = ((DataChangeDM) object).getId();
 //                                    user.setAreaId(AreaID);
-                ethnicityyET.setText(name);
+
+                if (user.getLanguageCode().equalsIgnoreCase("en")) {
+                    ethnicityyET.setText(name);
+                }else{
+                    ethnicityyET.setText(nameAr);
+                }
 
 
             }
@@ -199,10 +206,16 @@ public class Create_Account_Activity extends AppCompatActivity {
             public void response(Object object) {
 
                 name = ((DataChangeDM) object).getName();
+                nameAr=((DataChangeDM) object).getNameAr();
                 SelectCountryid = ((DataChangeDM) object).getId();
 
 //               user.setAreaId(AreaID);
-                selectCountryET.setText(name);
+                if (user.getLanguageCode().equalsIgnoreCase("en")) {
+                    selectCountryET.setText(name);
+                }else{
+                    selectCountryET.setText(nameAr);
+                }
+
 
             }
         });
@@ -387,6 +400,7 @@ public class Create_Account_Activity extends AppCompatActivity {
                         for (Ethnic_details obj : therapistEthnicDM.getEthnic_details()) {
                             DataChangeDM s = new DataChangeDM();
                             s.setName(obj.getEthnic_name());
+                            s.setNameAr(obj.getEthnic_name_as());
                             s.setId(obj.getId());
                             arrayList.add(s);
                         }
@@ -418,6 +432,7 @@ public class Create_Account_Activity extends AppCompatActivity {
                         for (Details obj : therapistCountriesDM.getDetails()) {
                             DataChangeDM s = new DataChangeDM();
                             s.setName(obj.getName_en());
+                            s.setNameAr(obj.getName_ar());
 //                            s.setId(obj.getCountry_id());
                             s.setId(obj.getIsoCode());
                             arrayList1.add(s);
@@ -450,6 +465,7 @@ public class Create_Account_Activity extends AppCompatActivity {
                         for (Details obj : therapistCountriesDM.getDetails()) {
                             DataChangeDM s = new DataChangeDM();
                             s.setName(obj.getName_en());
+                            s.setNameAr(obj.getName_ar());
                             s.setId(obj.getDialCode());
 
                             arrayList2.add(s);

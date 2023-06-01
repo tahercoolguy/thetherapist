@@ -88,10 +88,21 @@ public class Adapter_Chat extends RecyclerView.Adapter<Adapter_Chat.ViewHolder> 
 //        viewHolder.messageTxt.setText(arrayList.get(position).getMesseage());
 //        viewHolder.messegeCountTxt.setText(arrayList.get(position).getMesseageCount());
 //        viewHolder.timeTxt.setText(arrayList.get(position).getTime());
-        viewHolder.userNameTxt.setText(arrayList.get(position).getFront_user().getName());
-        viewHolder.timeTxt.setText(arrayList.get(position).getTimestamp());
-        viewHolder.messageTxt.setText(arrayList.get(position).getLatest_message());
+//        viewHolder.userNameTxt.setText(arrayList.get(position).getFront_user().getName());
+//        viewHolder.timeTxt.setText(arrayList.get(position).getTimestamp());
+//        viewHolder.messageTxt.setText(arrayList.get(position).getLatest_message());
         //       viewHolder.profileRIV.setImageResource(arrayList.get(position).getImage());
+
+        if (user.getLanguageCode().equalsIgnoreCase("en")) {
+            viewHolder.userNameTxt.setText(arrayList.get(position).getFront_user().getName());
+            viewHolder.timeTxt.setText(arrayList.get(position).getTimestamp());
+            viewHolder.messageTxt.setText(arrayList.get(position).getLatest_message());
+        }else{
+            viewHolder.userNameTxt.setText(arrayList.get(position).getFront_user().getName());
+            viewHolder.timeTxt.setText(arrayList.get(position).getTimestamp());
+            viewHolder.messageTxt.setText(arrayList.get(position).getLatest_message());
+        }
+
         Picasso.with(context).load(AppController.THERAPIST_IMAGE + arrayList.get(position).getFront_user().getImage()).into(viewHolder.profileRIV);
 //        if (arrayList.get(position).getMesseageCount().equalsIgnoreCase("0")) {
 //            viewHolder.messegeCountTxt.setVisibility(View.GONE);

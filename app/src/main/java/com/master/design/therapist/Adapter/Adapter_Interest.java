@@ -87,7 +87,14 @@ public class Adapter_Interest extends RecyclerView.Adapter<Adapter_Interest.View
 //            }
 //        }, 100);
 //        viewHolder.mainTxt.setText(arrayList.get(position).getHead());
-        viewHolder.interestTxt.setText(arrayList.get(position).getInterest_eg());
+//        viewHolder.interestTxt.setText(arrayList.get(position).getInterest_eg());
+
+        if (user.getLanguageCode().equalsIgnoreCase("en")) {
+            viewHolder.interestTxt.setText(arrayList.get(position).getInterest_eg());
+        }else {
+            viewHolder.interestTxt.setText(arrayList.get(position).getInterest_arb());
+        }
+
         if(arrayList.get(position).getInterest_img()!=null) {
             Picasso.with(context).load(AppController.THERAPIST_IMAGE+arrayList.get(position).getInterest_img()).placeholder(R.drawable.tab_selector).into(viewHolder.img);
         }

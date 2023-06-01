@@ -103,7 +103,13 @@ public class Adapter_Request extends RecyclerView.Adapter<Adapter_Request.ViewHo
 //            }
 //        }, 100);
 
-        viewHolder.nameTxt.setText(arrayList.get(position).getName());
+//        viewHolder.nameTxt.setText(arrayList.get(position).getName());
+
+        if (user.getLanguageCode().equalsIgnoreCase("en")) {
+            viewHolder.nameTxt.setText(arrayList.get(position).getName());
+        }else {
+            viewHolder.nameTxt.setText(arrayList.get(position).getName());
+        }
 //        viewHolder.profileImageRIV.setImageResource(arrayList.get(position).getImage());
 
         Picasso.with(context).load(AppController.THERAPIST_IMAGE + arrayList.get(position).getImage()).placeholder(R.drawable.tab_selector).into(viewHolder.profileImageRIV);

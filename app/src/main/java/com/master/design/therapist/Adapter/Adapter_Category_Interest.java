@@ -81,7 +81,13 @@ public class Adapter_Category_Interest extends RecyclerView.Adapter<Adapter_Cate
         }, 100);
 
 //        viewHolder.mainTxt.setText(arrayList.get(position).getHead());
-        viewHolder.interestTxt.setText(arrayList.get(position).getInterest_eg());
+        if (user.getLanguageCode().equalsIgnoreCase("en")) {
+            viewHolder.interestTxt.setText(arrayList.get(position).getInterest_eg());
+        }else{
+            viewHolder.interestTxt.setText(arrayList.get(position).getInterest_arb());
+        }
+
+//        viewHolder.interestTxt.setText(arrayList.get(position).getInterest_eg());
 
 
         viewHolder.clickLL.setOnClickListener(new View.OnClickListener() {

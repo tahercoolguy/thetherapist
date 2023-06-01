@@ -52,12 +52,10 @@ public class FriendSearch_SelectActivity extends AppCompatActivity {
 
 
     AppController appController;
-
     Dialog progress;
     ConnectionDetector connectionDetector;
     User user;
     DialogUtil dialogUtil;
-
     String username;
     String date;
     String selectCountry;

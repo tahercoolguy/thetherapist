@@ -88,7 +88,13 @@ public class Adapter_Search_Select1 extends RecyclerView.Adapter<Adapter_Search_
 
 //        viewHolder.mainTxt.setText(arrayList.get(position).getHead());
 
-        viewHolder.smallTxt.setText(arrayList.get(position).getAge_eg());
+//        viewHolder.smallTxt.setText(arrayList.get(position).getAge_eg());
+
+        if (user.getLanguageCode().equalsIgnoreCase("en")) {
+            viewHolder.smallTxt.setText(arrayList.get(position).getAge_eg());
+        }else {
+            viewHolder.smallTxt.setText(arrayList.get(position).getAge_arb());
+        }
 
         viewHolder.mainTxt.setVisibility(View.GONE);
         viewHolder.smallTxt.setGravity(Gravity.CENTER);
