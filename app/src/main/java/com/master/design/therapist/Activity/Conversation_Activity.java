@@ -52,6 +52,7 @@ import com.master.design.therapist.DataModel.ChatHistoryDM;
 import com.master.design.therapist.DataModel.ChatHistoryRoot;
 import com.master.design.therapist.DataModel.SendingImageDM;
 import com.master.design.therapist.DataModel.TherapistInterestDM;
+import com.master.design.therapist.DataModel.TokenRoot;
 import com.master.design.therapist.Helper.DialogUtil;
 import com.master.design.therapist.Helper.User;
 import com.master.design.therapist.R;
@@ -84,6 +85,7 @@ import okhttp3.WebSocketListener;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import retrofit.converter.ConversionException;
 import retrofit.mime.MultipartTypedOutput;
 import retrofit.mime.TypedFile;
 import retrofit.mime.TypedString;
@@ -150,6 +152,7 @@ public class Conversation_Activity extends AppCompatActivity {
         Picasso.with(context).load(image).into(profileCircleImg);
 
         setChatData();
+        updateOnline();
         createWebSocketClient();
 
         messageRL.setOnTouchListener(new View.OnTouchListener() {
@@ -301,6 +304,7 @@ public class Conversation_Activity extends AppCompatActivity {
             messageET.setText("");
             setListeners();
             sendBoolean = true;
+            sendPlayRingtone();
         }
 
 
@@ -457,13 +461,14 @@ public class Conversation_Activity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         activity.overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
-        webSocketClient.close(1,1,"");
+        webSocketClient.close(1, 1, "");
         super.onBackPressed();
     }
 
     @Override
     public void finish() {
         super.finish();
+        updateOnline();
         activity.overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
     }
 
@@ -556,7 +561,7 @@ public class Conversation_Activity extends AppCompatActivity {
                                 }
                             });
                             if (sendBoolean) {
-                                sendPlayRingtone();
+//                                sendPlayRingtone();
                             } else {
                                 sendBoolean = false;
                             }
@@ -622,7 +627,7 @@ public class Conversation_Activity extends AppCompatActivity {
 //                        rcvRcv.scrollToPosition(messageChatModelList.size() - 1);
 //                        rcvRcv.scrollToPosition(adapter.getItemCount());
 //                        adapter.notifyDataSetChanged();
-                        sendPlayRingtone();
+//                        sendPlayRingtone();
                         setListeners();
 
                     }
@@ -892,6 +897,77 @@ public class Conversation_Activity extends AppCompatActivity {
 
             // other 'case' lines to check for other
             // permissions this app might request
+        }
+    }
+
+    private void updateOnline() {
+        if (connectionDetector.isConnectingToInternet()) {
+            String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+            MultipartTypedOutput multipartTypedOutput = new MultipartTypedOutput();
+            multipartTypedOutput.addPart("id", new TypedString(String.valueOf(user.getId())));
+
+//            progress = dialogUtil.showProgressDialog(context, context.getString(R.string.please_wait));
+            appController.paServices.Online(multipartTypedOutput, new Callback<TokenRoot>() {
+                @Override
+                public void success(TokenRoot tokenRoot, Response response) {
+                    if (tokenRoot.getStatus().equalsIgnoreCase("1")) {
+//                        progress.dismiss();
+
+                    } else {
+//                        progress.dismiss();
+                    }
+                }
+
+                @Override
+                public void failure(RetrofitError retrofitError) {
+//                    progress.dismiss();
+                    Log.e("error", retrofitError.toString());
+                }
+            });
+        } else {
+            com.master.design.therapist.Helper.Helper.showToast(Conversation_Activity.this, String.valueOf(R.string.no_internet_connection));
+        }
+    }
+
+
+    @Override
+    protected void onPause() {
+        updateOffline();
+        super.onPause();
+    }
+
+    @Override
+    protected void onRestart() {
+        updateOnline();
+        super.onRestart();
+    }
+
+    private void updateOffline() {
+        if (connectionDetector.isConnectingToInternet()) {
+            String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+            MultipartTypedOutput multipartTypedOutput = new MultipartTypedOutput();
+            multipartTypedOutput.addPart("id", new TypedString(String.valueOf(user.getId())));
+
+//            progress = dialogUtil.showProgressDialog(MainActivity.this, getString(R.string.please_wait));
+            appController.paServices.Offline(multipartTypedOutput, new Callback<TokenRoot>() {
+                @Override
+                public void success(TokenRoot tokenRoot, Response response) {
+                    if (tokenRoot.getStatus().equalsIgnoreCase("1")) {
+//                        progress.dismiss();
+
+                    } else {
+//                        progress.dismiss();
+                    }
+                }
+
+                @Override
+                public void failure(RetrofitError retrofitError) {
+//                    progress.dismiss();
+                    Log.e("error", retrofitError.toString());
+                }
+            });
+        } else {
+            com.master.design.therapist.Helper.Helper.showToast(Conversation_Activity.this, String.valueOf(R.string.no_internet_connection));
         }
     }
 }

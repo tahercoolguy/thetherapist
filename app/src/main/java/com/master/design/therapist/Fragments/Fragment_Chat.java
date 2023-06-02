@@ -13,6 +13,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -122,7 +123,22 @@ public class Fragment_Chat extends Fragment {
                     }
             );
 
-//            updateDisplay();
+            swiperefresh.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    setChatData();
+                    return false;
+                }
+            });
+            rcvRcv.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    setChatData();
+                    return false;
+                }
+            });
+
+            updateDisplay();
 
             searchET.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -158,7 +174,7 @@ public class Fragment_Chat extends Fragment {
                 }
 
             }
-        }, 1000, 5000);//Update text every second
+        }, 0, 7000);//Update text every second
 
     }
 

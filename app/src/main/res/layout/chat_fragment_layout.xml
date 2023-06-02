@@ -82,7 +82,7 @@
 
     </LinearLayout>
 
-    <include layout="@layout/layout_error" />
+        <include layout="@layout/layout_error" />
 
     </RelativeLayout>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

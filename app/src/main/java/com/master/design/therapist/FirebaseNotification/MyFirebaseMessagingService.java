@@ -24,6 +24,9 @@ import com.google.firebase.messaging.RemoteMessage;
 import com.master.design.therapist.Activity.SplashScreen;
 import com.master.design.therapist.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import io.reactivex.Scheduler;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
@@ -52,7 +55,13 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         // Check if message contains a notification payload.
         if (remoteMessage.getNotification() != null) {
             Log.d("Message Notification Body", "Message Notification Body: " + remoteMessage.getNotification().getBody());
-            sendNotification(remoteMessage.getNotification().getBody());
+            try {
+                String title = remoteMessage.getNotification().getTitle();
+                  sendNotification(title,remoteMessage.getNotification().getBody());
+
+            } catch (Exception e) {
+                Log.e("TAG", "Exception: " + e.getMessage());
+            }
         }
 
         // Also if you intend on generating your own notifications as a result of a received FCM
@@ -85,35 +94,42 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         }
     }
 
-    private void sendNotification(String messageBody) {
+    private void sendNotification(String tittle,String messegebody) {
         Intent intent = new Intent(this, SplashScreen.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_IMMUTABLE);
 
-        String channelId = "fcm_default_channel";
-        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        NotificationCompat.Builder notificationBuilder =
-                new NotificationCompat.Builder(this, channelId)
-                        .setContentTitle(getString(R.string.app_name))
+
+
+
+
+            String channelId = "fcm_default_channel";
+            Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            NotificationCompat.Builder notificationBuilder =
+                    new NotificationCompat.Builder(this, channelId)
+                            .setContentTitle(tittle)
 //                        .setSmallIcon(getDrawable(R.drawable.ic_app_icon))
-                        .setSmallIcon(R.drawable.ic_app_icon)
-                        .setContentText(messageBody)
-                        .setAutoCancel(true)
-                        .setSound(defaultSoundUri)
-                        .setContentIntent(pendingIntent);
+                            .setSmallIcon(R.drawable.ic_app_icon)
+                            .setContentText(messegebody)
+                            .setAutoCancel(true)
+                            .setSound(defaultSoundUri)
+                            .setContentIntent(pendingIntent);
 
-        NotificationManager notificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            NotificationManager notificationManager =
+                    (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-        // Since android Oreo notification channel is needed.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel(channelId,
-                    "Channel human readable title",
-                    NotificationManager.IMPORTANCE_DEFAULT);
-            notificationManager.createNotificationChannel(channel);
-        }
+            // Since android Oreo notification channel is needed.
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                NotificationChannel channel = new NotificationChannel(channelId,
+                        "Channel human readable title",
+                        NotificationManager.IMPORTANCE_DEFAULT);
+                notificationManager.createNotificationChannel(channel);
+            }
 
-        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+            notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+
+
+
     }
 }
