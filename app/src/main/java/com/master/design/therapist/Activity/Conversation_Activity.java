@@ -176,43 +176,7 @@ public class Conversation_Activity extends AppCompatActivity {
     List<All_messages> refreshmessageChatModelList = new ArrayList<>();
 
     private void setChatData() {
-//        MessageChatModel model1 = new MessageChatModel(
-//                "Hello. How are you today?",
-//                "10:00 PM", 0, R.drawable.marshall_img
-//
-//        );
-//        MessageChatModel model2 = new MessageChatModel(
-//                "Hey! I'm fine. Thanks for asking!",
-//                "10:00 PM",
-//                1, R.drawable.marshall_img
-//        );
-//        MessageChatModel model3 = new MessageChatModel(
-//                "Sweet! So, what do you wanna do today?",
-//                "10:00 PM",
-//                0, R.drawable.marshall_img
-//        );
-//        MessageChatModel model4 = new MessageChatModel(
-//                "Nah, I dunno. Play soccer.. or learn more coding perhaps?",
-//                "10:00 PM",
-//                1, R.drawable.marshall_img
-//        );
-//
-//
-//        messageChatModelList.add(model1);
-//        messageChatModelList.add(model2);
-//        messageChatModelList.add(model3);
-//        messageChatModelList.add(model4);
-//        messageChatModelList.add(model1);
-//        messageChatModelList.add(model2);
-//        messageChatModelList.add(model3);
-//        messageChatModelList.add(model4);
-//        messageChatModelList.add(model1);
-//        messageChatModelList.add(model2);
-//        messageChatModelList.add(model3);
-//        messageChatModelList.add(model4);
-
-
-        if (connectionDetector.isConnectingToInternet()) {
+         if (connectionDetector.isConnectingToInternet()) {
 
             String refreshedToken = FirebaseInstanceId.getInstance().getToken();
 
@@ -304,7 +268,6 @@ public class Conversation_Activity extends AppCompatActivity {
             messageET.setText("");
             setListeners();
             sendBoolean = true;
-            sendPlayRingtone();
         }
 
 
@@ -461,14 +424,13 @@ public class Conversation_Activity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         activity.overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
-        webSocketClient.close(1, 1, "");
+        webSocketClient.close(1,1,"");
         super.onBackPressed();
     }
 
     @Override
     public void finish() {
         super.finish();
-        updateOnline();
         activity.overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
     }
 
@@ -614,9 +576,9 @@ public class Conversation_Activity extends AppCompatActivity {
                         int i = 0;
                         for (All_messages message : messageChatModelList
                         ) {
-                            if (Integer.parseInt(message.getId()) == Integer.parseInt(messageId)) {
+//                            if (Integer.parseInt(message.getId()) == Integer.parseInt(messageId)) {
                                 messageChatModelList.get(i).setStatus("delivered");
-                            }
+//                            }
                             i++;
                         }
                         adapter.notifyDataSetChanged();
@@ -913,7 +875,7 @@ public class Conversation_Activity extends AppCompatActivity {
                     if (tokenRoot.getStatus().equalsIgnoreCase("1")) {
 //                        progress.dismiss();
 
-                    } else {
+                    }else{
 //                        progress.dismiss();
                     }
                 }
@@ -929,10 +891,9 @@ public class Conversation_Activity extends AppCompatActivity {
         }
     }
 
-
     @Override
     protected void onPause() {
-        updateOffline();
+//        updateOffline();
         super.onPause();
     }
 
@@ -941,7 +902,6 @@ public class Conversation_Activity extends AppCompatActivity {
         updateOnline();
         super.onRestart();
     }
-
     private void updateOffline() {
         if (connectionDetector.isConnectingToInternet()) {
             String refreshedToken = FirebaseInstanceId.getInstance().getToken();

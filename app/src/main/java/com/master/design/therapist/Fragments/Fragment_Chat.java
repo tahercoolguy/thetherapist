@@ -168,7 +168,12 @@ public class Fragment_Chat extends Fragment {
             //@Override
             public void run() {
                 try {
-                    setChatData();
+                    activity.runOnUiThread(new Runnable() {
+                        public void run() {
+                            setChatData();
+                        }
+                    });
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

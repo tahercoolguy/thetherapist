@@ -550,6 +550,18 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         super.onRestart();
     }
 
+    @Override
+    protected void onResumeFragments() {
+        updateOnline();
+        super.onResumeFragments();
+    }
+
+    @Override
+    public void onAttachFragment(@NonNull Fragment fragment) {
+        updateOnline();
+        super.onAttachFragment(fragment);
+    }
+
     private void updateOnline() {
         if (connectionDetector.isConnectingToInternet()) {
             String refreshedToken = FirebaseInstanceId.getInstance().getToken();
