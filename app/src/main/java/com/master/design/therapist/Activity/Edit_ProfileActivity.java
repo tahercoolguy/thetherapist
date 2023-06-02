@@ -230,6 +230,7 @@ public class Edit_ProfileActivity extends AppCompatActivity {
             public void response(Object object) {
 
                 name = ((DataChangeDM) object).getName();
+                nameAr = ((DataChangeDM) object).getNameAr();
                 SelectCountryid = ((DataChangeDM) object).getId();
 //               user.setAreaId(AreaID);
                 selectCountryET.setText(name);
