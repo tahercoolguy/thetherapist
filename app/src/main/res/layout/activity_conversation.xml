@@ -38,8 +38,9 @@
                 android:layout_gravity="end"
                 android:paddingHorizontal="10dp"
                 android:paddingVertical="10dp"
+                android:src="@drawable/ic_notification_come"
 
-                android:src="@drawable/ic_notification_come"></ImageView>
+                android:visibility="gone"></ImageView>
 
         </RelativeLayout>
 
@@ -79,9 +80,9 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcvRcv"
-            android:paddingTop="20dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
+            android:layout_height="match_parent"
+            android:paddingTop="20dp"></androidx.recyclerview.widget.RecyclerView>
 
     </LinearLayout>
 
@@ -93,8 +94,8 @@
 
         <RelativeLayout
             android:id="@+id/addRL"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_gravity="center"
             android:layout_marginHorizontal="15dp"
             android:background="@drawable/ic_open_icon"
@@ -102,7 +103,7 @@
 
             <ImageView
                 android:id="@+id/addImg"
-                android:layout_width="17sp"
+                android:layout_width="17dp"
                 android:layout_height="17dp"
                 android:layout_centerInParent="true"
                 android:layout_gravity="center"
@@ -122,10 +123,10 @@
 
             <EditText
                 android:id="@+id/messageET"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="45dp"
                 android:layout_marginHorizontal="10dp"
+                android:layout_marginEnd="45dp"
                 android:backgroundTint="@color/white"
                 android:hint="@string/message"
                 android:imeOptions="actionSend"

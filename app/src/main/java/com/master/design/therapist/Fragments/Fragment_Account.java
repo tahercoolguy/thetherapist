@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -27,6 +28,7 @@ import com.master.design.therapist.Activity.MyPostedImagesActivity;
 import com.master.design.therapist.Activity.My_ProfileActivity;
 import com.master.design.therapist.Activity.Sign_InActivity;
 import com.master.design.therapist.Activity.SplashScreen;
+import com.master.design.therapist.BuildConfig;
 import com.master.design.therapist.Controller.AppController;
 import com.master.design.therapist.Helper.User;
 import com.master.design.therapist.R;
@@ -59,6 +61,8 @@ public class Fragment_Account extends Fragment {
     LinearLayout logoutLL;
     @BindView(R.id.myPostedImageLL)
     LinearLayout myPostedImageLL;
+    @BindView(R.id.versionTxt)
+    TextView versionTxt;
 
     @BindView(R.id.layout_parent)
     LinearLayout layout_parent;
@@ -85,6 +89,11 @@ public class Fragment_Account extends Fragment {
             rootView = inflater.inflate(R.layout.account_fragment_layout, container, false);
             ButterKnife.bind(this, rootView);
 
+            String versionCode = String.valueOf(BuildConfig.VERSION_CODE);
+            String versionName = BuildConfig.VERSION_NAME;
+
+            versionTxt.setText(""+versionCode+".0");
+
         }
         return rootView;
     }
@@ -103,7 +112,9 @@ public class Fragment_Account extends Fragment {
 
     @OnClick(R.id.notificationLL)
     public void clicknotificationLL() {
-
+        Intent intent = new Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
+                .putExtra(Settings.EXTRA_APP_PACKAGE, context.getPackageName());
+        startActivity(intent);
     }
 
     @OnClick(R.id.myPostedImageLL)
