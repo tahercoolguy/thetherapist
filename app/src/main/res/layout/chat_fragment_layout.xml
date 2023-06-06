@@ -29,8 +29,9 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_gravity="end"
+                android:visibility="invisible"
                 android:paddingHorizontal="20dp"
-                android:paddingVertical="20dp"
+                android:paddingVertical="10dp"
 
                 android:src="@drawable/ic_notification_come"></ImageView>
 
