@@ -192,5 +192,6 @@
     <string name="select_education" >Select Education</string>
     <string name="update_profile" >Update Profile</string>
     <string name="logout_from_this_app">Do you want to logout from this app</string>
-
+    <string name="you_are_not_friend_now">you are not friend now</string>
+    <string name="delete_account_new" >Do you want to delete this account</string>
 </resources>

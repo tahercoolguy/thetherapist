@@ -4,34 +4,34 @@ package com.master.design.therapist.Services;
 //import io.opencensus.stats.Stats;
 
 
+import com.master.design.therapist.Adapter.DataModel.DeleteAccountDM;
 import com.master.design.therapist.Adapter.TherapistEducationDM;
-import com.master.design.therapist.DataModel.AddMultipleImageRoot;
-import com.master.design.therapist.DataModel.Cancel_Friend_RequestDM;
-import com.master.design.therapist.DataModel.ChatHistoryDM;
-import com.master.design.therapist.DataModel.ChatlistDM;
-import com.master.design.therapist.DataModel.ChatroomDM;
-import com.master.design.therapist.DataModel.Edit_ProfileDM;
-import com.master.design.therapist.DataModel.Friend_ListDM;
-import com.master.design.therapist.DataModel.GetAll_Image.GetAllImageRoot;
-import com.master.design.therapist.DataModel.MyProfile.Root;
-import com.master.design.therapist.DataModel.ProfileDM;
-import com.master.design.therapist.DataModel.RemoveImageRoot;
-import com.master.design.therapist.DataModel.Request_ListDM;
-import com.master.design.therapist.DataModel.Request_ResponseDM;
-import com.master.design.therapist.DataModel.Send_Friend_RequestDM;
-import com.master.design.therapist.DataModel.SendingImageDM;
-import com.master.design.therapist.DataModel.Terms_ConditionsDM;
-import com.master.design.therapist.DataModel.TherapistAgeDM;
-import com.master.design.therapist.DataModel.TherapistCountriesDM;
-import com.master.design.therapist.DataModel.TherapistEthnicDM;
-import com.master.design.therapist.DataModel.TherapistGenderDM;
-import com.master.design.therapist.DataModel.TherapistHomeDM;
-import com.master.design.therapist.DataModel.TherapistInterestDM;
-import com.master.design.therapist.DataModel.TherapistLoginDM;
-import com.master.design.therapist.DataModel.TherapistRegisterDM;
-import com.master.design.therapist.DataModel.TokenRoot;
-import com.master.design.therapist.DataModel.UnfriendDM;
-import com.master.design.therapist.DataModel.Update_Pic_ProfileDM;
+import com.master.design.therapist.Adapter.DataModel.AddMultipleImageRoot;
+import com.master.design.therapist.Adapter.DataModel.Cancel_Friend_RequestDM;
+import com.master.design.therapist.Adapter.DataModel.ChatHistoryDM;
+import com.master.design.therapist.Adapter.DataModel.ChatlistDM;
+import com.master.design.therapist.Adapter.DataModel.ChatroomDM;
+import com.master.design.therapist.Adapter.DataModel.Edit_ProfileDM;
+import com.master.design.therapist.Adapter.DataModel.Friend_ListDM;
+import com.master.design.therapist.Adapter.DataModel.GetAll_Image.GetAllImageRoot;
+import com.master.design.therapist.Adapter.DataModel.MyProfile.Root;
+import com.master.design.therapist.Adapter.DataModel.RemoveImageRoot;
+import com.master.design.therapist.Adapter.DataModel.Request_ListDM;
+import com.master.design.therapist.Adapter.DataModel.Request_ResponseDM;
+import com.master.design.therapist.Adapter.DataModel.Send_Friend_RequestDM;
+import com.master.design.therapist.Adapter.DataModel.SendingImageDM;
+import com.master.design.therapist.Adapter.DataModel.Terms_ConditionsDM;
+import com.master.design.therapist.Adapter.DataModel.TherapistAgeDM;
+import com.master.design.therapist.Adapter.DataModel.TherapistCountriesDM;
+import com.master.design.therapist.Adapter.DataModel.TherapistEthnicDM;
+import com.master.design.therapist.Adapter.DataModel.TherapistGenderDM;
+import com.master.design.therapist.Adapter.DataModel.TherapistHomeDM;
+import com.master.design.therapist.Adapter.DataModel.TherapistInterestDM;
+import com.master.design.therapist.Adapter.DataModel.TherapistLoginDM;
+import com.master.design.therapist.Adapter.DataModel.TherapistRegisterDM;
+import com.master.design.therapist.Adapter.DataModel.TokenRoot;
+import com.master.design.therapist.Adapter.DataModel.UnfriendDM;
+import com.master.design.therapist.Adapter.DataModel.Update_Pic_ProfileDM;
 
 import retrofit.Callback;
 import retrofit.http.Body;
@@ -70,6 +70,7 @@ public interface PAServices {
     @POST("/login")
     public void TherapistLogin(@Field("email") String email,
                                @Field("password") String password,
+                               @Field("logintype") String logintype,
                                Callback<TherapistLoginDM> therapistLoginDMCallback);
 
     // 3
@@ -265,5 +266,10 @@ public interface PAServices {
     @POST("/offline")
     void Offline(@Body MultipartTypedOutput multipartTypedOutput, Callback<TokenRoot> tokenRootCallback);
 
+    // 34
+    @FormUrlEncoded
+    @POST("/deleteaccount")
+    void DeleteAccount(@Field("id") String id,
+                    Callback<DeleteAccountDM> deleteAccountDMCallback);
 
 }

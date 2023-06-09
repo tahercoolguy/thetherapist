@@ -1,26 +1,17 @@
 package com.master.design.therapist.Adapter;
 
 import android.content.Context;
-import android.os.Handler;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.master.design.therapist.Controller.AppController;
-import com.master.design.therapist.DM.SearchDM;
-import com.master.design.therapist.DataModel.Age_details;
-import com.master.design.therapist.DataModel.GetAll_Image.GetAllImageOutput;
+import com.master.design.therapist.Adapter.DataModel.GetAll_Image.GetAllImageOutput;
 import com.master.design.therapist.Helper.User;
 import com.master.design.therapist.R;
 import com.squareup.picasso.Picasso;

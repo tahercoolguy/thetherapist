@@ -3,7 +3,6 @@ package com.master.design.therapist.Activity;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,12 +18,8 @@ import android.graphics.drawable.Drawable;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.provider.Settings;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -35,8 +30,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
@@ -45,14 +38,10 @@ import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.master.design.therapist.Adapter.MessageChatAdapter;
 import com.master.design.therapist.Controller.AppController;
-import com.master.design.therapist.DM.MessageChatModel;
-import com.master.design.therapist.DataModel.AddMultipleImageRoot;
-import com.master.design.therapist.DataModel.All_messages;
-import com.master.design.therapist.DataModel.ChatHistoryDM;
-import com.master.design.therapist.DataModel.ChatHistoryRoot;
-import com.master.design.therapist.DataModel.SendingImageDM;
-import com.master.design.therapist.DataModel.TherapistInterestDM;
-import com.master.design.therapist.DataModel.TokenRoot;
+import com.master.design.therapist.Adapter.DataModel.All_messages;
+import com.master.design.therapist.Adapter.DataModel.ChatHistoryDM;
+import com.master.design.therapist.Adapter.DataModel.SendingImageDM;
+import com.master.design.therapist.Adapter.DataModel.TokenRoot;
 import com.master.design.therapist.Helper.DialogUtil;
 import com.master.design.therapist.Helper.User;
 import com.master.design.therapist.R;
@@ -78,14 +67,9 @@ import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 import dev.gustavoavila.websocketclient.WebSocketClient;
 import me.echodev.resizer.Resizer;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.WebSocket;
-import okhttp3.WebSocketListener;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
-import retrofit.converter.ConversionException;
 import retrofit.mime.MultipartTypedOutput;
 import retrofit.mime.TypedFile;
 import retrofit.mime.TypedString;
@@ -111,6 +95,12 @@ public class Conversation_Activity extends AppCompatActivity {
     EditText messageET;
     @BindView(R.id.messageRL)
     RelativeLayout messageRL;
+
+    @BindView(R.id.addRL)
+    RelativeLayout addRL;
+
+    @BindView(R.id.textRL)
+    RelativeLayout textRL;
     public MessageChatAdapter adapter;
     String name, image;
     LinearLayoutManager lm;
@@ -196,6 +186,19 @@ public class Conversation_Activity extends AppCompatActivity {
                     if (chatHistoryDM.getStatus().equalsIgnoreCase("1")) {
 
                         messageChatModelList = chatHistoryDM.getAll_messages();
+
+                        if(chatHistoryDM.getFriends()==true)
+                        {
+                            messageRL.setVisibility(View.VISIBLE);
+                            addRL.setVisibility(View.VISIBLE);
+                            textRL.setVisibility(View.GONE);
+                        }
+                        else {
+                            messageRL.setVisibility(View.GONE);
+                            addRL.setVisibility(View.GONE);
+                            textRL.setVisibility(View.VISIBLE);
+                        }
+
 
                         adapter = new MessageChatAdapter(messageChatModelList, context, FriendsId, status);
                         lm = new LinearLayoutManager(Conversation_Activity.this, LinearLayoutManager.VERTICAL, false);

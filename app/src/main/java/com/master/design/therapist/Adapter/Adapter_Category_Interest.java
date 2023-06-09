@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -15,8 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.master.design.therapist.DM.InterestDM;
-import com.master.design.therapist.DataModel.Interests;
-import com.master.design.therapist.DataModel.Users;
+import com.master.design.therapist.Adapter.DataModel.Interests;
 import com.master.design.therapist.Helper.User;
 import com.master.design.therapist.R;
 

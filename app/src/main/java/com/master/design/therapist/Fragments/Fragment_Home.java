@@ -7,10 +7,6 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,56 +24,33 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.makeramen.roundedimageview.RoundedImageView;
-import com.master.design.therapist.Activity.Create_Account_Activity;
-import com.master.design.therapist.Activity.FriendSearchActivity;
-import com.master.design.therapist.Activity.FriendSearch_SelectActivity;
 import com.master.design.therapist.Activity.MainActivity;
-import com.master.design.therapist.Activity.MyPostedImagesActivity;
 import com.master.design.therapist.Adapter.Adapter_Category_Interest;
-import com.master.design.therapist.Adapter.SliderAdapter;
 import com.master.design.therapist.Adapter.SliderHomeAdapter;
 import com.master.design.therapist.Controller.AppController;
-import com.master.design.therapist.DM.InterestDM;
-import com.master.design.therapist.DM.IntroSliderDM;
-import com.master.design.therapist.DataModel.AddMultipleImageRoot;
-import com.master.design.therapist.DataModel.Cancel_Friend_RequestDM;
-import com.master.design.therapist.DataModel.RemoveImageRoot;
-import com.master.design.therapist.DataModel.Request_ResponseDM;
-import com.master.design.therapist.DataModel.Send_Friend_RequestDM;
-import com.master.design.therapist.DataModel.TherapistEthnicDM;
-import com.master.design.therapist.DataModel.TherapistHomeDM;
-import com.master.design.therapist.DataModel.TokenRoot;
-import com.master.design.therapist.DataModel.Users;
-import com.master.design.therapist.Helper.BlurBuilder;
+import com.master.design.therapist.Adapter.DataModel.Cancel_Friend_RequestDM;
+import com.master.design.therapist.Adapter.DataModel.Send_Friend_RequestDM;
+import com.master.design.therapist.Adapter.DataModel.TherapistHomeDM;
+import com.master.design.therapist.Adapter.DataModel.TokenRoot;
 import com.master.design.therapist.Helper.DialogUtil;
 import com.master.design.therapist.Helper.Helper;
 import com.master.design.therapist.Helper.User;
 import com.master.design.therapist.R;
 import com.master.design.therapist.Utils.ConnectionDetector;
 import com.smarteist.autoimageslider.SliderView;
-import com.squareup.picasso.Picasso;
-
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import it.sephiroth.android.library.widget.HListView;
-import me.echodev.resizer.Resizer;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 import retrofit.mime.MultipartTypedOutput;
-import retrofit.mime.TypedFile;
 import retrofit.mime.TypedString;
 
 public class Fragment_Home extends Fragment {
@@ -93,6 +66,9 @@ public class Fragment_Home extends Fragment {
 
     @BindView(R.id.sendRequestImg)
     ImageView sendRequestImg;
+    @BindView(R.id.sendimagLL)
+     LinearLayout sendimagLL;
+
     @BindView(R.id.nextTxt)
     TextView nextTxt;
     @BindView(R.id.userNameTxt)
@@ -107,6 +83,8 @@ public class Fragment_Home extends Fragment {
     ImageView changeSearchTxt;
     @BindView(R.id.recieveRequestImg)
     ImageView recieveRequestImg;
+    @BindView(R.id.reciveimagLL)
+    LinearLayout reciveimagLL;
     @BindView(R.id.bgRoundedImg)
     RoundedImageView bgRoundedImg;
     @BindView(R.id.frontRoundedImg)
@@ -246,8 +224,10 @@ public class Fragment_Home extends Fragment {
             nextUserID = therapistHomeDMPosition.getUsers().get(listposition).getId();
             userNameTxt.setText(therapistHomeDMPosition.getUsers().get(listposition).getName());
             aboutTxt.setText(therapistHomeDMPosition.getUsers().get(listposition).getAboutyou());
-            sendRequestImg.setVisibility(View.VISIBLE);
-            recieveRequestImg.setVisibility(View.GONE);
+//            sendRequestImg.setVisibility(View.VISIBLE);
+//            recieveRequestImg.setVisibility(View.GONE);
+            sendimagLL.setVisibility(View.VISIBLE);
+            reciveimagLL.setVisibility(View.GONE);
 
             Adapter_Category_Interest adapter_category_interest = new Adapter_Category_Interest(context, therapistHomeDMPosition.getUsers().get(listposition).getInterests());
             GridLayoutManager linearLayoutManager = new GridLayoutManager(context,3);
@@ -434,8 +414,11 @@ public class Fragment_Home extends Fragment {
                     progress.dismiss();
                     if (send_friend_requestDM.getStatus().equalsIgnoreCase("1")) {
                         Helper.showToast(context, send_friend_requestDM.getMsg());
-                        sendRequestImg.setVisibility(View.GONE);
-                        recieveRequestImg.setVisibility(View.VISIBLE);
+//                        sendRequestImg.setVisibility(View.GONE);
+//                        recieveRequestImg.setVisibility(View.VISIBLE);
+                        sendimagLL.setVisibility(View.GONE);
+                        reciveimagLL.setVisibility(View.VISIBLE);
+
 
                     } else {
                         Helper.showToast(context, send_friend_requestDM.getMsg());

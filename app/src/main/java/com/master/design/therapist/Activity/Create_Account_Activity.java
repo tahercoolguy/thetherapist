@@ -3,10 +3,8 @@ package com.master.design.therapist.Activity;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,11 +16,10 @@ import android.widget.TextView;
 import com.github.florent37.singledateandtimepicker.dialog.SingleDateAndTimePickerDialog;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.master.design.therapist.Controller.AppController;
-import com.master.design.therapist.DataModel.Details;
-import com.master.design.therapist.DataModel.Ethnic_details;
-import com.master.design.therapist.DataModel.TherapistCountriesDM;
-import com.master.design.therapist.DataModel.TherapistEthnicDM;
-import com.master.design.therapist.DataModel.TherapistRegisterDM;
+import com.master.design.therapist.Adapter.DataModel.Details;
+import com.master.design.therapist.Adapter.DataModel.Ethnic_details;
+import com.master.design.therapist.Adapter.DataModel.TherapistCountriesDM;
+import com.master.design.therapist.Adapter.DataModel.TherapistEthnicDM;
 import com.master.design.therapist.Helper.BottomForAll;
 import com.master.design.therapist.Helper.DataChangeDM;
 import com.master.design.therapist.Helper.DialogUtil;
@@ -32,11 +29,8 @@ import com.master.design.therapist.Helper.User;
 import com.master.design.therapist.R;
 import com.master.design.therapist.Utils.ConnectionDetector;
 
-import org.w3c.dom.Text;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

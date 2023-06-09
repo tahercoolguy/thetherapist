@@ -14,9 +14,8 @@ import android.util.Log;
 import android.widget.TextView;
 
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.master.design.therapist.Adapter.TherapistEducationDM;
 import com.master.design.therapist.Controller.AppController;
-import com.master.design.therapist.DataModel.Terms_ConditionsDM;
+import com.master.design.therapist.Adapter.DataModel.Terms_ConditionsDM;
 import com.master.design.therapist.Helper.DialogUtil;
 import com.master.design.therapist.Helper.Helper;
 import com.master.design.therapist.Helper.User;

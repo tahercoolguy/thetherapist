@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -15,10 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.master.design.therapist.DM.SearchDM;
-import com.master.design.therapist.DataModel.NewsResult;
 import com.master.design.therapist.Helper.User;
 import com.master.design.therapist.R;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 

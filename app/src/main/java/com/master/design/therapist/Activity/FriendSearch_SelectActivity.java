@@ -2,13 +2,11 @@ package com.master.design.therapist.Activity;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -16,30 +14,22 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.master.design.therapist.Adapter.Adapter_Age_Select;
-import com.master.design.therapist.Adapter.Adapter_Interest;
 import com.master.design.therapist.Adapter.Adapter_Interest_new;
-import com.master.design.therapist.Adapter.Adapter_Search;
-import com.master.design.therapist.Adapter.Adapter_Search_Select;
 import com.master.design.therapist.Adapter.Adapter_Search_Select1;
 import com.master.design.therapist.Adapter.Adapter_Search_Select_Education;
 import com.master.design.therapist.Adapter.Adapter_Search_Select_Ethnic;
 import com.master.design.therapist.Adapter.Adapter_Search_Select_Gender;
 import com.master.design.therapist.Adapter.TherapistEducationDM;
 import com.master.design.therapist.Controller.AppController;
-import com.master.design.therapist.DM.InterestDM;
-import com.master.design.therapist.DM.SearchDM;
-import com.master.design.therapist.DataModel.TherapistAgeDM;
-import com.master.design.therapist.DataModel.TherapistEthnicDM;
-import com.master.design.therapist.DataModel.TherapistGenderDM;
-import com.master.design.therapist.DataModel.TherapistInterestDM;
-import com.master.design.therapist.DataModel.TherapistLoginDM;
+import com.master.design.therapist.Adapter.DataModel.TherapistAgeDM;
+import com.master.design.therapist.Adapter.DataModel.TherapistEthnicDM;
+import com.master.design.therapist.Adapter.DataModel.TherapistGenderDM;
+import com.master.design.therapist.Adapter.DataModel.TherapistInterestDM;
 import com.master.design.therapist.Helper.DialogUtil;
 import com.master.design.therapist.Helper.User;
 import com.master.design.therapist.R;
 import com.master.design.therapist.Utils.ConnectionDetector;
 import com.master.design.therapist.Utils.Helper;
-
-import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

@@ -11,7 +11,7 @@ import android.widget.EditText;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.master.design.therapist.Controller.AppController;
-import com.master.design.therapist.DataModel.TherapistLoginDM;
+import com.master.design.therapist.Adapter.DataModel.TherapistLoginDM;
 import com.master.design.therapist.Helper.DialogUtil;
 import com.master.design.therapist.Helper.User;
 import com.master.design.therapist.R;
@@ -71,7 +71,7 @@ public class Sign_InActivity extends AppCompatActivity {
 
                 progress = dialogUtil.showProgressDialog(Sign_InActivity.this, getString(R.string.please_wait));
 
-                appController.paServices.TherapistLogin(userNameET.getText().toString(), passETET.getText().toString(), new Callback<TherapistLoginDM>() {
+                appController.paServices.TherapistLogin(userNameET.getText().toString(), passETET.getText().toString(),"0", new Callback<TherapistLoginDM>() {
 
                             @Override
 

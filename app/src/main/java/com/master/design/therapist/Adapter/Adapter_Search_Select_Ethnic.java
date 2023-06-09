@@ -21,7 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.master.design.therapist.Activity.FriendSearch_SelectActivity;
 import com.master.design.therapist.DM.SearchDM;
-import com.master.design.therapist.DataModel.Ethnic_details;
+import com.master.design.therapist.Adapter.DataModel.Ethnic_details;
 import com.master.design.therapist.Helper.User;
 import com.master.design.therapist.R;
 

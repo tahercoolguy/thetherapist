@@ -2,7 +2,6 @@ package com.master.design.therapist.Activity;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
@@ -21,14 +20,12 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.master.design.therapist.Adapter.Education_details;
 import com.master.design.therapist.Adapter.TherapistEducationDM;
 import com.master.design.therapist.Controller.AppController;
-import com.master.design.therapist.DM.SearchDM;
-import com.master.design.therapist.DataModel.Details;
-import com.master.design.therapist.DataModel.Edit_ProfileDM;
-import com.master.design.therapist.DataModel.Ethnic_details;
-import com.master.design.therapist.DataModel.MyProfile.Root;
-import com.master.design.therapist.DataModel.ProfileDM;
-import com.master.design.therapist.DataModel.TherapistCountriesDM;
-import com.master.design.therapist.DataModel.TherapistEthnicDM;
+import com.master.design.therapist.Adapter.DataModel.Details;
+import com.master.design.therapist.Adapter.DataModel.Edit_ProfileDM;
+import com.master.design.therapist.Adapter.DataModel.Ethnic_details;
+import com.master.design.therapist.Adapter.DataModel.MyProfile.Root;
+import com.master.design.therapist.Adapter.DataModel.TherapistCountriesDM;
+import com.master.design.therapist.Adapter.DataModel.TherapistEthnicDM;
 import com.master.design.therapist.Helper.BottomForAll;
 import com.master.design.therapist.Helper.DataChangeDM;
 import com.master.design.therapist.Helper.DialogUtil;
@@ -37,7 +34,6 @@ import com.master.design.therapist.Helper.ResponseListener;
 import com.master.design.therapist.Helper.User;
 import com.master.design.therapist.R;
 import com.master.design.therapist.Utils.ConnectionDetector;
-import com.squareup.picasso.Picasso;
 
 
 import java.text.SimpleDateFormat;

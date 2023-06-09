@@ -1,15 +1,10 @@
 package com.master.design.therapist.Adapter;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -20,8 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.master.design.therapist.Controller.AppController;
 import com.master.design.therapist.DM.InterestDM;
-import com.master.design.therapist.DM.SearchDM;
-import com.master.design.therapist.DataModel.Interest_details;
+import com.master.design.therapist.Adapter.DataModel.Interest_details;
 import com.master.design.therapist.Helper.User;
 import com.master.design.therapist.R;
 import com.squareup.picasso.Picasso;

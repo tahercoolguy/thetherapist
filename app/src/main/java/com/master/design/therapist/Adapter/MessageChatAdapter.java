@@ -1,14 +1,10 @@
 package com.master.design.therapist.Adapter;
 
 import android.content.Context;
-import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.webkit.ConsoleMessage;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -19,9 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.makeramen.roundedimageview.RoundedImageView;
-import com.master.design.therapist.Controller.AppController;
-import com.master.design.therapist.DM.MessageChatModel;
-import com.master.design.therapist.DataModel.All_messages;
+import com.master.design.therapist.Adapter.DataModel.All_messages;
 import com.master.design.therapist.Helper.User;
 import com.master.design.therapist.R;
 import com.squareup.picasso.Picasso;

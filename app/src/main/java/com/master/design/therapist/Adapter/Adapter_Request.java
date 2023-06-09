@@ -2,39 +2,26 @@ package com.master.design.therapist.Adapter;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.master.design.therapist.Controller.AppController;
 import com.master.design.therapist.DM.InterestDM;
-import com.master.design.therapist.DataModel.Request_ListDM;
-import com.master.design.therapist.DataModel.Request_ResponseDM;
-import com.master.design.therapist.DataModel.Senders;
+import com.master.design.therapist.Adapter.DataModel.Senders;
 import com.master.design.therapist.Helper.DialogUtil;
-import com.master.design.therapist.Helper.Helper;
 import com.master.design.therapist.Helper.User;
 import com.master.design.therapist.R;
 import com.master.design.therapist.Utils.ConnectionDetector;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 
 public class Adapter_Request extends RecyclerView.Adapter<Adapter_Request.ViewHolder> {

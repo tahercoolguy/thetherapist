@@ -2,7 +2,6 @@ package com.master.design.therapist.Adapter;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,20 +9,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.master.design.therapist.Activity.IntroActivity;
 import com.master.design.therapist.Controller.AppController;
-import com.master.design.therapist.DM.IntroSliderDM;
-import com.master.design.therapist.DataModel.Cancel_Friend_RequestDM;
-import com.master.design.therapist.DataModel.Image;
-import com.master.design.therapist.DataModel.Send_Friend_RequestDM;
-import com.master.design.therapist.DataModel.Users;
-import com.master.design.therapist.Fragments.Fragment_Home;
+import com.master.design.therapist.Adapter.DataModel.Image;
 import com.master.design.therapist.Helper.DialogUtil;
-import com.master.design.therapist.Helper.Helper;
 import com.master.design.therapist.Helper.User;
 import com.master.design.therapist.R;
 import com.master.design.therapist.Utils.ConnectionDetector;
@@ -34,9 +24,6 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import jp.wasabeef.picasso.transformations.BlurTransformation;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 public class SliderHomeAdapter extends SliderViewAdapter<SliderHomeAdapter.SliderAdapterViewHolder> {
 

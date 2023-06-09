@@ -7,15 +7,16 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.karumi.dexter.Dexter;
@@ -23,12 +24,13 @@ import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
-import com.makeramen.roundedimageview.RoundedImageView;
+import com.master.design.therapist.Adapter.DataModel.DeleteAccountDM;
+import com.master.design.therapist.Adapter.Education_details;
 import com.master.design.therapist.Adapter.TherapistEducationDM;
 import com.master.design.therapist.Controller.AppController;
-import com.master.design.therapist.DataModel.MyProfile.Root;
-import com.master.design.therapist.DataModel.ProfileDM;
-import com.master.design.therapist.DataModel.Update_Pic_ProfileDM;
+import com.master.design.therapist.Adapter.DataModel.MyProfile.Root;
+import com.master.design.therapist.Adapter.DataModel.Update_Pic_ProfileDM;
+import com.master.design.therapist.Helper.DataChangeDM;
 import com.master.design.therapist.Helper.DialogUtil;
 import com.master.design.therapist.Helper.Helper;
 import com.master.design.therapist.Helper.User;
@@ -84,6 +86,11 @@ public class My_ProfileActivity extends AppCompatActivity {
     @BindView(R.id.profileImgRIV)
     ImageView profileImgRIV;
 
+    @BindView(R.id.deleteAccountTxt)
+    TextView deleteAccountTxt;
+
+
+
 
 //    @OnClick(R.id. editProfileTxt)
 //    public void  editProfileTxt() {
@@ -103,6 +110,37 @@ public class My_ProfileActivity extends AppCompatActivity {
         context = getApplicationContext();
         Binding();
 
+    }
+
+
+    @OnClick(R.id.deleteAccountTxt)
+    public void deleteAccountTxt() {
+        showdialogNoData(getString(R.string.delete_account_new));
+    }
+
+    public void showdialogNoData(String tittle) {
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(My_ProfileActivity.this);
+        builder.setTitle(tittle)
+                .setCancelable(false)
+                .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                })
+                .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+//                        ((MainActivity) context).finish();
+//                        startActivity(new Intent(My_ProfileActivity.this, Sign_InActivity.class));
+//        ((MainActivity)context).finish();
+//                        user.setId(0);
+//                        activity.overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
+                        BingingDeleteApi();
+                    }
+                });
+        final android.app.AlertDialog alert = builder.create();
+
+        alert.show();
     }
 
     boolean ifimg1 = false;
@@ -394,6 +432,35 @@ public class My_ProfileActivity extends AppCompatActivity {
             });
         } else
             Helper.showToast(My_ProfileActivity.this, getString(R.string.no_internet_connection));
+    }
+
+    public void BingingDeleteApi()
+    {
+        if (connectionDetector.isConnectingToInternet()) {
+            String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+            progress = dialogUtil.showProgressDialog(My_ProfileActivity.this, getString(R.string.please_wait));
+            appController.paServices.DeleteAccount(String.valueOf(user.getId()),new Callback<DeleteAccountDM>() {
+                @Override
+                public void success(DeleteAccountDM deleteAccountDM, Response response) {
+                    progress.dismiss();
+                    if (deleteAccountDM.getStatus().equalsIgnoreCase("1")) {
+                        Helper.showToast(My_ProfileActivity.this,deleteAccountDM.getMsg());
+                        finishAffinity();
+                        startActivity(new Intent(My_ProfileActivity.this, SplashScreen.class));
+                        user.setId(0);
+                    } else
+                        Helper.showToast(My_ProfileActivity.this, getString(R.string.Api_data_not_found));
+                }
+
+                @Override
+                public void failure(RetrofitError retrofitError) {
+                    Log.e("error", retrofitError.toString());
+                }
+            });
+        } else
+            Helper.showToast(My_ProfileActivity.this, getString(R.string.no_internet_connection));
+
+
     }
 
 }

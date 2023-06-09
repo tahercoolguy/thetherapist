@@ -28,25 +28,19 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.master.design.therapist.Activity.MainActivity;
-import com.master.design.therapist.Activity.Term_Privacy_TipsActivity;
 import com.master.design.therapist.Adapter.Adapter_Friends;
 import com.master.design.therapist.Adapter.Adapter_Request;
 import com.master.design.therapist.Controller.AppController;
-import com.master.design.therapist.DM.InterestDM;
-import com.master.design.therapist.DataModel.Friend_ListDM;
-import com.master.design.therapist.DataModel.Request_ListDM;
-import com.master.design.therapist.DataModel.Request_ResponseDM;
-import com.master.design.therapist.DataModel.Terms_ConditionsDM;
-import com.master.design.therapist.DataModel.UnfriendDM;
+import com.master.design.therapist.Adapter.DataModel.Friend_ListDM;
+import com.master.design.therapist.Adapter.DataModel.Request_ListDM;
+import com.master.design.therapist.Adapter.DataModel.Request_ResponseDM;
+import com.master.design.therapist.Adapter.DataModel.UnfriendDM;
 import com.master.design.therapist.Helper.DialogUtil;
 import com.master.design.therapist.Helper.Helper;
 import com.master.design.therapist.Helper.User;
 import com.master.design.therapist.R;
 import com.master.design.therapist.Utils.ConnectionDetector;
 
-import org.jdom2.Text;
-
-import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 

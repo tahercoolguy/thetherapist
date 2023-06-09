@@ -3,7 +3,6 @@ package com.master.design.therapist.Adapter;
 import android.content.Context;
 import android.os.Build;
 import android.os.Handler;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,12 +15,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.master.design.therapist.Activity.FriendSearch_SelectActivity;
 import com.master.design.therapist.DM.SearchDM;
-import com.master.design.therapist.DataModel.Age_details;
+import com.master.design.therapist.Adapter.DataModel.Age_details;
 import com.master.design.therapist.Helper.User;
 import com.master.design.therapist.R;
 

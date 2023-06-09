@@ -18,7 +18,6 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.master.design.therapist.Adapter.Adapter_Bottom;
-import com.master.design.therapist.DataModel.Ethnic_details;
 import com.master.design.therapist.R;
 
 import java.util.ArrayList;
