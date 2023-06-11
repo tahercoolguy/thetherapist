@@ -116,6 +116,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginEnd="15dp"
+             android:layout_marginLeft="10dp"
 
             android:background="@drawable/rectangle_message"
             android:backgroundTint="#80FFFFFF"
@@ -128,6 +129,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
                 android:layout_marginEnd="45dp"
+                android:layout_marginLeft="5dp"
                 android:backgroundTint="@color/white"
                 android:hint="@string/message"
                 android:imeOptions="actionSend"
@@ -151,10 +153,9 @@
                 android:id="@+id/sendImg"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
+                android:paddingRight="3dp"
                 android:layout_alignParentEnd="true"
-
                 android:layout_centerVertical="true"
-                android:layout_marginEnd="10dp"
                 android:src="@drawable/ic_baseline_send_24"></ImageView>
         </RelativeLayout>
 
