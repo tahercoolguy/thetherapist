@@ -121,15 +121,15 @@
                     android:src="@drawable/ic_add_image"></ImageView>
             </RelativeLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/multipleImageRcv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
 
-                android:orientation="horizontal"></androidx.recyclerview.widget.RecyclerView>
         </LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/multipleImageRcv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
 
+            android:orientation="horizontal"></androidx.recyclerview.widget.RecyclerView>
 
         <TextView
             android:layout_width="match_parent"

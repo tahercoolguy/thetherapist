@@ -54,6 +54,14 @@ public class User {
         sp.edit().putString("name", name).apply();
     }
 
+    public String getCheck() {
+        return sp.getString("check", null);
+    }
+
+    public void setCheck(String check) {
+        sp.edit().putString("check", check).apply();
+    }
+
     public String getPassword() {
         return sp.getString("password", null);
     }

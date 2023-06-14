@@ -24,6 +24,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -178,7 +179,7 @@ public class About_You_Activity extends AppCompatActivity {
         list = new ArrayList<>();
         listForSize = new ArrayList<>();
         adaptor = new AddImageAdapter(list, "1");
-        multipleImageRcv.setLayoutManager(new LinearLayoutManager(About_You_Activity.this, LinearLayoutManager.HORIZONTAL, false));
+        multipleImageRcv.setLayoutManager(new GridLayoutManager(About_You_Activity.this,2));
         multipleImageRcv.setAdapter(adaptor);
 
     }
@@ -554,9 +555,25 @@ public class About_You_Activity extends AppCompatActivity {
                     adaptor.notifyDataSetChanged();
 
 
-                } else {
-                    showdialogNoData(context, getString(R.string.select_multiiple_images), getString(R.string.select_multiple_images_to_upload));
+                } else if (data.getData() != null) {
+                    // Single image selected
+                    Uri imageUri = data.getData();
+                    try {
+                        bitmap = MediaStore.Images.Media.getBitmap(About_You_Activity.this.getContentResolver(), imageUri);
+                        list.add(imageUri);
+                        adaptor.notifyDataSetChanged();
+                        greaterImg_i = 0 + 1;
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
                 }
+
+
+
+//                else {
+//                    showdialogNoData(context, getString(R.string.select_multiiple_images), getString(R.string.select_multiple_images_to_upload));
+//                }
 
             }
 

@@ -195,5 +195,5 @@
     <string name="update_profile" >Update Profile</string>
     <string name="delete_account_new" >Do you want to delete this account</string>
     <string name="logout_from_this_app">Do you want to logout from this app</string>
-
+<!--    <string name="web_client_id">316325478836-klfv1mq77rm86bdq5agckj161gpmhe64.apps.googleusercontent.com</string>-->
 </resources>

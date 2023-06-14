@@ -211,6 +211,7 @@
 <!--                android:src="@drawable/ic_facebook"></ImageView>-->
 
             <ImageView
+                android:id="@+id/googleSignInButton"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_gravity="center"

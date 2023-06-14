@@ -20,6 +20,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.master.design.therapist.Activity.AboutActivity;
 import com.master.design.therapist.Activity.FriendSearchActivity;
 import com.master.design.therapist.Activity.LanguageActivity;
@@ -70,6 +75,8 @@ public class Fragment_Account extends Fragment {
     ConnectionDetector connectionDetector;
     ProgressDialog progressDialog;
     User user;
+    GoogleSignInOptions gso;
+    GoogleSignInClient gsc;
 
     @Nullable
     @Override
@@ -88,6 +95,8 @@ public class Fragment_Account extends Fragment {
         if (rootView == null) {
             rootView = inflater.inflate(R.layout.account_fragment_layout, container, false);
             ButterKnife.bind(this, rootView);
+            gso= new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
+            gsc= GoogleSignIn.getClient(context,gso);
 
             String versionCode = String.valueOf(BuildConfig.VERSION_CODE);
             String versionName = BuildConfig.VERSION_NAME;
@@ -149,11 +158,34 @@ public class Fragment_Account extends Fragment {
                 })
                 .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        ((MainActivity) context).finish();
-                        startActivity(new Intent(getActivity(), Sign_InActivity.class));
-//        ((MainActivity)context).finish();
-                        user.setId(0);
-                        activity.overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
+                      if(user.getCheck().equalsIgnoreCase("1")) {
+                          ((MainActivity) context).finish();
+                          startActivity(new Intent(getActivity(), Sign_InActivity.class));
+//                   ((MainActivity)context).finish();
+                          user.setId(0);
+                          activity.overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
+
+                      }else
+                      {
+
+//                          GoogleSignInOptions gso = new GoogleSignInOptions.
+//                                  Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).
+//                                  build();
+//
+//                          GoogleSignInClient googleSignInClient= GoogleSignIn.getClient(context,gso);
+//                          googleSignInClient.signOut();
+//                          ((MainActivity) context).finish();
+                          gsc.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
+                              @Override
+                              public void onComplete(Task<Void> task) {
+                                  ((MainActivity) context).finish();
+                                  user.setId(0);
+                                  startActivity(new Intent(getActivity(), Sign_InActivity.class));
+
+                              }
+                          });
+
+                      }
                     }
                 });
         final AlertDialog alert = builder.create();

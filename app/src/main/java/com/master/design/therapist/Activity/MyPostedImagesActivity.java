@@ -360,11 +360,18 @@ public class MyPostedImagesActivity extends AppCompatActivity {
     }
 
     private void openGalley() {
-        Intent intent = new Intent();
+//        Intent intent = new Intent();
+//        intent.setType("image/*");
+//        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+//        intent.setAction(Intent.ACTION_GET_CONTENT);
+//        startActivityForResult(Intent.createChooser(intent, getString(R.string.add_multiple_images)), ADD_MORE_IMAGE);
+
+
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("image/*");
-        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-        intent.setAction(Intent.ACTION_GET_CONTENT);
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true); // Enable multiple selection
         startActivityForResult(Intent.createChooser(intent, getString(R.string.add_multiple_images)), ADD_MORE_IMAGE);
+
     }
 
     Bitmap bitmap;
@@ -389,9 +396,21 @@ public class MyPostedImagesActivity extends AppCompatActivity {
                 }
 
 
-            }else{
-                showdialogNoData(context, getString(R.string.select_multiiple_images),getString(R.string.select_multiple_images_to_upload));
+            } else if (data.getData() != null) {
+                // Single image selected
+                Uri imageUri = data.getData();
+                try {
+                    bitmap = MediaStore.Images.Media.getBitmap(MyPostedImagesActivity.this.getContentResolver(), imageUri);
+                    addMultipleImageAPI(bitmap, 0);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
             }
+
+//            }else if{
+//                showdialogNoData(context, getString(R.string.select_multiiple_images),getString(R.string.select_multiple_images_to_upload));
+//            }
 
         }
 

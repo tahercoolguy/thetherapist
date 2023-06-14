@@ -5,6 +5,7 @@ package com.master.design.therapist.Services;
 
 
 import com.master.design.therapist.Adapter.DataModel.DeleteAccountDM;
+import com.master.design.therapist.Adapter.DataModel.SocialUserDM;
 import com.master.design.therapist.Adapter.TherapistEducationDM;
 import com.master.design.therapist.Adapter.DataModel.AddMultipleImageRoot;
 import com.master.design.therapist.Adapter.DataModel.Cancel_Friend_RequestDM;
@@ -271,5 +272,12 @@ public interface PAServices {
     @POST("/deleteaccount")
     void DeleteAccount(@Field("id") String id,
                     Callback<DeleteAccountDM> deleteAccountDMCallback);
+
+    //35
+    @FormUrlEncoded
+    @POST("/socialuser")
+    void SocialUser(@Field("name") String name,
+                     @Field("email") String email,
+                     Callback<SocialUserDM> socialUserDMCallback);
 
 }

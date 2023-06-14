@@ -70,7 +70,8 @@ public class SplashScreen extends AppCompatActivity {
 
                 String userID = String.valueOf(user.getId());
                 if (userID.equalsIgnoreCase("0")) {
-                    startActivity(new Intent(SplashScreen.this, LanguageActivity.class));
+//                    startActivity(new Intent(SplashScreen.this, LanguageActivity.class));
+                    startActivity(new Intent(SplashScreen.this, About_You_Activity.class));
                     finish();
                     overridePendingTransition(R.anim.fade_in, R.anim.fade_in);
                 } else {
