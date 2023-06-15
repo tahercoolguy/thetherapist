@@ -152,12 +152,42 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         progressDialog.setIndeterminate(true);
         progressDialog.setCancelable(false);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
-        addFragment(new Fragment_Home(), false);
+
 
         idMappings();
 //        setDrawer();
         setToolBar();
         setOnClickListeners();
+
+        try{
+            getDataFromIntent();
+        } catch (Exception e) {
+            e.printStackTrace();
+            addFragment(new Fragment_Home(),false);
+        }
+
+    }
+
+    private void getDataFromIntent() {
+        if (getIntent() != null) {
+            String accept = "dfsdfdf";
+            String send = "dfsdfdf";
+            accept = getIntent().getStringExtra("accept");
+            send = getIntent().getStringExtra("send");
+
+            if (accept.equalsIgnoreCase("accept") || send.equalsIgnoreCase("send")) {
+                if (accept.equalsIgnoreCase("accept")) {
+                    addFragment(new Fragment_Friends_Request(), false);
+                }
+
+                if (send.equalsIgnoreCase("send")) {
+                    addFragment(new Fragment_Friends_Request(), false);
+                }
+            } else {
+                addFragment(new Fragment_Home(), false);
+            }
+
+        }
     }
 
     public void showdialogNoData(Context context, String tittle, String msg) {

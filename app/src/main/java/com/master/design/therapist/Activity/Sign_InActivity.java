@@ -120,6 +120,8 @@ public class Sign_InActivity extends AppCompatActivity {
                     @Override
                     public void success(SocialUserDM socialUserDM, Response response) {
                         progress.dismiss();
+
+
                         if (socialUserDM.getStatus().equalsIgnoreCase("1")) {
                             user.setId(Integer.valueOf(socialUserDM.getUser_id()));
                             Intent intent = new Intent(Sign_InActivity.this, MainActivity.class);

@@ -178,12 +178,14 @@ public class Fragment_Account extends Fragment {
                           gsc.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
                               @Override
                               public void onComplete(Task<Void> task) {
-                                  ((MainActivity) context).finish();
                                   user.setId(0);
                                   startActivity(new Intent(getActivity(), Sign_InActivity.class));
+                                  ((MainActivity) context).finish();
 
                               }
                           });
+
+
 
                       }
                     }
