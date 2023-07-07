@@ -141,7 +141,7 @@
             android:layout_gravity="end"
             android:layout_marginTop="10dp"
             android:gravity="end"
-            android:hint="Forgot password"
+            android:hint="@string/forgot_password"
             android:paddingHorizontal="10dp"></TextView>
 
         <TextView

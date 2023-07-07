@@ -55,7 +55,7 @@
     <string name="tips" >نصائح</string>
     <string name="terms_amp_condition" ><![CDATA[Terms & Condition]]></string>
     <string name="username" >اسم المستخدم</string>
-    <string name="phone" >Phone</string>
+    <string name="phone" >رقم الهاتف</string>
     <string name="date_of_birth" >تاريخ الميلاد</string>
     <string name="gender_" >النوع</string>
     <string name="edit_profile" >تعديل الملف</string>
@@ -194,5 +194,10 @@
     <string name="logout_from_this_app">هل تريد الخروج من هذا التطبيق</string>
     <string name="you_are_not_friend_now">انت لست صديقا الان</string>
     <string name="delete_account_new" >هل تريد حذف هذا الحساب</string>
+
+    <string name="language" >لغة</string>
+    <string name="version" >إصدار</string>
+    <string name="edit_Profile" >تعديل الملف الشخصي</string>
+    <string name="forgot_password" >هل نسيت كلمة السر</string>
 
    </resources>

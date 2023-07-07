@@ -559,8 +559,10 @@ public class Fragment_Home extends Fragment {
                     progress.dismiss();
                     if (cancel_friend_requestDM.getStatus().equalsIgnoreCase("1")) {
                         Helper.showToast(context, cancel_friend_requestDM.getMsg());
-                        sendRequestImg.setVisibility(View.VISIBLE);
-                        recieveRequestImg.setVisibility(View.GONE);
+//                        sendRequestImg.setVisibility(View.VISIBLE);
+//                        recieveRequestImg.setVisibility(View.GONE);
+                        sendimagLL.setVisibility(View.VISIBLE);
+                        reciveimagLL.setVisibility(View.GONE);
 
                     } else
                         Helper.showToast(context, cancel_friend_requestDM.getMsg());

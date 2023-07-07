@@ -147,7 +147,7 @@
                     android:layout_marginHorizontal="10dp"
                     android:layout_weight="1"
 
-                    android:text="Language"
+                    android:text="@string/language"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_normal"></TextView>
 
@@ -283,7 +283,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:text="Version"
+                    android:text="@string/version"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_normal"></TextView>
 
