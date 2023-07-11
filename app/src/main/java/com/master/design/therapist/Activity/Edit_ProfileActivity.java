@@ -100,7 +100,7 @@ public class Edit_ProfileActivity extends AppCompatActivity {
 
     String Gender="";
     String name;
-    String nameAr;
+    String nameAr,educationAr;
     String SelectCountryid;
 
 
@@ -117,9 +117,17 @@ public class Edit_ProfileActivity extends AppCompatActivity {
             public void response(Object object) {
 
                 educationName = ((DataChangeDM) object).getName();
+                educationAr= ((DataChangeDM) object).getNameAr();
                 educationID = ((DataChangeDM) object).getId();
 //                                    user.setAreaId(AreaID);
-                educationET.setText(educationName);
+
+                if (user.getLanguageCode().equalsIgnoreCase("en")) {
+                    educationET.setText(educationName);
+                }
+                else
+                {
+                    educationET.setText(educationAr);
+                }
             }
         });
         bottomForAll.show(Edit_ProfileActivity.this.getSupportFragmentManager(), "bottomSheetCountry");
@@ -694,6 +702,7 @@ public class Edit_ProfileActivity extends AppCompatActivity {
                         for (Ethnic_details obj : therapistEthnicDM.getEthnic_details()) {
                             DataChangeDM s = new DataChangeDM();
                             s.setName(obj.getEthnic_name());
+                            s.setNameAr(obj.getEthnic_name_arb());
                             s.setId(obj.getId());
                             arrayList.add(s);
                         }
@@ -727,6 +736,7 @@ public class Edit_ProfileActivity extends AppCompatActivity {
                         for (Education_details obj : therapistEducationDM.getEducation_details()) {
                             DataChangeDM s = new DataChangeDM();
                             s.setName(obj.getEducation());
+                            s.setNameAr(obj.getEducation_arb());
                             s.setId(obj.getId());
                             arrayList.add(s);
                         }

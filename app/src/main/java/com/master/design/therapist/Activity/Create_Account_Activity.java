@@ -258,6 +258,13 @@ public class Create_Account_Activity extends AppCompatActivity {
         BindingEthenicity();
         SelectCountry();
         SelectMobileCode();
+        if (user.getLanguageCode().equalsIgnoreCase("en")) {
+            selectCountryET.setHint("Kuwait");
+        }
+       else    {
+            selectCountryET.setHint("الكويت");
+            }
+
 
 
     }
@@ -394,7 +401,7 @@ public class Create_Account_Activity extends AppCompatActivity {
                         for (Ethnic_details obj : therapistEthnicDM.getEthnic_details()) {
                             DataChangeDM s = new DataChangeDM();
                             s.setName(obj.getEthnic_name());
-                            s.setNameAr(obj.getEthnic_name_as());
+                            s.setNameAr(obj.getEthnic_name_arb());
                             s.setId(obj.getId());
                             arrayList.add(s);
                         }

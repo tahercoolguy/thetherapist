@@ -93,7 +93,7 @@ public class About_You_Activity extends AppCompatActivity {
     String password;
     String confirmPassword;
     String InterestIdList;
-    String name, id, age;
+    String name, id, age,nameAr;
 
     @BindView(R.id.aboutYouET)
     EditText aboutYouET;
@@ -124,9 +124,16 @@ public class About_You_Activity extends AppCompatActivity {
             public void response(Object object) {
 
                 name = ((DataChangeDM) object).getName();
+                nameAr=((DataChangeDM) object).getNameAr();
                 id = ((DataChangeDM) object).getId();
 //                                    user.setAreaId(AreaID);
-                educationET.setText(name);
+
+                if (user.getLanguageCode().equalsIgnoreCase("en")) {
+                    educationET.setText(name);
+                }
+                 else {
+                    educationET.setText(nameAr);
+                 }
             }
         });
         bottomForAll.show(About_You_Activity.this.getSupportFragmentManager(), "bottomSheetCountry");
@@ -720,6 +727,7 @@ public class About_You_Activity extends AppCompatActivity {
                         for (Education_details obj : therapistEducationDM.getEducation_details()) {
                             DataChangeDM s = new DataChangeDM();
                             s.setName(obj.getEducation());
+                            s.setNameAr(obj.getEducation_arb());
                             s.setId(obj.getId());
                             arrayList.add(s);
                         }

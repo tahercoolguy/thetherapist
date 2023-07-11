@@ -91,7 +91,7 @@ public class Adapter_Search_Select_Education extends RecyclerView.Adapter<Adapte
         if (user.getLanguageCode().equalsIgnoreCase("en")) {
             viewHolder.smallTxt.setText(arrayList.get(position).getEducation());
         }else {
-            viewHolder.smallTxt.setText(arrayList.get(position).getEducation());
+            viewHolder.smallTxt.setText(arrayList.get(position).getEducation_arb());
         }
 
 

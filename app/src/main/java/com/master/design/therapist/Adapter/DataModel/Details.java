@@ -31,6 +31,25 @@ public class Details {
     private String message_count;
     private String latest_message;
     private String timestamp;
+    private String content_in_arab;
+    private String title_in_arab;
+
+
+    public String getContent_in_arab() {
+        return content_in_arab;
+    }
+
+    public void setContent_in_arab(String content_in_arab) {
+        this.content_in_arab = content_in_arab;
+    }
+
+    public String getTitle_in_arab() {
+        return title_in_arab;
+    }
+
+    public void setTitle_in_arab(String title_in_arab) {
+        this.title_in_arab = title_in_arab;
+    }
 
     public String getCountry() {
         return country;
@@ -263,4 +282,8 @@ public class Details {
     public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
     }
+
+
+
+
 }

@@ -92,7 +92,7 @@ public class Adapter_Search_Select_Ethnic extends RecyclerView.Adapter<Adapter_S
         if (user.getLanguageCode().equalsIgnoreCase("en")) {
             viewHolder.smallTxt.setText(arrayList.get(position).getEthnic_name());
         }else {
-            viewHolder.smallTxt.setText(arrayList.get(position).getEthnic_name_as());
+            viewHolder.smallTxt.setText(arrayList.get(position).getEthnic_name_arb());
         }
 
 

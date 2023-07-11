@@ -9,6 +9,16 @@ public class Ethnic_details {
     private String repeated_at;
     private String ethnic_name_as;
 
+    private String ethnic_name_arb;
+
+    public String getEthnic_name_arb() {
+        return ethnic_name_arb;
+    }
+
+    public void setEthnic_name_arb(String ethnic_name_arb) {
+        this.ethnic_name_arb = ethnic_name_arb;
+    }
+
     public Boolean getIs_active() {
         return is_active;
     }

@@ -77,7 +77,7 @@ public class Adapter_Bottom extends BaseAdapter {
 //            viewHolder.price.setText(data.getUnitPriceKWD());
 
         } else {
-            viewHolder.size.setText(data.getName());
+            viewHolder.size.setText(data.getNameAr());
 //            viewHolder.price.setText(data.getUnitPriceKWDAr());
         }
 

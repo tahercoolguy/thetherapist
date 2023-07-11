@@ -69,7 +69,7 @@ public class Term_Privacy_TipsActivity extends AppCompatActivity {
     private void setTittle() {
 
         if (terms != null) {
-            tittleTxt.setText(getString(R.string.terms___and_condition));
+//            tittleTxt.setText(getString(R.string.terms___and_condition));
 //            conditionTxt.setText("These Website Standard Terms and Conditions written on this webpage shall manage your use of our website, Webiste Name accessible at Website.com.\n" +
 //                    "\n" +
 //                    "These Terms will be applied fully and affect to your use of this Website. By using this Website, you agreed to accept all terms and conditions written in here. You must not use this Website if you disagree with any of these Website Standard Terms and Conditions.\n" +
@@ -99,9 +99,24 @@ public class Term_Privacy_TipsActivity extends AppCompatActivity {
                         progress.dismiss();
                         if (terms_conditionsDM.getStatus().equalsIgnoreCase("1")) {
 
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                                conditionTxt.setText(Html.fromHtml(terms_conditionsDM.getDetails().get(0).getContent(), Html.FROM_HTML_MODE_COMPACT));
+
+                            if (user.getLanguageCode().equalsIgnoreCase("en")) {
+
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                                    conditionTxt.setText(Html.fromHtml(terms_conditionsDM.getDetails().get(0).getContent(), Html.FROM_HTML_MODE_COMPACT));
+                                    tittleTxt.setText(terms_conditionsDM.getDetails().get(0).getTitle());
+                                }
+
+                            }else{
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                                    conditionTxt.setText(Html.fromHtml(terms_conditionsDM.getDetails().get(0).getContent_in_arab(), Html.FROM_HTML_MODE_COMPACT));
+                                    tittleTxt.setText(terms_conditionsDM.getDetails().get(0).getTitle_in_arab());
+                                }
+
                             }
+
+
+
                         } else{
 
                             showdialogNoData(context,getString(R.string.terms),getString(R.string.no_terms_and_condition));
@@ -119,7 +134,7 @@ public class Term_Privacy_TipsActivity extends AppCompatActivity {
 
         }
         if (policy != null) {
-            tittleTxt.setText(getString(R.string.privacy_policy));
+//            tittleTxt.setText(getString(R.string.privacy_policy));
 
 //            conditionTxt.setText("We at Wasai LLC respect the privacy of your personal information and, as such, make every effort to ensure your information is protected and remains private. As the owner and operator of loremipsum.io (the \"Website\") hereafter referred to in this Privacy Policy as \"Lorem Ipsum\", \"us\", \"our\" or \"we\", we have provided this Privacy Policy to explain how we collect, use, share and protect information about the users of our Website (hereafter referred to as “user”, “you” or \"your\"). For the purposes of this Agreement, any use of the terms \"Lorem Ipsum\", \"us\", \"our\" or \"we\" includes Wasai LLC, without limitation. We will not use or share your personal information with anyone except as described in this Privacy Policy.\n" +
 //                    "\n" +
@@ -142,9 +157,23 @@ public class Term_Privacy_TipsActivity extends AppCompatActivity {
                         progress.dismiss();
                         if (terms_conditionsDM.getStatus().equalsIgnoreCase("1")) {
 
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                                conditionTxt.setText(Html.fromHtml(terms_conditionsDM.getDetails().get(0).getContent(), Html.FROM_HTML_MODE_COMPACT));
+
+                            if (user.getLanguageCode().equalsIgnoreCase("en")) {
+
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                                    conditionTxt.setText(Html.fromHtml(terms_conditionsDM.getDetails().get(0).getContent(), Html.FROM_HTML_MODE_COMPACT));
+                                    tittleTxt.setText(terms_conditionsDM.getDetails().get(0).getTitle());
+                                }
+
+                            }else{
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                                    conditionTxt.setText(Html.fromHtml(terms_conditionsDM.getDetails().get(0).getContent_in_arab(), Html.FROM_HTML_MODE_COMPACT));
+                                    tittleTxt.setText(terms_conditionsDM.getDetails().get(0).getTitle_in_arab());
+                                }
+
                             }
+
+
                         } else{
                             showdialogNoData(context,getString(R.string.privacy_policy),getString(R.string.no_privacy_policy));
                         }
@@ -183,9 +212,24 @@ public class Term_Privacy_TipsActivity extends AppCompatActivity {
                         progress.dismiss();
                         if (terms_conditionsDM.getStatus().equalsIgnoreCase("1")) {
 
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                                conditionTxt.setText(Html.fromHtml(terms_conditionsDM.getDetails().get(0).getContent(), Html.FROM_HTML_MODE_COMPACT));
+
+
+                            if (user.getLanguageCode().equalsIgnoreCase("en")) {
+
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                                    conditionTxt.setText(Html.fromHtml(terms_conditionsDM.getDetails().get(0).getContent(), Html.FROM_HTML_MODE_COMPACT));
+                                    tittleTxt.setText(terms_conditionsDM.getDetails().get(0).getTitle());
+                                }
+
+                            }else{
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                                    conditionTxt.setText(Html.fromHtml(terms_conditionsDM.getDetails().get(0).getContent_in_arab(), Html.FROM_HTML_MODE_COMPACT));
+                                    tittleTxt.setText(terms_conditionsDM.getDetails().get(0).getTitle_in_arab());
+                                }
+
                             }
+
+
                         } else{
 
                             showdialogNoData(context,getString(R.string.tips),getString(R.string.no_tips));
