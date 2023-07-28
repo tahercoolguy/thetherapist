@@ -102,6 +102,15 @@ public class User {
         sp.edit().putString("mobile_no", mobile_no).apply();
     }
 
+    public String getOffline() {
+        return sp.getString("offline", "1");
+    }
+
+    public void setOffline(String email) {
+        sp.edit().putString("offline", email).apply();
+    }
+
+
     //language
     public Language setLanguage(Language language) {
         User.language = language;

@@ -202,7 +202,12 @@ public class Fragment_Friends_Request extends Fragment {
                     } else {
                         rcvRcv.setVisibility(View.GONE);
                         swiperefresh.setRefreshing(false);
-                        showdialogNoData(context, getString(R.string.my_friends), getString(R.string.no_friends));
+                        try {
+                            showdialogNoData(context, getString(R.string.my_friends), getString(R.string.no_friends));
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
 //                        ((MainActivity) context).showdialogNoData(context, getString(R.string.my_friends), getString(R.string.no_friends));
                         DismissProgress();
                     }
@@ -218,7 +223,12 @@ public class Fragment_Friends_Request extends Fragment {
             });
         } else {
             swiperefresh.setRefreshing(false);
-            showdialogNoData(context, getString(R.string.my_friends), getString(R.string.no_internet_connection));
+            try {
+                showdialogNoData(context, getString(R.string.my_friends), getString(R.string.no_internet_connection));
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
         }
 //            Helper.showToast(getActivity(), getString(R.string.no_internet_connection));
@@ -283,7 +293,13 @@ public class Fragment_Friends_Request extends Fragment {
                         DismissProgress();
 //                        progress.dismiss();
 //                        Helper.showToast(getActivity(), getString(R.string.Api_data_not_found));
-                        showdialogNoData(context, getString(R.string.friend_request), getString(R.string.no_friend_request));
+
+                        try{
+                            showdialogNoData(context, getString(R.string.friend_request), getString(R.string.no_friend_request));
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
 
 //                        ((MainActivity) context).showdialogNoData(context, getString(R.string.friend_request), getString(R.string.no_friend_request));
                     }
@@ -300,7 +316,12 @@ public class Fragment_Friends_Request extends Fragment {
             rcvRcv.setVisibility(View.GONE);
             swiperefresh.setRefreshing(false);
             DismissProgress();
-            showdialogNoData(context, getString(R.string.friend_request), getString(R.string.no_internet_connection));
+            try {
+                showdialogNoData(context, getString(R.string.friend_request), getString(R.string.no_internet_connection));
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
         }
     }

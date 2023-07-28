@@ -35,6 +35,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.master.design.therapist.Adapter.DataModel.SocialUserDM;
 import com.master.design.therapist.Adapter.DataModel.Terms_ConditionsDM;
+import com.master.design.therapist.Adapter.DataModel.TokenRoot;
 import com.master.design.therapist.Controller.AppController;
 import com.master.design.therapist.Adapter.DataModel.TherapistLoginDM;
 import com.master.design.therapist.Helper.DialogUtil;
@@ -52,6 +53,8 @@ import butterknife.OnClick;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import retrofit.mime.MultipartTypedOutput;
+import retrofit.mime.TypedString;
 
 public class Sign_InActivity extends AppCompatActivity {
 
@@ -230,6 +233,9 @@ public class Sign_InActivity extends AppCompatActivity {
         connectionDetector = new ConnectionDetector(getApplicationContext());
         user = new User(Sign_InActivity.this);
 
+        if(user.getOffline().equalsIgnoreCase("0")){
+            updateOffline();
+        }
         gso= new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
         gsc= GoogleSignIn.getClient(this,gso);
 
@@ -339,5 +345,36 @@ public class Sign_InActivity extends AppCompatActivity {
     public void finish() {
         super.finish();
         overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
+    }
+
+    private void updateOffline()
+    {
+        if (connectionDetector.isConnectingToInternet()) {
+            String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+            MultipartTypedOutput multipartTypedOutput = new MultipartTypedOutput();
+            multipartTypedOutput.addPart("id", new TypedString(String.valueOf(user.getId())));
+
+//            progress = dialogUtil.showProgressDialog(MainActivity.this, getString(R.string.please_wait));
+            appController.paServices.Offline(multipartTypedOutput, new Callback<TokenRoot>() {
+                @Override
+                public void success(TokenRoot tokenRoot, Response response) {
+                    if (tokenRoot.getStatus().equalsIgnoreCase("1")) {
+//                        progress.dismiss();
+
+                        user.setOffline("1");
+                    } else {
+//                        progress.dismiss();
+                    }
+                }
+
+                @Override
+                public void failure(RetrofitError retrofitError) {
+//                    progress.dismiss();
+                    Log.e("error", retrofitError.toString());
+                }
+            });
+        } else {
+            com.master.design.therapist.Helper.Helper.showToast(Sign_InActivity.this, String.valueOf(R.string.no_internet_connection));
+        }
     }
 }

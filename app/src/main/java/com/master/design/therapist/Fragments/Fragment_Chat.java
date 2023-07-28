@@ -164,7 +164,12 @@ public class Fragment_Chat extends Fragment {
                 try {
                     activity.runOnUiThread(new Runnable() {
                         public void run() {
-                            setChatData();
+                            try {
+                                setChatData();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
                         }
                     });
 
@@ -244,7 +249,12 @@ public class Fragment_Chat extends Fragment {
                     } else {
                         rcvRcv.setVisibility(View.GONE);
                         swiperefresh.setRefreshing(false);
-                        showdialogNoData(context, getString(R.string.chat), getString(R.string.no_chats));
+                        try {
+                            showdialogNoData(context, getString(R.string.chat), getString(R.string.no_chats));
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
 //                        Helper.showToast(getActivity(), getString(R.string.Api_data_not_found));
                 }
@@ -257,7 +267,13 @@ public class Fragment_Chat extends Fragment {
             });
         } else {
             swiperefresh.setRefreshing(false);
-            showdialogNoData(context, getString(R.string.chat), getString(R.string.no_internet_connection));
+
+            try {
+                showdialogNoData(context, getString(R.string.chat), getString(R.string.no_internet_connection));
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
 //             Helper.showToast(context,getString(R.string.no_internet_connection));
         }

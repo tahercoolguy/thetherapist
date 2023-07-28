@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -25,7 +26,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.master.design.therapist.Activity.AboutActivity;
+import com.master.design.therapist.Activity.Conversation_Activity;
 import com.master.design.therapist.Activity.FriendSearchActivity;
 import com.master.design.therapist.Activity.LanguageActivity;
 import com.master.design.therapist.Activity.MainActivity;
@@ -33,6 +36,7 @@ import com.master.design.therapist.Activity.MyPostedImagesActivity;
 import com.master.design.therapist.Activity.My_ProfileActivity;
 import com.master.design.therapist.Activity.Sign_InActivity;
 import com.master.design.therapist.Activity.SplashScreen;
+import com.master.design.therapist.Adapter.DataModel.TokenRoot;
 import com.master.design.therapist.BuildConfig;
 import com.master.design.therapist.Controller.AppController;
 import com.master.design.therapist.Helper.User;
@@ -43,6 +47,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import it.sephiroth.android.library.widget.HListView;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+import retrofit.mime.MultipartTypedOutput;
+import retrofit.mime.TypedString;
 
 public class Fragment_Account extends Fragment {
 
@@ -163,6 +172,7 @@ public class Fragment_Account extends Fragment {
                           startActivity(new Intent(getActivity(), Sign_InActivity.class));
 //                   ((MainActivity)context).finish();
                           user.setId(0);
+                          user.setOffline("0");
                           activity.overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
 
                       }else
@@ -181,7 +191,7 @@ public class Fragment_Account extends Fragment {
                                   user.setId(0);
                                   startActivity(new Intent(getActivity(), Sign_InActivity.class));
                                   ((MainActivity) context).finish();
-
+                                   user.setOffline("0");
                               }
                           });
                       }
@@ -232,4 +242,5 @@ public class Fragment_Account extends Fragment {
         super.onPrepareOptionsMenu(menu);
         menu.findItem(R.id.action_back).setVisible(false);
     }
+
 }
