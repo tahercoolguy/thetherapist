@@ -110,7 +110,15 @@ public class Adapter_Search_Select1 extends RecyclerView.Adapter<Adapter_Search_
                 {
                     viewHolder.selected_cardView.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.red));
                     ((FriendSearch_SelectActivity)context).selected_ageId=((FriendSearch_SelectActivity)context).selected_ageId+arrayList.get(position).getId() +"," ;
-                    ((FriendSearch_SelectActivity)context).selected_ageEng=((FriendSearch_SelectActivity)context).selected_ageEng+arrayList.get(position).getAge_eg() +"," ;
+
+                    if (user.getLanguageCode().equalsIgnoreCase("en")) {
+                        ((FriendSearch_SelectActivity)context).selected_ageEng=((FriendSearch_SelectActivity)context).selected_ageEng+arrayList.get(position).getAge_eg() +"," ;
+
+                    }else{
+                        ((FriendSearch_SelectActivity)context).selected_ageEng=((FriendSearch_SelectActivity)context).selected_ageEng+arrayList.get(position).getAge_arb() +"," ;
+
+                    }
+
                     ((FriendSearch_SelectActivity)context).selected_ageAR=((FriendSearch_SelectActivity)context).selected_ageAR+arrayList.get(position).getAge_arb() +"," ;
                     Log.e("Checking", "Checking");
 
@@ -119,7 +127,15 @@ public class Adapter_Search_Select1 extends RecyclerView.Adapter<Adapter_Search_
                 {
                     viewHolder.selected_cardView.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.white));
                     ((FriendSearch_SelectActivity)context).selected_ageId=((FriendSearch_SelectActivity)context).selected_ageId.replace(arrayList.get(position).getId()+",","");
-                    ((FriendSearch_SelectActivity)context).selected_ageEng=((FriendSearch_SelectActivity)context).selected_ageEng.replace(arrayList.get(position).getAge_eg()+",","");
+
+                    if (user.getLanguageCode().equalsIgnoreCase("en")) {
+                        ((FriendSearch_SelectActivity)context).selected_ageEng=((FriendSearch_SelectActivity)context).selected_ageEng.replace(arrayList.get(position).getAge_eg()+",","");
+
+                    }else{
+                        ((FriendSearch_SelectActivity)context).selected_ageEng=((FriendSearch_SelectActivity)context).selected_ageEng.replace(arrayList.get(position).getAge_arb()+",","");
+
+                    }
+
                     ((FriendSearch_SelectActivity)context).selected_ageAR=((FriendSearch_SelectActivity)context).selected_ageAR.replace(arrayList.get(position).getAge_arb()+",","");
                     Log.e("Checking", "Checking");
 

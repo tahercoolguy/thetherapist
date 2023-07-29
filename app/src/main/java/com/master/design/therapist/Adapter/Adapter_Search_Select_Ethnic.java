@@ -111,7 +111,13 @@ public class Adapter_Search_Select_Ethnic extends RecyclerView.Adapter<Adapter_S
                 {
                     viewHolder.selected_cardView.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.red));
                     ((FriendSearch_SelectActivity)context).selected_ethicID=((FriendSearch_SelectActivity)context).selected_ethicID+arrayList.get(position).getId() +"," ;
-                    ((FriendSearch_SelectActivity)context).selected_ethicNameEng=((FriendSearch_SelectActivity)context).selected_ethicNameEng+arrayList.get(position).getEthnic_name() +"," ;
+                    if (user.getLanguageCode().equalsIgnoreCase("en")) {
+                        ((FriendSearch_SelectActivity)context).selected_ethicNameEng=((FriendSearch_SelectActivity)context).selected_ethicNameEng+arrayList.get(position).getEthnic_name() +"," ;
+
+                    }else{
+                        ((FriendSearch_SelectActivity)context).selected_ethicNameEng=((FriendSearch_SelectActivity)context).selected_ethicNameEng+arrayList.get(position).getEthnic_name_arb() +"," ;
+
+                    }
                     ((FriendSearch_SelectActivity)context).selected_ethicNameAR=((FriendSearch_SelectActivity)context).selected_ethicNameAR+arrayList.get(position).getEthnic_name_as() +"," ;
                     Log.e("Checking", "Checking");
 
@@ -120,7 +126,13 @@ public class Adapter_Search_Select_Ethnic extends RecyclerView.Adapter<Adapter_S
                 {
                     viewHolder.selected_cardView.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.white));
                     ((FriendSearch_SelectActivity)context).selected_ethicID=((FriendSearch_SelectActivity)context).selected_ethicID.replace(arrayList.get(position).getId()+",","");
-                    ((FriendSearch_SelectActivity)context).selected_ethicNameEng=((FriendSearch_SelectActivity)context).selected_ethicNameEng.replace(arrayList.get(position).getEthnic_name()+",","");
+                    if (user.getLanguageCode().equalsIgnoreCase("en")) {
+                        ((FriendSearch_SelectActivity)context).selected_ethicNameEng=((FriendSearch_SelectActivity)context).selected_ethicNameEng.replace(arrayList.get(position).getEthnic_name()+",","");
+
+                    }else{
+                        ((FriendSearch_SelectActivity)context).selected_ethicNameEng=((FriendSearch_SelectActivity)context).selected_ethicNameEng.replace(arrayList.get(position).getEthnic_name_arb()+",","");
+
+                    }
                     ((FriendSearch_SelectActivity)context).selected_ethicNameAR=((FriendSearch_SelectActivity)context).selected_ethicNameAR.replace(arrayList.get(position).getEthnic_name_as()+",","");
                     Log.e("Checking", "Checking");
 

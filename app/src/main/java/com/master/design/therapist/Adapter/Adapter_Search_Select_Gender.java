@@ -110,7 +110,14 @@ public class Adapter_Search_Select_Gender extends RecyclerView.Adapter<Adapter_S
                 {
                     viewHolder.selected_cardView.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.red));
                     ((FriendSearch_SelectActivity)context).selected_genderId=((FriendSearch_SelectActivity)context).selected_genderId+arrayList.get(position).getId() +"," ;
-                    ((FriendSearch_SelectActivity)context).selected_genderEng=((FriendSearch_SelectActivity)context).selected_genderEng+arrayList.get(position).getGender() +"," ;
+
+                    if (user.getLanguageCode().equalsIgnoreCase("en")) {
+                        ((FriendSearch_SelectActivity)context).selected_genderEng=((FriendSearch_SelectActivity)context).selected_genderEng+arrayList.get(position).getGender() +"," ;
+
+                    }else{
+                        ((FriendSearch_SelectActivity)context).selected_genderEng=((FriendSearch_SelectActivity)context).selected_genderEng+arrayList.get(position).getGender_arb() +"," ;
+
+                    }
                     ((FriendSearch_SelectActivity)context).selected_genderAR=((FriendSearch_SelectActivity)context).selected_genderAR+arrayList.get(position).getGender_arb() +"," ;
                     Log.e("Checking", "Checking");
 
@@ -119,7 +126,13 @@ public class Adapter_Search_Select_Gender extends RecyclerView.Adapter<Adapter_S
                 {
                     viewHolder.selected_cardView.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.white));
                     ((FriendSearch_SelectActivity)context).selected_genderId=((FriendSearch_SelectActivity)context).selected_genderId.replace(arrayList.get(position).getId()+",","");
-                    ((FriendSearch_SelectActivity)context).selected_genderEng=((FriendSearch_SelectActivity)context).selected_genderEng.replace(arrayList.get(position).getGender()+",","");
+                    if (user.getLanguageCode().equalsIgnoreCase("en")) {
+                        ((FriendSearch_SelectActivity)context).selected_genderEng=((FriendSearch_SelectActivity)context).selected_genderEng.replace(arrayList.get(position).getGender()+",","");
+
+                    }else{
+                        ((FriendSearch_SelectActivity)context).selected_genderEng=((FriendSearch_SelectActivity)context).selected_genderEng.replace(arrayList.get(position).getGender_arb()+",","");
+
+                    }
                     ((FriendSearch_SelectActivity)context).selected_genderAR=((FriendSearch_SelectActivity)context).selected_genderAR.replace(arrayList.get(position).getGender_arb()+",","");
                     Log.e("Checking", "Checking");
 

@@ -110,7 +110,14 @@ public class Adapter_Search_Select_Education extends RecyclerView.Adapter<Adapte
                 {
                     viewHolder.selected_cardView.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.red));
                     ((FriendSearch_SelectActivity)context).selected_educationID=((FriendSearch_SelectActivity)context).selected_educationID+arrayList.get(position).getId() +"," ;
-                    ((FriendSearch_SelectActivity)context).selected_educationEng=((FriendSearch_SelectActivity)context).selected_educationEng+arrayList.get(position).getEducation() +"," ;
+
+                    if (user.getLanguageCode().equalsIgnoreCase("en")) {
+                        ((FriendSearch_SelectActivity)context).selected_educationEng=((FriendSearch_SelectActivity)context).selected_educationEng+arrayList.get(position).getEducation() +"," ;
+
+                    }else{
+                        ((FriendSearch_SelectActivity)context).selected_educationEng=((FriendSearch_SelectActivity)context).selected_educationEng+arrayList.get(position).getEducation_arb() +"," ;
+
+                    }
                      Log.e("Checking", "Checking");
 
                 }
@@ -118,7 +125,13 @@ public class Adapter_Search_Select_Education extends RecyclerView.Adapter<Adapte
                 {
                     viewHolder.selected_cardView.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.white));
                     ((FriendSearch_SelectActivity)context).selected_educationID=((FriendSearch_SelectActivity)context).selected_educationID.replace(arrayList.get(position).getId()+",","");
-                    ((FriendSearch_SelectActivity)context).selected_educationEng=((FriendSearch_SelectActivity)context).selected_educationEng.replace(arrayList.get(position).getEducation()+",","");
+                    if (user.getLanguageCode().equalsIgnoreCase("en")) {
+                        ((FriendSearch_SelectActivity)context).selected_educationEng=((FriendSearch_SelectActivity)context).selected_educationEng.replace(arrayList.get(position).getEducation()+",","");
+
+                    }else{
+                        ((FriendSearch_SelectActivity)context).selected_educationEng=((FriendSearch_SelectActivity)context).selected_educationEng.replace(arrayList.get(position).getEducation_arb()+",","");
+
+                    }
                      Log.e("Checking", "Checking");
 
                 }

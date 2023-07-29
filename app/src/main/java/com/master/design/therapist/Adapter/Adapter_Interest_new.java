@@ -111,7 +111,13 @@ public class Adapter_Interest_new extends RecyclerView.Adapter<Adapter_Interest_
             {
                 viewHolder.selected_cardView.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.red));
                 ((FriendSearch_SelectActivity)context).InterestIdList=((FriendSearch_SelectActivity)context).InterestIdList+arrayList.get(position).getId() +"," ;
-                ((FriendSearch_SelectActivity)context).InterestNameEngList=((FriendSearch_SelectActivity)context).InterestNameEngList+arrayList.get(position).getInterest_eg() +"," ;
+                if (user.getLanguageCode().equalsIgnoreCase("en")) {
+                    ((FriendSearch_SelectActivity)context).InterestNameEngList=((FriendSearch_SelectActivity)context).InterestNameEngList+arrayList.get(position).getInterest_eg() +"," ;
+
+                }else{
+                    ((FriendSearch_SelectActivity)context).InterestNameEngList=((FriendSearch_SelectActivity)context).InterestNameEngList+arrayList.get(position).getInterest_arb() +"," ;
+
+                }
                 ((FriendSearch_SelectActivity)context).InterestNameArList=((FriendSearch_SelectActivity)context).InterestNameArList+arrayList.get(position).getInterest_arb() +"," ;
                 Log.e("Checking", "Checking");
 
@@ -120,7 +126,13 @@ public class Adapter_Interest_new extends RecyclerView.Adapter<Adapter_Interest_
            {
                viewHolder.selected_cardView.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.white));
                ((FriendSearch_SelectActivity)context).InterestIdList=((FriendSearch_SelectActivity)context).InterestIdList.replace(arrayList.get(position).getId()+",","");
-               ((FriendSearch_SelectActivity)context).InterestNameEngList=((FriendSearch_SelectActivity)context).InterestNameEngList.replace(arrayList.get(position).getInterest_eg()+",","");
+               if (user.getLanguageCode().equalsIgnoreCase("en")) {
+                   ((FriendSearch_SelectActivity)context).InterestNameEngList=((FriendSearch_SelectActivity)context).InterestNameEngList.replace(arrayList.get(position).getInterest_eg()+",","");
+
+               }else{
+                   ((FriendSearch_SelectActivity)context).InterestNameEngList=((FriendSearch_SelectActivity)context).InterestNameEngList.replace(arrayList.get(position).getInterest_arb()+",","");
+
+               }
                ((FriendSearch_SelectActivity)context).InterestNameArList=((FriendSearch_SelectActivity)context).InterestNameArList.replace(arrayList.get(position).getInterest_arb()+",","");
                Log.e("Checking", "Checking");
 
