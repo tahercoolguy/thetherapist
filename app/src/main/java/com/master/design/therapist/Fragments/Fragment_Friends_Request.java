@@ -276,6 +276,7 @@ public class Fragment_Friends_Request extends Fragment {
                             public void clickAcceptButton(int position, String id, String response) {
 
                                 acceptRequestAPI(id, response);
+                                setRequestAdapter();
                             }
 
 
@@ -283,6 +284,7 @@ public class Fragment_Friends_Request extends Fragment {
                             public void clickRejectButton(int position, String id, String response) {
 
                                 rejectRequestAPI(id, response);
+                                setRequestAdapter();
                             }
                         });
 

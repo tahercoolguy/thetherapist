@@ -17,16 +17,20 @@
         android:orientation="horizontal">
 
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <androidx.cardview.widget.CardView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@color/ic_launcher_background"
             android:layout_gravity="center"
-            android:gravity="center">
+            android:gravity="center"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="0dp">
 
             <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/profileRIV"
-                android:layout_width="71dp"
-                android:layout_height="71dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
                 android:minWidth="71dp"
                 android:minHeight="71dp"
                 android:scaleType="centerCrop"
@@ -37,8 +41,8 @@
                 android:id="@+id/activeStatusRL"
                 android:layout_width="12dp"
                 android:layout_height="12dp"
-                android:layout_marginStart="60dp"
-                android:layout_marginTop="62dp"
+                android:layout_marginStart="65dp"
+                android:layout_marginTop="65dp"
                 android:background="@drawable/circle_white"
                 android:backgroundTint="@color/white">
 
@@ -51,7 +55,7 @@
 
             </RelativeLayout>
 
-        </RelativeLayout>
+        </androidx.cardview.widget.CardView>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -71,7 +75,7 @@
                     android:id="@+id/userNameTxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                     android:fontFamily="@font/poppins_bold"
+                    android:fontFamily="@font/poppins_bold"
                     android:singleLine="true"
                     android:text="Rachelsdsdsdsdssdafffdsfsdfsdf"
                     android:textColor="@color/black"
@@ -87,7 +91,7 @@
                     android:layout_weight="1"
                     android:gravity="end"
                     android:singleLine="true"
-                     android:textSize="@dimen/text_size_date"></TextView>
+                    android:textSize="@dimen/text_size_date"></TextView>
 
             </LinearLayout>
 
@@ -108,7 +112,7 @@
                     android:fontFamily="@font/poppins_bold"
                     android:maxLines="2"
                     android:minLines="2"
-                     android:textSize="@dimen/text_size_date"></TextView>
+                    android:textSize="@dimen/text_size_date"></TextView>
 
 
                 <TextView
@@ -121,12 +125,12 @@
                     android:backgroundTint="@color/colorPrimary"
                     android:gravity="center"
                     android:minWidth="25dp"
-                    android:visibility="gone"
                     android:minHeight="25dp"
                     android:singleLine="true"
                     android:text="10"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_size_date"></TextView>
+                    android:textSize="@dimen/text_size_date"
+                    android:visibility="gone"></TextView>
 
             </LinearLayout>
 

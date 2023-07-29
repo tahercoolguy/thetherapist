@@ -171,7 +171,7 @@ public class Fragment_Account extends Fragment {
                           ((MainActivity) context).finish();
                           startActivity(new Intent(getActivity(), Sign_InActivity.class));
 //                   ((MainActivity)context).finish();
-                          user.setId(0);
+
                           user.setOffline("0");
                           activity.overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
 
@@ -188,8 +188,7 @@ public class Fragment_Account extends Fragment {
                           gsc.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
                               @Override
                               public void onComplete(Task<Void> task) {
-                                  user.setId(0);
-                                  startActivity(new Intent(getActivity(), Sign_InActivity.class));
+                                   startActivity(new Intent(getActivity(), Sign_InActivity.class));
                                   ((MainActivity) context).finish();
                                    user.setOffline("0");
                               }
@@ -243,4 +242,41 @@ public class Fragment_Account extends Fragment {
         menu.findItem(R.id.action_back).setVisible(false);
     }
 
+    @Override
+    public void onDestroy() {
+        updateOffline();
+        super.onDestroy();
+    }
+
+    private void updateOffline()
+    {
+        if (connectionDetector.isConnectingToInternet()) {
+            String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+            MultipartTypedOutput multipartTypedOutput = new MultipartTypedOutput();
+            String id= String.valueOf(user.getId());
+            multipartTypedOutput.addPart("id", new TypedString(id));
+
+//            progress = dialogUtil.showProgressDialog(MainActivity.this, getString(R.string.please_wait));
+            appController.paServices.Offline(multipartTypedOutput, new Callback<TokenRoot>() {
+                @Override
+                public void success(TokenRoot tokenRoot, Response response) {
+                    if (tokenRoot.getStatus().equalsIgnoreCase("1")) {
+//                        progress.dismiss();
+                        user.setId(0);
+                        user.setOffline("1");
+                    } else {
+//                        progress.dismiss();
+                    }
+                }
+
+                @Override
+                public void failure(RetrofitError retrofitError) {
+//                    progress.dismiss();
+                    Log.e("error", retrofitError.toString());
+                }
+            });
+        } else {
+            com.master.design.therapist.Helper.Helper.showToast(getActivity(), String.valueOf(R.string.no_internet_connection));
+        }
+    }
 }
