@@ -149,7 +149,7 @@ public class Fragment_Account extends Fragment {
         activity.overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
 
     }
-
+boolean offline=false;
     @OnClick(R.id.logoutLL)
     public void clicklogoutLL() {
         showdialogNoData(getString(R.string.logout_from_this_app));
@@ -172,6 +172,7 @@ public class Fragment_Account extends Fragment {
                           startActivity(new Intent(getActivity(), Sign_InActivity.class));
 //                   ((MainActivity)context).finish();
 
+                          offline=true;
                           user.setOffline("0");
                           activity.overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
 
@@ -244,7 +245,10 @@ public class Fragment_Account extends Fragment {
 
     @Override
     public void onDestroy() {
-        updateOffline();
+        if(offline){
+            updateOffline();
+
+        }
         super.onDestroy();
     }
 

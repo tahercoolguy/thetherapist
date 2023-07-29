@@ -60,12 +60,13 @@ public class LanguageActivity extends AppCompatActivity {
         connectionDetector = new ConnectionDetector(getApplicationContext());
 
     }
-
+boolean offline=false;
     @OnClick(R.id.englishRL)
     public void clickEnglishRL() {
         Language language = new Language(1,"Engish","en");
         user.setLanguage(language);
 
+        offline=true;
         Util.setConfigChange(LanguageActivity.this,"en");
 
         restartActivity(LanguageActivity.this);
@@ -85,6 +86,7 @@ public class LanguageActivity extends AppCompatActivity {
     public void clickArabicRL() {
         Language language = new Language(2,"Arabic","ar");
         user.setLanguage(language);
+        offline=true;
          Util.setConfigChange(LanguageActivity.this,"ar");
 //        getActivity().getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
         restartActivity(LanguageActivity.this);
@@ -124,7 +126,10 @@ public class LanguageActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        updateOffline();
+        if(offline){
+            updateOffline();
+
+        }
         super.onDestroy();
     }
 
