@@ -103,7 +103,7 @@ public class User {
     }
 
     public String getOffline() {
-        return sp.getString("offline", "1");
+        return sp.getString("offline", "0");
     }
 
     public void setOffline(String email) {

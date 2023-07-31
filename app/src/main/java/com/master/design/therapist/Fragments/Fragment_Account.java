@@ -59,6 +59,7 @@ public class Fragment_Account extends Fragment {
     private Context context;
     private Activity activity;
 
+
     @BindView(R.id.progress_bar)
     ProgressBar progress_bar;
     @BindView(R.id.txt_error)
@@ -168,14 +169,16 @@ boolean offline=false;
                 .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                       if(user.getCheck().equalsIgnoreCase("1")) {
-                          ((MainActivity) context).finish();
-                          startActivity(new Intent(getActivity(), Sign_InActivity.class));
+
 //                   ((MainActivity)context).finish();
 
                           offline=true;
                           user.setOffline("0");
+                          user.setId(0);
+                          user.logout();
                           activity.overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
-
+                          ((MainActivity) context).finish();
+                          startActivity(new Intent(getActivity(), Sign_InActivity.class));
                       }else
                       {
 
@@ -189,9 +192,13 @@ boolean offline=false;
                           gsc.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
                               @Override
                               public void onComplete(Task<Void> task) {
+                                  offline=true;
+                                  user.setOffline("0");
+                                  user.setId(0);
+                                  user.logout();
                                    startActivity(new Intent(getActivity(), Sign_InActivity.class));
                                   ((MainActivity) context).finish();
-                                   user.setOffline("0");
+
                               }
                           });
                       }
@@ -267,7 +274,7 @@ boolean offline=false;
                     if (tokenRoot.getStatus().equalsIgnoreCase("1")) {
 //                        progress.dismiss();
                         user.setId(0);
-                        user.setOffline("1");
+                        user.setOffline("0");
                     } else {
 //                        progress.dismiss();
                     }

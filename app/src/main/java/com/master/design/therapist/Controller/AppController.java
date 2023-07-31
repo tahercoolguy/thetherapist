@@ -35,8 +35,8 @@ public class AppController extends Application {
     RestAdapter restAdapter;
     RestAdapter restAdaptergoogle;
 
-    public static final String SHOPCH11_SERVER = "http://ta3aarof.com/therapist";
-    public static final String THERAPIST_IMAGE = "http://ta3aarof.com";
+    public static final String SHOPCH11_SERVER = "http://mysupportfriend.com/therapist";
+    public static final String THERAPIST_IMAGE = "http://mysupportfriend.com";
 // private static final String SHOPCH11_SERVER = "http://207.154.215.156:8000/therapist";
 //    public static final String THERAPIST_IMAGE = "http://207.154.215.156:8000";
 
