@@ -442,8 +442,8 @@ public class Conversation_Activity extends AppCompatActivity {
 
     public void createWebSocketClient() {
         URI uri;
-        try {
-            uri = new URI("ws://207.154.215.156:8000/ws/chat/" + chatRoomID + "/");
+         try {
+            uri = new URI("ws://"+ AppController.WebSocketURL+"/ws/chat/" + chatRoomID + "/");
         } catch (URISyntaxException e) {
             e.printStackTrace();
             return;

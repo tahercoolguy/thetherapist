@@ -37,6 +37,7 @@ public class AppController extends Application {
 
     public static final String SHOPCH11_SERVER = "http://mysupportfriend.com/therapist";
     public static final String THERAPIST_IMAGE = "http://mysupportfriend.com";
+    public static final String WebSocketURL = "mysupportfriend.com";
 // private static final String SHOPCH11_SERVER = "http://207.154.215.156:8000/therapist";
 //    public static final String THERAPIST_IMAGE = "http://207.154.215.156:8000";
 
