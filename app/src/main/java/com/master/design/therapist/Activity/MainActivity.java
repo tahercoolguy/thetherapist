@@ -135,6 +135,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 //
 //    }
     Context context;
+    String hello;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -517,10 +518,15 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 Fragment_Home fragment = new Fragment_Home();
                 Bundle args = new Bundle();
                 args.putString("selected_ageId", selected_ageId);
+                     user.setselected_ageId(selected_ageId);
                 args.putString("selected_genderId", selected_genderId);
+                   user.setselected_genderId(selected_genderId);
                 args.putString("selected_ethicID", selected_ethicID);
+                   user.setselected_ethicID(selected_ethicID);
                 args.putString("selected_educationID", selected_educationID);
+                  user.setselected_educationID(selected_educationID);
                 args.putString("InterestIdList", InterestIdList);
+                  user.setInterestIdList(InterestIdList);
                 fragment.setArguments(args);
                 addFragment(fragment, false);
 

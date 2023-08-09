@@ -105,13 +105,13 @@ public class Fragment_Account extends Fragment {
         if (rootView == null) {
             rootView = inflater.inflate(R.layout.account_fragment_layout, container, false);
             ButterKnife.bind(this, rootView);
-            gso= new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
-            gsc= GoogleSignIn.getClient(context,gso);
+            gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
+            gsc = GoogleSignIn.getClient(context, gso);
 
             String versionCode = String.valueOf(BuildConfig.VERSION_CODE);
             String versionName = BuildConfig.VERSION_NAME;
 
-            versionTxt.setText(""+versionCode+".0");
+            versionTxt.setText("" + versionCode + ".0");
 
         }
         return rootView;
@@ -150,7 +150,9 @@ public class Fragment_Account extends Fragment {
         activity.overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
 
     }
-boolean offline=false;
+
+    boolean offline = false;
+
     @OnClick(R.id.logoutLL)
     public void clicklogoutLL() {
         showdialogNoData(getString(R.string.logout_from_this_app));
@@ -168,19 +170,11 @@ boolean offline=false;
                 })
                 .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                      if(user.getCheck().equalsIgnoreCase("1")) {
+                        if (user.getCheck().equalsIgnoreCase("1")) {
 
 //                   ((MainActivity)context).finish();
-
-                          offline=true;
-                          user.setOffline("0");
-                          user.setId(0);
-                          user.logout();
-                          activity.overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
-                          ((MainActivity) context).finish();
-                          startActivity(new Intent(getActivity(), Sign_InActivity.class));
-                      }else
-                      {
+                            updateOffline();
+                        } else {
 
 //                          GoogleSignInOptions gso = new GoogleSignInOptions.
 //                                  Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).
@@ -189,19 +183,20 @@ boolean offline=false;
 //                          GoogleSignInClient googleSignInClient= GoogleSignIn.getClient(context,gso);
 //                          googleSignInClient.signOut();
 //                          ((MainActivity) context).finish();
-                          gsc.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
-                              @Override
-                              public void onComplete(Task<Void> task) {
-                                  offline=true;
-                                  user.setOffline("0");
-                                  user.setId(0);
-                                  user.logout();
-                                   startActivity(new Intent(getActivity(), Sign_InActivity.class));
-                                  ((MainActivity) context).finish();
+                            gsc.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(Task<Void> task) {
+                                    offline = true;
+                                    user.setOffline("0");
+                                    user.setId(0);
+                                    user.logout();
+                                    startActivity(new Intent(getActivity(), Sign_InActivity.class)
+                                            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+                                    ((MainActivity) context).finish();
 
-                              }
-                          });
-                      }
+                                }
+                            });
+                        }
                     }
                 });
         final AlertDialog alert = builder.create();
@@ -252,29 +247,35 @@ boolean offline=false;
 
     @Override
     public void onDestroy() {
-        if(offline){
-            updateOffline();
+        if (offline) {
+//            updateOffline();
 
         }
         super.onDestroy();
     }
 
-    private void updateOffline()
-    {
+    private void updateOffline() {
         if (connectionDetector.isConnectingToInternet()) {
             String refreshedToken = FirebaseInstanceId.getInstance().getToken();
             MultipartTypedOutput multipartTypedOutput = new MultipartTypedOutput();
-            String id= String.valueOf(user.getId());
+            String id = String.valueOf(user.getId());
             multipartTypedOutput.addPart("id", new TypedString(id));
 
-//            progress = dialogUtil.showProgressDialog(MainActivity.this, getString(R.string.please_wait));
+//        progress = dialogUtil.showProgressDialog(MainActivity.this, getString(R.string.please_wait));
             appController.paServices.Offline(multipartTypedOutput, new Callback<TokenRoot>() {
                 @Override
                 public void success(TokenRoot tokenRoot, Response response) {
                     if (tokenRoot.getStatus().equalsIgnoreCase("1")) {
 //                        progress.dismiss();
-                        user.setId(0);
+
+                        offline = true;
                         user.setOffline("0");
+                        user.setId(0);
+                        user.logout();
+                        activity.overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
+                        startActivity(new Intent(getActivity(), Sign_InActivity.class)
+                                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+//                        ((MainActivity) context).finish();
                     } else {
 //                        progress.dismiss();
                     }

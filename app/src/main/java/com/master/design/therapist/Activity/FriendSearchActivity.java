@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.master.design.therapist.Adapter.Adapter_Search;
 import com.master.design.therapist.DM.SearchDM;
+import com.master.design.therapist.Helper.User;
 import com.master.design.therapist.R;
 
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ public class FriendSearchActivity extends AppCompatActivity {
     private Context context;
     @BindView(R.id.rcvRcv)
     RecyclerView rcvRcv;
-
+User user;
     @BindView(R.id.startSearchingTxt)
     TextView startSearchingTxt;
 
@@ -46,6 +47,7 @@ public class FriendSearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_friend_search);
         ButterKnife.bind(this);
         context = getApplicationContext();
+        user=new User(FriendSearchActivity.this);
         getBundleData();
         setRcvRcv();
     }
@@ -135,7 +137,7 @@ public class FriendSearchActivity extends AppCompatActivity {
 
     @OnClick(R.id.startSearchingTxt)
     public void clickstartSearchingTxt() {
-
+        user.setSearchCheck("1");
             Intent intent = new Intent();
             intent.putExtra("selected_ageId", selected_ageId);
             intent.putExtra("selected_genderId", selected_genderId);

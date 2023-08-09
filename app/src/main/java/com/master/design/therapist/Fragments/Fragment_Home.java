@@ -67,7 +67,7 @@ public class Fragment_Home extends Fragment {
     @BindView(R.id.sendRequestImg)
     ImageView sendRequestImg;
     @BindView(R.id.sendimagLL)
-     LinearLayout sendimagLL;
+    LinearLayout sendimagLL;
 
     @BindView(R.id.nextTxt)
     TextView nextTxt;
@@ -144,29 +144,41 @@ public class Fragment_Home extends Fragment {
             updateToken();
             updateOnline();
 
-            if (getArguments() != null) {
 
-
-                if (!getArguments().getString("selected_ageId").equalsIgnoreCase("")) {
-                    selected_ageId = getArguments().getString("selected_ageId");
-                }
-                if (!getArguments().getString("selected_genderId").equalsIgnoreCase("")) {
-                    selected_genderId = getArguments().getString("selected_genderId");
-                }
-                if (!getArguments().getString("selected_ethicID").equalsIgnoreCase("")) {
-                    selected_ethicID = getArguments().getString("selected_ethicID");
-                }
-                if (!getArguments().getString("selected_educationID").equalsIgnoreCase("")) {
-                    selected_educationID = getArguments().getString("selected_educationID");
-                }
-                if (!getArguments().getString("InterestIdList").equalsIgnoreCase("")) {
-                    InterestIdList = getArguments().getString("InterestIdList");
-                }
-
+            if (user.getSearchCheck().equalsIgnoreCase("1")) {
+                selected_ageId = user.getselected_ageId();
+                selected_genderId = user.getselected_genderId();
+                selected_ethicID = user.getselected_ethicID();
+                selected_educationID = user.getselected_educationID();
+                InterestIdList = user.getInterestIdList();
                 searchAPI();
 
             } else {
-                setsliderData();
+                if (getArguments() != null) {
+
+
+                    if (!getArguments().getString("selected_ageId").equalsIgnoreCase("")) {
+                        selected_ageId = getArguments().getString("selected_ageId");
+                    }
+                    if (!getArguments().getString("selected_genderId").equalsIgnoreCase("")) {
+                        selected_genderId = getArguments().getString("selected_genderId");
+                    }
+                    if (!getArguments().getString("selected_ethicID").equalsIgnoreCase("")) {
+                        selected_ethicID = getArguments().getString("selected_ethicID");
+                    }
+                    if (!getArguments().getString("selected_educationID").equalsIgnoreCase("")) {
+                        selected_educationID = getArguments().getString("selected_educationID");
+                    }
+                    if (!getArguments().getString("InterestIdList").equalsIgnoreCase("")) {
+                        InterestIdList = getArguments().getString("InterestIdList");
+                    }
+
+                    searchAPI();
+
+                } else {
+                    setsliderData();
+                }
+
             }
 
 
@@ -230,7 +242,7 @@ public class Fragment_Home extends Fragment {
             reciveimagLL.setVisibility(View.GONE);
 
             Adapter_Category_Interest adapter_category_interest = new Adapter_Category_Interest(context, therapistHomeDMPosition.getUsers().get(listposition).getInterests());
-            GridLayoutManager linearLayoutManager = new GridLayoutManager(context,3);
+            GridLayoutManager linearLayoutManager = new GridLayoutManager(context, 3);
             categoryRcv.setLayoutManager(linearLayoutManager);
             categoryRcv.setAdapter(adapter_category_interest);
 
@@ -252,7 +264,7 @@ public class Fragment_Home extends Fragment {
                 }
 
                 @Override
-                    public void onSendRequest(String id) {
+                public void onSendRequest(String id) {
 
 //               SendRequestBinding(id);
 
@@ -466,7 +478,7 @@ public class Fragment_Home extends Fragment {
 
                             Adapter_Category_Interest adapter_category_interest = new Adapter_Category_Interest(context, therapistHomeDM.getUsers().get(0).getInterests());
 //                            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
-                            GridLayoutManager linearLayoutManager = new GridLayoutManager(context,3);
+                            GridLayoutManager linearLayoutManager = new GridLayoutManager(context, 3);
                             categoryRcv.setLayoutManager(linearLayoutManager);
                             categoryRcv.setAdapter(adapter_category_interest);
 
@@ -597,7 +609,7 @@ public class Fragment_Home extends Fragment {
                 if (!sb.equals("")) {
                     try {
                         sb.deleteCharAt(sb.length() - 1);
-                         multipartTypedOutput.addPart("gender", new TypedString(String.valueOf(sb)));
+                        multipartTypedOutput.addPart("gender", new TypedString(String.valueOf(sb)));
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -682,7 +694,7 @@ public class Fragment_Home extends Fragment {
 
                                 Adapter_Category_Interest adapter_category_interest = new Adapter_Category_Interest(context, therapistHomeDM.getUsers().get(0).getInterests());
 //                                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
-                                GridLayoutManager linearLayoutManager = new GridLayoutManager(context,3);
+                                GridLayoutManager linearLayoutManager = new GridLayoutManager(context, 3);
                                 categoryRcv.setLayoutManager(linearLayoutManager);
                                 categoryRcv.setAdapter(adapter_category_interest);
 
@@ -805,7 +817,7 @@ public class Fragment_Home extends Fragment {
                     if (tokenRoot.getStatus().equalsIgnoreCase("1")) {
 //                        progress.dismiss();
 
-                    }else{
+                    } else {
 //                        progress.dismiss();
                     }
                 }
@@ -834,7 +846,7 @@ public class Fragment_Home extends Fragment {
                     if (tokenRoot.getStatus().equalsIgnoreCase("1")) {
 //                        progress.dismiss();
 
-                    }else{
+                    } else {
 //                        progress.dismiss();
                     }
                 }

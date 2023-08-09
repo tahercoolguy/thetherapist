@@ -111,6 +111,54 @@ public class User {
     }
 
 
+    public String getselected_ageId() {
+        return sp.getString("selected_ageId", "");
+    }
+
+    public void setselected_ageId(String selected_ageId) {
+        sp.edit().putString("name", selected_ageId).apply();
+    }
+
+    public String getselected_genderId() {
+        return sp.getString("selected_genderId", "");
+    }
+
+    public void setselected_genderId(String selected_genderId) {
+        sp.edit().putString("selected_genderId", selected_genderId).apply();
+    }
+
+    public String getselected_ethicID() {
+        return sp.getString("selected_ethicID", "");
+    }
+
+    public void setselected_ethicID(String selected_ethicID) {
+        sp.edit().putString("selected_ethicID", selected_ethicID).apply();
+    }
+
+    public String getselected_educationID() {
+        return sp.getString("selected_educationID", "");
+    }
+
+    public void setselected_educationID(String selected_educationID) {
+        sp.edit().putString("selected_educationID", selected_educationID).apply();
+    }
+
+    public String getInterestIdList() {
+        return sp.getString("InterestIdList", "");
+    }
+
+    public void setInterestIdList(String InterestIdList) {
+        sp.edit().putString("InterestIdList", InterestIdList).apply();
+    }  public String getSearchCheck() {
+        return sp.getString("searchcheck", "0");
+    }
+
+    public void setSearchCheck(String searchcheck) {
+        sp.edit().putString("searchcheck", searchcheck).apply();
+    }
+
+
+
     //language
     public Language setLanguage(Language language) {
         User.language = language;
