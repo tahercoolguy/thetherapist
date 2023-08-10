@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -42,6 +43,14 @@ public class LanguageActivity extends AppCompatActivity {
 
     @BindView(R.id.arabicRL)
     RelativeLayout arabicRL;
+
+    @BindView(R.id.englishLL)
+    LinearLayout englishLL;
+
+
+    @BindView(R.id.arabicLL)
+    LinearLayout arabicLL;
+
     AppController appController;
     String check;
     Dialog progress;
@@ -65,6 +74,8 @@ boolean offline=false;
     public void clickEnglishRL() {
         Language language = new Language(1,"Engish","en");
         user.setLanguage(language);
+        englishRL.setBackground(getDrawable(R.drawable.language_select_bg));
+        arabicRL.setBackground(getDrawable(R.drawable.language_unselect_bg));
 
         offline=true;
         Util.setConfigChange(LanguageActivity.this,"en");
@@ -74,8 +85,7 @@ boolean offline=false;
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
         finish();
 
-        englishRL.setBackground(getDrawable(R.drawable.language_select_bg));
-        arabicRL.setBackground(getDrawable(R.drawable.language_unselect_bg));
+
 //        startActivity(new Intent(LanguageActivity.this, IntroActivity.class));
         overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
         finish();
@@ -87,6 +97,8 @@ boolean offline=false;
         Language language = new Language(2,"Arabic","ar");
         user.setLanguage(language);
         offline=true;
+        englishRL.setBackground(getDrawable(R.drawable.language_unselect_bg));
+        arabicRL.setBackground(getDrawable(R.drawable.language_select_bg));
          Util.setConfigChange(LanguageActivity.this,"ar");
 //        getActivity().getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
         restartActivity(LanguageActivity.this);
@@ -94,13 +106,59 @@ boolean offline=false;
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
         finish();
 
-        englishRL.setBackground(getDrawable(R.drawable.language_unselect_bg));
-        arabicRL.setBackground(getDrawable(R.drawable.language_select_bg));
+
 //        startActivity(new Intent(LanguageActivity.this, IntroActivity.class));
         finish();
         overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
 
     }
+
+    @OnClick(R.id.englishLL)
+    public void clickEnglishLL() {
+        Language language = new Language(1,"Engish","en");
+        user.setLanguage(language);
+
+        offline=true;
+
+        englishRL.setBackground(getDrawable(R.drawable.language_select_bg));
+        arabicRL.setBackground(getDrawable(R.drawable.language_unselect_bg));
+        Util.setConfigChange(LanguageActivity.this,"en");
+
+        restartActivity(LanguageActivity.this);
+        startActivity(new Intent(LanguageActivity.this,IntroActivity.class)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+        finish();
+
+
+//        startActivity(new Intent(LanguageActivity.this, IntroActivity.class));
+        overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
+        finish();
+
+    }
+
+    @OnClick(R.id.arabicLL)
+    public void clickArabicLL() {
+        Language language = new Language(2,"Arabic","ar");
+        user.setLanguage(language);
+        offline=true;
+        englishRL.setBackground(getDrawable(R.drawable.language_unselect_bg));
+        arabicRL.setBackground(getDrawable(R.drawable.language_select_bg));
+        Util.setConfigChange(LanguageActivity.this,"ar");
+//        getActivity().getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
+        restartActivity(LanguageActivity.this);
+        startActivity(new Intent(LanguageActivity.this,IntroActivity.class)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+        finish();
+
+
+//        startActivity(new Intent(LanguageActivity.this, IntroActivity.class));
+        finish();
+        overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
+
+    }
+
+
+
 
     public static void restartActivity(Activity activity){
         if (Build.VERSION.SDK_INT >= 11) {

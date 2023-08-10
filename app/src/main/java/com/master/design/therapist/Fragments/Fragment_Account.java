@@ -59,7 +59,6 @@ public class Fragment_Account extends Fragment {
     private Context context;
     private Activity activity;
 
-
     @BindView(R.id.progress_bar)
     ProgressBar progress_bar;
     @BindView(R.id.txt_error)
