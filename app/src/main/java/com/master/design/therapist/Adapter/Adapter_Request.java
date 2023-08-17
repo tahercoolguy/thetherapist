@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.master.design.therapist.Controller.AppController;
 import com.master.design.therapist.DM.InterestDM;
-import com.master.design.therapist.Adapter.DataModel.Senders;
+import com.master.design.therapist.DataModel.Senders;
 import com.master.design.therapist.Helper.DialogUtil;
 import com.master.design.therapist.Helper.User;
 import com.master.design.therapist.R;

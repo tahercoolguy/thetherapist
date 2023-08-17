@@ -136,10 +136,11 @@
             android:textSize="@dimen/text_size_normal"></EditText>
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:layout_marginTop="10dp"
+            android:id="@+id/forgotPasswordTxt"
             android:gravity="end"
             android:hint="@string/forgot_password"
             android:paddingHorizontal="10dp"></TextView>

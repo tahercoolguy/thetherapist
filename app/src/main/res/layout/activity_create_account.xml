@@ -175,6 +175,26 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="10dp"
+            android:visibility="visible"
+            android:background="@drawable/rectangle_white_grey_border"
+            android:backgroundTint="@color/white"
+            android:drawableEnd="@drawable/ic_down"
+            android:elevation="10dp"
+            android:hint="Kuwait"
+            android:padding="10dp"
+            android:paddingHorizontal="10dp"
+            android:paddingEnd="20dp"
+             android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_normal"></TextView>
+
+        <AutoCompleteTextView
+            android:id="@+id/autoCompleteTextview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
             android:background="@drawable/rectangle_white_grey_border"
             android:backgroundTint="@color/white"
             android:drawableEnd="@drawable/ic_down"
@@ -185,7 +205,7 @@
             android:paddingEnd="20dp"
             android:singleLine="true"
             android:textColor="@color/black"
-            android:textSize="@dimen/text_size_normal"></TextView>
+            android:textSize="@dimen/text_size_normal"></AutoCompleteTextView>
 
         <TextView
             android:layout_width="match_parent"

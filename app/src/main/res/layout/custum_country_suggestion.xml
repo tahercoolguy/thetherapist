@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:id="@+id/ll"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:padding="10dp"
+        android:text="country name"
+        android:textColor="@color/black"
+        android:id="@+id/countryNameTxt"
+        android:layout_height="wrap_content"></TextView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:padding="10dp"
+        android:visibility="gone"
+        android:text="country name"
+        android:textColor="@color/black"
+        android:id="@+id/countryIDTxt"
+        android:layout_height="wrap_content"></TextView>
+</LinearLayout>

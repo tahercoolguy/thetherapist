@@ -1,10 +1,7 @@
 package com.master.design.therapist.Activity;
 
-import static java.security.AccessController.getContext;
-
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
@@ -15,7 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.master.design.therapist.Adapter.DataModel.TokenRoot;
+import com.master.design.therapist.DataModel.TokenRoot;
 import com.master.design.therapist.Controller.AppController;
 import com.master.design.therapist.Helper.DialogUtil;
 import com.master.design.therapist.Helper.Language;
@@ -23,8 +20,6 @@ import com.master.design.therapist.Helper.User;
 import com.master.design.therapist.Helper.Util;
 import com.master.design.therapist.R;
 import com.master.design.therapist.Utils.ConnectionDetector;
-
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

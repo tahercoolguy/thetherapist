@@ -1,6 +1,5 @@
 package com.master.design.therapist.Activity;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
@@ -8,18 +7,25 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.florent37.singledateandtimepicker.dialog.SingleDateAndTimePickerDialog;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.master.design.therapist.Adapter.CountrySuggetsionAdapter;
 import com.master.design.therapist.Controller.AppController;
-import com.master.design.therapist.Adapter.DataModel.Details;
-import com.master.design.therapist.Adapter.DataModel.Ethnic_details;
-import com.master.design.therapist.Adapter.DataModel.TherapistCountriesDM;
-import com.master.design.therapist.Adapter.DataModel.TherapistEthnicDM;
+import com.master.design.therapist.DataModel.Details;
+import com.master.design.therapist.DataModel.Ethnic_details;
+import com.master.design.therapist.DataModel.TherapistCountriesDM;
+import com.master.design.therapist.DataModel.TherapistEthnicDM;
 import com.master.design.therapist.Helper.BottomForAll;
 import com.master.design.therapist.Helper.DataChangeDM;
 import com.master.design.therapist.Helper.DialogUtil;
@@ -35,6 +41,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.annotations.Nullable;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -46,7 +53,6 @@ public class Create_Account_Activity extends AppCompatActivity {
     User user;
     DialogUtil dialogUtil;
     Dialog progress;
-
     @BindView(R.id.userNameET)
     EditText userNameET;
 
@@ -93,18 +99,22 @@ public class Create_Account_Activity extends AppCompatActivity {
     @BindView(R.id.ageTxt)
     TextView ageTxt;
 
+    @BindView(R.id.autoCompleteTextview)
+    AutoCompleteTextView autoCompleteTextview;
+
 //    @BindView(R.id.full_date)
 //    LinearLayout full_date;
 
 
-    String Gender="";
-    String name="";
-    String SelectCountryid="", SelectCountryCode="";
-    String ethnicityyid="";
+    String Gender = "";
+    String name = "";
+    String SelectCountryid = "", SelectCountryCode = "";
+    String ethnicityyid = "";
     String Date;
-    String DialCode="", age="";
+    String DialCode = "", age = "";
     String nameAr;
 
+    CountrySuggetsionAdapter adapter;
 
     @OnClick(R.id.maleTV)
     public void maleTV() {
@@ -169,13 +179,13 @@ public class Create_Account_Activity extends AppCompatActivity {
             public void response(Object object) {
 
                 name = ((DataChangeDM) object).getName();
-                nameAr=((DataChangeDM) object).getNameAr();
+                nameAr = ((DataChangeDM) object).getNameAr();
                 ethnicityyid = ((DataChangeDM) object).getId();
 //                                    user.setAreaId(AreaID);
 
                 if (user.getLanguageCode().equalsIgnoreCase("en")) {
                     ethnicityyET.setText(name);
-                }else{
+                } else {
                     ethnicityyET.setText(nameAr);
                 }
 
@@ -200,13 +210,13 @@ public class Create_Account_Activity extends AppCompatActivity {
             public void response(Object object) {
 
                 name = ((DataChangeDM) object).getName();
-                nameAr=((DataChangeDM) object).getNameAr();
+                nameAr = ((DataChangeDM) object).getNameAr();
                 SelectCountryid = ((DataChangeDM) object).getId();
 
 //               user.setAreaId(AreaID);
                 if (user.getLanguageCode().equalsIgnoreCase("en")) {
                     selectCountryET.setText(name);
-                }else{
+                } else {
                     selectCountryET.setText(nameAr);
                 }
 
@@ -260,14 +270,56 @@ public class Create_Account_Activity extends AppCompatActivity {
         SelectMobileCode();
         if (user.getLanguageCode().equalsIgnoreCase("en")) {
             selectCountryET.setHint("Kuwait");
-        }
-       else    {
+        } else {
             selectCountryET.setHint("الكويت");
-            }
+        }
 
-
+//        adapter = new CountrySuggetsionAdapter(this, arrayList1);
+//        autoCompleteTextview.setAdapter(adapter);
+//
+//
+//        autoCompleteTextview.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable editable) {
+//                String query = editable.toString();
+//                filterSuggestions(query, adapter);
+//            }
+//        });
+//        autoCompleteTextview.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                autoCompleteTextview.showDropDown();
+//            }
+//        });
+//        autoCompleteTextview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//
+//                name = arrayList1.get(position).getName();
+//                nameAr = arrayList1.get(position).getNameAr();
+//                SelectCountryid = arrayList1.get(position).getId();
+//
+////               user.setAreaId(AreaID);
+//                if (user.getLanguageCode().equalsIgnoreCase("en")) {
+//                    selectCountryET.setText(name);
+//                } else {
+//                    selectCountryET.setText(nameAr);
+//                }
+//
+//            }
+//        });
 
     }
+
 
     @OnClick(R.id.continueTxt)
     public void clickcontinueTxt() {
@@ -420,14 +472,52 @@ public class Create_Account_Activity extends AppCompatActivity {
 
     }
 
+
+//    private String[] allSuggestions = {"Apple", "Banana", "Cherry", "Date", "Elderberry"};
+
+    private void filterSuggestions(String query, CountrySuggetsionAdapter adapter) {
+        adapter.clear(); // Clear existing items in the adapter before adding filtered ones
+
+        for (DataChangeDM item : arrayList1) {
+            String itemName = user.getLanguageCode().equalsIgnoreCase("en")
+                    ? item.getName() : item.getNameAr();
+
+            if (itemName.toLowerCase().contains(query.toLowerCase())) {
+                adapter.add(item);
+            }
+        }
+
+        adapter.notifyDataSetChanged(); // Notify the adapter that data has changed
+    }
+
+//    private void filterSuggestions(String query) {
+//        CountrySuggetsionAdapter adapter = (CountrySuggetsionAdapter) autoCompleteTextview.getAdapter();
+//        adapter.clear();
+//
+//        for (DataChangeDM suggestion : arrayList1) {
+//            if(user.getLanguageCode().equalsIgnoreCase("en")) {
+//                if (suggestion.getName().contains(query.toLowerCase())) {
+//                    adapter.add(arrayList1.get(0));
+//                }
+//            }else{
+//                if (suggestion.getNameAr().contains(query.toLowerCase())) {
+//                    adapter.add(arrayList1.get(0));
+//                }
+//            }
+//        }
+//
+//        adapter.notifyDataSetChanged();
+//    }
+
+
     public void SelectCountry() {
         if (connectionDetector.isConnectingToInternet()) {
             String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-            //           progress = dialogUtil.showProgressDialog(Create_Account_Activity.this, getString(R.string.please_wait));
+            progress = dialogUtil.showProgressDialog(Create_Account_Activity.this, getString(R.string.please_wait));
             appController.paServices.TherapistCountries(new Callback<TherapistCountriesDM>() {
                 @Override
                 public void success(TherapistCountriesDM therapistCountriesDM, Response response) {
-                    //                   progress.dismiss();
+                    progress.dismiss();
                     if (therapistCountriesDM.getStatus().equalsIgnoreCase("1")) {
 
                         for (Details obj : therapistCountriesDM.getDetails()) {
@@ -438,13 +528,14 @@ public class Create_Account_Activity extends AppCompatActivity {
                             s.setId(obj.getIsoCode());
                             arrayList1.add(s);
                         }
+
                     } else
                         Helper.showToast(Create_Account_Activity.this, getString(R.string.Api_data_not_found));
                 }
 
                 @Override
                 public void failure(RetrofitError retrofitError) {
-                    //                   progress.dismiss();
+                    progress.dismiss();
                     Log.e("error", retrofitError.toString());
                 }
             });

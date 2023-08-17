@@ -25,7 +25,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -39,8 +38,8 @@ import com.master.design.therapist.Adapter.AddImageAdapter;
 import com.master.design.therapist.Adapter.Education_details;
 import com.master.design.therapist.Adapter.TherapistEducationDM;
 import com.master.design.therapist.Controller.AppController;
-import com.master.design.therapist.Adapter.DataModel.AddMultipleImageRoot;
-import com.master.design.therapist.Adapter.DataModel.TherapistRegisterDM;
+import com.master.design.therapist.DataModel.AddMultipleImageRoot;
+import com.master.design.therapist.DataModel.TherapistRegisterDM;
 import com.master.design.therapist.Helper.BottomForAll;
 import com.master.design.therapist.Helper.DataChangeDM;
 import com.master.design.therapist.Helper.DialogUtil;

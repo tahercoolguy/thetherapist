@@ -8,18 +8,19 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.master.design.therapist.Controller.AppController;
 import com.master.design.therapist.DM.ChatDM;
-import com.master.design.therapist.Adapter.DataModel.Details;
+import com.master.design.therapist.DataModel.Details;
 import com.master.design.therapist.Helper.User;
 import com.master.design.therapist.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
+import io.reactivex.annotations.NonNull;
 
 
 public class Adapter_Chat extends RecyclerView.Adapter<Adapter_Chat.ViewHolder> {

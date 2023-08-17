@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.makeramen.roundedimageview.RoundedImageView;
-import com.master.design.therapist.Adapter.DataModel.All_messages;
+import com.master.design.therapist.DataModel.All_messages;
 import com.master.design.therapist.Helper.User;
 import com.master.design.therapist.R;
 import com.squareup.picasso.Picasso;

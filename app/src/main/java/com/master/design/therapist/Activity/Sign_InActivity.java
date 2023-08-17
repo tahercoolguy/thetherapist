@@ -1,43 +1,30 @@
 package com.master.design.therapist.Activity;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
-import android.app.Instrumentation;
-import android.app.LauncherActivity;
 import android.content.Intent;
-import android.content.IntentSender;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.auth.api.identity.BeginSignInRequest;
-import com.google.android.gms.auth.api.identity.BeginSignInResult;
-import com.google.android.gms.auth.api.identity.Identity;
-import com.google.android.gms.auth.api.identity.SignInClient;
-import com.google.android.gms.auth.api.identity.SignInCredential;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.common.api.CommonStatusCodes;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.master.design.therapist.Adapter.DataModel.SocialUserDM;
-import com.master.design.therapist.Adapter.DataModel.Terms_ConditionsDM;
-import com.master.design.therapist.Adapter.DataModel.TokenRoot;
+import com.master.design.therapist.DataModel.Forgotpassword;
+import com.master.design.therapist.DataModel.SocialUserDM;
 import com.master.design.therapist.Controller.AppController;
-import com.master.design.therapist.Adapter.DataModel.TherapistLoginDM;
+import com.master.design.therapist.DataModel.TherapistLoginDM;
+import com.master.design.therapist.DataModel.TokenRoot;
 import com.master.design.therapist.Helper.DialogUtil;
 import com.master.design.therapist.Helper.User;
 import com.master.design.therapist.R;
@@ -46,7 +33,6 @@ import com.master.design.therapist.Utils.Helper;
 import com.mobsandgeeks.saripaar.annotation.Email;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 
-import butterknife.Action;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -73,31 +59,29 @@ public class Sign_InActivity extends AppCompatActivity {
 //    private BeginSignInRequest signUpRequest;
 
 
-
     @BindView(R.id.googleSignInButton)
     ImageView googleSignInButton;
+    @BindView(R.id.forgotPasswordTxt)
+    TextView forgotPasswordTxt;
 
 
     @OnClick(R.id.googleSignInButton)
-    public void googleSignInButton()
-    {
-        check="2";
-       user.setCheck(check);
+    public void googleSignInButton() {
+        check = "2";
+        user.setCheck(check);
         sign();
     }
 
-    public  void sign()
-    {
-        Intent intent=gsc.getSignInIntent();
-        startActivityForResult(intent,1000);
+    public void sign() {
+        Intent intent = gsc.getSignInIntent();
+        startActivityForResult(intent, 1000);
 
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode,  Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==1000)
-        {
+        if (requestCode == 1000) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
 
             try {
@@ -119,7 +103,7 @@ public class Sign_InActivity extends AppCompatActivity {
             if (connectionDetector.isConnectingToInternet()) {
                 String refreshedToken = FirebaseInstanceId.getInstance().getToken();
                 progress = dialogUtil.showProgressDialog(Sign_InActivity.this, getString(R.string.please_wait));
-                appController.paServices.SocialUser(personName,personEmail,new Callback<SocialUserDM>() {
+                appController.paServices.SocialUser(personName, personEmail, new Callback<SocialUserDM>() {
                     @Override
                     public void success(SocialUserDM socialUserDM, Response response) {
                         progress.dismiss();
@@ -160,64 +144,54 @@ public class Sign_InActivity extends AppCompatActivity {
     TextInputEditText passETET;
 
 
-
     @OnClick(R.id.logINTxt)
-    public void logINTxt()
-    {
-        check="2";
+    public void logINTxt() {
+        check = "2";
         user.setCheck(check);
 
-        if(connectionDetector.isConnectingToInternet())
-        {
+        if (connectionDetector.isConnectingToInternet()) {
 
             boolean correct = true;
-            if(userNameET.getText().toString().equalsIgnoreCase(""))
-            {
-                correct=false;
-                Helper.showToast(Sign_InActivity.this,getString(R.string.kindly_enter_email));
-            }
-
-            else if(passETET.getText().toString().equalsIgnoreCase(""))
-            {
-                correct=false;
-                Helper.showToast(Sign_InActivity.this,getString(R.string.kindly_enter_password));
-            }
-
-            else if (correct)
-            {
+            if (userNameET.getText().toString().equalsIgnoreCase("")) {
+                correct = false;
+                Helper.showToast(Sign_InActivity.this, getString(R.string.kindly_enter_email));
+            } else if (passETET.getText().toString().equalsIgnoreCase("")) {
+                correct = false;
+                Helper.showToast(Sign_InActivity.this, getString(R.string.kindly_enter_password));
+            } else if (correct) {
                 String refreshedToken = FirebaseInstanceId.getInstance().getToken();
 
                 progress = dialogUtil.showProgressDialog(Sign_InActivity.this, getString(R.string.please_wait));
 
-                appController.paServices.TherapistLogin(userNameET.getText().toString(), passETET.getText().toString(),"0", new Callback<TherapistLoginDM>() {
+                appController.paServices.TherapistLogin(userNameET.getText().toString(), passETET.getText().toString(), "0", new Callback<TherapistLoginDM>() {
 
-                            @Override
+                    @Override
 
-                            public void success ( TherapistLoginDM therapistLoginDM, Response response ) {
-                                progress.dismiss();
-                                if (therapistLoginDM.getStatus().equalsIgnoreCase("1")) {
+                    public void success(TherapistLoginDM therapistLoginDM, Response response) {
+                        progress.dismiss();
+                        if (therapistLoginDM.getStatus().equalsIgnoreCase("1")) {
 //                        Helper.shwToast(LoginActivity.this,customerRegisterDM.getMessage());
-                                    user.setId(Integer.valueOf(therapistLoginDM.getUser().getId()));
+                            user.setId(Integer.valueOf(therapistLoginDM.getUser().getId()));
 
-                                    startActivity(new Intent(Sign_InActivity.this, MainActivity.class));
-                                    overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
-                                    finish();
+                            startActivity(new Intent(Sign_InActivity.this, MainActivity.class));
+                            overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
+                            finish();
 
-                                } else
-                                    Helper.showToast(Sign_InActivity.this, getString(R.string.user_login_failed));
-                            }
+                        } else
+                            Helper.showToast(Sign_InActivity.this, getString(R.string.user_login_failed));
+                    }
 
-                            @Override
-                            public void failure ( RetrofitError retrofitError ) {
-                                progress.dismiss();
+                    @Override
+                    public void failure(RetrofitError retrofitError) {
+                        progress.dismiss();
 
-                                Log.e("error", retrofitError.toString());
+                        Log.e("error", retrofitError.toString());
 
-                            }
-                        });
+                    }
+                });
             }
-        }else
-            Helper.showToast(Sign_InActivity.this,getString(R.string.no_internet_connection));
+        } else
+            Helper.showToast(Sign_InActivity.this, getString(R.string.no_internet_connection));
 
 
     }
@@ -236,8 +210,8 @@ public class Sign_InActivity extends AppCompatActivity {
 //        if(user.getOffline().equalsIgnoreCase("0")){
 //            updateOffline();
 //        }
-        gso= new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
-        gsc= GoogleSignIn.getClient(this,gso);
+        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
+        gsc = GoogleSignIn.getClient(this, gso);
 
 //        oneTapClient = Identity.getSignInClient(this);
 //        signUpRequest = BeginSignInRequest.builder()
@@ -279,7 +253,7 @@ public class Sign_InActivity extends AppCompatActivity {
 //       }
 //   });
 
- //   }
+        //   }
 //    @Override
 //    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 //        super.onActivityResult(requestCode, resultCode, data);
@@ -347,5 +321,41 @@ public class Sign_InActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
     }
 
+
+    @OnClick(R.id.forgotPasswordTxt)
+    public void clickForgotPassword() {
+
+    }
+
+    private void forgotPassword() {
+        if (connectionDetector.isConnectingToInternet()) {
+            String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+            MultipartTypedOutput multipartTypedOutput = new MultipartTypedOutput();
+            multipartTypedOutput.addPart("id", new TypedString(String.valueOf(user.getId())));
+
+            progress = dialogUtil.showProgressDialog(Sign_InActivity.this, getString(R.string.please_wait));
+            appController.paServices.Reset_Password(multipartTypedOutput, new Callback<Forgotpassword>() {
+                @Override
+                public void success(Forgotpassword tokenRoot, Response response) {
+                    if (tokenRoot.getStatus().equalsIgnoreCase("1")) {
+                        progress.dismiss();
+
+                        Helper.showToast(Sign_InActivity.this, getString(R.string.password_reset_link_sent_on_registered_email));
+                    } else {
+                        progress.dismiss();
+                        Helper.showToast(Sign_InActivity.this, getString(R.string.failed_reset_password));
+                    }
+                }
+
+                @Override
+                public void failure(RetrofitError retrofitError) {
+//                    progress.dismiss();
+                    Log.e("error", retrofitError.toString());
+                }
+            });
+        } else {
+            com.master.design.therapist.Helper.Helper.showToast(Sign_InActivity.this, String.valueOf(R.string.no_internet_connection));
+        }
+    }
 
 }

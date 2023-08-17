@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.master.design.therapist.Controller.AppController;
-import com.master.design.therapist.Adapter.DataModel.GetAll_Image.GetAllImageOutput;
+import com.master.design.therapist.DataModel.GetAll_Image.GetAllImageOutput;
 import com.master.design.therapist.Helper.User;
 import com.master.design.therapist.R;
 import com.squareup.picasso.Picasso;

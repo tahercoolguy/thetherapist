@@ -18,7 +18,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.master.design.therapist.DM.SearchDM;
-import com.master.design.therapist.Adapter.DataModel.Age_details;
+import com.master.design.therapist.DataModel.Age_details;
 import com.master.design.therapist.Helper.User;
 import com.master.design.therapist.R;
 

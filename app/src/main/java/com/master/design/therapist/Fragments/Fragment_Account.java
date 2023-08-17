@@ -2,11 +2,13 @@ package com.master.design.therapist.Fragments;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,28 +19,22 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.master.design.therapist.Activity.AboutActivity;
-import com.master.design.therapist.Activity.Conversation_Activity;
-import com.master.design.therapist.Activity.FriendSearchActivity;
 import com.master.design.therapist.Activity.LanguageActivity;
 import com.master.design.therapist.Activity.MainActivity;
 import com.master.design.therapist.Activity.MyPostedImagesActivity;
 import com.master.design.therapist.Activity.My_ProfileActivity;
 import com.master.design.therapist.Activity.Sign_InActivity;
-import com.master.design.therapist.Activity.SplashScreen;
-import com.master.design.therapist.Adapter.DataModel.TokenRoot;
+import com.master.design.therapist.DataModel.TokenRoot;
 import com.master.design.therapist.BuildConfig;
 import com.master.design.therapist.Controller.AppController;
+import com.master.design.therapist.Helper.DialogUtil;
 import com.master.design.therapist.Helper.User;
 import com.master.design.therapist.R;
 import com.master.design.therapist.Utils.ConnectionDetector;
@@ -46,7 +42,8 @@ import com.master.design.therapist.Utils.ConnectionDetector;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import it.sephiroth.android.library.widget.HListView;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.annotations.Nullable;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -86,7 +83,8 @@ public class Fragment_Account extends Fragment {
     User user;
     GoogleSignInOptions gso;
     GoogleSignInClient gsc;
-
+    DialogUtil dialogUtil;
+    Dialog progress;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -96,6 +94,7 @@ public class Fragment_Account extends Fragment {
         appController = (AppController) getActivity().getApplicationContext();
         user = new User(context);
         connectionDetector = new ConnectionDetector(getActivity());
+        dialogUtil = new DialogUtil();
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage(getResources().getString(R.string.please_wait));
         progressDialog.setIndeterminate(true);
@@ -169,11 +168,20 @@ public class Fragment_Account extends Fragment {
                 })
                 .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        if (user.getCheck().equalsIgnoreCase("1")) {
+                        progress = dialogUtil.showProgressDialog(getActivity(), getString(R.string.please_wait));
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                updateOffline();
+                            }
+                        }, 3000);
 
-//                   ((MainActivity)context).finish();
-                            updateOffline();
-                        } else {
+
+//                        if (user.getCheck().equalsIgnoreCase("1")) {
+//
+////                   ((MainActivity)context).finish();
+//                            updateOffline();
+//                        } else {
 
 //                          GoogleSignInOptions gso = new GoogleSignInOptions.
 //                                  Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).
@@ -182,20 +190,20 @@ public class Fragment_Account extends Fragment {
 //                          GoogleSignInClient googleSignInClient= GoogleSignIn.getClient(context,gso);
 //                          googleSignInClient.signOut();
 //                          ((MainActivity) context).finish();
-                            gsc.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(Task<Void> task) {
-                                    offline = true;
-                                    user.setOffline("0");
-                                    user.setId(0);
-                                    user.logout();
-                                    startActivity(new Intent(getActivity(), Sign_InActivity.class)
-                                            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
-                                    ((MainActivity) context).finish();
-
-                                }
-                            });
-                        }
+//                            gsc.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
+//                                @Override
+//                                public void onComplete(Task<Void> task) {
+//                                    offline = true;
+//                                    user.setOffline("0");
+//                                    user.setId(0);
+//                                    user.logout();
+//                                    startActivity(new Intent(getActivity(), Sign_InActivity.class)
+//                                            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+//                                    ((MainActivity) context).finish();
+//
+//                                }
+//                            });
+//                        }
                     }
                 });
         final AlertDialog alert = builder.create();

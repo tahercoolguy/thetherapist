@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/colorAppBG"
     android:clickable="true"
+    android:layout_gravity="top"
     android:gravity="center_horizontal"
-    android:minHeight="250dp"
-    android:orientation="vertical"
+    android:minHeight="1000dp"
+     android:orientation="vertical"
     app:behavior_hideable="true"
     app:behavior_peekHeight="0dp"
     app:layout_behavior="@string/bottom_sheet_behavior">
@@ -60,11 +61,24 @@
             android:textStyle="normal" />
     </RelativeLayout>
 
+
+    <SearchView
+        android:layout_width="match_parent"
+         android:id="@+id/searchView"
+        android:layout_marginTop="30dp"
+        android:layout_marginHorizontal="20dp"
+         android:iconifiedByDefault="false"
+        android:queryHint="@string/search"
+        android:background="@drawable/rectangle_message"
+        android:layout_height="wrap_content">
+
+    </SearchView>
+
     <ListView
         android:id="@+id/list_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_below="@+id/layout_top"
         android:clipToPadding="false"
         android:divider="@color/grey"
@@ -98,6 +112,6 @@
         android:textSize="@dimen/drawer_text_size"
         android:textStyle="bold"
         android:visibility="gone" />
-</RelativeLayout>
+</LinearLayout>
 
 

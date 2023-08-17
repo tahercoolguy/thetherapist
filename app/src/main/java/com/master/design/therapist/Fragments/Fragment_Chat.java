@@ -21,8 +21,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -33,8 +31,8 @@ import com.master.design.therapist.Activity.Conversation_Activity;
 import com.master.design.therapist.Activity.MainActivity;
 import com.master.design.therapist.Adapter.Adapter_Chat;
 import com.master.design.therapist.Controller.AppController;
-import com.master.design.therapist.Adapter.DataModel.ChatlistDM;
-import com.master.design.therapist.Adapter.DataModel.Details;
+import com.master.design.therapist.DataModel.ChatlistDM;
+import com.master.design.therapist.DataModel.Details;
 import com.master.design.therapist.Helper.DialogUtil;
 import com.master.design.therapist.Helper.User;
 import com.master.design.therapist.R;
@@ -46,6 +44,8 @@ import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.annotations.Nullable;
 import it.sephiroth.android.library.widget.HListView;
 import retrofit.Callback;
 import retrofit.RetrofitError;

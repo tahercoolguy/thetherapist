@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.master.design.therapist.Controller.AppController;
 import com.master.design.therapist.DM.InterestDM;
-import com.master.design.therapist.Adapter.DataModel.Interest_details;
+import com.master.design.therapist.DataModel.Interest_details;
 import com.master.design.therapist.Helper.User;
 import com.master.design.therapist.R;
 import com.squareup.picasso.Picasso;

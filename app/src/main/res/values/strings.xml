@@ -203,6 +203,8 @@
     <string name="version" >Version</string>
     <string name="edit_Profile" >Edit Profile</string>
     <string name="forgot_password" >Forgot Password</string>
+    <string name="password_reset_link_sent_on_registered_email">Password reset link sent on registered email</string>
+    <string name="failed_reset_password">failed reset password</string>
 
 
 </resources>

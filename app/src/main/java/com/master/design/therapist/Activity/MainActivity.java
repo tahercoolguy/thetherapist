@@ -32,7 +32,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.master.design.therapist.Controller.AppController;
-import com.master.design.therapist.Adapter.DataModel.TokenRoot;
+import com.master.design.therapist.DataModel.TokenRoot;
 import com.master.design.therapist.Fragments.Fragment_Account;
 import com.master.design.therapist.Fragments.Fragment_Chat;
 import com.master.design.therapist.Fragments.Fragment_Friends_Request;

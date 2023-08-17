@@ -12,7 +12,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.master.design.therapist.Controller.AppController;
-import com.master.design.therapist.Adapter.DataModel.Image;
+import com.master.design.therapist.DataModel.Image;
 import com.master.design.therapist.Helper.DialogUtil;
 import com.master.design.therapist.Helper.User;
 import com.master.design.therapist.R;

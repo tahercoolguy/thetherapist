@@ -199,5 +199,7 @@
     <string name="version" >إصدار</string>
     <string name="edit_Profile" >تعديل الملف الشخصي</string>
     <string name="forgot_password" >هل نسيت كلمة السر</string>
+    <string name="password_reset_link_sent_on_registered_email">تم إرسال رابط إعادة تعيين كلمة المرور على البريد الإلكتروني المسجل</string>
+    <string name="failed_reset_password">فشل إعادة تعيين كلمة المرور</string>
 
-   </resources>
+</resources>

@@ -14,7 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.master.design.therapist.DM.InterestDM;
-import com.master.design.therapist.Adapter.DataModel.Interests;
+import com.master.design.therapist.DataModel.Interests;
 import com.master.design.therapist.Helper.User;
 import com.master.design.therapist.R;
 
