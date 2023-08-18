@@ -166,6 +166,8 @@
                     android:background="@color/white"
                     android:editable="false"
                     android:gravity="end"
+                    android:clickable="false"
+                    android:focusable="false"
                     android:inputType="number"
                     android:padding="10dp"
                     android:paddingHorizontal="10dp"

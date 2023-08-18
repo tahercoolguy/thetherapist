@@ -1,7 +1,5 @@
 package com.master.design.therapist.Activity;
 
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
@@ -23,6 +21,7 @@ import com.master.design.therapist.Controller.AppController;
 import com.master.design.therapist.DataModel.Details;
 import com.master.design.therapist.DataModel.Edit_ProfileDM;
 import com.master.design.therapist.DataModel.Ethnic_details;
+import com.master.design.therapist.DataModel.MyProfile.NewInterest;
 import com.master.design.therapist.DataModel.MyProfile.Root;
 import com.master.design.therapist.DataModel.TherapistCountriesDM;
 import com.master.design.therapist.DataModel.TherapistEthnicDM;
@@ -38,10 +37,12 @@ import com.master.design.therapist.Utils.ConnectionDetector;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.annotations.Nullable;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -98,34 +99,33 @@ public class Edit_ProfileActivity extends AppCompatActivity {
     @BindView(R.id.educationET)
     TextView educationET;
 
-    String Gender="";
+    String Gender = "";
     String name;
-    String nameAr,educationAr;
+    String nameAr, educationAr;
     String SelectCountryid;
 
 
     String educationID;
     String educationName;
+    ArrayList<DataChangeDM> arrayList4 = new ArrayList();
 
     @OnClick(R.id.educationET)
     public void educationET() {
         bottomForAll = new BottomForAll();
-        bottomForAll.arrayList = arrayList;
+        bottomForAll.arrayList = arrayList4;
 
         bottomForAll.setResponseListener(new ResponseListener() {
             @Override
             public void response(Object object) {
 
                 educationName = ((DataChangeDM) object).getName();
-                educationAr= ((DataChangeDM) object).getNameAr();
+                educationAr = ((DataChangeDM) object).getNameAr();
                 educationID = ((DataChangeDM) object).getId();
 //                                    user.setAreaId(AreaID);
 
                 if (user.getLanguageCode().equalsIgnoreCase("en")) {
                     educationET.setText(educationName);
-                }
-                else
-                {
+                } else {
                     educationET.setText(educationAr);
                 }
             }
@@ -138,12 +138,13 @@ public class Edit_ProfileActivity extends AppCompatActivity {
     BottomForAll bottomForAll;
 
     String ethnicityyid;
+    ArrayList<DataChangeDM> arrayList3 = new ArrayList();
 
     @OnClick(R.id.selectEthnicityTxt)
     public void clickselectEthnicityTxt() {
 
         bottomForAll = new BottomForAll();
-        bottomForAll.arrayList = arrayList;
+        bottomForAll.arrayList = arrayList3;
 
 
         bottomForAll.setResponseListener(new ResponseListener() {
@@ -197,19 +198,19 @@ public class Edit_ProfileActivity extends AppCompatActivity {
         Gender = "0";
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
+
     @OnClick(R.id.dateET)
     public void dateET() {
         datepick();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
+
     @OnClick(R.id.monthET)
     public void monthET() {
         datepick();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
+
     @OnClick(R.id.yearET)
     public void yearET() {
         datepick();
@@ -246,56 +247,58 @@ public class Edit_ProfileActivity extends AppCompatActivity {
 
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
+
     public void datepick() {
-        new SingleDateAndTimePickerDialog.Builder(this)
-                .bottomSheet()
-                .curved()
-                .displayMinutes(false)
-                .displayHours(false)
-                .displayDays(false)
-                .displayMonth(true)
-                .mainColor(getColor(R.color.black))
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            new SingleDateAndTimePickerDialog.Builder(this)
+                    .bottomSheet()
+                    .curved()
+                    .displayMinutes(false)
+                    .displayHours(false)
+                    .displayDays(false)
+                    .displayMonth(true)
+                    .mainColor(getColor(R.color.black))
 
-                .listener(new SingleDateAndTimePickerDialog.Listener() {
-                    @Override
-                    public void onDateSelected(java.util.Date date) {
-                        String inputPattern = "yyyy-MM-dd";
-                        SimpleDateFormat inputFormat = new SimpleDateFormat(inputPattern);
+                    .listener(new SingleDateAndTimePickerDialog.Listener() {
+                        @Override
+                        public void onDateSelected(Date date) {
+                            String inputPattern = "yyyy-MM-dd";
+                            SimpleDateFormat inputFormat = new SimpleDateFormat(inputPattern);
 
-                        String inputPattern2 = "yyyy-MMM-dd";
-                        SimpleDateFormat inputFormat2 = new SimpleDateFormat(inputPattern2);
+                            String inputPattern2 = "yyyy-MMM-dd";
+                            SimpleDateFormat inputFormat2 = new SimpleDateFormat(inputPattern2);
 
-                        try {
-                            String str = inputFormat.format(date);
-                            String str1 = inputFormat2.format(date);
-//                            dateTxt.setText(str);
-//                            Date=str;
+                            try {
+                                String str = inputFormat.format(date);
+                                String str1 = inputFormat2.format(date);
+                                //                            dateTxt.setText(str);
+                                //                            Date=str;
 
-                            String Month = "MM";
-                            inputFormat2 = new SimpleDateFormat(Month);
-                            String MonthText = inputFormat2.format(date);
-                            monthET.setText(MonthText);
+                                String Month = "MM";
+                                inputFormat2 = new SimpleDateFormat(Month);
+                                String MonthText = inputFormat2.format(date);
+                                monthET.setText(MonthText);
 
-                            String Year = "yyyy";
-                            inputFormat = new SimpleDateFormat(Year);
-                            String YearText = inputFormat.format(date);
-                            yearET.setText(YearText);
+                                String Year = "yyyy";
+                                inputFormat = new SimpleDateFormat(Year);
+                                String YearText = inputFormat.format(date);
+                                yearET.setText(YearText);
 
-                            String Day = "dd";
-                            inputFormat = new SimpleDateFormat(Day);
-                            String DateText = inputFormat.format(date);
-                            dateET.setText(DateText);
+                                String Day = "dd";
+                                inputFormat = new SimpleDateFormat(Day);
+                                String DateText = inputFormat.format(date);
+                                dateET.setText(DateText);
 
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         }
-                    }
-                })
+                    })
 
-                .displayYears(true)
-                .displayDaysOfMonth(true)
-                .display();
+                    .displayYears(true)
+                    .displayDaysOfMonth(true)
+                    .display();
+        }
 
 
     }
@@ -399,11 +402,10 @@ public class Edit_ProfileActivity extends AppCompatActivity {
         } else if (aboutYouET.getText().toString().equalsIgnoreCase("")) {
             correct = false;
             Helper.showToast(Edit_ProfileActivity.this, getString(R.string.kindly_tell_me_about_u));
-        }else if (aboutYouET.getText().toString().length()>50) {
+        } else if (aboutYouET.getText().toString().length() > 50) {
             correct = false;
             Helper.showToast(Edit_ProfileActivity.this, getString(R.string.characters_should_be_less_than));
-        }
-        else if (educationET.getText().toString().equalsIgnoreCase("")) {
+        } else if (educationET.getText().toString().equalsIgnoreCase("")) {
             correct = false;
             Helper.showToast(Edit_ProfileActivity.this, getString(R.string.kindly_select_education));
         }
@@ -505,7 +507,7 @@ public class Edit_ProfileActivity extends AppCompatActivity {
                 public void success(TherapistCountriesDM therapistCountriesDM, Response response) {
                     //                   progress.dismiss();
                     if (therapistCountriesDM.getStatus().equalsIgnoreCase("1")) {
-
+                        arrayList.clear();
                         for (Details obj : therapistCountriesDM.getDetails()) {
                             DataChangeDM s = new DataChangeDM();
                             s.setName(obj.getName_en());
@@ -538,7 +540,7 @@ public class Edit_ProfileActivity extends AppCompatActivity {
                 public void success(TherapistCountriesDM therapistCountriesDM, Response response) {
                     //                   progress.dismiss();
                     if (therapistCountriesDM.getStatus().equalsIgnoreCase("1")) {
-
+                        arrayList.clear();
                         for (Details obj : therapistCountriesDM.getDetails()) {
                             DataChangeDM s = new DataChangeDM();
                             s.setName(obj.getName_en());
@@ -577,18 +579,18 @@ public class Edit_ProfileActivity extends AppCompatActivity {
 
                         userNameET.setText(profileDM.getUser_data().get(0).getName());
                         selectEthnicityTxt.setText(profileDM.getUser_data().get(0).getEthnicity().getName_en());
-                        ethnicityyid=profileDM.getUser_data().get(0).getEthnicity().getId();
+                        ethnicityyid = profileDM.getUser_data().get(0).getEthnicity().getId();
 
                         aboutYouET.setText(profileDM.getUser_data().get(0).getAboutyou());
 
                         educationET.setText(profileDM.getUser_data().get(0).getEducation().getName_en());
-                        educationID=profileDM.getUser_data().get(0).getEducation().getId();
+                        educationID = profileDM.getUser_data().get(0).getEducation().getId();
 
                         mydob = profileDM.getUser_data().get(0).getDob();
 //                        mygenderId = profileDM.getUser_data().get(0).getGender().get(0).getId();
                         newMobile = profileDM.getUser_data().get(0).getPhone();
                         Gender = profileDM.getUser_data().get(0).getGender().getId();
-                        SelectCountryid = profileDM.getUser_data().get(0).getCountry() .getIsoCode();
+                        SelectCountryid = profileDM.getUser_data().get(0).getCountry().getIsoCode();
                         selectCountryET.setText(profileDM.getUser_data().get(0).getCountry().getName_en());
                         date = profileDM.getUser_data().get(0).getDob();
 
@@ -649,6 +651,39 @@ public class Edit_ProfileActivity extends AppCompatActivity {
                         String year = items1[0];
                         yearET.setText(year);
 
+
+                        ArrayList<String> interestlist = new ArrayList<>();
+                        ArrayList<String> interestlistID = new ArrayList<>();
+
+                        for (NewInterest newinterest : profileDM.getUser_data().get(0).getInterests()) {
+                            if (user.getLanguageCode().equalsIgnoreCase("en")) {
+                                interestlist.add(newinterest.getInterest_eg());
+                            } else {
+                                interestlist.add(newinterest.getInterest_arb());
+                            }
+                            interestlistID.add(newinterest.getId());
+                        }
+
+                        StringBuilder combinedInterests = new StringBuilder();
+                        StringBuilder combinedInterestsID = new StringBuilder();
+                        for (int i = 0; i < interestlist.size(); i++) {
+                            String combinedInterest = interestlist.get(i) + ",";
+                            String combinedInterestID = interestlistID.get(i) + ",";
+                            combinedInterests.append(combinedInterest);
+                            combinedInterestsID.append(combinedInterestID);
+                            if (i < interestlist.size() - 1) {
+                                combinedInterests.append(",");
+                            }
+                        }
+
+                        String combinedInterestsString = combinedInterests.toString();
+                        String combinedInterestsIDString = combinedInterestsID.toString();
+
+                        selectInterestTxt.setText(combinedInterestsString);
+                        InterestIdList=combinedInterestsIDString;
+// Now you have the combined interests and IDs separated by commas
+
+
                         BindingEthenicity();
 
                     } else {
@@ -704,7 +739,7 @@ public class Edit_ProfileActivity extends AppCompatActivity {
                             s.setName(obj.getEthnic_name());
                             s.setNameAr(obj.getEthnic_name_arb());
                             s.setId(obj.getId());
-                            arrayList.add(s);
+                            arrayList3.add(s);
                         }
 
                         BindingEducation();
@@ -738,7 +773,7 @@ public class Edit_ProfileActivity extends AppCompatActivity {
                             s.setName(obj.getEducation());
                             s.setNameAr(obj.getEducation_arb());
                             s.setId(obj.getId());
-                            arrayList.add(s);
+                            arrayList4.add(s);
                         }
                     } else
                         Helper.showToast(Edit_ProfileActivity.this, getString(R.string.Api_data_not_found));

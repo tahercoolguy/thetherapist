@@ -20,8 +20,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -46,6 +44,8 @@ import com.smarteist.autoimageslider.SliderView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.annotations.Nullable;
 import it.sephiroth.android.library.widget.HListView;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -155,7 +155,6 @@ public class Fragment_Home extends Fragment {
 
             } else {
                 if (getArguments() != null) {
-
 
                     if (!getArguments().getString("selected_ageId").equalsIgnoreCase("")) {
                         selected_ageId = getArguments().getString("selected_ageId");
