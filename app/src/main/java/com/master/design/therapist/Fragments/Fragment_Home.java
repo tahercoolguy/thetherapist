@@ -299,7 +299,7 @@ public class Fragment_Home extends Fragment {
 
         } else {
             listposition = 0;
-            if (getArguments() != null) {
+            if (!user.getSearchCheck().equalsIgnoreCase("0")) {
                 searchAPI();
             } else {
                 setsliderData();

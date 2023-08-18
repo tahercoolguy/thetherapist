@@ -7,6 +7,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
@@ -75,6 +77,8 @@ public class Fragment_Account extends Fragment {
     LinearLayout myPostedImageLL;
     @BindView(R.id.versionTxt)
     TextView versionTxt;
+    @BindView(R.id.contactUsLL)
+    LinearLayout contactUsLL;
 
     @BindView(R.id.layout_parent)
     LinearLayout layout_parent;
@@ -86,6 +90,7 @@ public class Fragment_Account extends Fragment {
     GoogleSignInClient gsc;
     DialogUtil dialogUtil;
     Dialog progress;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -148,6 +153,31 @@ public class Fragment_Account extends Fragment {
         startActivity(new Intent(getActivity(), AboutActivity.class));
         activity.overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
 
+    }
+
+    @OnClick(R.id.contactUsLL)
+    public void clickcontactUsLL() {
+
+        sendMail();
+    }
+
+    private void sendMail() {
+
+        // Create an Intent to open Gmail with a pre-filled email draft
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.setData(Uri.parse("mailto:")); // Set the data type to "mailto:"
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"support@dryosefalhasany.com"}); // Set recipient's email address
+        intent.putExtra(Intent.EXTRA_SUBJECT, "For Query"); // Set email subject
+        intent.putExtra(Intent.EXTRA_TEXT, "Hello,"); // Set email body
+        // Check if the device has an email app
+        PackageManager packageManager = context.getPackageManager();
+        if (intent.resolveActivity(packageManager) != null) {
+            // Create a chooser to allow the user to select an app
+            Intent chooserIntent = Intent.createChooser(intent, "Send Email via...");
+
+            // Start the chooser
+            startActivity(chooserIntent);
+        }
     }
 
     boolean offline = false;

@@ -657,8 +657,24 @@ public class Edit_ProfileActivity extends AppCompatActivity {
 
 
 
-
-
+//                        String phoneNumber = newMobile; // Your phone number
+//                        String extractedCountryCode = "";
+//                        String extractedPhoneNumber = phoneNumber;
+//
+//                        if (arrayList2 != null) {
+//                            for (DataChangeDM countryCode : arrayList2) {
+//                                String dialCode = countryCode.getDialCode();
+//                                if (dialCode != null && phoneNumber.startsWith(dialCode)) {
+//                                    extractedCountryCode = dialCode;
+//                                    extractedPhoneNumber = phoneNumber.substring(dialCode.length());
+//                                    break;
+//                                }
+//                            }
+//                        }
+//
+//                        mobilecodeET.setText(extractedCountryCode);
+//                        mobileET.setText(extractedPhoneNumber);
+//                        newMobile = extractedCountryCode + extractedPhoneNumber;
 
 
                         String[] items1 = date.split("-");
