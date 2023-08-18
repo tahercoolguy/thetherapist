@@ -242,8 +242,11 @@ public class Edit_ProfileActivity extends AppCompatActivity {
                 nameAr = ((DataChangeDM) object).getNameAr();
                 SelectCountryid = ((DataChangeDM) object).getId();
 //               user.setAreaId(AreaID);
-                selectCountryET.setText(name);
-
+                 if (user.getLanguageCode().equalsIgnoreCase("en")) {
+                    selectCountryET.setText(name);
+                } else {
+                    selectCountryET.setText(nameAr);
+                }
             }
         });
         bottomForAll.show(Edit_ProfileActivity.this.getSupportFragmentManager(), "bottomSheetCountry");
