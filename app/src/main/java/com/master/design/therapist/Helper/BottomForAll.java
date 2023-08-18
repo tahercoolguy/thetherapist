@@ -52,7 +52,7 @@ public class BottomForAll extends BottomSheetDialogFragment implements View.OnCl
                 dismiss();
             } else if (newState == BottomSheetBehavior.STATE_DRAGGING && Util.canScrollUp(listview)) {
                 if (!isTopScroll) {
-                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
                 }
             }
 
@@ -225,13 +225,14 @@ public class BottomForAll extends BottomSheetDialogFragment implements View.OnCl
 
                 }
             } else {
-                if (item.getNameAr().contains(text)) {
+                if (item.getNameAr() != null) {
+                    if (item.getNameAr().contains(text)) {
 //                    // if the item is matched we are
 //                    // adding it to our filtered list.
-                    filteredlist.add(item);
+                        filteredlist.add(item);
 //                }
 
-
+                    }
                 }
             }
 
