@@ -31,6 +31,7 @@ import com.master.design.therapist.Activity.MainActivity;
 import com.master.design.therapist.Activity.MyPostedImagesActivity;
 import com.master.design.therapist.Activity.My_ProfileActivity;
 import com.master.design.therapist.Activity.Sign_InActivity;
+import com.master.design.therapist.Activity.SplashScreen;
 import com.master.design.therapist.DataModel.TokenRoot;
 import com.master.design.therapist.BuildConfig;
 import com.master.design.therapist.Controller.AppController;
@@ -280,9 +281,10 @@ public class Fragment_Account extends Fragment {
                         user.setId(0);
                         user.logout();
                         activity.overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
-                        startActivity(new Intent(getActivity(), Sign_InActivity.class)
+                        ((MainActivity) context).finish();
+                        startActivity(new Intent(getActivity(), SplashScreen.class)
                                 .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
-//                        ((MainActivity) context).finish();
+
                     } else {
 //                        progress.dismiss();
                     }
