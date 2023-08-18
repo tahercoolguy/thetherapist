@@ -3,10 +3,16 @@ package com.master.design.therapist.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -325,13 +331,44 @@ public class Sign_InActivity extends AppCompatActivity {
     @OnClick(R.id.forgotPasswordTxt)
     public void clickForgotPassword() {
 
+        showForgotPasswordDialog();
+    }
+    AlertDialog dialog;
+    private void showForgotPasswordDialog() {
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.forgot_password_dialog, null);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(dialogView)
+                .setTitle(getString(R.string.forgot_password))
+                .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Handle reset password action
+                        EditText emailEditText = dialogView.findViewById(R.id.emailEditText);
+                        String email = emailEditText.getText().toString();
+
+                        forgotPassword(email);
+                        // Implement your password reset logic here using the provided email
+                    }
+                })
+                .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+          dialog = builder.create();
+        dialog.show();
     }
 
-    private void forgotPassword() {
+
+    private void forgotPassword(String email) {
         if (connectionDetector.isConnectingToInternet()) {
             String refreshedToken = FirebaseInstanceId.getInstance().getToken();
             MultipartTypedOutput multipartTypedOutput = new MultipartTypedOutput();
-            multipartTypedOutput.addPart("id", new TypedString(String.valueOf(user.getId())));
+            multipartTypedOutput.addPart("email", new TypedString(email));
 
             progress = dialogUtil.showProgressDialog(Sign_InActivity.this, getString(R.string.please_wait));
             appController.paServices.Reset_Password(multipartTypedOutput, new Callback<Forgotpassword>() {
@@ -340,9 +377,11 @@ public class Sign_InActivity extends AppCompatActivity {
                     if (tokenRoot.getStatus().equalsIgnoreCase("1")) {
                         progress.dismiss();
 
+                        dialog.cancel();
                         Helper.showToast(Sign_InActivity.this, getString(R.string.password_reset_link_sent_on_registered_email));
                     } else {
                         progress.dismiss();
+                        dialog.cancel();
                         Helper.showToast(Sign_InActivity.this, getString(R.string.failed_reset_password));
                     }
                 }

@@ -142,13 +142,40 @@
                     android:textSize="@dimen/text_size_normal"></TextView>
 
             </LinearLayout>
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
                 android:layout_marginTop="-10dp"
-                android:hint="@string/choose_your_country"
+                android:visibility="gone"
+                android:hint="@string/select_age"
+                android:paddingHorizontal="10dp"></TextView>
+
+
+            <TextView
+                android:id="@+id/ageTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                android:layout_margin="10dp"
+                android:background="@drawable/rectangle_white_grey_border"
+                android:backgroundTint="@color/white"
+                android:drawableEnd="@drawable/ic_down"
+                android:elevation="10dp"
+                android:hint="15-20"
+                android:padding="10dp"
+                android:paddingHorizontal="10dp"
+                android:paddingEnd="20dp"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_normal"></TextView>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-10dp"
+                android:layout_gravity="start"
+                 android:hint="@string/choose_your_country"
                 android:paddingHorizontal="10dp"></TextView>
 
 
@@ -224,7 +251,32 @@
                     android:textSize="@dimen/text_size_normal"></EditText>
 
             </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginTop="10dp"
+                android:hint="@string/email"
+                android:paddingHorizontal="10dp"></TextView>
 
+
+            <EditText
+
+                android:id="@+id/emailET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:background="@drawable/rectangle_white_grey_border"
+                android:backgroundTint="@color/white"
+                android:elevation="10dp"
+
+                android:padding="10dp"
+                android:paddingHorizontal="10dp"
+                android:paddingEnd="20dp"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_normal"></EditText>
 
             <TextView
                 android:layout_width="match_parent"

@@ -201,5 +201,6 @@
     <string name="forgot_password" >هل نسيت كلمة السر</string>
     <string name="password_reset_link_sent_on_registered_email">تم إرسال رابط إعادة تعيين كلمة المرور على البريد الإلكتروني المسجل</string>
     <string name="failed_reset_password">فشل إعادة تعيين كلمة المرور</string>
+    <string name="kindly_enter_your_registered_email">يرجى إدخال البريد الإلكتروني المسجل الخاص بك</string>
 
 </resources>

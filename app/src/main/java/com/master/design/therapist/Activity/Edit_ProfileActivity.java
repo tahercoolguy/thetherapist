@@ -109,6 +109,10 @@ public class Edit_ProfileActivity extends AppCompatActivity {
     String educationName;
     ArrayList<DataChangeDM> arrayList4 = new ArrayList();
 
+    @BindView(R.id.emailET)
+    EditText emailEt;
+    @BindView(R.id.ageTxt)
+    TextView ageTxt;
     @OnClick(R.id.educationET)
     public void educationET() {
         bottomForAll = new BottomForAll();
@@ -434,7 +438,10 @@ public class Edit_ProfileActivity extends AppCompatActivity {
                 String date = (yearET.getText().toString() + "-" + monthET.getText().toString() + "-" + dateET.getText().toString());
 
                 newMobile = mobilecodeET.getText().toString() + mobileET.getText().toString();
-                appController.paServices.TherapistEdit_Profile(String.valueOf(user.getId()), userNameET.getText().toString(), date, SelectCountryid, Gender, newMobile, educationID, ethnicityyid, InterestIdList, aboutyou, new Callback<Edit_ProfileDM>() {
+
+               String email= emailEt.getText().toString();
+               String age= ageTxt.getText().toString();
+                appController.paServices.TherapistEdit_Profile(String.valueOf(user.getId()), userNameET.getText().toString(), date, SelectCountryid, Gender, newMobile, educationID, ethnicityyid, InterestIdList, aboutyou,email, new Callback<Edit_ProfileDM>() {
                     @Override
 
                     public void success(Edit_ProfileDM edit_profileDM, Response response) {
@@ -577,6 +584,7 @@ public class Edit_ProfileActivity extends AppCompatActivity {
                     progress.dismiss();
                     if (profileDM.getStatus().equalsIgnoreCase("1")) {
 
+                        emailEt.setText(profileDM.getUser_data().get(0).getEmail());
                         userNameET.setText(profileDM.getUser_data().get(0).getName());
                         selectEthnicityTxt.setText(profileDM.getUser_data().get(0).getEthnicity().getName_en());
                         ethnicityyid = profileDM.getUser_data().get(0).getEthnicity().getId();
@@ -610,6 +618,7 @@ public class Edit_ProfileActivity extends AppCompatActivity {
                             Gender = "1";
                         }
 
+
                         String[] numberspilit = newMobile.split(" ");
 
                         if (numberspilit.length == 2) {
@@ -641,6 +650,12 @@ public class Edit_ProfileActivity extends AppCompatActivity {
                                 mobileET.setText(number1 + " " + number2 + "" + number3);
                             }
                         }
+
+
+
+
+
+
 
 
                         String[] items1 = date.split("-");
