@@ -1,6 +1,5 @@
 package com.master.design.therapist.Activity;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -23,6 +22,8 @@ import com.master.design.therapist.R;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+
+import io.reactivex.annotations.NonNull;
 
 
 public class SplashScreen extends AppCompatActivity {
@@ -102,6 +103,7 @@ public class SplashScreen extends AppCompatActivity {
         FirebaseMessaging.getInstance().getToken()
                 .addOnCompleteListener(new OnCompleteListener<String>() {
                     @Override
+
                     public void onComplete(@NonNull Task<String> task) {
                         if (!task.isSuccessful()) {
 //                            Log.w(TAG, "Fetching FCM registration token failed", task.getException());

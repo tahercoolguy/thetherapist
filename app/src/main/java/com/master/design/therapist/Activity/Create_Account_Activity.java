@@ -242,7 +242,11 @@ public class Create_Account_Activity extends AppCompatActivity {
             @Override
             public void response(Object object) {
 
-                DialCode = ((DataChangeDM) object).getName();
+                if(user.getLanguageCode().equalsIgnoreCase("en")) {
+                    DialCode = ((DataChangeDM) object).getName();
+                }else{
+                    DialCode=((DataChangeDM) object).getNameAr();
+                }
                 SelectCountryCode = ((DataChangeDM) object).getId();
 //               user.setAreaId(AreaID);
                 mobilecodeET.setText(SelectCountryCode);
@@ -643,7 +647,12 @@ public class Create_Account_Activity extends AppCompatActivity {
                 String age_id = data.getStringExtra("age_id");
                 String ageEng = data.getStringExtra("ageEng");
                 String ageAR = data.getStringExtra("ageAR");
-                ageTxt.setText(ageEng);
+
+                if(user.getLanguageCode().equalsIgnoreCase("en")) {
+                    ageTxt.setText(ageEng);
+                }else{
+                    ageTxt.setText(ageAR);
+                }
                 age = age_id;
             }
         }

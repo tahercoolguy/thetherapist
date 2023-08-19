@@ -272,6 +272,7 @@ public class My_ProfileActivity extends AppCompatActivity {
     @OnClick(R.id.editProfileTxt)
     public void clickEditProfile() {
         startActivity(new Intent(My_ProfileActivity.this, Edit_ProfileActivity.class));
+        finish();
         overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
     }
 

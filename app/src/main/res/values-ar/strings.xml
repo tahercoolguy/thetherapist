@@ -203,5 +203,6 @@
     <string name="failed_reset_password">فشل إعادة تعيين كلمة المرور</string>
     <string name="kindly_enter_your_registered_email">يرجى إدخال البريد الإلكتروني المسجل الخاص بك</string>
     <string name="contact_us">اتصل بنا</string>
+    <string name="month">شهر</string>
 
 </resources>

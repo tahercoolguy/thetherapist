@@ -113,6 +113,7 @@ public class Edit_ProfileActivity extends AppCompatActivity {
     EditText emailEt;
     @BindView(R.id.ageTxt)
     TextView ageTxt;
+
     @OnClick(R.id.educationET)
     public void educationET() {
         bottomForAll = new BottomForAll();
@@ -242,7 +243,7 @@ public class Edit_ProfileActivity extends AppCompatActivity {
                 nameAr = ((DataChangeDM) object).getNameAr();
                 SelectCountryid = ((DataChangeDM) object).getId();
 //               user.setAreaId(AreaID);
-                 if (user.getLanguageCode().equalsIgnoreCase("en")) {
+                if (user.getLanguageCode().equalsIgnoreCase("en")) {
                     selectCountryET.setText(name);
                 } else {
                     selectCountryET.setText(nameAr);
@@ -320,16 +321,18 @@ public class Edit_ProfileActivity extends AppCompatActivity {
         connectionDetector = new ConnectionDetector(Edit_ProfileActivity.this);
         user = new User(Edit_ProfileActivity.this);
         dialogUtil = new DialogUtil();
-
-        getMyProfielDataAPI();
-        SelectCountry();
         SelectMobileCode();
+
+        SelectCountry();
     }
 
 
     @OnClick(R.id.backImg)
     public void clickBack() {
-        finish();
+        Intent intent = new Intent(Edit_ProfileActivity.this, My_ProfileActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish(); // Finish ActivityC
     }
 
     ArrayList<DataChangeDM> arrayList2 = new ArrayList();
@@ -345,10 +348,15 @@ public class Edit_ProfileActivity extends AppCompatActivity {
             @Override
             public void response(Object object) {
 
-                DialCode = ((DataChangeDM) object).getName();
                 SelectCountryCode = ((DataChangeDM) object).getId();
 //               user.setAreaId(AreaID);
                 mobilecodeET.setText(SelectCountryCode);
+
+                if (user.getLanguageCode().equalsIgnoreCase("en")) {
+                    DialCode = ((DataChangeDM) object).getName();
+                } else {
+                    DialCode = ((DataChangeDM) object).getNameAr();
+                }
 
             }
         });
@@ -359,6 +367,11 @@ public class Edit_ProfileActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        finish();
+        Intent intent = new Intent(Edit_ProfileActivity.this, My_ProfileActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish(); // Finish ActivityC
         overridePendingTransition(R.anim.right_slide_in, R.anim.right_slide_in);
         super.onBackPressed();
     }
@@ -442,9 +455,9 @@ public class Edit_ProfileActivity extends AppCompatActivity {
 
                 newMobile = mobilecodeET.getText().toString() + mobileET.getText().toString();
 
-               String email= emailEt.getText().toString();
-               String age= ageTxt.getText().toString();
-                appController.paServices.TherapistEdit_Profile(String.valueOf(user.getId()), userNameET.getText().toString(), date, SelectCountryid, Gender, newMobile, educationID, ethnicityyid, InterestIdList, aboutyou,email, new Callback<Edit_ProfileDM>() {
+                String email = emailEt.getText().toString();
+                String age = ageTxt.getText().toString();
+                appController.paServices.TherapistEdit_Profile(String.valueOf(user.getId()), userNameET.getText().toString(), date, SelectCountryid, Gender, newMobile, educationID, ethnicityyid, InterestIdList, aboutyou, email, new Callback<Edit_ProfileDM>() {
                     @Override
 
                     public void success(Edit_ProfileDM edit_profileDM, Response response) {
@@ -452,7 +465,11 @@ public class Edit_ProfileActivity extends AppCompatActivity {
                         if (edit_profileDM.getStatus().equalsIgnoreCase("1")) {
 
                             Helper.showToast(Edit_ProfileActivity.this, edit_profileDM.getMsg());
-                            getMyProfielDataAPI();
+                            // Inside ActivityC, when you want to start a new activity and clear the stack
+                            Intent intent = new Intent(Edit_ProfileActivity.this, My_ProfileActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+                            finish(); // Finish ActivityC
 
                         } else {
 //                            Helper.showToast(Edit_ProfileActivity.this,"profile already updated");
@@ -554,10 +571,14 @@ public class Edit_ProfileActivity extends AppCompatActivity {
                         for (Details obj : therapistCountriesDM.getDetails()) {
                             DataChangeDM s = new DataChangeDM();
                             s.setName(obj.getName_en());
+                            s.setNameAr(obj.getName_ar());
                             s.setId(obj.getDialCode());
 
                             arrayList2.add(s);
                         }
+
+                        getMyProfielDataAPI();
+
                     } else
                         Helper.showToast(Edit_ProfileActivity.this, getString(R.string.Api_data_not_found));
                 }
@@ -589,12 +610,20 @@ public class Edit_ProfileActivity extends AppCompatActivity {
 
                         emailEt.setText(profileDM.getUser_data().get(0).getEmail());
                         userNameET.setText(profileDM.getUser_data().get(0).getName());
-                        selectEthnicityTxt.setText(profileDM.getUser_data().get(0).getEthnicity().getName_en());
+
+                        if (user.getLanguageCode().equalsIgnoreCase("en")) {
+                            selectEthnicityTxt.setText(profileDM.getUser_data().get(0).getEthnicity().getName_en());
+                        } else {
+                            selectEthnicityTxt.setText(profileDM.getUser_data().get(0).getEthnicity().getName_ar());
+                        }
                         ethnicityyid = profileDM.getUser_data().get(0).getEthnicity().getId();
 
                         aboutYouET.setText(profileDM.getUser_data().get(0).getAboutyou());
-
-                        educationET.setText(profileDM.getUser_data().get(0).getEducation().getName_en());
+                        if (user.getLanguageCode().equalsIgnoreCase("en")) {
+                            educationET.setText(profileDM.getUser_data().get(0).getEducation().getName_en());
+                        } else {
+                            educationET.setText(profileDM.getUser_data().get(0).getEducation().getName_ar());
+                        }
                         educationID = profileDM.getUser_data().get(0).getEducation().getId();
 
                         mydob = profileDM.getUser_data().get(0).getDob();
@@ -602,7 +631,15 @@ public class Edit_ProfileActivity extends AppCompatActivity {
                         newMobile = profileDM.getUser_data().get(0).getPhone();
                         Gender = profileDM.getUser_data().get(0).getGender().getId();
                         SelectCountryid = profileDM.getUser_data().get(0).getCountry().getIsoCode();
-                        selectCountryET.setText(profileDM.getUser_data().get(0).getCountry().getName_en());
+                        String countryName ;
+                        if (user.getLanguageCode().equalsIgnoreCase("en")) {
+                           countryName= profileDM.getUser_data().get(0).getCountry().getName_en();
+                        } else {
+                            countryName= profileDM.getUser_data().get(0).getCountry().getName_ar();
+                         }
+
+
+                        selectCountryET.setText(countryName);
                         date = profileDM.getUser_data().get(0).getDob();
 
                         if (Gender.equalsIgnoreCase("0")) {
@@ -622,36 +659,60 @@ public class Edit_ProfileActivity extends AppCompatActivity {
                         }
 
 
-                        String[] numberspilit = newMobile.split(" ");
+//                        String[] numberspilit = newMobile.split(" ");
+//
+//                        if (numberspilit.length == 2) {
+//                            if (numberspilit.length <= 2) {
+//                                String isocode = numberspilit[0];
+//                                mobilecodeET.setText(isocode);
+//                                String number1 = numberspilit[1];
+//                                mobileET.setText("" + number1);
+//                            }
+//                        }
+//                        if (numberspilit.length == 3) {
+//
+//                            if (numberspilit.length <= 3) {
+//                                String isocode = numberspilit[0];
+//                                mobilecodeET.setText(isocode);
+//                                String number1 = numberspilit[1];
+//                                String number2 = numberspilit[2];
+//                                mobileET.setText(number1 + "" + number2);
+//                            }
+//                        }
+//                        if (numberspilit.length == 4) {
+//                            if (numberspilit.length <= 4) {
+//                                String isocode = numberspilit[0];
+//                                mobilecodeET.setText(isocode);
+//                                String number1 = numberspilit[1];
+//                                String number2 = numberspilit[2];
+//                                String number3 = numberspilit[3];
+//
+//                                mobileET.setText(number1 + " " + number2 + "" + number3);
+//                            }
+//                        }
 
-                        if (numberspilit.length == 2) {
-                            if (numberspilit.length <= 2) {
-                                String isocode = numberspilit[0];
-                                mobilecodeET.setText(isocode);
-                                String number1 = numberspilit[1];
-                                mobileET.setText("" + number1);
+
+
+                        String extractedCountryCode = null;
+                        String extractedPhoneNumber = null;
+
+                        for (DataChangeDM countryCode : arrayList2) {
+                            if (newMobile.startsWith(countryCode.getId())) {
+                                extractedCountryCode = countryCode.getId();
+                                extractedPhoneNumber = newMobile.substring(countryCode.getId().length());
+                                break;
                             }
                         }
-                        if (numberspilit.length == 3) {
 
-                            if (numberspilit.length <= 3) {
-                                String isocode = numberspilit[0];
-                                mobilecodeET.setText(isocode);
-                                String number1 = numberspilit[1];
-                                String number2 = numberspilit[2];
-                                mobileET.setText(number1 + "" + number2);
-                            }
-                        }
-                        if (numberspilit.length == 4) {
-                            if (numberspilit.length <= 4) {
-                                String isocode = numberspilit[0];
-                                mobilecodeET.setText(isocode);
-                                String number1 = numberspilit[1];
-                                String number2 = numberspilit[2];
-                                String number3 = numberspilit[3];
-
-                                mobileET.setText(number1 + " " + number2 + "" + number3);
-                            }
+                        if (extractedCountryCode != null && extractedPhoneNumber != null) {
+                            // Now you have the separated country code and phone number
+                            // extractedCountryCode contains the country code (e.g., "+91")
+                            // extractedPhoneNumber contains the remaining phone number
+                            SelectCountryCode=extractedCountryCode;
+                            mobilecodeET.setText(extractedCountryCode);
+                            mobileET.setText(extractedPhoneNumber);
+                        } else {
+                            // The phone number doesn't match any known country code
                         }
 
 
@@ -701,7 +762,7 @@ public class Edit_ProfileActivity extends AppCompatActivity {
                         StringBuilder combinedInterests = new StringBuilder();
                         StringBuilder combinedInterestsID = new StringBuilder();
                         for (int i = 0; i < interestlist.size(); i++) {
-                            String combinedInterest = interestlist.get(i) + ",";
+                            String combinedInterest = interestlist.get(i) + " ";
                             String combinedInterestID = interestlistID.get(i) + ",";
                             combinedInterests.append(combinedInterest);
                             combinedInterestsID.append(combinedInterestID);
@@ -714,7 +775,7 @@ public class Edit_ProfileActivity extends AppCompatActivity {
                         String combinedInterestsIDString = combinedInterestsID.toString();
 
                         selectInterestTxt.setText(combinedInterestsString);
-                        InterestIdList=combinedInterestsIDString;
+                        InterestIdList = combinedInterestsIDString;
 // Now you have the combined interests and IDs separated by commas
 
 
@@ -749,7 +810,11 @@ public class Edit_ProfileActivity extends AppCompatActivity {
                     InterestNameEngList = data.getStringExtra("InterestNameEngList");
                     InterestNameArList = data.getStringExtra("InterestNameArList");
 
-                    selectInterestTxt.setText(InterestNameEngList);
+                    if (user.getLanguageCode().equalsIgnoreCase("en")) {
+                        selectInterestTxt.setText(InterestNameEngList);
+                    } else {
+                        selectInterestTxt.setText(InterestNameArList);
+                    }
                 }
             }
         }

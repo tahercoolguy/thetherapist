@@ -50,7 +50,7 @@ public class LanguageActivity extends AppCompatActivity {
     String check;
     Dialog progress;
     ConnectionDetector connectionDetector;
-     DialogUtil dialogUtil;
+    DialogUtil dialogUtil;
     User user;
 
     @Override
@@ -63,20 +63,45 @@ public class LanguageActivity extends AppCompatActivity {
         appController = (AppController) getApplicationContext();
         connectionDetector = new ConnectionDetector(getApplicationContext());
 
+
+
+        String userID = String.valueOf(user.getId());
+        if (!userID.equalsIgnoreCase("0")) {
+            if (user.getLanguageCode().equalsIgnoreCase("en")) {
+                Language language = new Language(1, "Engish", "en");
+                user.setLanguage(language);
+                englishRL.setBackground(getDrawable(R.drawable.language_select_bg));
+                arabicRL.setBackground(getDrawable(R.drawable.language_unselect_bg));
+                Util.setConfigChange(LanguageActivity.this, "en");
+            } else {
+                Language language = new Language(2, "Arabic", "ar");
+                user.setLanguage(language);
+                offline = true;
+                englishRL.setBackground(getDrawable(R.drawable.language_unselect_bg));
+                arabicRL.setBackground(getDrawable(R.drawable.language_select_bg));
+                Util.setConfigChange(LanguageActivity.this, "ar");
+
+            }
+        } else {
+
+        }
+
     }
-boolean offline=false;
+
+    boolean offline = false;
+
     @OnClick(R.id.englishRL)
     public void clickEnglishRL() {
-        Language language = new Language(1,"Engish","en");
+        Language language = new Language(1, "Engish", "en");
         user.setLanguage(language);
         englishRL.setBackground(getDrawable(R.drawable.language_select_bg));
         arabicRL.setBackground(getDrawable(R.drawable.language_unselect_bg));
 
-        offline=true;
-        Util.setConfigChange(LanguageActivity.this,"en");
+        offline = true;
+        Util.setConfigChange(LanguageActivity.this, "en");
 
         restartActivity(LanguageActivity.this);
-        startActivity(new Intent(LanguageActivity.this,IntroActivity.class)
+        startActivity(new Intent(LanguageActivity.this, IntroActivity.class)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
         finish();
 
@@ -89,15 +114,15 @@ boolean offline=false;
 
     @OnClick(R.id.arabicRL)
     public void clickArabicRL() {
-        Language language = new Language(2,"Arabic","ar");
+        Language language = new Language(2, "Arabic", "ar");
         user.setLanguage(language);
-        offline=true;
+        offline = true;
         englishRL.setBackground(getDrawable(R.drawable.language_unselect_bg));
         arabicRL.setBackground(getDrawable(R.drawable.language_select_bg));
-         Util.setConfigChange(LanguageActivity.this,"ar");
+        Util.setConfigChange(LanguageActivity.this, "ar");
 //        getActivity().getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
         restartActivity(LanguageActivity.this);
-        startActivity(new Intent(LanguageActivity.this,IntroActivity.class)
+        startActivity(new Intent(LanguageActivity.this, IntroActivity.class)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
         finish();
 
@@ -110,17 +135,17 @@ boolean offline=false;
 
     @OnClick(R.id.englishLL)
     public void clickEnglishLL() {
-        Language language = new Language(1,"Engish","en");
+        Language language = new Language(1, "Engish", "en");
         user.setLanguage(language);
 
-        offline=true;
+        offline = true;
 
         englishRL.setBackground(getDrawable(R.drawable.language_select_bg));
         arabicRL.setBackground(getDrawable(R.drawable.language_unselect_bg));
-        Util.setConfigChange(LanguageActivity.this,"en");
+        Util.setConfigChange(LanguageActivity.this, "en");
 
         restartActivity(LanguageActivity.this);
-        startActivity(new Intent(LanguageActivity.this,IntroActivity.class)
+        startActivity(new Intent(LanguageActivity.this, IntroActivity.class)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
         finish();
 
@@ -133,15 +158,15 @@ boolean offline=false;
 
     @OnClick(R.id.arabicLL)
     public void clickArabicLL() {
-        Language language = new Language(2,"Arabic","ar");
+        Language language = new Language(2, "Arabic", "ar");
         user.setLanguage(language);
-        offline=true;
+        offline = true;
         englishRL.setBackground(getDrawable(R.drawable.language_unselect_bg));
         arabicRL.setBackground(getDrawable(R.drawable.language_select_bg));
-        Util.setConfigChange(LanguageActivity.this,"ar");
+        Util.setConfigChange(LanguageActivity.this, "ar");
 //        getActivity().getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
         restartActivity(LanguageActivity.this);
-        startActivity(new Intent(LanguageActivity.this,IntroActivity.class)
+        startActivity(new Intent(LanguageActivity.this, IntroActivity.class)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
         finish();
 
@@ -153,9 +178,7 @@ boolean offline=false;
     }
 
 
-
-
-    public static void restartActivity(Activity activity){
+    public static void restartActivity(Activity activity) {
         if (Build.VERSION.SDK_INT >= 11) {
             activity.recreate();
         } else {
@@ -179,19 +202,18 @@ boolean offline=false;
 
     @Override
     protected void onDestroy() {
-        if(offline){
+        if (offline) {
             updateOffline();
 
         }
         super.onDestroy();
     }
 
-    private void updateOffline()
-    {
+    private void updateOffline() {
         if (connectionDetector.isConnectingToInternet()) {
             String refreshedToken = FirebaseInstanceId.getInstance().getToken();
             MultipartTypedOutput multipartTypedOutput = new MultipartTypedOutput();
-            String id= String.valueOf(user.getId());
+            String id = String.valueOf(user.getId());
             multipartTypedOutput.addPart("id", new TypedString(id));
 
 //            progress = dialogUtil.showProgressDialog(MainActivity.this, getString(R.string.please_wait));

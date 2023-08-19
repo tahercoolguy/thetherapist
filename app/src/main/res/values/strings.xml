@@ -207,6 +207,7 @@
     <string name="failed_reset_password">failed reset password</string>
     <string name="kindly_enter_your_registered_email">Kindly enter your registered email</string>
     <string name="contact_us">Contact Us</string>
+    <string name="month">month</string>
 
 
 </resources>
