@@ -11,7 +11,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
@@ -30,6 +29,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import io.reactivex.Scheduler;
+import io.reactivex.annotations.NonNull;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
