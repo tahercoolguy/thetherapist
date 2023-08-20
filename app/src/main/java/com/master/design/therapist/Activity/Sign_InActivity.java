@@ -348,7 +348,11 @@ public class Sign_InActivity extends AppCompatActivity {
                         EditText emailEditText = dialogView.findViewById(R.id.emailEditText);
                         String email = emailEditText.getText().toString();
 
-                        forgotPassword(email);
+                        if(!email.contains("@")){
+                            Helper.showToast(Sign_InActivity.this, getString(R.string.kindly_enter_your_registered_email));
+                        }else {
+                            forgotPassword(email);
+                        }
                         // Implement your password reset logic here using the provided email
                     }
                 })
@@ -376,20 +380,21 @@ public class Sign_InActivity extends AppCompatActivity {
                 public void success(Forgotpassword tokenRoot, Response response) {
                     if (tokenRoot.getStatus().equalsIgnoreCase("1")) {
                         progress.dismiss();
-
                         dialog.cancel();
                         Helper.showToast(Sign_InActivity.this, getString(R.string.password_reset_link_sent_on_registered_email));
                     } else {
                         progress.dismiss();
                         dialog.cancel();
-                        Helper.showToast(Sign_InActivity.this, getString(R.string.failed_reset_password));
+                        Helper.showToast(Sign_InActivity.this, getString(R.string.kindly_enter_your_registered_email));
                     }
                 }
 
                 @Override
                 public void failure(RetrofitError retrofitError) {
-//                    progress.dismiss();
+                    progress.dismiss();
                     Log.e("error", retrofitError.toString());
+                    dialog.cancel();
+                    Helper.showToast(Sign_InActivity.this, getString(R.string.kindly_enter_your_registered_email));
                 }
             });
         } else {
