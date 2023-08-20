@@ -81,6 +81,11 @@ public class BottomForAll extends BottomSheetDialogFragment implements View.OnCl
 
         if (behavior != null && behavior instanceof BottomSheetBehavior) {
             bottomSheetBehavior = (BottomSheetBehavior) behavior;
+            // Set the state of the BottomSheet to expanded
+            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+
+            // Set the peek height to 0 to achieve full-screen behavior
+            bottomSheetBehavior.setPeekHeight(0);
             bottomSheetBehavior.setBottomSheetCallback(mBottomSheetBehaviorCallback);
         }
         mapping(contentView);

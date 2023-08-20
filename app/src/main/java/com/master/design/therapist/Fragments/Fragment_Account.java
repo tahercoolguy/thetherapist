@@ -310,6 +310,7 @@ public class Fragment_Account extends Fragment {
                         user.setOffline("0");
                         user.setId(0);
                         user.logout();
+                        user.setSearchCheck("0");
                         activity.overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
                         ((MainActivity) context).finish();
                         startActivity(new Intent(getActivity(), SplashScreen.class)

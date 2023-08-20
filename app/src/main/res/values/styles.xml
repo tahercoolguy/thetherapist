@@ -67,4 +67,10 @@
         <item name="colorAccent">@color/red_light</item>
     </style>
 
+    <style name="FullScreenBottomSheetDialog" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+
 </resources>
