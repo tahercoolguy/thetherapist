@@ -1,5 +1,7 @@
 package com.master.design.therapist.DataModel.MyProfile;
 
+import com.master.design.therapist.DataModel.AgeMyProfile;
+
 import java.util.ArrayList;
 
 public class UserDatum {
@@ -15,8 +17,9 @@ public class UserDatum {
     public NewEtnicity ethnicity;
     public ArrayList<NewInterest> interests;
     public String aboutyou;
+    public AgeMyProfile age;
 
-    public UserDatum(int id, String image, String name, String email, String phone, NewGender gender, String dob, NewCountry country, NewEducation education, NewEtnicity ethnicity, ArrayList<NewInterest> interests, String aboutyou) {
+    public UserDatum(int id, String image, String name, String email, String phone, NewGender gender, String dob, NewCountry country, NewEducation education, NewEtnicity ethnicity, ArrayList<NewInterest> interests, String aboutyou, AgeMyProfile age) {
         this.id = id;
         this.image = image;
         this.name = name;
@@ -29,6 +32,7 @@ public class UserDatum {
         this.ethnicity = ethnicity;
         this.interests = interests;
         this.aboutyou = aboutyou;
+        this.age = age;
     }
 
     public int getId() {
@@ -125,5 +129,13 @@ public class UserDatum {
 
     public void setAboutyou(String aboutyou) {
         this.aboutyou = aboutyou;
+    }
+
+    public AgeMyProfile getAge() {
+        return age;
+    }
+
+    public void setAge(AgeMyProfile age) {
+        this.age = age;
     }
 }

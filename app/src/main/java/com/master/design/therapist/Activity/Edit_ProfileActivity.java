@@ -104,7 +104,7 @@ public class Edit_ProfileActivity extends AppCompatActivity {
     String nameAr, educationAr;
     String SelectCountryid;
 
-
+    String age;
     String educationID;
     String educationName;
     ArrayList<DataChangeDM> arrayList4 = new ArrayList();
@@ -364,6 +364,14 @@ public class Edit_ProfileActivity extends AppCompatActivity {
 
     }
 
+    @OnClick(R.id.ageTxt)
+    public void clickAgeET() {
+//        startActivity(new Intent(Create_Account_Activity.this, FriendSearch_SelectActivity.class).putExtra("string1","string1"));
+        Intent intent = new Intent(Edit_ProfileActivity.this, FriendSearch_SelectActivity.class);
+        intent.putExtra("age_single", "age_single");
+        startActivityForResult(intent, 2);// Activity is started with requestCode 2
+
+    }
 
     @Override
     public void onBackPressed() {
@@ -456,8 +464,7 @@ public class Edit_ProfileActivity extends AppCompatActivity {
                 newMobile = mobilecodeET.getText().toString() + mobileET.getText().toString();
 
                 String email = emailEt.getText().toString();
-                String age = ageTxt.getText().toString();
-                appController.paServices.TherapistEdit_Profile(String.valueOf(user.getId()), userNameET.getText().toString(), date, SelectCountryid, Gender, newMobile, educationID, ethnicityyid, InterestIdList, aboutyou, email, new Callback<Edit_ProfileDM>() {
+                appController.paServices.TherapistEdit_Profile(String.valueOf(user.getId()), userNameET.getText().toString(), date, SelectCountryid, Gender, newMobile, educationID, ethnicityyid, InterestIdList, aboutyou, email, age, new Callback<Edit_ProfileDM>() {
                     @Override
 
                     public void success(Edit_ProfileDM edit_profileDM, Response response) {
@@ -610,6 +617,12 @@ public class Edit_ProfileActivity extends AppCompatActivity {
 
                         emailEt.setText(profileDM.getUser_data().get(0).getEmail());
                         userNameET.setText(profileDM.getUser_data().get(0).getName());
+                        age = profileDM.getUser_data().get(0).getAge().getId();
+                        if (user.getLanguageCode().equalsIgnoreCase("en")) {
+                            ageTxt.setText(profileDM.getUser_data().get(0).getAge().getAge_eg());
+                        } else {
+                            ageTxt.setText(profileDM.getUser_data().get(0).getAge().getAge_ar());
+                        }
 
                         if (user.getLanguageCode().equalsIgnoreCase("en")) {
                             selectEthnicityTxt.setText(profileDM.getUser_data().get(0).getEthnicity().getName_en());
@@ -631,12 +644,12 @@ public class Edit_ProfileActivity extends AppCompatActivity {
                         newMobile = profileDM.getUser_data().get(0).getPhone();
                         Gender = profileDM.getUser_data().get(0).getGender().getId();
                         SelectCountryid = profileDM.getUser_data().get(0).getCountry().getIsoCode();
-                        String countryName ;
+                        String countryName;
                         if (user.getLanguageCode().equalsIgnoreCase("en")) {
-                           countryName= profileDM.getUser_data().get(0).getCountry().getName_en();
+                            countryName = profileDM.getUser_data().get(0).getCountry().getName_en();
                         } else {
-                            countryName= profileDM.getUser_data().get(0).getCountry().getName_ar();
-                         }
+                            countryName = profileDM.getUser_data().get(0).getCountry().getName_ar();
+                        }
 
 
                         selectCountryET.setText(countryName);
@@ -692,7 +705,6 @@ public class Edit_ProfileActivity extends AppCompatActivity {
 //                        }
 
 
-
                         String extractedCountryCode = null;
                         String extractedPhoneNumber = null;
 
@@ -708,14 +720,12 @@ public class Edit_ProfileActivity extends AppCompatActivity {
                             // Now you have the separated country code and phone number
                             // extractedCountryCode contains the country code (e.g., "+91")
                             // extractedPhoneNumber contains the remaining phone number
-                            SelectCountryCode=extractedCountryCode;
+                            SelectCountryCode = extractedCountryCode;
                             mobilecodeET.setText(extractedCountryCode);
                             mobileET.setText(extractedPhoneNumber);
                         } else {
                             // The phone number doesn't match any known country code
                         }
-
-
 
 
 //                        String phoneNumber = newMobile; // Your phone number
@@ -816,6 +826,24 @@ public class Edit_ProfileActivity extends AppCompatActivity {
                         selectInterestTxt.setText(InterestNameArList);
                     }
                 }
+            }
+        }
+
+        if (resultCode != RESULT_CANCELED) {
+            // check if the request code is same as what is passed  here it is 2
+            if (requestCode == 2) {
+
+//            String message_age=data.getStringExtra("age");
+                String age_id = data.getStringExtra("age_id");
+                String ageEng = data.getStringExtra("ageEng");
+                String ageAR = data.getStringExtra("ageAR");
+
+                if (user.getLanguageCode().equalsIgnoreCase("en")) {
+                    ageTxt.setText(ageEng);
+                } else {
+                    ageTxt.setText(ageAR);
+                }
+                age = age_id;
             }
         }
 
