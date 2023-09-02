@@ -95,8 +95,11 @@
     <string name="i_am_corporate_lawyer_at_goliath_national_bank_i_grown_up_in_minnesota_i_love_and_care_and_confident_and_extremely_emotional_which_i_often_gets_teased_for_by_the_gang_i_am_very_passionate_about_what_i_do_and_care_deeply_for_my_family_and_friends" >أنا محامي شركة في بنك جالوت الوطني. لقد نشأت في مينيسوتا. أنا أحبه وأهتم به وواثق من نفسي وعاطفي للغاية ، وهو الأمر الذي غالبًا ما يضايقني من قبل العصابة. أنا متحمس جدًا لما أفعله ، وأهتم بشدة بأسرتي وأصدقائي..</string>
     <string name="change_search" >تغير البحث</string>
     <string name="next" >التالى</string>
-    <string name="intro2" >ستجد معنا صديقًا داعمًا كنت تبحث عنه منذ فترة طويلة وهو واقعي وأخلاقي ، بالإضافة إلى أنه سيتم إزالة أي أشخاص مزيفين أو غير حقيقيين على الفور.</string>
-    <string name="intro_1" >أول تطبيق صداقة مبني على أطر علمية وخبرات واقعية.</string>
+
+    <string name="intro_1" >اول تطبيق تعارف بنى على اطر علمية وخبرات واقعيه</string>
+    <string name="intro2" >اول تطبيق تعارف بنى على اطر علمية وخبرات واقعيه</string>
+<!--    <string name="intro2" >ستجد معنا صديقًا داعمًا كنت تبحث عنه منذ فترة طويلة وهو واقعي وأخلاقي ، بالإضافة إلى أنه سيتم إزالة أي أشخاص مزيفين أو غير حقيقيين على الفور.</string>-->
+<!--    <string name="intro_1" >أول تطبيق صداقة مبني على أطر علمية وخبرات واقعية.</string>-->
     <string name="intro1_head" >ابقي على اتصال</string>
     <string name="intro1_head_part2" >مع اصدقائك</string>
     <string name="intro_2_head" >مشاركة الوسائط مع</string>

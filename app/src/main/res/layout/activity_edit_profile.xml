@@ -340,6 +340,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
+                android:visibility="gone"
                 android:hint="@string/select_ethnicity"
                 android:paddingHorizontal="10dp"></TextView>
 
@@ -347,6 +348,7 @@
             <TextView
                 android:id="@+id/selectEthnicityTxt"
                 android:layout_width="match_parent"
+                android:visibility="gone"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="10dp"
@@ -365,7 +367,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="-18dp"
                 android:hint="@string/select_interest"
                 android:paddingHorizontal="10dp"></TextView>
 
@@ -435,7 +437,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginBottom="-10dp"
                 android:text="@string/education"
                 android:textSize="@dimen/text_size_normal"></TextView>

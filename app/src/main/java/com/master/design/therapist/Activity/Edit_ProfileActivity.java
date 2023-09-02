@@ -322,6 +322,7 @@ public class Edit_ProfileActivity extends AppCompatActivity {
         user = new User(Edit_ProfileActivity.this);
         dialogUtil = new DialogUtil();
         SelectMobileCode();
+        BindingEducation();
 
         SelectCountry();
     }
@@ -421,10 +422,12 @@ public class Edit_ProfileActivity extends AppCompatActivity {
         } else if (mobilecodeET.getText().toString().equalsIgnoreCase("")) {
             correct = false;
             Helper.showToast(Edit_ProfileActivity.this, getString(R.string.kindly_select_mobile_country_code));
-        } else if (selectEthnicityTxt.getText().toString().equalsIgnoreCase("")) {
-            correct = false;
-            Helper.showToast(Edit_ProfileActivity.this, getString(R.string.kindlyenter_your_ethnicity));
-        } else if (selectInterestTxt.getText().toString().equalsIgnoreCase("")) {
+        }
+//        else if (selectEthnicityTxt.getText().toString().equalsIgnoreCase("")) {
+//            correct = false;
+//            Helper.showToast(Edit_ProfileActivity.this, getString(R.string.kindlyenter_your_ethnicity));
+//        }
+        else if (selectInterestTxt.getText().toString().equalsIgnoreCase("")) {
             correct = false;
             Helper.showToast(Edit_ProfileActivity.this, getString(R.string.kindly_select_interest));
         } else if (aboutYouET.getText().toString().equalsIgnoreCase("")) {
@@ -624,12 +627,12 @@ public class Edit_ProfileActivity extends AppCompatActivity {
                             ageTxt.setText(profileDM.getUser_data().get(0).getAge().getAge_ar());
                         }
 
-                        if (user.getLanguageCode().equalsIgnoreCase("en")) {
-                            selectEthnicityTxt.setText(profileDM.getUser_data().get(0).getEthnicity().getName_en());
-                        } else {
-                            selectEthnicityTxt.setText(profileDM.getUser_data().get(0).getEthnicity().getName_ar());
-                        }
-                        ethnicityyid = profileDM.getUser_data().get(0).getEthnicity().getId();
+//                        if (user.getLanguageCode().equalsIgnoreCase("en")) {
+//                            selectEthnicityTxt.setText(profileDM.getUser_data().get(0).getEthnicity().getName_en());
+//                        } else {
+//                            selectEthnicityTxt.setText(profileDM.getUser_data().get(0).getEthnicity().getName_ar());
+//                        }
+//                        ethnicityyid = profileDM.getUser_data().get(0).getEthnicity().getId();
 
                         aboutYouET.setText(profileDM.getUser_data().get(0).getAboutyou());
                         if (user.getLanguageCode().equalsIgnoreCase("en")) {
@@ -789,7 +792,7 @@ public class Edit_ProfileActivity extends AppCompatActivity {
 // Now you have the combined interests and IDs separated by commas
 
 
-                        BindingEthenicity();
+//                        BindingEthenicity();
 
                     } else {
                         Helper.showToast(Edit_ProfileActivity.this, getString(R.string.Api_data_not_found));
@@ -869,7 +872,6 @@ public class Edit_ProfileActivity extends AppCompatActivity {
                             arrayList3.add(s);
                         }
 
-                        BindingEducation();
                     } else
                         Helper.showToast(Edit_ProfileActivity.this, getString(R.string.Api_data_not_found));
                 }

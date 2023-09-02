@@ -180,7 +180,7 @@
             android:backgroundTint="@color/white"
             android:drawableEnd="@drawable/ic_down"
             android:elevation="10dp"
-            android:hint="Kuwait"
+            android:hint=" "
             android:padding="10dp"
             android:paddingHorizontal="10dp"
             android:paddingEnd="20dp"
@@ -271,6 +271,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
+            android:visibility="gone"
             android:layout_marginTop="-10dp"
             android:hint="@string/ethnicity"
             android:paddingHorizontal="10dp"></TextView>
@@ -280,6 +281,7 @@
             android:id="@+id/ethnicityyET"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:layout_gravity="center"
             android:layout_marginHorizontal="10dp"
             android:layout_marginVertical="10dp"
@@ -300,7 +302,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="-10dp"
             android:hint="@string/mobile_number"
             android:paddingHorizontal="10dp"></TextView>
 

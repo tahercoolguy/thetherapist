@@ -1,6 +1,5 @@
 package com.master.design.therapist.Activity;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,6 +16,8 @@ import com.master.design.therapist.Adapter.Adapter_Search;
 import com.master.design.therapist.DM.SearchDM;
 import com.master.design.therapist.Helper.User;
 import com.master.design.therapist.R;
+
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 
@@ -65,7 +66,7 @@ User user;
         searchDMArrayList.add(new SearchDM(getString(R.string.age_range), ""));
         searchDMArrayList.add(new SearchDM(getString(R.string.gender), " "));
         searchDMArrayList.add(new SearchDM(getString(R.string.interest_optional), " "));
-        searchDMArrayList.add(new SearchDM(getString(R.string.ethic_optional), " "));
+//        searchDMArrayList.add(new SearchDM(getString(R.string.ethic_optional), " "));
         searchDMArrayList.add(new SearchDM(getString(R.string.education_optional), " "));
 
         adapter_search = new Adapter_Search(context, searchDMArrayList);
@@ -100,16 +101,16 @@ User user;
 
 
                 }
+//                if (position == 3) {
+//
+//                    Intent intent = new Intent(FriendSearchActivity.this, FriendSearch_SelectActivity.class);
+//                    intent.putExtra("string4", "string4");
+//                    startActivityForResult(intent, 3);
+//                    overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
+//
+//
+//                }
                 if (position == 3) {
-
-                    Intent intent = new Intent(FriendSearchActivity.this, FriendSearch_SelectActivity.class);
-                    intent.putExtra("string4", "string4");
-                    startActivityForResult(intent, 3);
-                    overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
-
-
-                }
-                if (position == 4) {
 
                     Intent intent = new Intent(FriendSearchActivity.this, FriendSearch_SelectActivity.class);
                     intent.putExtra("string5", "string5");
@@ -276,7 +277,7 @@ User user;
                     selected_educationID = data.getStringExtra("selected_educationID");
                     selected_educationEng = data.getStringExtra("selected_educationEng");
 
-                    searchDMArrayList.set(4, new SearchDM(getString(R.string.education_optional), selected_educationEng));
+                    searchDMArrayList.set(3, new SearchDM(getString(R.string.education_optional), selected_educationEng));
                     adapter_search.notifyDataSetChanged();
 
 

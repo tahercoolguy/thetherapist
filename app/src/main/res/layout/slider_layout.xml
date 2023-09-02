@@ -57,6 +57,7 @@
              android:layout_marginHorizontal="20dp"
              android:gravity="center"
             android:minLines="5"
+            android:lines="5"
             android:maxLines="5"
             android:layout_gravity="center"
                android:text="The First friendship application Based on realistic scientific frameworks and experiences."

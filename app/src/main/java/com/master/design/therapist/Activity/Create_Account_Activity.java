@@ -269,7 +269,7 @@ public class Create_Account_Activity extends AppCompatActivity {
         connectionDetector = new ConnectionDetector(Create_Account_Activity.this);
         user = new User(Create_Account_Activity.this);
         dialogUtil = new DialogUtil();
-        BindingEthenicity();
+//        BindingEthenicity();
         SelectCountry();
         SelectMobileCode();
         if (user.getLanguageCode().equalsIgnoreCase("en")) {
@@ -369,10 +369,13 @@ public class Create_Account_Activity extends AppCompatActivity {
         } else if (selectCountryET.getText().toString().equalsIgnoreCase("")) {
             correct = false;
             Helper.showToast(Create_Account_Activity.this, getString(R.string.select_your_country));
-        } else if (ethnicityyET.getText().toString().equalsIgnoreCase("")) {
-            correct = false;
-            Helper.showToast(Create_Account_Activity.this, getString(R.string.kindlyenter_your_ethnicity));
-        } else if (mobileET.getText().toString().equalsIgnoreCase("")) {
+        }
+//        else if (ethnicityyET.getText().toString().equalsIgnoreCase("")) {
+//            correct = false;
+//            Helper.showToast(Create_Account_Activity.this, getString(R.string.kindlyenter_your_ethnicity));
+//        }
+//
+        else if (mobileET.getText().toString().equalsIgnoreCase("")) {
             correct = false;
             Helper.showToast(Create_Account_Activity.this, getString(R.string.kindly_enter_your_mobile_number));
         } else if (emailEt.getText().toString().equalsIgnoreCase("")) {
