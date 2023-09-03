@@ -3,7 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/SaifyTech/StudioProjects/thetherapist/app/src/main/res/drawable/ic_app_icon.xml" value="0.1785" />
         <entry key="..\:/Users/SaifyTech/StudioProjects/thetherapist/app/src/main/res/drawable/ic_baseline_contact_support_24.xml" value="0.1875" />
+        <entry key="..\:/Users/SaifyTech/StudioProjects/thetherapist/app/src/main/res/drawable/ic_splash_bg.xml" value="0.1875" />
         <entry key="..\:/Users/SaifyTech/StudioProjects/thetherapist/app/src/main/res/layout/account_fragment_layout.xml" value="0.22333333333333336" />
         <entry key="..\:/Users/SaifyTech/StudioProjects/thetherapist/app/src/main/res/layout/activity_create_account.xml" value="0.22333333333333336" />
         <entry key="..\:/Users/SaifyTech/StudioProjects/thetherapist/app/src/main/res/layout/activity_edit_profile.xml" value="0.22333333333333336" />
