@@ -27,12 +27,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.master.design.therapist.Activity.BlockedAccountActivity;
 import com.master.design.therapist.Activity.Conversation_Activity;
 import com.master.design.therapist.Activity.MainActivity;
 import com.master.design.therapist.Adapter.Adapter_Chat;
 import com.master.design.therapist.Controller.AppController;
 import com.master.design.therapist.DataModel.ChatlistDM;
+import com.master.design.therapist.DataModel.CommonReasonRoot;
 import com.master.design.therapist.DataModel.Details;
+import com.master.design.therapist.DataModel.ReportUserRoot;
+import com.master.design.therapist.DataModel.UserBlockUnblockRoot;
 import com.master.design.therapist.Helper.DialogUtil;
 import com.master.design.therapist.Helper.User;
 import com.master.design.therapist.R;
@@ -50,6 +54,8 @@ import it.sephiroth.android.library.widget.HListView;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import retrofit.mime.MultipartTypedOutput;
+import retrofit.mime.TypedString;
 
 public class Fragment_Chat extends Fragment {
 
@@ -380,5 +386,129 @@ public class Fragment_Chat extends Fragment {
     public void onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
         menu.findItem(R.id.action_back).setVisible(false);
+    }
+
+
+
+    private void unblockUser(String unblock_user_id) {
+        if (connectionDetector.isConnectingToInternet()) {
+            MultipartTypedOutput multipartTypedOutput = new MultipartTypedOutput();
+            String id = String.valueOf(user.getId());
+            multipartTypedOutput.addPart("user_id", new TypedString(id));
+            multipartTypedOutput.addPart("unblock_user_id", new TypedString(unblock_user_id));
+
+//        progress = dialogUtil.showProgressDialog(MainActivity.this, getString(R.string.please_wait));
+            appController.paServices.UnblockUser(multipartTypedOutput, new Callback<UserBlockUnblockRoot>() {
+                @Override
+                public void success(UserBlockUnblockRoot userBlockUnblockRoot, Response response) {
+                    if (userBlockUnblockRoot.getStatus().equalsIgnoreCase("1")) {
+//                        progress.dismiss();
+
+
+                    } else {
+//                        progress.dismiss();
+                    }
+                }
+
+                @Override
+                public void failure(RetrofitError retrofitError) {
+//                    progress.dismiss();
+                    Log.e("error", retrofitError.toString());
+                }
+            });
+        } else {
+            com.master.design.therapist.Helper.Helper.showToast(getActivity(), String.valueOf(R.string.no_internet_connection));
+        }
+    }
+
+
+    private void blockUser(String blocked_user_id) {
+        if (connectionDetector.isConnectingToInternet()) {
+            MultipartTypedOutput multipartTypedOutput = new MultipartTypedOutput();
+            String id = String.valueOf(user.getId());
+            multipartTypedOutput.addPart("user_id", new TypedString(id));
+            multipartTypedOutput.addPart("blocked_user_id", new TypedString(blocked_user_id));
+
+//        progress = dialogUtil.showProgressDialog(MainActivity.this, getString(R.string.please_wait));
+            appController.paServices.UnblockUser(multipartTypedOutput, new Callback<UserBlockUnblockRoot>() {
+                @Override
+                public void success(UserBlockUnblockRoot userBlockUnblockRoot, Response response) {
+                    if (userBlockUnblockRoot.getStatus().equalsIgnoreCase("1")) {
+//                        progress.dismiss();
+
+
+                    } else {
+//                        progress.dismiss();
+                    }
+                }
+
+                @Override
+                public void failure(RetrofitError retrofitError) {
+//                    progress.dismiss();
+                    Log.e("error", retrofitError.toString());
+                }
+            });
+        } else {
+            com.master.design.therapist.Helper.Helper.showToast(getActivity(), String.valueOf(R.string.no_internet_connection));
+        }
+    }
+
+    private void commonReasons() {
+        if (connectionDetector.isConnectingToInternet()) {
+
+//        progress = dialogUtil.showProgressDialog(MainActivity.this, getString(R.string.please_wait));
+            appController.paServices.CommonReasons(new Callback<CommonReasonRoot>() {
+                @Override
+                public void success(CommonReasonRoot commonReasonRoot, Response response) {
+                    if (commonReasonRoot.getStatus().equalsIgnoreCase("1")) {
+//                        progress.dismiss();
+
+
+                    } else {
+//                        progress.dismiss();
+                    }
+                }
+
+                @Override
+                public void failure(RetrofitError retrofitError) {
+//                    progress.dismiss();
+                    Log.e("error", retrofitError.toString());
+                }
+            });
+        } else {
+            com.master.design.therapist.Helper.Helper.showToast(getActivity(), String.valueOf(R.string.no_internet_connection));
+        }
+    }
+
+    private void reportUser(String reported_user, String reason, String description) {
+        if (connectionDetector.isConnectingToInternet()) {
+            MultipartTypedOutput multipartTypedOutput = new MultipartTypedOutput();
+            String id = String.valueOf(user.getId());
+            multipartTypedOutput.addPart("user_id", new TypedString(id));
+            multipartTypedOutput.addPart("reported_user", new TypedString(reported_user));
+            multipartTypedOutput.addPart("description", new TypedString(description));
+
+//        progress = dialogUtil.showProgressDialog(MainActivity.this, getString(R.string.please_wait));
+            appController.paServices.ReportingUser(multipartTypedOutput, new Callback<ReportUserRoot>() {
+                @Override
+                public void success(ReportUserRoot reportUserRoot, Response response) {
+                    if (reportUserRoot.getStatus().equalsIgnoreCase("1")) {
+//                        progress.dismiss();
+
+
+                    } else {
+//                        progress.dismiss();
+                    }
+                }
+
+                @Override
+                public void failure(RetrofitError retrofitError) {
+//                    progress.dismiss();
+                    Log.e("error", retrofitError.toString());
+                }
+            });
+        } else {
+            com.master.design.therapist.Helper.Helper.showToast(getActivity(), String.valueOf(R.string.no_internet_connection));
+        }
     }
 }

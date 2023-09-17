@@ -333,7 +333,9 @@ public class Sign_InActivity extends AppCompatActivity {
 
         showForgotPasswordDialog();
     }
+
     AlertDialog dialog;
+
     private void showForgotPasswordDialog() {
         LayoutInflater inflater = getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.forgot_password_dialog, null);
@@ -348,9 +350,9 @@ public class Sign_InActivity extends AppCompatActivity {
                         EditText emailEditText = dialogView.findViewById(R.id.emailEditText);
                         String email = emailEditText.getText().toString();
 
-                        if(!email.contains("@")){
+                        if (!email.contains("@")) {
                             Helper.showToast(Sign_InActivity.this, getString(R.string.kindly_enter_your_registered_email));
-                        }else {
+                        } else {
                             forgotPassword(email);
                         }
                         // Implement your password reset logic here using the provided email
@@ -363,7 +365,7 @@ public class Sign_InActivity extends AppCompatActivity {
                     }
                 });
 
-          dialog = builder.create();
+        dialog = builder.create();
         dialog.show();
     }
 
@@ -401,5 +403,4 @@ public class Sign_InActivity extends AppCompatActivity {
             com.master.design.therapist.Helper.Helper.showToast(Sign_InActivity.this, String.valueOf(R.string.no_internet_connection));
         }
     }
-
 }

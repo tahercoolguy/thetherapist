@@ -4,8 +4,12 @@ package com.master.design.therapist.Services;
 //import io.opencensus.stats.Stats;
 
 
+import com.master.design.therapist.DataModel.ActiveStatusRoot;
+import com.master.design.therapist.DataModel.BlockedUserRoot;
+import com.master.design.therapist.DataModel.CommonReasonRoot;
 import com.master.design.therapist.DataModel.DeleteAccountDM;
 import com.master.design.therapist.DataModel.Forgotpassword;
+import com.master.design.therapist.DataModel.ReportUserRoot;
 import com.master.design.therapist.DataModel.SocialUserDM;
 import com.master.design.therapist.Adapter.TherapistEducationDM;
 import com.master.design.therapist.DataModel.AddMultipleImageRoot;
@@ -34,6 +38,7 @@ import com.master.design.therapist.DataModel.TherapistRegisterDM;
 import com.master.design.therapist.DataModel.TokenRoot;
 import com.master.design.therapist.DataModel.UnfriendDM;
 import com.master.design.therapist.DataModel.Update_Pic_ProfileDM;
+import com.master.design.therapist.DataModel.UserBlockUnblockRoot;
 
 import retrofit.Callback;
 import retrofit.http.Body;
@@ -206,7 +211,7 @@ public interface PAServices {
 //                                     @Field("user_id ") String user_id ,
 //                                     Callback<ChatHistoryDM> chatHistoryDMCallback);
 
-    // 23
+    // 22
     @POST("/chathistory")
     void TherapistChatHistory(@Body MultipartTypedOutput multipartTypedOutput, Callback<ChatHistoryDM> chatHistoryDMCallback);
 
@@ -282,7 +287,32 @@ public interface PAServices {
     void SocialUser(@Field("name") String name,
                      @Field("email") String email,
                      Callback<SocialUserDM> socialUserDMCallback);
-    // 34
+    // 36
     @POST("/reset_password")
     void Reset_Password(@Body MultipartTypedOutput multipartTypedOutput, Callback<Forgotpassword> forgotpasswordCallback);
+
+    // 37
+    @POST("/user_status")
+    void UserStatus(@Body MultipartTypedOutput multipartTypedOutput, Callback<ActiveStatusRoot> activeStatusRootCallback);
+
+    // 38
+    @GET("/common_reasons")
+    void CommonReasons(Callback<CommonReasonRoot> commonReasonRootCallback);
+
+ // 39
+    @POST("/all_blocked_users")
+    void AllBlockedUsers(@Body MultipartTypedOutput multipartTypedOutput, Callback<BlockedUserRoot> blockedUserRootCallback);
+
+ // 40
+    @POST("/unblockuser")
+    void UnblockUser(@Body MultipartTypedOutput multipartTypedOutput, Callback<UserBlockUnblockRoot> userBlockUnblockRootCallback);
+
+ // 41
+    @POST("/blockuser")
+    void BlockUser(@Body MultipartTypedOutput multipartTypedOutput, Callback<UserBlockUnblockRoot> userBlockUnblockRootCallback);
+
+ // 42
+    @POST("/reporting_user")
+    void ReportingUser(@Body MultipartTypedOutput multipartTypedOutput, Callback<ReportUserRoot> reportUserRootCallback);
+
 }

@@ -1,8 +1,6 @@
 
 package com.master.design.therapist.Activity;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -19,6 +17,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,6 +31,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.master.design.therapist.Controller.AppController;
+import com.master.design.therapist.DataModel.ActiveStatusRoot;
+import com.master.design.therapist.DataModel.Forgotpassword;
 import com.master.design.therapist.DataModel.TokenRoot;
 import com.master.design.therapist.Fragments.Fragment_Account;
 import com.master.design.therapist.Fragments.Fragment_Chat;
@@ -49,6 +50,7 @@ import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.annotations.NonNull;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -56,6 +58,8 @@ import retrofit.mime.MultipartTypedOutput;
 import retrofit.mime.TypedString;
 
 import static com.master.design.therapist.Models.DrawerMenu.RECORD;
+
+import org.jetbrains.annotations.Nullable;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
     private static final int CAMERA_CAPTURE_IMAGE_REQUEST_CODE = 100;
@@ -160,13 +164,14 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         setToolBar();
         setOnClickListeners();
 
-        try{
+        try {
             getDataFromIntent();
         } catch (Exception e) {
             e.printStackTrace();
-            addFragment(new Fragment_Home(),false);
+            addFragment(new Fragment_Home(), false);
         }
 
+        checkReportStatus();
     }
 
     private void getDataFromIntent() {
@@ -518,15 +523,15 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 Fragment_Home fragment = new Fragment_Home();
                 Bundle args = new Bundle();
                 args.putString("selected_ageId", selected_ageId);
-                     user.setselected_ageId(selected_ageId);
+                user.setselected_ageId(selected_ageId);
                 args.putString("selected_genderId", selected_genderId);
-                   user.setselected_genderId(selected_genderId);
+                user.setselected_genderId(selected_genderId);
                 args.putString("selected_ethicID", selected_ethicID);
-                   user.setselected_ethicID(selected_ethicID);
+                user.setselected_ethicID(selected_ethicID);
                 args.putString("selected_educationID", selected_educationID);
-                  user.setselected_educationID(selected_educationID);
+                user.setselected_educationID(selected_educationID);
                 args.putString("InterestIdList", InterestIdList);
-                  user.setInterestIdList(InterestIdList);
+                user.setInterestIdList(InterestIdList);
                 fragment.setArguments(args);
                 addFragment(fragment, false);
 
@@ -614,6 +619,102 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             });
         } else {
             Helper.showToast(MainActivity.this, String.valueOf(R.string.no_internet_connection));
+        }
+    }
+
+    private void checkReportStatus() {
+        if (connectionDetector.isConnectingToInternet()) {
+            String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+            MultipartTypedOutput multipartTypedOutput = new MultipartTypedOutput();
+            multipartTypedOutput.addPart("user_id", new TypedString(String.valueOf(user.getId())));
+
+//            progress = dialogUtil.showProgressDialog(MainActivity.this, getString(R.string.please_wait));
+            appController.paServices.UserStatus(multipartTypedOutput, new Callback<ActiveStatusRoot>() {
+                @Override
+                public void success(ActiveStatusRoot activeStatusRoot, Response response) {
+                    if (activeStatusRoot.getStatus().equalsIgnoreCase("1")) {
+
+                        if (activeStatusRoot.getActive_status().getActive_status().equalsIgnoreCase("true")) {
+                            showReportedLogout();
+                        } else {
+
+                        }
+
+
+                    } else {
+//                        progress.dismiss();
+                        com.master.design.therapist.Utils.Helper.showToast(MainActivity.this, getString(R.string.kindly_enter_your_registered_email));
+                    }
+                }
+
+                @Override
+                public void failure(RetrofitError retrofitError) {
+//                    progress.dismiss();
+                    Log.e("error", retrofitError.toString());
+                }
+            });
+        } else {
+            com.master.design.therapist.Helper.Helper.showToast(MainActivity.this, String.valueOf(R.string.no_internet_connection));
+        }
+    }
+
+    public void showReportedLogout() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle(context.getString(R.string.your_account_suspended_to_secure_our_community))
+                .setCancelable(false)
+                .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                updateReportedUserOffline();
+                            }
+                        }, 3000);
+                    }
+                });
+        final AlertDialog alert = builder.create();
+
+        alert.show();
+    }
+
+
+    private void updateReportedUserOffline() {
+        if (connectionDetector.isConnectingToInternet()) {
+            String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+            MultipartTypedOutput multipartTypedOutput = new MultipartTypedOutput();
+            String id = String.valueOf(user.getId());
+            multipartTypedOutput.addPart("id", new TypedString(id));
+
+//        progress = dialogUtil.showProgressDialog(MainActivity.this, getString(R.string.please_wait));
+            appController.paServices.Offline(multipartTypedOutput, new Callback<TokenRoot>() {
+                @Override
+                public void success(TokenRoot tokenRoot, Response response) {
+                    if (tokenRoot.getStatus().equalsIgnoreCase("1")) {
+//                        progress.dismiss();
+
+                        user.setOffline("0");
+                        user.setId(0);
+                        user.logout();
+                        user.setSearchCheck("0");
+
+                        ((MainActivity) context).finish();
+                        startActivity(new Intent(MainActivity.this, SplashScreen.class)
+                                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+                        overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
+
+                    } else {
+//                        progress.dismiss();
+                    }
+                }
+
+                @Override
+                public void failure(RetrofitError retrofitError) {
+//                    progress.dismiss();
+                    Log.e("error", retrofitError.toString());
+                }
+            });
+        } else {
+            com.master.design.therapist.Helper.Helper.showToast(MainActivity.this, String.valueOf(R.string.no_internet_connection));
         }
     }
 

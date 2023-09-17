@@ -1,6 +1,7 @@
 package com.master.design.therapist.Fragments;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -17,9 +18,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -27,19 +25,25 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.master.design.therapist.Activity.BlockedAccountActivity;
 import com.master.design.therapist.Activity.MainActivity;
 import com.master.design.therapist.Adapter.Adapter_Friends;
 import com.master.design.therapist.Adapter.Adapter_Request;
 import com.master.design.therapist.Controller.AppController;
+import com.master.design.therapist.DataModel.CommonReasonRoot;
 import com.master.design.therapist.DataModel.Friend_ListDM;
+import com.master.design.therapist.DataModel.ReportUserRoot;
 import com.master.design.therapist.DataModel.Request_ListDM;
 import com.master.design.therapist.DataModel.Request_ResponseDM;
 import com.master.design.therapist.DataModel.UnfriendDM;
+import com.master.design.therapist.DataModel.UserBlockUnblockRoot;
 import com.master.design.therapist.Helper.DialogUtil;
 import com.master.design.therapist.Helper.Helper;
 import com.master.design.therapist.Helper.User;
 import com.master.design.therapist.R;
 import com.master.design.therapist.Utils.ConnectionDetector;
+
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -47,10 +51,13 @@ import java.util.TimerTask;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.annotations.NonNull;
 import it.sephiroth.android.library.widget.HListView;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import retrofit.mime.MultipartTypedOutput;
+import retrofit.mime.TypedString;
 
 public class Fragment_Friends_Request extends Fragment {
 
@@ -101,7 +108,7 @@ public class Fragment_Friends_Request extends Fragment {
 
             setDetails();
             setMyFriendsAdapter();
-            myfriend_request="my_friends";
+            myfriend_request = "my_friends";
             /*
              * Sets up a SwipeRefreshLayout.OnRefreshListener that is invoked when the user
              * performs a swipe-to-refresh gesture.
@@ -129,7 +136,7 @@ public class Fragment_Friends_Request extends Fragment {
     }
 
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
+    @TargetApi(Build.VERSION_CODES.M)
     @SuppressLint({"UseCompatLoadingForDrawables", "UseCompatLoadingForColorStateLists"})
     @OnClick(R.id.myFriendsTxt)
     public void clickMyFriends() {
@@ -147,7 +154,7 @@ public class Fragment_Friends_Request extends Fragment {
         setMyFriendsAdapter();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
+    @TargetApi(Build.VERSION_CODES.M)
     @SuppressLint({"UseCompatLoadingForDrawables", "UseCompatLoadingForColorStateLists"})
     @OnClick(R.id.requestTxt)
     public void clickRequestTxt() {
@@ -296,7 +303,7 @@ public class Fragment_Friends_Request extends Fragment {
 //                        progress.dismiss();
 //                        Helper.showToast(getActivity(), getString(R.string.Api_data_not_found));
 
-                        try{
+                        try {
                             showdialogNoData(context, getString(R.string.friend_request), getString(R.string.no_friend_request));
 
                         } catch (Exception e) {
@@ -489,10 +496,10 @@ public class Fragment_Friends_Request extends Fragment {
             //@Override
             public void run() {
                 try {
-                    if(myfriend_request.equalsIgnoreCase("my_friends")){
+                    if (myfriend_request.equalsIgnoreCase("my_friends")) {
                         setMyFriendsAdapter();
 
-                    }else{
+                    } else {
 
                     }
                 } catch (Exception e) {
@@ -502,5 +509,128 @@ public class Fragment_Friends_Request extends Fragment {
             }
         }, 1000, 5000);//Update text every second
 
+    }
+
+
+    private void unblockUser(String unblock_user_id) {
+        if (connectionDetector.isConnectingToInternet()) {
+            MultipartTypedOutput multipartTypedOutput = new MultipartTypedOutput();
+            String id = String.valueOf(user.getId());
+            multipartTypedOutput.addPart("user_id", new TypedString(id));
+            multipartTypedOutput.addPart("unblock_user_id", new TypedString(unblock_user_id));
+
+//        progress = dialogUtil.showProgressDialog(MainActivity.this, getString(R.string.please_wait));
+            appController.paServices.UnblockUser(multipartTypedOutput, new Callback<UserBlockUnblockRoot>() {
+                @Override
+                public void success(UserBlockUnblockRoot userBlockUnblockRoot, Response response) {
+                    if (userBlockUnblockRoot.getStatus().equalsIgnoreCase("1")) {
+//                        progress.dismiss();
+
+
+                    } else {
+//                        progress.dismiss();
+                    }
+                }
+
+                @Override
+                public void failure(RetrofitError retrofitError) {
+//                    progress.dismiss();
+                    Log.e("error", retrofitError.toString());
+                }
+            });
+        } else {
+            com.master.design.therapist.Helper.Helper.showToast(getActivity(), String.valueOf(R.string.no_internet_connection));
+        }
+    }
+
+
+    private void blockUser(String blocked_user_id) {
+        if (connectionDetector.isConnectingToInternet()) {
+            MultipartTypedOutput multipartTypedOutput = new MultipartTypedOutput();
+            String id = String.valueOf(user.getId());
+            multipartTypedOutput.addPart("user_id", new TypedString(id));
+            multipartTypedOutput.addPart("blocked_user_id", new TypedString(blocked_user_id));
+
+//        progress = dialogUtil.showProgressDialog(MainActivity.this, getString(R.string.please_wait));
+            appController.paServices.UnblockUser(multipartTypedOutput, new Callback<UserBlockUnblockRoot>() {
+                @Override
+                public void success(UserBlockUnblockRoot userBlockUnblockRoot, Response response) {
+                    if (userBlockUnblockRoot.getStatus().equalsIgnoreCase("1")) {
+//                        progress.dismiss();
+
+
+                    } else {
+//                        progress.dismiss();
+                    }
+                }
+
+                @Override
+                public void failure(RetrofitError retrofitError) {
+//                    progress.dismiss();
+                    Log.e("error", retrofitError.toString());
+                }
+            });
+        } else {
+            com.master.design.therapist.Helper.Helper.showToast(getActivity(), String.valueOf(R.string.no_internet_connection));
+        }
+    }
+
+    private void commonReasons() {
+        if (connectionDetector.isConnectingToInternet()) {
+
+//        progress = dialogUtil.showProgressDialog(MainActivity.this, getString(R.string.please_wait));
+            appController.paServices.CommonReasons(new Callback<CommonReasonRoot>() {
+                @Override
+                public void success(CommonReasonRoot commonReasonRoot, Response response) {
+                    if (commonReasonRoot.getStatus().equalsIgnoreCase("1")) {
+//                        progress.dismiss();
+
+
+                    } else {
+//                        progress.dismiss();
+                    }
+                }
+
+                @Override
+                public void failure(RetrofitError retrofitError) {
+//                    progress.dismiss();
+                    Log.e("error", retrofitError.toString());
+                }
+            });
+        } else {
+            com.master.design.therapist.Helper.Helper.showToast(getActivity(), String.valueOf(R.string.no_internet_connection));
+        }
+    }
+
+    private void reportUser(String reported_user, String reason, String description) {
+        if (connectionDetector.isConnectingToInternet()) {
+            MultipartTypedOutput multipartTypedOutput = new MultipartTypedOutput();
+            String id = String.valueOf(user.getId());
+            multipartTypedOutput.addPart("user_id", new TypedString(id));
+            multipartTypedOutput.addPart("reported_user", new TypedString(reported_user));
+            multipartTypedOutput.addPart("description", new TypedString(description));
+
+//        progress = dialogUtil.showProgressDialog(MainActivity.this, getString(R.string.please_wait));
+            appController.paServices.ReportingUser(multipartTypedOutput, new Callback<ReportUserRoot>() {
+                @Override
+                public void success(ReportUserRoot reportUserRoot, Response response) {
+                    if (reportUserRoot.getStatus().equalsIgnoreCase("1")) {
+//                        progress.dismiss();
+
+
+                    } else {
+//                        progress.dismiss();
+                    }
+                }
+
+                @Override
+                public void failure(RetrofitError retrofitError) {
+//                    progress.dismiss();
+                    Log.e("error", retrofitError.toString());
+                }
+            });
+        } else {
+            com.master.design.therapist.Helper.Helper.showToast(getActivity(), String.valueOf(R.string.no_internet_connection));
+        }
     }
 }

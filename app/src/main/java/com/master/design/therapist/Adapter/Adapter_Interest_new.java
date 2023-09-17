@@ -1,5 +1,6 @@
 package com.master.design.therapist.Adapter;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
 import android.util.Log;
@@ -10,8 +11,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,6 +24,8 @@ import com.master.design.therapist.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
+import io.reactivex.annotations.NonNull;
 
 public class Adapter_Interest_new extends RecyclerView.Adapter<Adapter_Interest_new.ViewHolder>{
 
@@ -99,7 +100,7 @@ public class Adapter_Interest_new extends RecyclerView.Adapter<Adapter_Interest_
 //        viewHolder.img.setImageResource(arrayList.get(position).getImage());
 
         viewHolder.clickLL.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.M)
+            @TargetApi(Build.VERSION_CODES.M)
             @Override
             public void onClick(View view) {
 //                onItemClickListener.onClickThis(position, arrayList.get(position).getTittleInterest());

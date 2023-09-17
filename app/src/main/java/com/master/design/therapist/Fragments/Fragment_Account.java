@@ -28,6 +28,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.master.design.therapist.Activity.AboutActivity;
+import com.master.design.therapist.Activity.BlockedAccountActivity;
 import com.master.design.therapist.Activity.LanguageActivity;
 import com.master.design.therapist.Activity.MainActivity;
 import com.master.design.therapist.Activity.MyPostedImagesActivity;
@@ -79,6 +80,8 @@ public class Fragment_Account extends Fragment {
     TextView versionTxt;
     @BindView(R.id.contactUsLL)
     LinearLayout contactUsLL;
+    @BindView(R.id.BlockedFriendsLL)
+    LinearLayout BlockedFriendsLL;
 
     @BindView(R.id.layout_parent)
     LinearLayout layout_parent;
@@ -155,6 +158,14 @@ public class Fragment_Account extends Fragment {
 
     }
 
+    @OnClick(R.id.BlockedFriendsLL)
+    public void clickBlockedFriendsLL() {
+        startActivity(new Intent(getActivity(), BlockedAccountActivity.class));
+        activity.overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
+
+
+    }
+
     @OnClick(R.id.contactUsLL)
     public void clickcontactUsLL() {
 
@@ -188,7 +199,7 @@ public class Fragment_Account extends Fragment {
     }
 
     public void showdialogNoData(String tittle) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        AlertDialog.Builder builder = new AlertDialog.Builder(((MainActivity) context));
         builder.setTitle(tittle)
                 .setCancelable(false)
                 .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
@@ -199,7 +210,6 @@ public class Fragment_Account extends Fragment {
                 })
                 .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        progress = dialogUtil.showProgressDialog(getActivity(), getString(R.string.please_wait));
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {

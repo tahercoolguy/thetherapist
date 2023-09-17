@@ -15,6 +15,7 @@
     <uses-permission
         android:name="android.permission.WRITE_SETTINGS"
         tools:ignore="ProtectedPermissions" />
+
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
@@ -29,6 +30,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".Activity.BlockedAccountActivity"
+            android:exported="false" />
         <activity
             android:name=".Activity.ViewImageActivity"
             android:exported="false" />
@@ -105,9 +109,10 @@
 
         <activity
             android:name=".Activity.MainActivity"
-            android:windowSoftInputMode="adjustPan"
-            android:exported="false" />
-        <activity android:name=".Activity.SplashScreen"
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".Activity.SplashScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

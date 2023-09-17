@@ -207,5 +207,8 @@
     <string name="kindly_enter_your_registered_email">يرجى إدخال البريد الإلكتروني المسجل الخاص بك</string>
     <string name="contact_us">اتصل بنا</string>
     <string name="month">شهر</string>
+    <string name="your_account_suspended_to_secure_our_community">Your account has been Suspended to secure our community</string>
+    <string name="blocked_accounts">الحسابات المحظورة</string>
+    <string name="unblock_user">إلغاء حظر عن مستخدم</string>
 
 </resources>
