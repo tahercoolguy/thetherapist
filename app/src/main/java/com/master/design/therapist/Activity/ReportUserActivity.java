@@ -141,7 +141,7 @@ public class ReportUserActivity extends AppCompatActivity {
                 MultipartTypedOutput multipartTypedOutput = new MultipartTypedOutput();
                 String id = String.valueOf(user.getId());
                 String description = descriptionET.getText().toString();
-                multipartTypedOutput.addPart("user_id", new TypedString(id));
+                multipartTypedOutput.addPart("user", new TypedString(id));
                 multipartTypedOutput.addPart("reported_user", new TypedString(FriendsId));
                 multipartTypedOutput.addPart("reason", new TypedString(reasonId));
                 multipartTypedOutput.addPart("description", new TypedString(description));

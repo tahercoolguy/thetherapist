@@ -635,8 +635,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                     if (activeStatusRoot.getStatus().equalsIgnoreCase("1")) {
 
                         if (activeStatusRoot.getActive_status().getActive_status().equalsIgnoreCase("true")) {
-                            showReportedLogout();
+
                         } else {
+                            showReportedLogout();
 
                         }
 
