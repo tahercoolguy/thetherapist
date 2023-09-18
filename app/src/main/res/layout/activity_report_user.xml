@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Activity.ReportUserActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="10dp"
+            android:paddingTop="20dp"
+            android:visibility="visible">
+
+
+            <ImageView
+                android:id="@+id/backImg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_gravity="end"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="15dp"
+
+                android:src="@drawable/ic_back_arrow"></ImageView>
+
+            <TextView
+                android:id="@+id/tittleTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginVertical="10dp"
+                android:fontFamily="@font/poppins_bold"
+                android:text="@string/report"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_Heading"
+                android:textStyle="bold"></TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="10dp"
+            android:paddingTop="20dp">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginTop="20dp"
+                android:hint="@string/select_reason"
+                android:paddingHorizontal="10dp"></TextView>
+
+
+            <TextView
+                android:id="@+id/selectReasonTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="start"
+                android:layout_margin="10dp"
+                android:background="@drawable/rectangle_white_grey_border"
+                android:backgroundTint="@color/white"
+                android:drawableEnd="@drawable/ic_down"
+                android:elevation="10dp"
+                android:hint="@string/bad_behave"
+                android:padding="10dp"
+                android:paddingHorizontal="10dp"
+                android:paddingEnd="20dp"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_normal"></TextView>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginTop="20dp"
+                android:hint="@string/description_for_report"
+                android:paddingHorizontal="10dp"></TextView>
+
+
+            <EditText
+                android:id="@+id/descriptionET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:background="@drawable/rectangle_white_grey_border"
+                android:backgroundTint="@color/white"
+                android:elevation="10dp"
+                android:gravity="start"
+                android:hint="@string/describe_reason"
+                android:lines="7"
+                android:padding="15dp"
+
+                android:paddingHorizontal="10dp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_normal"></EditText>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/submitReportButton"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="20dp"
+            android:textAllCaps="false"
+            android:layout_marginTop="70dp"
+            android:layout_marginBottom="70dp"
+            android:background="@drawable/rectangle_white_grey_border"
+            android:backgroundTint="@color/colorPrimary"
+            android:elevation="10dp"
+            android:text="@string/submit_report"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_normal">
+
+        </Button>
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

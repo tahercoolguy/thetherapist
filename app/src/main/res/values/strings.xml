@@ -213,6 +213,24 @@
     <string name="your_account_suspended_to_secure_our_community">Your account has been Suspended to secure our community</string>
     <string name="blocked_accounts">Blocked Accounts</string>
     <string name="unblock_user">Unblock User</string>
+    <string name="nobody_blocked_in_your_block_list">nobody blocked in your block list</string>
+    <string name="block_user">Block user</string>
+    <string name="report">Report</string>
+    <string name="block">Block</string>
+    <string name="unblock">Unblock</string>
+    <string name="your_friend_blocked_you">your friend blocked you</string>
+    <string name="select_reason">Select Reason</string>
+    <string name="bad_behave">bad behave</string>
+    <string name="description_for_report">Description for report</string>
+    <string name="kindly_enter_description">kindly enter description</string>
+    <string name="kindly_select_any_reason">kindly select any reason</string>
+    <string name="submit_report">Submit Report</string>
+    <string name="describe_reason">describe reason</string>
+    <string name="user_has_been_blocked">user has been blocked</string>
+    <string name="user_has_been_unblocked">user has been unblocked</string>
+    <string name="you_can_not_see_the_chats_when_you_blocked_the_user">you can not see the chats when you block this user.</string>
+    <string name="your_reported_submitted_successfully">Your reported submitted successfully</string>
+    <string name="report_submission_failed">report submission failed</string>
 
 
 </resources>

@@ -31,6 +31,12 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".Activity.CommonReasonActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.ReportUserActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activity.BlockedAccountActivity"
             android:exported="false" />
         <activity

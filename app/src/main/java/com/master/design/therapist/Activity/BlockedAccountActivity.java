@@ -32,6 +32,7 @@ import com.master.design.therapist.Helper.DialogUtil;
 import com.master.design.therapist.Helper.User;
 import com.master.design.therapist.R;
 import com.master.design.therapist.Utils.ConnectionDetector;
+import com.master.design.therapist.Utils.Helper;
 
 import java.util.ArrayList;
 
@@ -128,13 +129,18 @@ public class BlockedAccountActivity extends AppCompatActivity {
 
                             if (blockedUserRoot.getDetails().size() > 0) {
                                 setAccountList(blockedUserRoot.getDetails());
+                            }else{
+                                setAccountList(blockedUserRoot.getDetails());
+                                Helper.showToast(BlockedAccountActivity.this,getString(R.string.nobody_blocked_in_your_block_list));
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
 
+
                     } else {
 //                        progress.dismiss();
+
                     }
                 }
 
@@ -154,6 +160,7 @@ public class BlockedAccountActivity extends AppCompatActivity {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 3);
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(adapter_blocked_accounts);
+        adapter_blocked_accounts.notifyDataSetChanged();
 
         adapter_blocked_accounts.setOnItemClickListener(new Adapter_Blocked_Accounts.OnItemClickListener() {
             @Override
@@ -192,6 +199,8 @@ public class BlockedAccountActivity extends AppCompatActivity {
                 public void success(UserBlockUnblockRoot userBlockUnblockRoot, Response response) {
                     if (userBlockUnblockRoot.getStatus().equalsIgnoreCase("1")) {
 //                        progress.dismiss();
+                        Helper.showToast(BlockedAccountActivity.this,getString(R.string.user_has_been_unblocked));
+
                         setBlockedAccounts();
 
                     } else {

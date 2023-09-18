@@ -10,6 +10,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -21,6 +22,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -28,6 +31,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.JsonObject;
@@ -40,8 +44,12 @@ import com.master.design.therapist.Adapter.MessageChatAdapter;
 import com.master.design.therapist.Controller.AppController;
 import com.master.design.therapist.DataModel.All_messages;
 import com.master.design.therapist.DataModel.ChatHistoryDM;
+import com.master.design.therapist.DataModel.CommonReasonDetail;
+import com.master.design.therapist.DataModel.CommonReasonRoot;
+import com.master.design.therapist.DataModel.ReportUserRoot;
 import com.master.design.therapist.DataModel.SendingImageDM;
 import com.master.design.therapist.DataModel.TokenRoot;
+import com.master.design.therapist.DataModel.UserBlockUnblockRoot;
 import com.master.design.therapist.Helper.DialogUtil;
 import com.master.design.therapist.Helper.User;
 import com.master.design.therapist.R;
@@ -76,9 +84,9 @@ import retrofit.mime.TypedString;
 
 public class Conversation_Activity extends AppCompatActivity {
 
-//    private String SERVER_PATH = "";
+    //    private String SERVER_PATH = "";
 //    private WebSocket webSocket;
-
+    private Menu menu;
     private Context context;
     private Activity activity;
     @BindView(R.id.rcvRcv)
@@ -98,6 +106,8 @@ public class Conversation_Activity extends AppCompatActivity {
 
     @BindView(R.id.addRL)
     RelativeLayout addRL;
+    @BindView(R.id.unfriend_blockTxt)
+    TextView unfriend_blockTxt;
 
     @BindView(R.id.textRL)
     RelativeLayout textRL;
@@ -120,6 +130,8 @@ public class Conversation_Activity extends AppCompatActivity {
     @BindView(R.id.addImg)
     ImageView addImg;
 
+    androidx.appcompat.widget.Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -133,6 +145,10 @@ public class Conversation_Activity extends AppCompatActivity {
         user = new User(Conversation_Activity.this);
         LinearLayoutManager manager = new LinearLayoutManager(Conversation_Activity.this, RecyclerView.VERTICAL, false);
         rcvRcv.setLayoutManager(manager);
+        toolbar = findViewById(R.id.toolbarrrrr);
+        toolbar.setTitle("");
+        setSupportActionBar(toolbar);
+
 
         name = getIntent().getStringExtra("Name");
         image = getIntent().getStringExtra("image");
@@ -159,14 +175,19 @@ public class Conversation_Activity extends AppCompatActivity {
         ActivityCompat.requestPermissions(Conversation_Activity.this,
                 new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                 1);
+
+    }
+
+    private void setSupportActionBar(Toolbar toolbar) {
     }
 
 
     List<All_messages> messageChatModelList = new ArrayList<>();
     List<All_messages> refreshmessageChatModelList = new ArrayList<>();
+    boolean block_unblock = false;
 
     private void setChatData() {
-         if (connectionDetector.isConnectingToInternet()) {
+        if (connectionDetector.isConnectingToInternet()) {
 
             String refreshedToken = FirebaseInstanceId.getInstance().getToken();
 
@@ -187,18 +208,35 @@ public class Conversation_Activity extends AppCompatActivity {
 
                         messageChatModelList = chatHistoryDM.getAll_messages();
 
-                        if(chatHistoryDM.getFriends()==true)
-                        {
+                        if (chatHistoryDM.getFriends() == true) {
                             messageRL.setVisibility(View.VISIBLE);
                             addRL.setVisibility(View.VISIBLE);
                             textRL.setVisibility(View.GONE);
-                        }
-                        else {
+                        } else {
                             messageRL.setVisibility(View.GONE);
                             addRL.setVisibility(View.GONE);
                             textRL.setVisibility(View.VISIBLE);
+                            unfriend_blockTxt.setText(getString(R.string.you_are_not_friend_now));
+
                         }
 
+                        if (chatHistoryDM.getBlock_status() == false) {
+                            block_unblock = false;
+                            messageRL.setVisibility(View.VISIBLE);
+                            addRL.setVisibility(View.VISIBLE);
+                            textRL.setVisibility(View.GONE);
+//                            updateMenuTitles();
+
+
+                        } else {
+                            block_unblock = true;
+                            messageRL.setVisibility(View.GONE);
+                            addRL.setVisibility(View.GONE);
+                            textRL.setVisibility(View.VISIBLE);
+                            unfriend_blockTxt.setText(getString(R.string.your_friend_blocked_you));
+//                            updateMenuTitles();
+
+                        }
 
                         adapter = new MessageChatAdapter(messageChatModelList, context, FriendsId, status);
                         lm = new LinearLayoutManager(Conversation_Activity.this, LinearLayoutManager.VERTICAL, false);
@@ -427,7 +465,7 @@ public class Conversation_Activity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         activity.overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
-        webSocketClient.close(1,1,"");
+        webSocketClient.close(1, 1, "");
         super.onBackPressed();
     }
 
@@ -442,8 +480,8 @@ public class Conversation_Activity extends AppCompatActivity {
 
     public void createWebSocketClient() {
         URI uri;
-         try {
-            uri = new URI("ws://"+ AppController.WebSocketURL+"/ws/chat/" + chatRoomID + "/");
+        try {
+            uri = new URI("ws://" + AppController.WebSocketURL + "/ws/chat/" + chatRoomID + "/");
         } catch (URISyntaxException e) {
             e.printStackTrace();
             return;
@@ -580,7 +618,7 @@ public class Conversation_Activity extends AppCompatActivity {
                         for (All_messages message : messageChatModelList
                         ) {
 //                            if (Integer.parseInt(message.getId()) == Integer.parseInt(messageId)) {
-                                messageChatModelList.get(i).setStatus("delivered");
+                            messageChatModelList.get(i).setStatus("delivered");
 //                            }
                             i++;
                         }
@@ -878,7 +916,7 @@ public class Conversation_Activity extends AppCompatActivity {
                     if (tokenRoot.getStatus().equalsIgnoreCase("1")) {
 //                        progress.dismiss();
 
-                    }else{
+                    } else {
 //                        progress.dismiss();
                     }
                 }
@@ -905,6 +943,7 @@ public class Conversation_Activity extends AppCompatActivity {
         updateOnline();
         super.onRestart();
     }
+
     private void updateOffline() {
         if (connectionDetector.isConnectingToInternet()) {
             String refreshedToken = FirebaseInstanceId.getInstance().getToken();
@@ -917,6 +956,159 @@ public class Conversation_Activity extends AppCompatActivity {
                 public void success(TokenRoot tokenRoot, Response response) {
                     if (tokenRoot.getStatus().equalsIgnoreCase("1")) {
 //                        progress.dismiss();
+
+                    } else {
+//                        progress.dismiss();
+                    }
+                }
+
+                @Override
+                public void failure(RetrofitError retrofitError) {
+//                    progress.dismiss();
+                    Log.e("error", retrofitError.toString());
+                }
+            });
+        } else {
+            com.master.design.therapist.Helper.Helper.showToast(Conversation_Activity.this, String.valueOf(R.string.no_internet_connection));
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.chat_menu, menu);
+        this.menu = menu;
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == R.id.report) {
+            // Handle the "Report" menu item click here
+            // You can show a dialog or navigate to another activity
+
+            startActivity(new Intent(Conversation_Activity.this, ReportUserActivity.class)
+                    .putExtra("FriendsId", FriendsId));
+            overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
+
+            return true;
+        }
+        if (itemId == R.id.block) {
+            // Handle the "Block" menu item click here
+            // You can show a dialog or navigate to another activity
+//            if (block_unblock == false) {
+                showDialogToBlockUser(FriendsId, getString(R.string.block_user));
+//            } else {
+//                showDialogToUnblockUser(FriendsId, getString(R.string.unblock_user));
+//            }
+            return true;
+        }
+        // Add more cases for other menu items if needed
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void updateMenuTitles() {
+        if (menu == null) {
+
+        } else {
+            MenuItem block_unblockMenu = menu.findItem(R.id.block);
+            if (block_unblock) {
+                block_unblockMenu.setTitle(getString(R.string.unblock));
+            } else {
+                block_unblockMenu.setTitle(getString(R.string.block));
+            }
+        }
+    }
+
+    public void showDialogToUnblockUser(String id_friend, String tittle) {
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(Conversation_Activity.this);
+        builder.setMessage(tittle)
+                .setIcon(getDrawable(R.drawable.ic_baseline_block_24))
+                .setCancelable(true)
+                .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+//                        if (block_unblock == false) {
+//                            blockUser(id_friend);
+//                        } else {
+                            unblockUser(id_friend);
+//                        }
+                    }
+                });
+        final android.app.AlertDialog alert = builder.create();
+
+        alert.show();
+    }
+
+    public void showDialogToBlockUser(String id_friend, String tittle) {
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(Conversation_Activity.this);
+        builder.setTitle(tittle)
+                .setMessage(getString(R.string.you_can_not_see_the_chats_when_you_blocked_the_user))
+                .setIcon(getDrawable(R.drawable.ic_baseline_block_24))
+                .setCancelable(true)
+                .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+//                        if (block_unblock == false) {
+                            blockUser(id_friend);
+//                        } else {
+//                            unblockUser(id_friend);
+//                        }
+                    }
+                });
+        final android.app.AlertDialog alert = builder.create();
+
+        alert.show();
+    }
+
+    private void unblockUser(String unblock_user_id) {
+        if (connectionDetector.isConnectingToInternet()) {
+            MultipartTypedOutput multipartTypedOutput = new MultipartTypedOutput();
+            String id = String.valueOf(user.getId());
+            multipartTypedOutput.addPart("user_id", new TypedString(id));
+            multipartTypedOutput.addPart("unblock_user_id", new TypedString(unblock_user_id));
+
+//        progress = dialogUtil.showProgressDialog(MainActivity.this, getString(R.string.please_wait));
+            appController.paServices.UnblockUser(multipartTypedOutput, new Callback<UserBlockUnblockRoot>() {
+                @Override
+                public void success(UserBlockUnblockRoot userBlockUnblockRoot, Response response) {
+                    if (userBlockUnblockRoot.getStatus().equalsIgnoreCase("1")) {
+//                        progress.dismiss();
+                         recreate();
+
+                    } else {
+//                        progress.dismiss();
+                    }
+                }
+
+                @Override
+                public void failure(RetrofitError retrofitError) {
+//                    progress.dismiss();
+                    Log.e("error", retrofitError.toString());
+                }
+            });
+        } else {
+            com.master.design.therapist.Helper.Helper.showToast(Conversation_Activity.this, String.valueOf(R.string.no_internet_connection));
+        }
+    }
+
+
+    private void blockUser(String blocked_user_id) {
+        if (connectionDetector.isConnectingToInternet()) {
+            MultipartTypedOutput multipartTypedOutput = new MultipartTypedOutput();
+            String id = String.valueOf(user.getId());
+            multipartTypedOutput.addPart("user_id", new TypedString(String.valueOf(id)));
+            multipartTypedOutput.addPart("blocked_user_id", new TypedString(blocked_user_id));
+
+//        progress = dialogUtil.showProgressDialog(MainActivity.this, getString(R.string.please_wait));
+            appController.paServices.BlockUser(multipartTypedOutput, new Callback<UserBlockUnblockRoot>() {
+                @Override
+                public void success(UserBlockUnblockRoot userBlockUnblockRoot, Response response) {
+                    if (userBlockUnblockRoot.getStatus().equalsIgnoreCase("1")) {
+//                        progress.dismiss();
+                        Helper.showToast(Conversation_Activity.this, getString(R.string.user_has_been_blocked));
+
+                        Conversation_Activity.this.finish();
 
                     } else {
 //                        progress.dismiss();
