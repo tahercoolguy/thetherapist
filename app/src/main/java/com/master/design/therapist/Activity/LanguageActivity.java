@@ -90,58 +90,76 @@ public class LanguageActivity extends AppCompatActivity {
 
     boolean offline = false;
 
-    @OnClick(R.id.englishRL)
-    public void clickEnglishRL() {
-        Language language = new Language(1, "Engish", "en");
-        user.setLanguage(language);
-        englishRL.setBackground(getDrawable(R.drawable.language_select_bg));
-        arabicRL.setBackground(getDrawable(R.drawable.language_unselect_bg));
-
-        offline = true;
-        Util.setConfigChange(LanguageActivity.this, "en");
-
-        restartActivity(LanguageActivity.this);
-        startActivity(new Intent(LanguageActivity.this, IntroActivity.class)
-                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
-        finish();
-
-
-//        startActivity(new Intent(LanguageActivity.this, IntroActivity.class));
-        overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
-        finish();
-
-    }
-
-    @OnClick(R.id.arabicRL)
-    public void clickArabicRL() {
-        Language language = new Language(2, "Arabic", "ar");
-        user.setLanguage(language);
-        offline = true;
-        englishRL.setBackground(getDrawable(R.drawable.language_unselect_bg));
-        arabicRL.setBackground(getDrawable(R.drawable.language_select_bg));
-        Util.setConfigChange(LanguageActivity.this, "ar");
-//        getActivity().getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
-        restartActivity(LanguageActivity.this);
-        startActivity(new Intent(LanguageActivity.this, IntroActivity.class)
-                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
-        finish();
-
-
-//        startActivity(new Intent(LanguageActivity.this, IntroActivity.class));
-        finish();
-        overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
-
-    }
+//    @OnClick(R.id.englishRL)
+//    public void clickEnglishRL() {
+//        Language language = new Language(1, "Engish", "en");
+//        user.setLanguage(language);
+//        englishRL.setBackground(getDrawable(R.drawable.language_select_bg));
+//        arabicRL.setBackground(getDrawable(R.drawable.language_unselect_bg));
+//
+//        offline = true;
+//        Util.setConfigChange(LanguageActivity.this, "en");
+//
+//        restartActivity(LanguageActivity.this);
+//        startActivity(new Intent(LanguageActivity.this, IntroActivity.class)
+//                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+//        finish();
+//
+//
+////        startActivity(new Intent(LanguageActivity.this, IntroActivity.class));
+//        overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
+//        finish();
+//
+//    }
+//
+//    @OnClick(R.id.arabicRL)
+//    public void clickArabicRL() {
+//        Language language = new Language(2, "Arabic", "ar");
+//        user.setLanguage(language);
+//        offline = true;
+//        englishRL.setBackground(getDrawable(R.drawable.language_unselect_bg));
+//        arabicRL.setBackground(getDrawable(R.drawable.language_select_bg));
+//        Util.setConfigChange(LanguageActivity.this, "ar");
+////        getActivity().getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
+//        restartActivity(LanguageActivity.this);
+//        startActivity(new Intent(LanguageActivity.this, IntroActivity.class)
+//                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+//        finish();
+//
+//
+////        startActivity(new Intent(LanguageActivity.this, IntroActivity.class));
+//        finish();
+//        overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
+//
+//    }
 
     @OnClick(R.id.englishLL)
     public void clickEnglishLL() {
+//        Language language = new Language(1, "Engish", "en");
+//        user.setLanguage(language);
+//
+//        offline = true;
+//
+//        englishRL.setBackground(getDrawable(R.drawable.language_select_bg));
+//        arabicRL.setBackground(getDrawable(R.drawable.language_unselect_bg));
+//        Util.setConfigChange(LanguageActivity.this, "en");
+//
+//        restartActivity(LanguageActivity.this);
+//        startActivity(new Intent(LanguageActivity.this, IntroActivity.class)
+//                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+//        finish();
+//
+//
+////        startActivity(new Intent(LanguageActivity.this, IntroActivity.class));
+//        overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
+//        finish();
+
         Language language = new Language(1, "Engish", "en");
         user.setLanguage(language);
-
-        offline = true;
-
         englishRL.setBackground(getDrawable(R.drawable.language_select_bg));
         arabicRL.setBackground(getDrawable(R.drawable.language_unselect_bg));
+
+        offline = true;
         Util.setConfigChange(LanguageActivity.this, "en");
 
         restartActivity(LanguageActivity.this);
@@ -158,6 +176,23 @@ public class LanguageActivity extends AppCompatActivity {
 
     @OnClick(R.id.arabicLL)
     public void clickArabicLL() {
+//        Language language = new Language(2, "Arabic", "ar");
+//        user.setLanguage(language);
+//        offline = true;
+//        englishRL.setBackground(getDrawable(R.drawable.language_unselect_bg));
+//        arabicRL.setBackground(getDrawable(R.drawable.language_select_bg));
+//        Util.setConfigChange(LanguageActivity.this, "ar");
+////        getActivity().getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
+//        restartActivity(LanguageActivity.this);
+//        startActivity(new Intent(LanguageActivity.this, IntroActivity.class)
+//                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+//        finish();
+//
+//
+////        startActivity(new Intent(LanguageActivity.this, IntroActivity.class));
+//        finish();
+//        overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
+
         Language language = new Language(2, "Arabic", "ar");
         user.setLanguage(language);
         offline = true;

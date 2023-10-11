@@ -14,8 +14,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -79,14 +81,14 @@ public class My_ProfileActivity extends AppCompatActivity {
 
     @BindView(R.id.dobET)
     EditText dobET;
+    @BindView(R.id.phoneLL)
+    LinearLayout phoneLL;
 
     @BindView(R.id.profileImgRIV)
     ImageView profileImgRIV;
 
     @BindView(R.id.deleteAccountTxt)
     TextView deleteAccountTxt;
-
-
 
 
 //    @OnClick(R.id. editProfileTxt)
@@ -311,12 +313,16 @@ public class My_ProfileActivity extends AppCompatActivity {
                         genderET.setText(profileDM.getUser_data().get(0).getGender().getGender_eg());
                         dobET.setText(profileDM.getUser_data().get(0).getDob());
 
-
+                        if (phoneET.getText().toString().equalsIgnoreCase("")) {
+                            phoneLL.setVisibility(View.GONE);
+                        } else {
+                            phoneLL.setVisibility(View.VISIBLE);
+                        }
 
                         Picasso.with(context).load(AppController.THERAPIST_IMAGE + profileDM.getUser_data().get(0).getImage()).into(profileImgRIV);
 
 
-                    }else{
+                    } else {
                         progress.dismiss();
                     }
 //                    else {
@@ -434,17 +440,16 @@ public class My_ProfileActivity extends AppCompatActivity {
             Helper.showToast(My_ProfileActivity.this, getString(R.string.no_internet_connection));
     }
 
-    public void BingingDeleteApi()
-    {
+    public void BingingDeleteApi() {
         if (connectionDetector.isConnectingToInternet()) {
             String refreshedToken = FirebaseInstanceId.getInstance().getToken();
             progress = dialogUtil.showProgressDialog(My_ProfileActivity.this, getString(R.string.please_wait));
-            appController.paServices.DeleteAccount(String.valueOf(user.getId()),new Callback<DeleteAccountDM>() {
+            appController.paServices.DeleteAccount(String.valueOf(user.getId()), new Callback<DeleteAccountDM>() {
                 @Override
                 public void success(DeleteAccountDM deleteAccountDM, Response response) {
                     progress.dismiss();
                     if (deleteAccountDM.getStatus().equalsIgnoreCase("1")) {
-                        Helper.showToast(My_ProfileActivity.this,deleteAccountDM.getMsg());
+                        Helper.showToast(My_ProfileActivity.this, deleteAccountDM.getMsg());
                         finishAffinity();
                         startActivity(new Intent(My_ProfileActivity.this, SplashScreen.class));
                         user.setId(0);

@@ -375,10 +375,11 @@ public class Create_Account_Activity extends AppCompatActivity {
 //            Helper.showToast(Create_Account_Activity.this, getString(R.string.kindlyenter_your_ethnicity));
 //        }
 //
-        else if (mobileET.getText().toString().equalsIgnoreCase("")) {
-            correct = false;
-            Helper.showToast(Create_Account_Activity.this, getString(R.string.kindly_enter_your_mobile_number));
-        } else if (emailEt.getText().toString().equalsIgnoreCase("")) {
+//        else if (mobileET.getText().toString().equalsIgnoreCase("")) {
+//            correct = false;
+//            Helper.showToast(Create_Account_Activity.this, getString(R.string.kindly_enter_your_mobile_number));
+//        }
+        else if (emailEt.getText().toString().equalsIgnoreCase("")) {
             correct = false;
             Helper.showToast(Create_Account_Activity.this, getString(R.string.kindly_enter_email));
         } else if (PasswordEdT.getText().toString().equalsIgnoreCase("")) {

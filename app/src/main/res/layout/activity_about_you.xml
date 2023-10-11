@@ -169,7 +169,7 @@
                     android:layout_gravity="start"
                     android:background="@color/white"
                     android:gravity="start"
-                    android:hint="Co Founder of ZZ App"
+                    android:hint=" "
                     android:minLines="5"
                     android:padding="20dp"
                     android:textSize="@dimen/text_size_normal"></EditText>

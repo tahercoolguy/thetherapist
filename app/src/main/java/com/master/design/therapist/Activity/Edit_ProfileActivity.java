@@ -416,13 +416,15 @@ public class Edit_ProfileActivity extends AppCompatActivity {
             correct = false;
             Helper.showToast(Edit_ProfileActivity.this, getString(R.string.kindly_select_gender));
 
-        } else if (mobileET.getText().toString().equalsIgnoreCase("")) {
-            correct = false;
-            Helper.showToast(Edit_ProfileActivity.this, getString(R.string.kindly_enter_mobile));
-        } else if (mobilecodeET.getText().toString().equalsIgnoreCase("")) {
-            correct = false;
-            Helper.showToast(Edit_ProfileActivity.this, getString(R.string.kindly_select_mobile_country_code));
         }
+//        else if (mobileET.getText().toString().equalsIgnoreCase("")) {
+//            correct = false;
+//            Helper.showToast(Edit_ProfileActivity.this, getString(R.string.kindly_enter_mobile));
+//        }
+//        else if (mobilecodeET.getText().toString().equalsIgnoreCase("")) {
+//            correct = false;
+//            Helper.showToast(Edit_ProfileActivity.this, getString(R.string.kindly_select_mobile_country_code));
+//        }
 //        else if (selectEthnicityTxt.getText().toString().equalsIgnoreCase("")) {
 //            correct = false;
 //            Helper.showToast(Edit_ProfileActivity.this, getString(R.string.kindlyenter_your_ethnicity));
@@ -644,7 +646,43 @@ public class Edit_ProfileActivity extends AppCompatActivity {
 
                         mydob = profileDM.getUser_data().get(0).getDob();
 //                        mygenderId = profileDM.getUser_data().get(0).getGender().get(0).getId();
-                        newMobile = profileDM.getUser_data().get(0).getPhone();
+
+                        try {
+                            if(!profileDM.getUser_data().get(0).getPhone().equalsIgnoreCase("")){
+                                try {
+                                    newMobile = profileDM.getUser_data().get(0).getPhone();
+                                    String extractedCountryCode = null;
+                                    String extractedPhoneNumber = null;
+
+                                    for (DataChangeDM countryCode : arrayList2) {
+                                        if (newMobile.startsWith(countryCode.getId())) {
+                                            extractedCountryCode = countryCode.getId();
+                                            extractedPhoneNumber = newMobile.substring(countryCode.getId().length());
+                                            break;
+                                        }
+                                    }
+
+                                    if (extractedCountryCode != null && extractedPhoneNumber != null) {
+                                        // Now you have the separated country code and phone number
+                                        // extractedCountryCode contains the country code (e.g., "+91")
+                                        // extractedPhoneNumber contains the remaining phone number
+                                        SelectCountryCode = extractedCountryCode;
+                                        mobilecodeET.setText(extractedCountryCode);
+                                        mobileET.setText(extractedPhoneNumber);
+                                    } else {
+                                        // The phone number doesn't match any known country code
+                                    }
+
+
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
                         Gender = profileDM.getUser_data().get(0).getGender().getId();
                         SelectCountryid = profileDM.getUser_data().get(0).getCountry().getIsoCode();
                         String countryName;
@@ -707,28 +745,6 @@ public class Edit_ProfileActivity extends AppCompatActivity {
 //                            }
 //                        }
 
-
-                        String extractedCountryCode = null;
-                        String extractedPhoneNumber = null;
-
-                        for (DataChangeDM countryCode : arrayList2) {
-                            if (newMobile.startsWith(countryCode.getId())) {
-                                extractedCountryCode = countryCode.getId();
-                                extractedPhoneNumber = newMobile.substring(countryCode.getId().length());
-                                break;
-                            }
-                        }
-
-                        if (extractedCountryCode != null && extractedPhoneNumber != null) {
-                            // Now you have the separated country code and phone number
-                            // extractedCountryCode contains the country code (e.g., "+91")
-                            // extractedPhoneNumber contains the remaining phone number
-                            SelectCountryCode = extractedCountryCode;
-                            mobilecodeET.setText(extractedCountryCode);
-                            mobileET.setText(extractedPhoneNumber);
-                        } else {
-                            // The phone number doesn't match any known country code
-                        }
 
 
 //                        String phoneNumber = newMobile; // Your phone number

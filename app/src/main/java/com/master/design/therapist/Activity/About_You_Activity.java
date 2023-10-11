@@ -92,7 +92,7 @@ public class About_You_Activity extends AppCompatActivity {
     String password;
     String confirmPassword;
     String InterestIdList;
-    String name, id, age,nameAr;
+    String name, id, age, nameAr;
 
     @BindView(R.id.aboutYouET)
     EditText aboutYouET;
@@ -123,16 +123,15 @@ public class About_You_Activity extends AppCompatActivity {
             public void response(Object object) {
 
                 name = ((DataChangeDM) object).getName();
-                nameAr=((DataChangeDM) object).getNameAr();
+                nameAr = ((DataChangeDM) object).getNameAr();
                 id = ((DataChangeDM) object).getId();
 //                                    user.setAreaId(AreaID);
 
                 if (user.getLanguageCode().equalsIgnoreCase("en")) {
                     educationET.setText(name);
-                }
-                 else {
+                } else {
                     educationET.setText(nameAr);
-                 }
+                }
             }
         });
         bottomForAll.show(About_You_Activity.this.getSupportFragmentManager(), "bottomSheetCountry");
@@ -141,11 +140,30 @@ public class About_You_Activity extends AppCompatActivity {
 
     @OnClick(R.id.addMultipleImgRL)
     public void clickaddMultipleImgRL() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, getString(R.string.add_multiple_images)), ADD_MORE_IMAGE);
+        Dexter.withActivity(this)
+                .withPermissions(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .withListener(new MultiplePermissionsListener() {
+                    @Override
+                    public void onPermissionsChecked(MultiplePermissionsReport report) {
+                        if (report.areAllPermissionsGranted()) {
+//                            showImagePickerOptions();
+                            Intent intent = new Intent();
+                            intent.setType("image/*");
+                            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                            intent.setAction(Intent.ACTION_GET_CONTENT);
+                            startActivityForResult(Intent.createChooser(intent, getString(R.string.add_multiple_images)), ADD_MORE_IMAGE);
+                        }
+
+                        if (report.isAnyPermissionPermanentlyDenied()) {
+                            showSettingsDialog();
+                        }
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+                        token.continuePermissionRequest();
+                    }
+                }).check();
     }
 
     AddImageAdapter adaptor;
@@ -185,7 +203,7 @@ public class About_You_Activity extends AppCompatActivity {
         list = new ArrayList<>();
         listForSize = new ArrayList<>();
         adaptor = new AddImageAdapter(list, "1");
-        multipleImageRcv.setLayoutManager(new GridLayoutManager(About_You_Activity.this,2));
+        multipleImageRcv.setLayoutManager(new GridLayoutManager(About_You_Activity.this, 2));
         multipleImageRcv.setAdapter(adaptor);
 
     }
@@ -240,7 +258,7 @@ public class About_You_Activity extends AppCompatActivity {
         if (aboutYouET.getText().toString().equalsIgnoreCase("")) {
             correct = false;
             Helper.showToast(About_You_Activity.this, getString(R.string.kindly_tell_me_about_u));
-        } else if (aboutYouET.getText().toString().length()>50) {
+        } else if (aboutYouET.getText().toString().length() > 50) {
             correct = false;
             Helper.showToast(About_You_Activity.this, getString(R.string.characters_should_be_less_than));
         } else if (educationET.getText().toString().equalsIgnoreCase("")) {
@@ -574,7 +592,6 @@ public class About_You_Activity extends AppCompatActivity {
                     }
 
                 }
-
 
 
 //                else {
