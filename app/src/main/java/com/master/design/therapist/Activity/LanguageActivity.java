@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,6 +21,8 @@ import com.master.design.therapist.Helper.User;
 import com.master.design.therapist.Helper.Util;
 import com.master.design.therapist.R;
 import com.master.design.therapist.Utils.ConnectionDetector;
+
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -52,7 +55,7 @@ public class LanguageActivity extends AppCompatActivity {
     ConnectionDetector connectionDetector;
     DialogUtil dialogUtil;
     User user;
-
+    Configuration config;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +66,7 @@ public class LanguageActivity extends AppCompatActivity {
         appController = (AppController) getApplicationContext();
         connectionDetector = new ConnectionDetector(getApplicationContext());
 
+          config = new Configuration(getResources().getConfiguration());
 
 
         String userID = String.valueOf(user.getId());
@@ -72,14 +76,22 @@ public class LanguageActivity extends AppCompatActivity {
                 user.setLanguage(language);
                 englishRL.setBackground(getDrawable(R.drawable.language_select_bg));
                 arabicRL.setBackground(getDrawable(R.drawable.language_unselect_bg));
-                Util.setConfigChange(LanguageActivity.this, "en");
+//                Util.setConfigChange(LanguageActivity.this, "en");
+                config.setLocale(new Locale("en"));
+                getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+
+
             } else {
                 Language language = new Language(2, "Arabic", "ar");
                 user.setLanguage(language);
                 offline = true;
                 englishRL.setBackground(getDrawable(R.drawable.language_unselect_bg));
                 arabicRL.setBackground(getDrawable(R.drawable.language_select_bg));
-                Util.setConfigChange(LanguageActivity.this, "ar");
+//                Util.setConfigChange(LanguageActivity.this, "ar");
+
+                config.setLocale(new Locale("ar"));
+                getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+
 
             }
         } else {
@@ -158,19 +170,20 @@ public class LanguageActivity extends AppCompatActivity {
         user.setLanguage(language);
         englishRL.setBackground(getDrawable(R.drawable.language_select_bg));
         arabicRL.setBackground(getDrawable(R.drawable.language_unselect_bg));
-
+        config.setLocale(new Locale("en"));
+        getResources().updateConfiguration(config, getResources().getDisplayMetrics());
         offline = true;
-        Util.setConfigChange(LanguageActivity.this, "en");
-
-        restartActivity(LanguageActivity.this);
+//        Util.setConfigChange(LanguageActivity.this, "en");
+//
+//        restartActivity(LanguageActivity.this);
         startActivity(new Intent(LanguageActivity.this, IntroActivity.class)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
         finish();
-
-
-//        startActivity(new Intent(LanguageActivity.this, IntroActivity.class));
-        overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
-        finish();
+//
+//
+////        startActivity(new Intent(LanguageActivity.this, IntroActivity.class));
+//        overridePendingTransition(R.anim.left_slide_in, R.anim.right_slide_out);
+//        finish();
 
     }
 
@@ -198,12 +211,18 @@ public class LanguageActivity extends AppCompatActivity {
         offline = true;
         englishRL.setBackground(getDrawable(R.drawable.language_unselect_bg));
         arabicRL.setBackground(getDrawable(R.drawable.language_select_bg));
-        Util.setConfigChange(LanguageActivity.this, "ar");
+
+
+        config.setLocale(new Locale("ar"));
+        getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+
+
+//        Util.setConfigChange(LanguageActivity.this, "ar");
 //        getActivity().getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
-        restartActivity(LanguageActivity.this);
+//        restartActivity(LanguageActivity.this);
         startActivity(new Intent(LanguageActivity.this, IntroActivity.class)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
-        finish();
+//        finish();
 
 
 //        startActivity(new Intent(LanguageActivity.this, IntroActivity.class));
