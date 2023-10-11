@@ -13,6 +13,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -56,6 +57,7 @@ import retrofit.mime.TypedString;
 
 public class My_ProfileActivity extends AppCompatActivity {
 
+    private static final int SETTING_REQUEST_CODE_SINGLE = 1001;
 
     AppController appController;
     ConnectionDetector connectionDetector;
@@ -172,6 +174,18 @@ public class My_ProfileActivity extends AppCompatActivity {
                 }
             }
         }
+
+        if (requestCode == SETTING_REQUEST_CODE_SINGLE) {
+            if (resultCode == Activity.RESULT_OK) {
+                // Retrieve the search results from the intent
+                if (data != null) {
+                    String searchResults = String.valueOf(data.getStringArrayListExtra("search_results"));
+                    if (searchResults != null) {
+                        showImagePickerOptions();
+                    }
+                }
+            }
+        }
         super.onActivityResult(requestCode, resultCode, data);
     }
 
@@ -263,13 +277,22 @@ public class My_ProfileActivity extends AppCompatActivity {
         builder.setMessage(getString(R.string.dialog_permission_message));
         builder.setPositiveButton(getString(R.string.go_to_settings), (dialog, which) -> {
             dialog.cancel();
-//            openSettings();
+            openSettings();
         });
         builder.setNegativeButton(getString(android.R.string.cancel), (dialog, which) -> dialog.cancel());
         builder.show();
 
     }
 
+    private void openSettings() {
+        // Implement code to open the app settings screen here.
+        // You can use an Intent to open the app's settings.
+        // Example:
+        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        Uri uri = Uri.fromParts("package", getPackageName(), null);
+        intent.setData(uri);
+        startActivityForResult(intent, SETTING_REQUEST_CODE_SINGLE);
+    }
 
     @OnClick(R.id.editProfileTxt)
     public void clickEditProfile() {

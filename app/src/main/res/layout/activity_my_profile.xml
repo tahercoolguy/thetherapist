@@ -49,9 +49,9 @@
                     android:layout_width="140dp"
                     android:layout_height="180dp"
                     android:layout_centerInParent="true"
-                     android:layout_gravity="center"
-                    android:src="@drawable/button_rectangle_primary_color_selector"
+                    android:layout_gravity="center"
                     android:scaleType="centerCrop"
+                    android:src="@drawable/button_rectangle_primary_color_selector"
                     app:riv_corner_radius="70dp"></com.makeramen.roundedimageview.RoundedImageView>
 
 

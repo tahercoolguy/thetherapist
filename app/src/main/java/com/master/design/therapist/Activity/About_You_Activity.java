@@ -15,6 +15,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -69,6 +70,9 @@ import retrofit.mime.TypedString;
 
 public class About_You_Activity extends AppCompatActivity {
 
+    // Define a constant for your request code
+    private static final int SETTING_REQUEST_CODE_SINGLE = 1001;
+    private static final int SETTING_REQUEST_CODE_MULTIPLE = 1002;
     private Activity activity;
     private Context context;
     AppController appController;
@@ -155,7 +159,7 @@ public class About_You_Activity extends AppCompatActivity {
                         }
 
                         if (report.isAnyPermissionPermanentlyDenied()) {
-                            showSettingsDialog();
+                            showSettingsDialogMultiple();
                         }
                     }
 
@@ -179,14 +183,14 @@ public class About_You_Activity extends AppCompatActivity {
         dialogUtil = new DialogUtil();
         context = this.getApplicationContext();
         activity = this;
-        if ((ActivityCompat.checkSelfPermission(
-                this, colum[0]) != PackageManager.PERMISSION_GRANTED) &&
-                (ActivityCompat.checkSelfPermission(
-                        this, colum[1]) != PackageManager.PERMISSION_GRANTED)) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                requestPermissions(colum, ADD_MORE_IMAGE);
-            }
-        }
+//        if ((ActivityCompat.checkSelfPermission(
+//                this, colum[0]) != PackageManager.PERMISSION_GRANTED) &&
+//                (ActivityCompat.checkSelfPermission(
+//                        this, colum[1]) != PackageManager.PERMISSION_GRANTED)) {
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//                requestPermissions(colum, ADD_MORE_IMAGE);
+//            }
+//        }
         username = getIntent().getStringExtra("userName");
         date = getIntent().getStringExtra("date");
         selectCountry = getIntent().getStringExtra("selectCountry");
@@ -559,6 +563,33 @@ public class About_You_Activity extends AppCompatActivity {
             }
 
 
+            if (requestCode == SETTING_REQUEST_CODE_SINGLE) {
+                if (resultCode == Activity.RESULT_OK) {
+                    // Retrieve the search results from the intent
+                    if (data != null) {
+                        String searchResults = String.valueOf(data.getStringArrayListExtra("search_results"));
+                        if (searchResults != null) {
+                            showImagePickerOptions();
+                        }
+                    }
+                }
+            }
+            if (requestCode == SETTING_REQUEST_CODE_MULTIPLE) {
+                if (resultCode == Activity.RESULT_OK) {
+                    // Retrieve the search results from the intent
+                    if (data != null) {
+                        String searchResults = String.valueOf(data.getStringArrayListExtra("search_results"));
+                        if (searchResults != null) {
+                            Intent intent = new Intent();
+                            intent.setType("image/*");
+                            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                            intent.setAction(Intent.ACTION_GET_CONTENT);
+                            startActivityForResult(Intent.createChooser(intent, getString(R.string.add_multiple_images)), ADD_MORE_IMAGE);
+                        }
+                    }
+                }
+            }
+
             if (requestCode == ADD_MORE_IMAGE && resultCode == RESULT_OK) {
                 if (data.getClipData() != null && data.getClipData().getItemCount() > 1) {
                     int x = data.getClipData().getItemCount();
@@ -630,7 +661,7 @@ public class About_You_Activity extends AppCompatActivity {
                         }
 
                         if (report.isAnyPermissionPermanentlyDenied()) {
-                            showSettingsDialog();
+                            showSettingsDialogSingle();
                         }
                     }
 
@@ -701,17 +732,54 @@ public class About_You_Activity extends AppCompatActivity {
      * Navigates user to app settings
      * NOTE: Keep proper title and message depending on your app
      */
-    private void showSettingsDialog() {
+    private void showSettingsDialogMultiple() {
         AlertDialog.Builder builder = new AlertDialog.Builder(About_You_Activity.this);
         builder.setTitle(getString(R.string.dialog_permission_title));
         builder.setMessage(getString(R.string.dialog_permission_message));
         builder.setPositiveButton(getString(R.string.go_to_settings), (dialog, which) -> {
             dialog.cancel();
-//            openSettings();
+            openSettings_SETTING_REQUEST_CODE_MULTIPLE();
         });
         builder.setNegativeButton(getString(android.R.string.cancel), (dialog, which) -> dialog.cancel());
         builder.show();
 
+    }
+
+    private void showSettingsDialogSingle() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(About_You_Activity.this);
+        builder.setTitle(getString(R.string.dialog_permission_title));
+        builder.setMessage(getString(R.string.dialog_permission_message));
+        builder.setPositiveButton(getString(R.string.go_to_settings), (dialog, which) -> {
+            dialog.cancel();
+            openSettings_SETTING_REQUEST_CODE_SINGLE();
+        });
+        builder.setNegativeButton(getString(android.R.string.cancel), (dialog, which) -> dialog.cancel());
+        builder.show();
+
+    }
+
+    /**
+     * Open app settings to let the user grant the required permissions.
+     * You need to implement this method to open app settings.
+     */
+    private void openSettings_SETTING_REQUEST_CODE_MULTIPLE() {
+        // Implement code to open the app settings screen here.
+        // You can use an Intent to open the app's settings.
+        // Example:
+        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        Uri uri = Uri.fromParts("package", getPackageName(), null);
+        intent.setData(uri);
+        startActivityForResult(intent, SETTING_REQUEST_CODE_MULTIPLE);
+    }
+
+    private void openSettings_SETTING_REQUEST_CODE_SINGLE() {
+        // Implement code to open the app settings screen here.
+        // You can use an Intent to open the app's settings.
+        // Example:
+        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        Uri uri = Uri.fromParts("package", getPackageName(), null);
+        intent.setData(uri);
+        startActivityForResult(intent, SETTING_REQUEST_CODE_SINGLE);
     }
 
     @Override

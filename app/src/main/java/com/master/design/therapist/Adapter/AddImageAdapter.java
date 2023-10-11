@@ -61,9 +61,14 @@ public class AddImageAdapter extends RecyclerView.Adapter<AddImageAdapter.ViewHo
             @Override
             public void onClick(View v) {
 //                onItemClickListener.onClickImageDelete(position);
+                // Get the current position
+                int currentPosition = holder.getAdapterPosition();
 
-                list.remove(position);
-                notifyItemRemoved(position);
+                if (currentPosition != RecyclerView.NO_POSITION) {
+                    // Remove the item at the current position
+                    list.remove(currentPosition);
+                    notifyItemRemoved(currentPosition);
+                }
             }
         });
 
