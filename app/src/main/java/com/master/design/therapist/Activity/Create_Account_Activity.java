@@ -242,10 +242,10 @@ public class Create_Account_Activity extends AppCompatActivity {
             @Override
             public void response(Object object) {
 
-                if(user.getLanguageCode().equalsIgnoreCase("en")) {
+                if (user.getLanguageCode().equalsIgnoreCase("en")) {
                     DialCode = ((DataChangeDM) object).getName();
-                }else{
-                    DialCode=((DataChangeDM) object).getNameAr();
+                } else {
+                    DialCode = ((DataChangeDM) object).getNameAr();
                 }
                 SelectCountryCode = ((DataChangeDM) object).getId();
 //               user.setAreaId(AreaID);
@@ -396,6 +396,14 @@ public class Create_Account_Activity extends AppCompatActivity {
 //
 ////            String refreshedToken = FirebaseInstanceId.getInstance().getToken();
         if (correct) {
+            String newMobile="";
+            if (mobileET.getText().toString().equalsIgnoreCase("")) {
+                newMobile = "";
+                mobilecodeET.setText("");
+            } else {
+                newMobile = mobilecodeET.getText().toString() + mobileET.getText().toString();
+
+            }
 
             //       startActivity(new Intent(Create_Account_Activity.this, FriendSearch_SelectActivity.class).putExtra("string33", "string33"));
             Intent intent = new Intent(Create_Account_Activity.this, FriendSearch_SelectActivity.class);
@@ -407,7 +415,7 @@ public class Create_Account_Activity extends AppCompatActivity {
             intent.putExtra("gender", Gender);
             intent.putExtra("age", age);
             intent.putExtra("ethnicity", ethnicityyid);
-            intent.putExtra("mobileNumber", mobilecodeET.getText().toString() + mobileET.getText().toString());
+            intent.putExtra("mobileNumber", newMobile);
             intent.putExtra("email", emailEt.getText().toString());
             intent.putExtra("password", PasswordEdT.getText().toString());
             intent.putExtra("confirmPassword", confirmPasswordET.getText().toString());
@@ -652,9 +660,9 @@ public class Create_Account_Activity extends AppCompatActivity {
                 String ageEng = data.getStringExtra("ageEng");
                 String ageAR = data.getStringExtra("ageAR");
 
-                if(user.getLanguageCode().equalsIgnoreCase("en")) {
+                if (user.getLanguageCode().equalsIgnoreCase("en")) {
                     ageTxt.setText(ageEng);
-                }else{
+                } else {
                     ageTxt.setText(ageAR);
                 }
                 age = age_id;

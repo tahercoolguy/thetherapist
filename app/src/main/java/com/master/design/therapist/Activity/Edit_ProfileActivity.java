@@ -466,7 +466,13 @@ public class Edit_ProfileActivity extends AppCompatActivity {
                 progress = dialogUtil.showProgressDialog(Edit_ProfileActivity.this, getString(R.string.please_wait));
                 String date = (yearET.getText().toString() + "-" + monthET.getText().toString() + "-" + dateET.getText().toString());
 
-                newMobile = mobilecodeET.getText().toString() + mobileET.getText().toString();
+                if(mobileET.getText().toString().equalsIgnoreCase("")){
+                    newMobile="";
+                    mobilecodeET.setText("");
+                }else{
+                    newMobile = mobilecodeET.getText().toString() + mobileET.getText().toString();
+
+                }
 
                 String email = emailEt.getText().toString();
                 appController.paServices.TherapistEdit_Profile(String.valueOf(user.getId()), userNameET.getText().toString(), date, SelectCountryid, Gender, newMobile, educationID, ethnicityyid, InterestIdList, aboutyou, email, age, new Callback<Edit_ProfileDM>() {
